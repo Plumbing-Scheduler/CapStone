@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+//WorkOrder Database Model
+//This will be how the data is displayed in the database
 const workOrder = mongoose.Schema(
     {
         serviceStatus: Number,
@@ -21,4 +23,6 @@ const workOrder = mongoose.Schema(
         busName: String,
 
     }
-)
+);
+
+module.exports = mongoose.model(workOrder);
