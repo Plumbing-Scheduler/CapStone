@@ -44,7 +44,15 @@ router.get('/', async (request, response) => {
 
 //Route to get workOrder by ID
 router.get('/:id', async (request, response) => {
+    try {
+        const { id } = request.params;
 
+        const workOrder = await WorkOrder.findById(id)
+        return response.status(200).send(workOrder);
+    } catch (error) {
+        console.log(error);
+        response.status(500).send({message: error.message});
+    }
 });
 
 //Route to update workorder by ID
