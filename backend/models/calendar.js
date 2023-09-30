@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 //This may change
 //Im not sure how well this will work with our system
-const calendar = mongoose.Schema(
+const calendarSchema = mongoose.Schema(
     {
         service: String,
         date:{
@@ -14,4 +14,4 @@ const calendar = mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model(calendar);
+export const Calendar = mongoose.model('WorkOrder', calendarSchema);
