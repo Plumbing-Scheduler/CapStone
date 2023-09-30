@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 //WorkOrder Database Model
 //This will be how the data is displayed in the database
-const workOrder = mongoose.Schema(
+const workOrderSchema = mongoose.Schema(
     {
         serviceStatus: Number,
         s_description: {
@@ -25,4 +25,4 @@ const workOrder = mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model(workOrder);
+export const WorkOrder = mongoose.model('WorkOrder', workOrderSchema);
