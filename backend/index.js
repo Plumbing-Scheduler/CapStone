@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import workOrderRoute from './routes/workOrdersRoute.js'
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.get('/' ,(request, response) => {
     return response.status(234).send('Welcome to the beggining of the end!')
 });
 
-app.use('/workorders', )
+app.use('/workorders', workOrderRoute);
 
 //Connection to MongoDB
 //Connection Process will need to be changed so than Mongo URL isnt in plain text!!!!!!
