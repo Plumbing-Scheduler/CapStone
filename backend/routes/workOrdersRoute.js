@@ -8,7 +8,7 @@ router.post('/', async (request, response) => {
     try {
         if(!request.body.s_description || !request.body.s_startDate || !request.body.s_cost || !request.body.customerID){
             return response.status(400).send({message: 'All required fields must be filled'});
-        }
+        };
         const newWorkOrder = {
             serviceStatus: 1,
             s_description: request.body.s_description,
@@ -25,7 +25,7 @@ router.post('/', async (request, response) => {
     } catch (error) {
         console.log(error);
         response.status(500).send({message: error.message});
-    }
+    };
 });
 
 //Route to Get ALL workOrders
@@ -39,7 +39,7 @@ router.get('/', async (request, response) => {
     } catch (error) {
         console.log(error);
         response.status(500).send({message: error.message});
-    }
+    };
 });
 
 //Route to get workOrder by ID
@@ -47,15 +47,15 @@ router.get('/:id', async (request, response) => {
     try {
         const { id } = request.params;
 
-        const result = await WorkOrder.findById(id)
+        const result = await WorkOrder.findById(id);
         if(!result){
             return response.status(404).send({message: 'Work Order Not Found'});
-        }
+        };
         return response.status(200).send(result);
     } catch (error) {
         console.log(error);
         response.status(500).send({message: error.message});
-    }
+    };
 });
 
 //Route to update workorder by ID
@@ -63,14 +63,14 @@ router.put('/:id', async (request, response) => {
     try {
         if(!request.body.s_description || !request.body.s_startDate || !request.body.s_cost || !request.body.customerID){
             return response.status(400).send({message: 'All required fields must be filled'});
-        }
+        };
 
         const { id } = request.params;
 
         const result = await WorkOrder.findByIdAndUpdate(id, request.body);
         if(!result){
             return response.status(404).send({message: 'Work Order Not Found'});
-        }
+        };
         return response.status(200).send({message: 'Work Order Updated!'})
     } catch (error) {
         console.log(error);
@@ -80,7 +80,18 @@ router.put('/:id', async (request, response) => {
 
 //Route to Delete worderOrder by ID
 router.delete('/:id', async (request, response) => {
-    
-})
+    try {
+        const { id } = request.params;
+        const result = await WorkOrder.findByIdAndDelete(id);
+
+        if (!result) {
+            return response.status(404).send({message: 'Work Order Not Found'});
+        };
+        return response.status(200).send({message: "Work Order Deleted!"});
+    } catch (error) {
+        console.log(error);
+        response.status(500).send({message: error.message});
+    };
+});
 
 export default router;
