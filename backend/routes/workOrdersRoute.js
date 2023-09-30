@@ -1,5 +1,5 @@
 import express from "express";
-import { workOrder } from '../models/workOrderModel.js';
+import { WorkOrder } from '../models/workOrderModel.js';
 
 const router = express.Router();
 
@@ -18,8 +18,8 @@ router.post('/', async (request, response) => {
             endDate: request.body.endDate,
             customerID: '',
             busName: ''
-        }
-        const result = await workOrder.create(newWorkOrder);
+        };
+        const result = await WorkOrder.create(newWorkOrder);
 
         return response.status(201).send(result);
     } catch (error) {
@@ -30,12 +30,21 @@ router.post('/', async (request, response) => {
 
 //Route to Get ALL workOrders
 router.get('/', async (request, response) => {
-    
+    try {
+        const workOrders = await WorkOrder.find({});
+        return response.status(200).send({
+            count: workOrders.length,
+            data: workOrders
+        });
+    } catch (error) {
+        console.log(error);
+        response.status(500).send({message: error.message});
+    }
 });
 
 //Route to get workOrder by ID
 router.get('/:id', async (request, response) => {
-    
+
 });
 
 //Route to update workorder by ID

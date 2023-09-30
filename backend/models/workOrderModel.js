@@ -25,4 +25,4 @@ const workOrderSchema = mongoose.Schema(
     }
 );
 
-export const workOrder = mongoose.model('WorkOrder', workOrderSchema);
+export const WorkOrder = mongoose.model('WorkOrder', workOrderSchema);
