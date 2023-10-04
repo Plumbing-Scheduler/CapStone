@@ -1,11 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import workOrderRoute from './routes/workOrdersRoute.js'
+import cors from 'cors';
 
 const app = express();
 
 const PORT = process.env.port || 3500;
 
+app.use(cors()); 
 
 app.use(express.json());
 

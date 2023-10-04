@@ -5,7 +5,8 @@ import Topbar from "./scenes/global/Topbar";
 import Home from "./scenes/Home";
 import Sidebar from "./scenes/global/Sidebar";
 import Quotes from "./scenes/Quotes";
-import WorkOrder from "./scenes/form";
+import WorkOrder from "./pages/workOrders";
+import Form from './scenes/form/form'
 import Schedule from "./scenes/Schedule";
 import Employee from "./scenes/Employee";
 import Reports from "./scenes/Reports";
@@ -26,6 +27,7 @@ function App() {
             {/* <Route path="/workOrderform" element={<WorkOrderForm />} /> */}
             <Route path="/Quotes" element={<Quotes />} />
             <Route path="/WorkOrder" element={<WorkOrder />} />
+            <Route path="/WorkOrder/Form" element={<Form />} />
             <Route path="/Schedule" element={<Schedule />} />
             <Route path="/Employee" element={<Employee />} />
             <Route path="/Reports" element={<Reports />} />
