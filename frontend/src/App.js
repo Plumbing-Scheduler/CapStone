@@ -1,9 +1,9 @@
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
-import Topbar from "./components/Topbar";
+import Topbar from "./components/global/Topbar";
 import Home from "./pages/Home";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/global/Sidebar";
 import Quotes from "./pages/Quotes";
 import WorkOrder from "./pages/workOrders";
 import Form from './pages/WorkOrderForm'

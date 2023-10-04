@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Box, useTheme, Button } from "@mui/material";
-import { tokens } from "../theme";
+import { tokens } from "../../theme";
 
 const BackButton = () => {
     const theme = useTheme();
@@ -20,4 +20,4 @@ const BackButton = () => {
     )
 }
 
-export default BackButton
+export default BackButton;
