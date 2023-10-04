@@ -1,15 +1,15 @@
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
-import Topbar from "./scenes/global/Topbar";
-import Home from "./scenes/Home";
-import Sidebar from "./scenes/global/Sidebar";
-import Quotes from "./scenes/Quotes";
+import Topbar from "./components/Topbar";
+import Home from "./pages/Home";
+import Sidebar from "./components/Sidebar";
+import Quotes from "./pages/Quotes";
 import WorkOrder from "./pages/workOrders";
-import Form from './scenes/form/form'
-import Schedule from "./scenes/Schedule";
-import Employee from "./scenes/Employee";
-import Reports from "./scenes/Reports";
+import Form from './pages/WorkOrderForm'
+import Schedule from "./pages/Schedule";
+import Employee from "./pages/Employee";
+import Reports from "./pages/Reports";
 // import WorkOrderform from "./scenes/form";
 
 function App() {

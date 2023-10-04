@@ -10,7 +10,7 @@ const BackButton = () => {
     return (
         <div>
             <Box display="flex" justifyContent="space-between" p={3}>
-                <Link to='..' relative='path' className='link'>
+                <Link to='..' relative='path' className='link'> {/**Routes Up one "route" level. Eg, if path is "/workorder/form" up one route level will go to "/workorder". */}
                     <Box display="flex" justifyContent="space-between" backgroundColor={colors.primary[400]} borderRadius="3px" >
                         <Button variant="Text">Back</Button>
                     </Box>

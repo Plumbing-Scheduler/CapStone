@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CreateNewButton from '../components/createNew';
+import AddNewButton from '../components/AddNewButton';
 import axios from 'axios';
 import Header from '../components/Header';
 
@@ -20,7 +20,7 @@ const WorkOrders = () => {
     return (
         <div>
             <Header title="WORK ORDER" subtitle="Show Work Orders" />
-            <CreateNewButton destination="/WorkOrder/Form" item="Work Order"/>
+            <AddNewButton destination="/WorkOrder/Form" item="Work Order"/> {/* "Add new" button at top of list, Routes to Work order Form*/} 
             <table>
                 <thead>
                     <tr>
@@ -28,6 +28,7 @@ const WorkOrders = () => {
                         <th>Cost</th>
                         <th>Emp</th>
                         <th>Customer</th>
+                        <th>Operations</th>
                     </tr>
                 </thead>
                 <tbody>
