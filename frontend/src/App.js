@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Sidebar from "./components/global/Sidebar";
 import Quotes from "./pages/Quotes";
 import WorkOrder from "./pages/workOrders";
-import Form from './pages/WorkOrderForm'
+import Form from './pages/workOrder/WorkOrderForm'
 import Schedule from "./pages/Schedule";
 import Employee from "./pages/Employee";
 import Reports from "./pages/Reports";
@@ -27,7 +27,7 @@ function App() {
             {/* <Route path="/workOrderform" element={<WorkOrderForm />} /> */}
             <Route path="/Quotes" element={<Quotes />} />
             <Route path="/WorkOrder" element={<WorkOrder />} />
-            <Route path="/WorkOrder/Form" element={<Form />} />
+            <Route path="/WorkOrder/Form" element={<Form />} /> 
             <Route path="/Schedule" element={<Schedule />} />
             <Route path="/Employee" element={<Employee />} />
             <Route path="/Reports" element={<Reports />} />
