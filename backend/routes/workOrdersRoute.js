@@ -14,10 +14,10 @@ router.post('/', async (request, response) => {
             s_description: request.body.s_description,
             s_startDate: request.body.s_startDate,
             s_cost: request.body.s_cost,
-            assignedEmp: '',
+            assignedEmp: request.body.assignedEmp,
             endDate: request.body.endDate,
-            customerID: '',
-            busName: ''
+            customerID: request.body.customerID,
+            busName: request.body.busName
         };
         const result = await WorkOrder.create(newWorkOrder);
 

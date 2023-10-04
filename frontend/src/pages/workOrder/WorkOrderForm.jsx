@@ -4,6 +4,7 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery"; /* Make screen Responsive */
 import Header from "../../components/Header";
 //import { ColorModeContext, tokens } from "../../theme";
+//Commiting 
 
 const initialValues = {
     firstName: "",
@@ -58,7 +59,7 @@ const Form = () => {
                             onChange={handleChange}
                             value={values.firstName} /* value that is changed when changed */
                             name="firstName"
-                            error={!!touched.first && !!errors.firstName}
+                            error={!!touched.firstName && !!errors.firstName}
                             helperText={touched.firstName && errors.firstName}
                             sx={{ gridColumn: "span 2" }}
                         />
@@ -71,7 +72,7 @@ const Form = () => {
                             onChange={handleChange}
                             value={values.firstName} /* value that is changed when changed */
                             name="lastName"
-                            error={!!touched.last && !!errors.lastName}
+                            error={!!touched.lastName && !!errors.lastName}
                             helperText={touched.lastName && errors.lastName}
                             sx={{ gridColumn: "span 2" }}
                         />
@@ -88,7 +89,7 @@ const Form = () => {
                             helperText={touched.email && errors.email}
                             sx={{ gridColumn: "span 4" }}
                         />
-                        <TextField
+                        <TextField              
                             fullWidth
                             variant="filled"
                             type="text"
