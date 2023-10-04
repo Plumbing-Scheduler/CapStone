@@ -33,3 +33,8 @@ body,
 ::-webkit-scrollbar-track:hover {
   background-color: #555;
 }
+
+.link{
+  color: #fff;
+  text-decoration: none;
+}

@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery"; /* Make screen Responsive */
 import Header from "../../components/Header";
+import BackButton from "../../components/BackButton";
 //import { ColorModeContext, tokens } from "../../theme";
 
 const initialValues = {
@@ -35,10 +36,9 @@ const Form = () => {
         console.log(values);
     }
 
-    return <Box m="20px">
+    return <Box >
         <Header title="WORK ORDER" subtitle="Create Invoice" />
-
-        <Formik
+        <Formik 
             onSubmit={handleFormSubmit}
             initialValues={initialValues}
             validationSchema={userSchema}
@@ -46,7 +46,7 @@ const Form = () => {
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit }) => (
                 <form onSubmit={handleSubmit}>
                     {/* /* allows to split the grid */}
-                    <Box diplay="grid" gap="30px" gridTemplateColumns="repeat(4, minmax(0, 1fr))" sx={{
+                    <Box m="20px" diplay="grid" gap="30px" gridTemplateColumns="repeat(4, minmax(0, 1fr))" sx={{
                         "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                     }}>
                         <Typography display="flex" variant="h4" justifyContent="space-between" sx={{ m: "50px 0 20px 0" }}>Customer Information</Typography>

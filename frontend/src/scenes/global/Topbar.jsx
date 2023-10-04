@@ -7,6 +7,7 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 // import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import { Link } from "react-router-dom";
 // import SearchIcon from "@mui/icons-material/Search";
 
 const Topbar = () => {
@@ -24,10 +25,11 @@ const Topbar = () => {
     //     </Box>
 
     return(<Box display = "flex" justifyContent="space-between" p={3}>
+        <Link to='..' relative="path" className="link">
         <Box display= "flex" backgroundColor={colors.primary[400]} borderRadius="3px">  
-            <Button variant="Text"> Back</Button>
+                <Button variant="Text"> Back</Button>
         </Box>
-
+        </Link>
         {/* Icons */}
         <Box display="flex">
             <IconButton onClick={colorMode.toggleColorMode}>

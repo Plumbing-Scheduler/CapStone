@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import CreateNewButton from '../components/createNew';
 import axios from 'axios';
-//DOES NOT WORK!!!!!
+import Header from '../components/Header';
+
+
 const WorkOrders = () => {
     const [workOrders, setWorkOrders] = useState([]);
 
@@ -17,9 +19,8 @@ const WorkOrders = () => {
     }, []);
     return (
         <div>
-            <Link to='/WorkOrder/Form'>
-                <button>Add new</button>
-            </Link>
+            <Header title="WORK ORDER" subtitle="Show Work Orders" />
+            <CreateNewButton destination="/WorkOrder/Form" item="Work Order"/>
             <table>
                 <thead>
                     <tr>
