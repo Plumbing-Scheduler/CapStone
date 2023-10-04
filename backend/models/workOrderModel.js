@@ -21,7 +21,10 @@ const workOrderSchema = mongoose.Schema(
         endDate: Date,
         customerID: String,
         busName: String,
-
+        address: {
+            type: String,
+            required: true
+        }
     }
 );
 

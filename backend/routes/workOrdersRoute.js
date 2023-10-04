@@ -6,7 +6,7 @@ const router = express.Router();
 //Route to add a new workOrder
 router.post('/', async (request, response) => {
     try {
-        if(!request.body.s_description || !request.body.s_startDate || !request.body.s_cost || !request.body.customerID){
+        if(!request.body.s_description || !request.body.s_startDate || !request.body.s_cost || !request.body.customerID || !request.body.address){
             return response.status(400).send({message: 'All required fields must be filled'});
         };
         const newWorkOrder = {
@@ -17,7 +17,8 @@ router.post('/', async (request, response) => {
             assignedEmp: request.body.assignedEmp,
             endDate: request.body.endDate,
             customerID: request.body.customerID,
-            busName: request.body.busName
+            busName: request.body.busName,
+            address: request.body.address
         };
         const result = await WorkOrder.create(newWorkOrder);
 
