@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Box, useTheme, Button } from "@mui/material";
 import { tokens } from "../theme";
 
-const AddNewButton = ({destination = '/', item = ''}) => { {/*sets "destination" and "item" variables to '/' and empty string respectively as default if no props are sent in*/}
+const AddNewButton = ({destination = '/', item = ''}) => { /*sets "destination" and "item" variables to '/' and empty string respectively as default if no props are sent in*/
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
@@ -17,7 +17,6 @@ const AddNewButton = ({destination = '/', item = ''}) => { {/*sets "destination"
                 </Link>
             </Box>
         </div>
-    )
-}
+    )}
 
-export default AddNewButton
+export default AddNewButton;

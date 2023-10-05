@@ -115,19 +115,6 @@ const Form = () => {
                             helperText={touched.address1 && errors.address1}
                             sx={{ gridColumn: "span 4" }}
                         />
-                        <TextField
-                            fullWidth
-                            variant="filled"
-                            type="text"
-                            label="Address 2"
-                            onBlur={handleBlur} /* changes color when clicked */
-                            onChange={handleChange}
-                            value={values.address2} /* value that is changed when changed */
-                            name="address2"
-                            error={!!touched.address2 && !!errors.address2}
-                            helperText={touched.address2 && errors.address2}
-                            sx={{ gridColumn: "span 4" }}
-                        />
 
                     </Box>
 
