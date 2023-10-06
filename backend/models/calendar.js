@@ -14,4 +14,4 @@ const calendarSchema = mongoose.Schema(
     }
 );
 
-export const Calendar = mongoose.model('WorkOrder', calendarSchema);
+export const Calendar = mongoose.model('Calendar', calendarSchema);

@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import workOrderRoute from './routes/workOrdersRoute.js'
+import workOrderRoute from './routes/api/workOrders.js';
 import cors from 'cors';
 
 const app = express();
