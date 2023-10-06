@@ -50,9 +50,18 @@ const getCalendar = async (request, response) => {
 };
 
 const updateCalendar = async (request, response) => {
-    
+    if (!request.body.title || !request.body.startDate || !request.body.endDate || !request.body.serviceId) {
+        return response.status(400).send({message: 'All required fields must be filled'});
+    };
+    const { id } = request.params;
     try {
-        
+        const result = await Calendar.findByIdAndUpdate(id, request.body);
+
+        if(!result){
+            return response.status(204).send({message: "No Content Found"});
+        }
+
+        return response.status(200).send(result);
     } catch (error) {
         console.log(error);
         return response.status(500).send({message: error.message});
