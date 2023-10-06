@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Box, TextField, Typography } from '@mui/material';
+import Header from '../../components/Header';
 
 
 const CreateWorkOrder = () => {
@@ -41,82 +43,97 @@ const CreateWorkOrder = () => {
     }
 
     return (
-        <div className='p-4 text-center'>
-            <h1 className='my-4 text-3xl '>Creat new Work Order</h1>
-            <div >
-                <div className='w-full flex justify-center' >
-                    <label className='text-base'>Description of Job</label>
-                    <textarea
-                        required
-                        name=""
-                        id=""
+        <Box m="20px">
+            <Header title="WORK ORDER" subtitle="Create Invoice" />
+            <form >
+                <Typography display="flex" variant="h4" justifyContent="space-between" sx={{ m: "30px 0 10px 0" }}>Customer Information</Typography>
+                <Box display="grid" gap="30px" gridTemplateColumns="repeat(4, minmax(0, 1fr))" sx={{ gridColumn: "span 4" }} >
+                    <TextField
+                        fullWidth
+                        multiline
+                        variant="filled"
+                        label="Description"
                         value={description}
                         cols="30"
-                        rows="3"
+                        rows="4"
                         onChange={(e) => setDescription(e.target.value)}
-                        className='mx-4 rounded bg-gray-600 p-2 ' />
-                </div>
-                <div className='w-full flex justify-center my-4'>
-                    <label className='text-base' >Start Date</label>
-                    <input
-                        required
-                        type="date"
-                        name=""
+                        name="description"
                         id=""
+                        sx={{ gridColumn: "span 4" }}
+                    />
+                    <TextField
+                        fullWidth
+                        type="date"
+                        variant="filled"
+                        label="Start Date"
                         value={s_startDate}
-                        className='mx-4 rounded bg-gray-600 p-2' />
-                </div>
-                <div className='w-full flex justify-center my-4'>
-                    <label className='text-base' >Cost</label>
-                    <input
-                        required
-                        type="number"
-                        value={cost}
-                        name=""
+                        onChange={(e) => setDescription(e.target.value)}
+                        name="startdate"
                         id=""
-                        className='mx-4 rounded bg-gray-600 p-2' />
-                </div>
-                <div className='w-full flex justify-center my-4'>
-                    <label className='text-base' >Assigned Employee</label>
-                    <input
-                        type="text"
-                        value={assignedEmp}
-                        name=""
-                        id=""
-                        className='mx-4 rounded bg-gray-600 p-2' />
-                </div>
-                <div className='w-full flex justify-center my-4'>
-                    <label className='text-base' >End Date</label>
-                    <input
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
                         type="date"
+                        variant="filled"
+                        label="End Date"
                         value={endDate}
-                        name=""
+                        onChange={(e) => setDescription(e.target.value)}
+                        name="enddate"
                         id=""
-                        className='mx-4 rounded bg-gray-600 p-2' />
-                </div>
-                <div className='w-full flex justify-center my-4'>
-                    <label className='text-base' >Business Name</label>
-                    <input
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
                         type="text"
+                        variant='filled'
+                        label="Business Name"
                         value={busName}
-                        name=""
+                        onChange={(e) => setDescription(e.target.value)}
+                        name="businessname"
                         id=""
-                        className='mx-4 rounded bg-gray-600 p-2' />
-                </div>
-                <div className='w-full flex justify-center my-4'>
-                    <label className='text-base' >Address</label>
-                    <input
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
                         required
+                        variant='filled'
                         type="text"
+                        label="Address"
                         value={address}
-                        name=""
+                        onChange={(e) => setDescription(e.target.value)}
+                        name="address"
                         id=""
-                        className='mx-4 rounded bg-gray-600 p-2' />
-                </div>
-            </div>
-            <button onClick={print}>PRINT</button>
-        </div>
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        type="text"
+                        variant='filled'
+                        label="Assign Employee"
+                        value={assignedEmp}
+                        onChange={(e) => setDescription(e.target.value)}
+                        name="assignemployee"
+                        id=""
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        type="number"
+                        variant='filled'
+                        label="Cost"
+                        value={cost}
+                        onChange={(e) => setDescription(e.target.value)}
+                        name="cost"
+                        id=""
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <button onClick={print}>PRINT</button>
+                </Box>
+            </form>
+        </Box>
     )
+
 }
 
 export default CreateWorkOrder
