@@ -24,11 +24,11 @@ const createCalendar = async (request, response) => {
 const getAllCalendar = async (request, response) => {
     try {
         const result = await Calendar.find({});
+
         return response.status(200).send({
             count: result.length,
             data: result
         });
-
     } catch (error) {
         console.log(error);
         return response.status(500).send({message: error.message});
@@ -39,9 +39,11 @@ const getCalendar = async (request, response) => {
     const { id } = request.params
     try {
         const result = await Calendar.findById(id);
+
         if(!result){
             return response.status(204).send({message: "No Content Found"});
         }
+
         return response.status(200).send(result);
     } catch (error) {
         console.log(error);
@@ -61,7 +63,7 @@ const updateCalendar = async (request, response) => {
             return response.status(204).send({message: "No Content Found"});
         }
 
-        return response.status(200).send(result);
+        return response.status(200).send({message: "Update Successful"});
     } catch (error) {
         console.log(error);
         return response.status(500).send({message: error.message});
@@ -69,9 +71,15 @@ const updateCalendar = async (request, response) => {
 };
 
 const deleteCalendar = async (request, response) => {
-
+    const { id } = request.params;
     try {
-        
+        const result = await Calendar.findByIdAndDelete(id);
+
+        if(!result){
+            return response.status(204).send({message: "No Content Found"});
+        }
+
+        return response.status(200).send({message: "Delete Successful"});
     } catch (error) {
         console.log(error);
         return response.status(500).send({message: error.message});
