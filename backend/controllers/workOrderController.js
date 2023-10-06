@@ -1,10 +1,6 @@
-import express from "express";
-import { WorkOrder } from '../models/workOrderModel.js';
+import { WorkOrder } from "../models/workOrderModel.js";
 
-const router = express.Router();
-
-//Route to add a new workOrder
-router.post('/', async (request, response) => {
+const createWorkOrder = async (request, response) => { 
     try {
         if(!request.body.s_description || !request.body.s_startDate || !request.body.s_cost || !request.body.customerID || !request.body.address){
             return response.status(400).send({message: 'All required fields must be filled'});
@@ -27,10 +23,9 @@ router.post('/', async (request, response) => {
         console.log(error);
         response.status(500).send({message: error.message});
     };
-});
+};
 
-//Route to Get ALL workOrders
-router.get('/', async (request, response) => {
+const getAllWorkOrders = async (request, response) => { 
     try {
         const result = await WorkOrder.find({});
         return response.status(200).send({
@@ -41,10 +36,9 @@ router.get('/', async (request, response) => {
         console.log(error);
         response.status(500).send({message: error.message});
     };
-});
+};
 
-//Route to get workOrder by ID
-router.get('/:id', async (request, response) => {
+const getWorkOrder = async (request, response) => { 
     try {
         const { id } = request.params;
 
@@ -57,10 +51,9 @@ router.get('/:id', async (request, response) => {
         console.log(error);
         response.status(500).send({message: error.message});
     };
-});
+};
 
-//Route to update workorder by ID
-router.put('/:id', async (request, response) => {
+const updateWorkOrder = async (request, response) => { 
     try {
         if(!request.body.s_description || !request.body.s_startDate || !request.body.s_cost || !request.body.customerID){
             return response.status(400).send({message: 'All required fields must be filled'});
@@ -77,10 +70,9 @@ router.put('/:id', async (request, response) => {
         console.log(error);
         response.status(500).send({message: error.message});
     }
-});
+};
 
-//Route to Delete worderOrder by ID
-router.delete('/:id', async (request, response) => {
+const deleteWorkOrder = async (request, response) => { 
     try {
         const { id } = request.params;
         const result = await WorkOrder.findByIdAndDelete(id);
@@ -93,6 +85,6 @@ router.delete('/:id', async (request, response) => {
         console.log(error);
         response.status(500).send({message: error.message});
     };
-});
+};
 
-export default router;
+export default {createWorkOrder, getAllWorkOrders, getWorkOrder, updateWorkOrder, deleteWorkOrder};

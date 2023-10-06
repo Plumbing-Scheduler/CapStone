@@ -4,14 +4,24 @@ import mongoose from "mongoose";
 //Im not sure how well this will work with our system
 const calendarSchema = mongoose.Schema(
     {
-        service: String,
-        date:{
+        title:{
+            type: String,
+            required: true
+        },
+        startDate:{
             type: Date,
             required: true
         },
-        serviceID: String,
-        empID: String,
+        endDate:{
+            type: Date,
+            required: true
+        },
+        serviceId:{
+            type: String,
+            required: true
+        },
+        empId: String,
     }
 );
 
-export const Calendar = mongoose.model('WorkOrder', calendarSchema);
+export const Calendar = mongoose.model('Calendar', calendarSchema);
