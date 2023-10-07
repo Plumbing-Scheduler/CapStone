@@ -1,11 +1,14 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import workOrderRoute from './routes/workOrdersRoute.js'
+import cors from 'cors';
+import workOrder from './routes/api/workOrders.js';
+import calendar from './routes/api/calendar.js';
 
 const app = express();
 
 const PORT = process.env.port || 3500;
 
+app.use(cors()); 
 
 app.use(express.json());
 
@@ -15,7 +18,8 @@ app.get('/' ,(request, response) => {
     return response.status(234).send('Welcome to the beggining of the end!')
 });
 
-app.use('/workorders', workOrderRoute);
+app.use('/workorders', workOrder);
+app.use('/schedule', calendar);
 
 //Connection to MongoDB
 //Connection Process will need to be changed so than Mongo URL isnt in plain text!!!!!!
