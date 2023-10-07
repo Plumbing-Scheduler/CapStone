@@ -1,4 +1,5 @@
 import { WorkOrder } from "../models/workOrderModel.js";
+import { Calendar } from "../models/calendar.js";
 
 const createWorkOrder = async (request, response) => { 
     try {
@@ -19,7 +20,17 @@ const createWorkOrder = async (request, response) => {
         };
         const result = await WorkOrder.create(newWorkOrder);
 
+        const newCalendar = {
+            title: result.title,
+            startDate: result.s_startDate,
+            endDate: result.endDate,
+            serviceId: result._id,
+            empId: result.assignedEmp
+        }
+        const resultCal = await Calendar.create(newCalendar);
+        console.log(resultCal);
         return response.status(201).send(result);
+
     } catch (error) {
         console.log(error);
         response.status(500).send({message: error.message});
