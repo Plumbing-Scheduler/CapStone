@@ -6,8 +6,9 @@ const createWorkOrder = async (request, response) => {
             return response.status(400).send({message: 'All required fields must be filled'});
         };
         const newWorkOrder = {
-            serviceStatus: 1,
+            serviceStatus: request.body.serviceStatus,
             s_description: request.body.s_description,
+            title: request.body.title,
             s_startDate: request.body.s_startDate,
             s_cost: request.body.s_cost,
             assignedEmp: request.body.assignedEmp,

@@ -24,11 +24,14 @@ const WorkOrders = () => {
     return (
         <div>
             <Header title="WORK ORDER" subtitle="Show Work Orders" />
-            <AddNewButton destination="/WorkOrder/Form" item="Work Order" /> {/* "Add new" button at top of list, Routes to Work order Form*/}
-            <table className='w-1/2 border-separate border-spacing-2 m-auto text-xl'>
-                <thead className='text-xl '>
+            <div >
+                <AddNewButton destination="/WorkOrder/Form" item="Work Order" className='bg-sky-900'/> {/* "Add new" button at top of list, Routes to Work order Form*/}
+            </div>
+            <table className='w-9/12 border-separate border-spacing-2 m-auto text-xl'>
+                <thead className='text-xl'>
                     <tr >
-                        <th className='border border-slate-600 rounded-md'>Description</th>
+                        <th className='border border-slate-600 rounded-md'>No.</th>
+                        <th className='border border-slate-600 rounded-md'>Title</th>
                         <th className='border border-slate-600 rounded-md'>Cost</th>
                         <th className='border border-slate-600 rounded-md'>Emp</th>
                         <th className='border border-slate-600 rounded-md'>Customer</th>
@@ -38,11 +41,13 @@ const WorkOrders = () => {
                 <tbody className=''>
                     {workOrders.map((wo, index) => (
                         <tr key={wo._id}>
-                            <td className='border border-slate-700 rounded-md pl-2'>{index} {wo.s_description}</td>
+                            <td className='border border-slate-700 rounded-md pl-2'>{index + 1}</td>
+                            <td className='border border-slate-700 rounded-md pl-2'>{wo.title}</td>
                             <td className='border border-slate-700 rounded-md pl-2'>{wo.s_cost}</td>
                             <td className='border border-slate-700 rounded-md pl-2'>{wo.assignedEmp}</td>
                             <td className='border border-slate-700 rounded-md pl-2'>{wo.customerID}</td>
-                            <td className='flex justify-center gap-4 border border-slate-700 rounded-md pl-2'>
+                            <td className='flex justify-evenly border border-slate-700 rounded-md'>
+                                
                                 <Link to={`/WorkOrder/Edit/${wo._id}`} className='link '>
                                     <EditIcon />
                                 </Link>
@@ -52,6 +57,7 @@ const WorkOrders = () => {
                                 <Link to={`/WorkOrder/Delete/${wo._id}`} className='link '>
                                     <DeleteOutlineIcon />
                                 </Link>
+                                
                             </td>
                         </tr>
                     ))

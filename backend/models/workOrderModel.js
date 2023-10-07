@@ -9,6 +9,9 @@ const workOrderSchema = mongoose.Schema(
             type: String,
             required: true
         },
+        title: {
+            type: String,
+        },
         s_startDate: {
             type: Date,
             required: true
