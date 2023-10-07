@@ -7,9 +7,13 @@ import Sidebar from "./components/global/Sidebar";
 import Quotes from "./pages/Quotes";
 import WorkOrder from "./pages/workOrders";
 import CreateWorkOrder from './pages/workOrder/CreateWorkOrder'
+import EditWorkOrder from './pages/workOrder/EditWorkOrder'
+import ShowWorkOrder from './pages/workOrder/ShowWorkOrder'
+import DeleteWorkOrder from './pages/workOrder/DeleteWorkOrder'
 import Schedule from "./pages/Schedule";
 import Employee from "./pages/Employee";
 import Reports from "./pages/Reports";
+
 // import WorkOrderform from "./scenes/form";
 
 function App() {
@@ -25,12 +29,16 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             {/* <Route path="/workOrderform" element={<WorkOrderForm />} /> */}
-            <Route path="/Quotes" element={<Quotes />} />
-            <Route path="/WorkOrder" element={<WorkOrder />} />
-            <Route path="/WorkOrder/Form" element={<CreateWorkOrder />} /> 
-            <Route path="/Schedule" element={<Schedule />} />
-            <Route path="/Employee" element={<Employee />} />
-            <Route path="/Reports" element={<Reports />} />
+            <Route path="/quotes" element={<Quotes />} />
+            <Route path="workorder" element={<WorkOrder />}>
+              <Route path="form" element={<CreateWorkOrder />} /> 
+              <Route path="edit/:id" element={<EditWorkOrder />} />
+              <Route path="details/:id" element={<ShowWorkOrder />} />
+              <Route path="delete/:id" element={<DeleteWorkOrder />} />
+            </Route>
+            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/employee" element={<Employee />} />
+            <Route path="/reports" element={<Reports />} />
           </Routes>
         </main>
       </div>

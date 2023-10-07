@@ -112,35 +112,35 @@ const Sidebar = () => {
                         />
                         <Item
                             title="Quote Rquests"
-                            to="/Quotes"
+                            to="/quotes"
                             icon={<ContactsOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
                             title="Work Orders"
-                            to="/WorkOrder"
+                            to="/workorder"
                             icon={<ReceiptOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
                             title="Schedule"
-                            to="/Schedule"
+                            to="/schedule"
                             icon={<CalendarTodayOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
                             title="Employee"
-                            to="/Employee"
+                            to="/employee"
                             icon={<PeopleOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
                             title="Reports"
-                            to="/Reports"
+                            to="/reports"
                             icon={<BarChartOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
