@@ -18,7 +18,7 @@ export const CreateWorkOrder = () => {
     const [busName, setBusName] = useState('');
     const [address, setAddress] = useState('');
     const navigate = useNavigate();
-    const data = {
+    const newWorkOrder = {
         serviceStatus,
         s_description,
         title,
@@ -30,16 +30,16 @@ export const CreateWorkOrder = () => {
         busName,
         address,
     };
-
+ 
     const handleSave = () => {
         axios
-            .post('http://localhost:3500/workorders', data)
+            .post('http://localhost:3500/workorders', newWorkOrder)
             .then(
-                navigate('/workorder')
+                navigate('/workorders')
             )
             .catch((error) => {
                 console.log(error)
-            })
+            });
     };
     
 
