@@ -6,15 +6,15 @@ import { Box, TextField, Typography } from '@mui/material';
 import Header from '../../components/Header';
 
 
-const CreateWorkOrder = () => {
+export const CreateWorkOrder = () => {
     const serviceStatus = 1 //Newly created work orders will always be set to "1" for in progress. 
     const [s_description, setDescription] = useState('');
     const [title, setTitle] = useState('')
     const [s_startDate, setStartDate] = useState('');
     const [s_cost, setCost] = useState('');
-    const [assignedEmp, setAssignedEmp] = useState('N/A');
+    const [assignedEmp, setAssignedEmp] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [customerID, setCustomerID] = useState('N/A');
+    const [customerID, setCustomerID] = useState('');
     const [busName, setBusName] = useState('');
     const [address, setAddress] = useState('');
     const navigate = useNavigate();
@@ -41,9 +41,7 @@ const CreateWorkOrder = () => {
                 console.log(error)
             })
     };
-    const print = () => {
-        console.log(data);
-    }
+    
 
     return (
         <Box m="20px">
@@ -160,6 +158,17 @@ const CreateWorkOrder = () => {
                     label="Cost"
                     value={s_cost}
                     onChange={(e) => setCost(e.target.value)}
+                    name="cost"
+                    id=""
+                    sx={{ gridColumn: "span 1" }}
+                />
+                <TextField
+                    fullWidth
+                    type="number"
+                    variant='filled'
+                    label="Cutomer ID"
+                    value={customerID}
+                    onChange={(e) => setCustomerID(e.target.value)}
                     name="cost"
                     id=""
                     sx={{ gridColumn: "span 1" }}

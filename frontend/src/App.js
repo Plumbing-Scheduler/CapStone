@@ -30,12 +30,11 @@ function App() {
             <Route path="/" element={<Home />} />
             {/* <Route path="/workOrderform" element={<WorkOrderForm />} /> */}
             <Route path="/quotes" element={<Quotes />} />
-            <Route path="workorder" element={<WorkOrder />}>
-              <Route path="form" element={<CreateWorkOrder />} /> 
-              <Route path="edit/:id" element={<EditWorkOrder />} />
-              <Route path="details/:id" element={<ShowWorkOrder />} />
-              <Route path="delete/:id" element={<DeleteWorkOrder />} />
-            </Route>
+            <Route path="workorder" element={<WorkOrder />} />
+            <Route path="workorder/form" element={<CreateWorkOrder />} /> 
+            <Route path="workorder/edit/:id" element={<EditWorkOrder />} />
+            <Route path="workorder/details/:id" element={<ShowWorkOrder />} />
+            <Route path="workorder/delete/:id" element={<DeleteWorkOrder />} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/employee" element={<Employee />} />
             <Route path="/reports" element={<Reports />} />
