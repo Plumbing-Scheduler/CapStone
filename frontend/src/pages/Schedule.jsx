@@ -5,7 +5,6 @@ const Schedule = () => {
 
     return <Box m="20px">
         <Header title="SCHEDULE" subtitle="Calendar" />
-
     </Box>
 }
 

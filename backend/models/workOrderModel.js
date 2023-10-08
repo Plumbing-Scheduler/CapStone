@@ -5,18 +5,18 @@ import mongoose from "mongoose";
 const workOrderSchema = mongoose.Schema(
     {
         serviceStatus: Number,
-        s_description: {
+        description: {
             type: String,
             required: true
         },
         title: {
             type: String,
         },
-        s_startDate: {
+        startDate: {
             type: Date,
             required: true
         },
-        s_cost:{
+        cost:{
             type: Number,
             required: true
         },
