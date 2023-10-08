@@ -5,7 +5,7 @@ import { tokens } from "../../theme";
 import axios from 'axios';
 
 
-const DeleteWorkOrder = () => {
+export const DeleteWorkOrder = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { id } = useParams();
@@ -17,12 +17,13 @@ const DeleteWorkOrder = () => {
       .get(`http://localhost:3500/workorders/${id}`)
       .then((response) => {
         setWorkOrder(response.data)
+        console.log(workOrder);
       }
       )
       .catch((error) => {
         console.log(error)
       });
-  });
+  }, []);
 
   const handleDeleteWorkOrder = () => {
     axios

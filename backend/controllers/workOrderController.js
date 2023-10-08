@@ -1,5 +1,5 @@
 import { WorkOrder } from "../models/workOrderModel.js";
-
+import calendarController from "./calendarController.js";
 const createWorkOrder = async (request, response) => { 
     try {
         if(!request.body.s_description || !request.body.s_startDate || !request.body.s_cost || !request.body.customerID || !request.body.address){
@@ -18,9 +18,16 @@ const createWorkOrder = async (request, response) => {
             address: request.body.address
         };
         const result = await WorkOrder.create(newWorkOrder);
-
+        const newCalendar = {
+            title: result.title,
+            s_startDate: result.s_startDate,
+            endDate: result.endDate,
+            serviceId: result._id,
+            empId: result.assignedEmp
+        }
+        calendarController.createCalendar(newCalendar);
+    
         return response.status(201).send(result);
-
     } catch (error) {
         console.log(error);
         response.status(500).send({message: error.message});

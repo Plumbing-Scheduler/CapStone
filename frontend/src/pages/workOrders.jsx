@@ -8,7 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Paper } from '@mui/material';
 
-const WorkOrders = () => {
+export const WorkOrders = () => {
     const [workOrders, setWorkOrders] = useState([]);
 
     useEffect(() => {

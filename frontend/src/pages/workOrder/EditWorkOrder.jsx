@@ -51,11 +51,11 @@ export const CreateWorkOrder = () => {
         .catch((error) => {
           console.log(error)
         });
-    })
+    }, [])
 
     const handleSave = () => {
         axios
-            .post('http://localhost:3500/workorders', data)
+            .put(`http://localhost:3500/workorders/${id}`, data)
             .then(
                 navigate('/workorder')
             )

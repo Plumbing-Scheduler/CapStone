@@ -4,7 +4,7 @@ const createCalendar = async (request, response) => {
     if (!request.body.title || !request.body.startDate || !request.body.endDate || !request.body.serviceId) {
         return response.status(400).send({message: 'All required fields must be filled'});
     };
-
+ 
     try {
         const newCalendar = {
             title: request.body.title,
