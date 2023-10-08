@@ -2,15 +2,15 @@ import { WorkOrder } from "../models/workOrderModel.js";
 import calendarController from "./calendarController.js";
 const createWorkOrder = async (request, response) => { 
     try {
-        if(!request.body.s_description || !request.body.s_startDate || !request.body.s_cost || !request.body.customerID || !request.body.address){
+        if(!request.body.description || !request.body.startDate || !request.body.cost || !request.body.customerID || !request.body.address){
             return response.status(400).send({message: 'All required fields must be filled'});
         };
         const newWorkOrder = {
             serviceStatus: request.body.serviceStatus,
-            s_description: request.body.s_description,
+            description: request.body.description,
             title: request.body.title,
-            s_startDate: request.body.s_startDate,
-            s_cost: request.body.s_cost,
+            startDate: request.body.startDate,
+            cost: request.body.cost,
             assignedEmp: request.body.assignedEmp,
             endDate: request.body.endDate,
             customerID: request.body.customerID,
@@ -18,14 +18,6 @@ const createWorkOrder = async (request, response) => {
             address: request.body.address
         };
         const result = await WorkOrder.create(newWorkOrder);
-        const newCalendar = {
-            title: result.title,
-            s_startDate: result.s_startDate,
-            endDate: result.endDate,
-            serviceId: result._id,
-            empId: result.assignedEmp
-        }
-        calendarController.createCalendar(newCalendar);
     
         return response.status(201).send(result);
     } catch (error) {
@@ -64,7 +56,7 @@ const getWorkOrder = async (request, response) => {
 
 const updateWorkOrder = async (request, response) => { 
     try {
-        if(!request.body.s_description || !request.body.s_startDate || !request.body.s_cost || !request.body.customerID){
+        if(!request.body.description || !request.body.startDate || !request.body.cost || !request.body.customerID){
             return response.status(400).send({message: 'All required fields must be filled'});
         };
 

@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@devexpress/dx-react-core": "^4.0.5",
+    "@devexpress/dx-react-scheduler": "^4.0.5"
+  }
+}
