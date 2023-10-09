@@ -8,9 +8,9 @@ import Spinner from 'react-bootstrap/Spinner';
 export const DeleteWorkOrder = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { id } = useParams();
+  const { id } = useParams('');
   const navigate = useNavigate();
-  const [workOrder, setWorkOrder] = useState([]);
+  const [workOrder, setWorkOrder] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const DeleteWorkOrder = () => {
         setLoading(false);
         console.log(error)
       });
-  }, []);
+  }, [id]);
 
   const handleDeleteWorkOrder = () => {
     axios
