@@ -19,4 +19,4 @@ const customerSchema = mongoose.Schema(
     }
 );
 
-export const Customer = comgoose.model('Customer', customerSchema);
+export const Customer = mongoose.model('Customer', customerSchema);

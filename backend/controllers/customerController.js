@@ -1,7 +1,7 @@
 import { Customer } from '../models/customer.js';
 
 const createCustomer = async (request, response) => {
-    if (!request.body.title || !request.body.startDate || !request.body.endDate || !request.body.serviceId) {
+    if (!request.body.firstName || !request.body.lastName || !request.body.address) {
         return response.status(400).send({message: 'All required fields must be filled'});
     };
  
@@ -53,7 +53,7 @@ const getCustomer = async (request, response) => {
 };
 
 const updateCustomer = async (request, response) => {
-    if (!request.body.title || !request.body.startDate || !request.body.endDate || !request.body.serviceId) {
+    if (!request.body.firstName || !request.body.lastName || !request.body.address) {
         return response.status(400).send({message: 'All required fields must be filled'});
     };
     const { id } = request.params;
