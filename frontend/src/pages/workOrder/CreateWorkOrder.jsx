@@ -7,6 +7,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Header from '../../components/Header';
 import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 export const CreateWorkOrder = () => {
     const serviceStatus = 1 //Newly created work orders will always be set to "1" for in progress. 
@@ -20,6 +21,9 @@ export const CreateWorkOrder = () => {
     const [busName, setBusName] = useState('');
     const [address, setAddress] = useState('');
     const navigate = useNavigate();
+
+    dayjs.extend(localizedFormat);
+
     const newWorkOrder = {
         serviceStatus,
         description,
@@ -125,7 +129,7 @@ export const CreateWorkOrder = () => {
                         renderInput={(params) => <TextField {...params} />}
                         value={dayjs(endDate).toISOString()}
                         onChange={(e) => {setEndDate(e)}}
-                        minDateTime={startDate}
+                        minDate={startDate}
                         minutesStep={5}
                     />
                 </LocalizationProvider>

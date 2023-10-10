@@ -142,7 +142,7 @@ export const CreateWorkOrder = () => {
                                 renderInput={(params) => <TextField {...params} />}
                                 value={dayjs(endDate).toISOString()}
                                 onChange={(e) => { setEndDate(e) }}
-                                minDateTime={startDate}
+                                minDate={startDate}
                                 minutesStep={5}
                             />
                         </LocalizationProvider>
