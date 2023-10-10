@@ -15,7 +15,7 @@ export const CreateWorkOrder = () => {
     const [startDate, setStartDate] = useState(Date.now());
     const [cost, setCost] = useState('');
     const [assignedEmp, setAssignedEmp] = useState('');
-    const [endDate, setEndDate] = useState(Date.now());
+    const [endDate, setEndDate] = useState(startDate);
     const [customerID, setCustomerID] = useState('');
     const [busName, setBusName] = useState('');
     const [address, setAddress] = useState('');
@@ -116,6 +116,7 @@ export const CreateWorkOrder = () => {
                         renderInput={(params) => <TextField {...params} />}
                         value={dayjs(startDate).toISOString()}
                         onChange={(e) => {setStartDate(e)}}
+                        minutesStep={5}
                     />
                 </LocalizationProvider>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -124,33 +125,10 @@ export const CreateWorkOrder = () => {
                         renderInput={(params) => <TextField {...params} />}
                         value={dayjs(endDate).toISOString()}
                         onChange={(e) => {setEndDate(e)}}
+                        minDateTime={startDate}
+                        minutesStep={5}
                     />
                 </LocalizationProvider>
-                {/* Old Date Inout Fields */}
-                {/* <TextField 
-                    fullWidth
-                    type="date"
-                    variant="filled"
-                    label="Start Date"
-                    value={startDate}
-                    required
-                    onChange={(e) => setStartDate(e.target.value)}
-                    name="startdate"
-                    id=""
-                    sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                    fullWidth
-                    type="date"
-                    variant="filled"
-                    label="End Date"
-                    value={endDate}
-                    required
-                    onChange={(e) => setEndDate(e.target.value)}
-                    name="enddate"
-                    id=""
-                    sx={{ gridColumn: "span 2" }}
-                /> */}
                 <TextField
                     fullWidth
                     type="text"
