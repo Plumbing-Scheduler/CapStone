@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Box, TextField, Typography } from '@mui/material';
-
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Header from '../../components/Header';
-
+import dayjs from 'dayjs';
 
 export const CreateWorkOrder = () => {
     const serviceStatus = 1 //Newly created work orders will always be set to "1" for in progress. 
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
-    const [startDate, setStartDate] = useState('');
+    const [startDate, setStartDate] = useState(Date.now());
     const [cost, setCost] = useState('');
     const [assignedEmp, setAssignedEmp] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [endDate, setEndDate] = useState(Date.now());
     const [customerID, setCustomerID] = useState('');
     const [busName, setBusName] = useState('');
     const [address, setAddress] = useState('');
@@ -108,7 +110,24 @@ export const CreateWorkOrder = () => {
                     id=""
                     sx={{ gridColumn: "span 2" }}
                 />
-                <TextField
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateTimePicker
+                        label='Start Date' 
+                        renderInput={(params) => <TextField {...params} />}
+                        value={dayjs(startDate).toISOString()}
+                        onChange={(e) => {setStartDate(e)}}
+                    />
+                </LocalizationProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateTimePicker
+                        label='End Date' 
+                        renderInput={(params) => <TextField {...params} />}
+                        value={dayjs(endDate).toISOString()}
+                        onChange={(e) => {setEndDate(e)}}
+                    />
+                </LocalizationProvider>
+                {/* Old Date Inout Fields */}
+                {/* <TextField 
                     fullWidth
                     type="date"
                     variant="filled"
@@ -131,7 +150,7 @@ export const CreateWorkOrder = () => {
                     name="enddate"
                     id=""
                     sx={{ gridColumn: "span 2" }}
-                />
+                /> */}
                 <TextField
                     fullWidth
                     type="text"
