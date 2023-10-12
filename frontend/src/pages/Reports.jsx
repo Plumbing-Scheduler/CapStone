@@ -3,7 +3,7 @@ import Header from "../components/Header";
 
 const Reports = () => {
 
-    return <Box m="20px">
+    return <Box>
         <Header title="REPORTS" subtitle="Select Report" />
 
     </Box>

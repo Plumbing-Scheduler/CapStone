@@ -3,7 +3,7 @@ import Header from "../components/Header";
 
 const Quotes = () => {
 
-    return <Box m="20px">
+    return <Box>
         <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
 
     </Box>
