@@ -38,6 +38,7 @@ const Schedule = () => {
                 console.log(error)
             })
     }, []);
+<<<<<<< HEAD
     return <Box m="20px">
         <Header title="SCHEDULE" subtitle="Calendar"/>
         <Box display="flex" justifyContent="space-between" p="10px" sx={{ boxShadow: 3}}>
@@ -61,6 +62,31 @@ const Schedule = () => {
             )}
             
         </Box>
+=======
+    return <Box m="20px" sx={{ paddingBottom: "50px" }}>
+        <Header title="SCHEDULE" subtitle="Calendar" />
+
+        {loading ? (
+            <div className='w-5 m-auto h-5 pt-11 text-center'>
+                <Spinner />
+            </div>
+        ) : (
+            <Paper >
+                <Scheduler data={data} >
+                    <ViewState defaultCurrentDate={currDate} defaultCurrentViewName="Week" />
+
+                    <DayView startDayHour={5} endDayHour={20.5} cellDuration={60} />
+                    <WeekView startDayHour={5} endDayHour={20.5} cellDuration={60} />
+                    <MonthView />
+
+                    <Appointments />
+                <Toolbar />
+                    <DateNavigator />
+                    <ViewSwitcher />
+                </Scheduler>
+            </Paper>
+        )}
+>>>>>>> 356e45e83edfa8fecac3954cab8052591f6c6501
     </Box>
 }
 
