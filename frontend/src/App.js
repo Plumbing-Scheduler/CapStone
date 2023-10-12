@@ -4,7 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from "./components/global/Topbar";
 import Home from "./pages/Home";
 import Sidebar from "./components/global/Sidebar";
-import Quotes from "./pages/Quotes";
+import Quotes from "./pages/QuoteRequest";
+import CreateQuote from './pages/Quotes/CreateQuote';
 import WorkOrder from "./pages/workOrders";
 import CreateWorkOrder from './pages/workOrder/CreateWorkOrder'
 import EditWorkOrder from './pages/workOrder/EditWorkOrder'
@@ -30,6 +31,7 @@ function App() {
             <Route path="/" element={<Home />} />
             {/* <Route path="/workOrderform" element={<WorkOrderForm />} /> */}
             <Route path="/quotes" element={<Quotes />} />
+            <Route path="/quotes/create" element={<CreateQuote />}/>
             <Route path="workorder" element={<WorkOrder />} />
             <Route path="workorder/form" element={<CreateWorkOrder />} /> 
             <Route path="workorder/edit/:id" element={<EditWorkOrder />} />

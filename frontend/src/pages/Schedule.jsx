@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import Header from "../components/Header";
-import {Paper, useTheme} from "@mui/material";
+import {Paper} from "@mui/material";
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
     Scheduler,
@@ -15,10 +15,9 @@ import {
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from 'react-bootstrap/Spinner';
-import { tokens } from "../theme";
+
 const Schedule = () => {
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
+    
     const [ loading, setLoading ] = useState(true)
     const currDate = Date.now();
     const [ data, setData] = useState([{}]);
@@ -38,11 +37,11 @@ const Schedule = () => {
                 console.log(error)
             })
     }, []);
-    return <Box m="20px">
+    return <Box m="0 20px 0 20px">
         <Header title="SCHEDULE" subtitle="Calendar" />
         {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
         <Paper >
-            <Scheduler data={data} colors>
+            <Scheduler data={data}>
             <ViewState defaultCurrentDate={currDate} defaultCurrentViewName="Week" />
 
             <DayView startDayHour={6} endDayHour={18} />

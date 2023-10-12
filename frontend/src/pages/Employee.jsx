@@ -3,7 +3,7 @@ import Header from "../components/Header";
 
 const Employee = () => {
 
-    return <Box m="20px">
+    return <Box ml="20px">
         <Header title="EMPLOYEE" subtitle="Manage Employee" />
 
     </Box>
