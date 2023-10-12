@@ -1,12 +1,24 @@
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import Header from "../../components/Header";
 
 
 const Quotes = () => {
 
-    return <Box m="20px">
-        <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
-        <Box
+    return (
+        <Box m="20px">
+            <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
+            <Typography
+                //display="flex"
+                variant="h4"
+                //justifyContent="space-between"
+                sx={{
+                    m: "10px auto",
+                    width: '80%',
+                    textAlign: 'center'
+                }}>
+                Add Work Order Details
+            </Typography>
+            <Box
                 display="grid"
                 gap="30px"
                 gridTemplateColumns="repeat(4, minmax(0, 1fr))"
@@ -22,7 +34,7 @@ const Quotes = () => {
                     label="Phone #"
                     name="phone"
                     id=""
-                    sx={{ gridColumn: "span 1" }}
+                    sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
                     fullWidth
@@ -33,18 +45,7 @@ const Quotes = () => {
                     id=""
                     sx={{ gridColumn: "span 2" }}
                 />
-                <TextField
-                    fullWidth
-                    multiline
-                    variant="filled"
-                    label="Description"
-                    required
-                    cols="30"
-                    rows="4"
-                    name="description"
-                    id=""
-                    sx={{ gridColumn: "span 2" }}
-                />
+
                 <TextField
                     fullWidth
                     type="text"
@@ -52,7 +53,7 @@ const Quotes = () => {
                     label="Buisness Name"
                     name="businessname"
                     id=""
-                    sx={{ gridColumn: "span 1" }}
+                    sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
                     fullWidth
@@ -70,12 +71,24 @@ const Quotes = () => {
                     label="Cost"
                     name="cost"
                     id=""
-                    sx={{ gridColumn: "span 1" }}
+                    sx={{ gridColumn: "span 2" }}
                 />
-
+                <TextField
+                    fullWidth
+                    multiline
+                    variant="filled"
+                    label="Description"
+                    required
+                    cols="30"
+                    rows="4"
+                    name="description"
+                    id=""
+                    sx={{ gridColumn: "span 2" }}
+                />
             </Box>
 
-    </Box>
+        </Box>
+    )
 }
 
 export default Quotes;

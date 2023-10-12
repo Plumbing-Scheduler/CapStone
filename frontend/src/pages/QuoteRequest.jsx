@@ -5,20 +5,26 @@ import AddNewButton from "../components/AddNewButton";
 import { useState } from "react";
 
 const Quotes = () => {
-const [ loading, setLoading ] = useState(false);
+    // Declaring Constants
+    const [loading, setLoading] = useState(false);
 
-    return <Box ml="20px">
-        <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
-        {!loading ? (
+    return (
+        <Box ml="20px">
+            <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
             <div>
-                <AddNewButton destination="create" item="Quote"/>
+                <AddNewButton destination="create" item="Quote" />
             </div>
-        ):(
-            <Box>
+            {!loading ? (
 
-            </Box>
-        )}
-    </Box>
+                <div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>
+            ) : (
+                <Box>
+                    {/* Quote Request List will go here */}
+                    
+                </Box>
+            )}
+        </Box>
+    )
 }
 
 export default Quotes;
