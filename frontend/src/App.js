@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Sidebar from "./components/global/Sidebar";
 import Quotes from "./pages/QuoteRequest";
 import CreateQuote from './pages/Quotes/CreateQuote';
+import EditQuote from './pages/Quotes/EditQuote';
 import WorkOrder from "./pages/workOrders";
 import CreateWorkOrder from './pages/workOrder/CreateWorkOrder'
 import EditWorkOrder from './pages/workOrder/EditWorkOrder'
@@ -32,6 +33,7 @@ function App() {
             {/* <Route path="/workOrderform" element={<WorkOrderForm />} /> */}
             <Route path="/quotes" element={<Quotes />} />
             <Route path="/quotes/create" element={<CreateQuote />}/>
+            <Route path="/quotes/update" element={<EditQuote />}/>
             <Route path="workorder" element={<WorkOrder />} />
             <Route path="workorder/form" element={<CreateWorkOrder />} /> 
             <Route path="workorder/edit/:id" element={<EditWorkOrder />} />
