@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import AddNewButton from '../components/AddNewButton';
+import AddNewButton from '../../components/AddNewButton';
 import axios from 'axios';
-import Header from '../components/Header';
+import Header from '../../components/Header';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
