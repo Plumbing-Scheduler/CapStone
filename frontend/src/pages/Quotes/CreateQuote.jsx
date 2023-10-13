@@ -7,6 +7,7 @@ const Quotes = () => {
     return (
         <Box m="20px">
             <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
+            
             <Typography
                 //display="flex"
                 variant="h4"
