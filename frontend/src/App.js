@@ -4,7 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from "./components/global/Topbar";
 import Home from "./pages/Home";
 import Sidebar from "./components/global/Sidebar";
-import Quotes from "./pages/Quotes";
+import Quotes from "./pages/QuoteRequest";
+import CreateQuote from './pages/Quotes/CreateQuote';
+import EditQuote from './pages/Quotes/EditQuote';
 import WorkOrderList from "./pages/workOrder/workOrderList";
 import CreateWorkOrder from './pages/workOrder/CreateWorkOrder'
 import EditWorkOrder from './pages/workOrder/EditWorkOrder'
