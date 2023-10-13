@@ -31,7 +31,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
 
-            <Route path="/quotes" element={<Quotes />} >
+            <Route path="/quotes" >
+              <Route index element={<Quotes />} />
+              <Route path='create' element={<CreateQuote />}/>
             </Route>
 
             <Route path='workorder'>

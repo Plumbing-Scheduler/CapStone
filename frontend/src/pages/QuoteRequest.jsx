@@ -9,7 +9,7 @@ const Quotes = () => {
     const [loading, setLoading] = useState(false);
 
     return (
-        <Box ml="20px">
+        <Box m="20px">
             <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
 
             <div>

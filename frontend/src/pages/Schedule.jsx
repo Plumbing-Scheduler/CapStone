@@ -39,9 +39,9 @@ const Schedule = () => {
                 console.log(error)
             })
     }, []);
-    return <Box m="20px">
+    return <Box >
         <Header title="SCHEDULE" subtitle="Calendar"/>
-        <Box display="flex" justifyContent="space-between" p="10px" sx={{ boxShadow: 3}}>
+        <Box display="flex" justifyContent="space-between" p="10px" m="20px" sx={{ boxShadow: 3}}>
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <Paper variant="h4"> 
                     <Box flex="1 1 20%" >
