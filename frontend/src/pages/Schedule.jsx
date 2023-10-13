@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import Header from "../components/Header";
-import {Paper} from "@mui/material";
+import { Paper, useTheme } from "@mui/material";
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
     Scheduler,
@@ -17,12 +17,13 @@ import axios from "axios";
 import Spinner from 'react-bootstrap/Spinner';
 
 const Schedule = () => {
-    
-    const [ loading, setLoading ] = useState(true)
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const [loading, setLoading] = useState(true)
     const currDate = Date.now();
-    const [ data, setData] = useState([{}]);
-//    const data = [{ startDate: '2023-10-10T09:45', endDate: '2023-10-10T11:00', title: 'Meeting' },
-//    { startDate: '2023-10-09T12:00', endDate: '2023-10-09T13:30', title: 'Go to a gym'  }]
+    const [data, setData] = useState([{}]);
+    //    const data = [{ startDate: '2023-10-10T09:45', endDate: '2023-10-10T11:00', title: 'Meeting' },
+    //    { startDate: '2023-10-09T12:00', endDate: '2023-10-09T13:30', title: 'Go to a gym'  }]
 
     useEffect(() => {
         axios
@@ -37,24 +38,29 @@ const Schedule = () => {
                 console.log(error)
             })
     }, []);
-    return <Box m="0 20px 0 20px">
-        <Header title="SCHEDULE" subtitle="Calendar" />
-        {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-        <Paper >
-            <Scheduler data={data}>
-            <ViewState defaultCurrentDate={currDate} defaultCurrentViewName="Week" />
+    return <Box m="20px">
+        <Header title="SCHEDULE" subtitle="Calendar"/>
+        <Box display="flex" justifyContent="space-between" p="10px" sx={{ boxShadow: 3}}>
+            {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
+                <Paper variant="h4"> 
+                    <Box flex="1 1 20%" >
+                    <Scheduler data={data} >
+                        <ViewState defaultCurrentDate={currDate} defaultCurrentViewName="Week" />
 
-            <DayView startDayHour={6} endDayHour={18} />
-            <WeekView startDayHour={6} endDayHour={18} />
-            <MonthView />
+                        <DayView startDayHour={6} endDayHour={18} />
+                        <WeekView startDayHour={6} endDayHour={18} />
+                        <MonthView />
 
-            <Appointments />
-            <Toolbar />
-            <DateNavigator />
-            <ViewSwitcher />
-            </Scheduler>
-        </Paper>
-        )}
+                        <Appointments />
+                        <Toolbar />
+                        <DateNavigator />
+                        <ViewSwitcher />
+                    </Scheduler>
+                    </Box>
+                </Paper>
+            )}
+            
+        </Box>
     </Box>
 }
 
