@@ -6,15 +6,19 @@ import axios from "axios";
 
 
 const Quotes = () => {
-    const [ phone, setPhone ] = useState('');
-    const [ description, setDescription ] = useState('');
-    const [ address, setAddress ] = useState('');
-    const [ cost, setCost ] = useState('');
-    const [ busName, setBusName ] = useState('');
-    const [ email, setEmail ] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [description, setDescription] = useState('');
+    const [address, setAddress] = useState('');
+    const [cost, setCost] = useState('');
+    const [busName, setBusName] = useState('');
+    const [email, setEmail] = useState('');
     const navigate = useNavigate();
 
     const newQuote = {
+        firstName,
+        lastName,
         phone,
         description,
         address,
@@ -60,6 +64,28 @@ const Quotes = () => {
                     margin: "auto",
                     width: '75%'
                 }} >
+                <TextField
+                    fullWidth
+                    type="text"
+                    variant='filled'
+                    label="First Name"
+                    name="firstName"
+                    id="firstName"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    sx={{ gridColumn: "span 2" }}
+                />
+                <TextField
+                    fullWidth
+                    type="text"
+                    variant='filled'
+                    label="Last Name"
+                    name="lastName"
+                    id="lastName"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    sx={{ gridColumn: "span 2" }}
+                />
                 <TextField
                     fullWidth
                     type="text"
@@ -130,11 +156,11 @@ const Quotes = () => {
                     onChange={(e) => setDescription(e.target.value)}
                     sx={{ gridColumn: "span 2" }}
                 />
-                 <button onClick={handleSave} className='bg-gray-500 w-1/2 h-12 '>
+                <button onClick={handleSave} className='bg-gray-500 w-1/2 h-12 '>
                     Save and Add
                 </button>
             </Box>
-           
+
         </Box>
     )
 }

@@ -23,6 +23,28 @@ const EditQuote = () => {
                     margin: "auto",
                     width: '75%'
                 }} >
+                    <TextField
+                    fullWidth
+                    type="text"
+                    variant='filled'
+                    label="First Name"
+                    name="firstName"
+                    id="firstName"
+                    //value={firstName}
+                    //onChange={(e) => setFirstName(e.target.value)}
+                    sx={{ gridColumn: "span 2" }}
+                />
+                <TextField
+                    fullWidth
+                    type="text"
+                    variant='filled'
+                    label="Last Name"
+                    name="lastName"
+                    id="lastName"
+                    //value={lastName}
+                    //onChange={(e) => setLastName(e.target.value)}
+                    sx={{ gridColumn: "span 2" }}
+                />
                 <TextField
                     fullWidth
                     type="number"
