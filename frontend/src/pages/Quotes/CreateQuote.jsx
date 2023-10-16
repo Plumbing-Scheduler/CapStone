@@ -1,13 +1,45 @@
 import { Box, TextField, Typography } from "@mui/material";
 import Header from "../../components/Header";
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 
 const Quotes = () => {
+    const [ phone, setPhone ] = useState("");
+    const [ description, setDescription ] = useState("");
+    const [ address, setAddress ] = useState("");
+    const [ cost, setCost ] = useState("");
+    const [ busName, setBusName ] = useState("");
+    const [ email, setEmail ] = useState("");
+    const navigate = useNavigate();
+
+    const newQuote = {
+        phone,
+        description,
+        address,
+        cost,
+        busName,
+        email,
+    }
+
+    const handleSave = () => {
+        axios
+            .post('http:/localhost:3500/quote', newQuote)
+            .then((response) => {
+                console.log(response.data)
+                navigate('/workorder')
+            }
+            ).catch((error) => {
+                console.log(error);
+            })
+    }
+
 
     return (
         <Box m="20px">
             <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
-            
+
             <Typography
                 //display="flex"
                 variant="h4"
@@ -17,7 +49,7 @@ const Quotes = () => {
                     width: '80%',
                     textAlign: 'center'
                 }}>
-                Add Work Order Details
+                Add New Quote
             </Typography>
             <Box
                 display="grid"
@@ -86,8 +118,11 @@ const Quotes = () => {
                     id=""
                     sx={{ gridColumn: "span 2" }}
                 />
+                 <button onClick={handleSave} className='bg-gray-500 w-1/2 h-12 '>
+                    Save and Add
+                </button>
             </Box>
-
+           
         </Box>
     )
 }
