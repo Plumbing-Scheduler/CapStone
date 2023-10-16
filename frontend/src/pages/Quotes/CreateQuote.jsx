@@ -6,12 +6,12 @@ import axios from "axios";
 
 
 const Quotes = () => {
-    const [ phone, setPhone ] = useState("");
-    const [ description, setDescription ] = useState("");
-    const [ address, setAddress ] = useState("");
-    const [ cost, setCost ] = useState("");
-    const [ busName, setBusName ] = useState("");
-    const [ email, setEmail ] = useState("");
+    const [ phone, setPhone ] = useState('');
+    const [ description, setDescription ] = useState('');
+    const [ address, setAddress ] = useState('');
+    const [ cost, setCost ] = useState('');
+    const [ busName, setBusName ] = useState('');
+    const [ email, setEmail ] = useState('');
     const navigate = useNavigate();
 
     const newQuote = {
@@ -25,10 +25,10 @@ const Quotes = () => {
 
     const handleSave = () => {
         axios
-            .post('http:/localhost:3500/quote', newQuote)
+            .post('http://localhost:3500/quote', newQuote)
             .then((response) => {
                 console.log(response.data)
-                navigate('/workorder')
+                navigate('/quotes')
             }
             ).catch((error) => {
                 console.log(error);
@@ -62,11 +62,13 @@ const Quotes = () => {
                 }} >
                 <TextField
                     fullWidth
-                    type="number"
+                    type="text"
                     variant='filled'
                     label="Phone #"
                     name="phone"
-                    id=""
+                    id="phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
@@ -75,7 +77,9 @@ const Quotes = () => {
                     variant='filled'
                     label="Email"
                     name="email"
-                    id=""
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     sx={{ gridColumn: "span 2" }}
                 />
 
@@ -85,7 +89,9 @@ const Quotes = () => {
                     variant="filled"
                     label="Buisness Name"
                     name="businessname"
-                    id=""
+                    id="businessname"
+                    value={busName}
+                    onChange={(e) => setBusName(e.target.value)}
                     sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
@@ -94,7 +100,9 @@ const Quotes = () => {
                     variant="filled"
                     label="Address"
                     name="address"
-                    id=""
+                    id="address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
                     sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
@@ -103,7 +111,9 @@ const Quotes = () => {
                     variant='filled'
                     label="Cost"
                     name="cost"
-                    id=""
+                    id="cost"
+                    value={cost}
+                    onChange={(e) => setCost(e.target.value)}
                     sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
@@ -115,7 +125,9 @@ const Quotes = () => {
                     cols="30"
                     rows="4"
                     name="description"
-                    id=""
+                    id="description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     sx={{ gridColumn: "span 2" }}
                 />
                  <button onClick={handleSave} className='bg-gray-500 w-1/2 h-12 '>
