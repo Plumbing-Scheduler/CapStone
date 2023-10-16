@@ -6,27 +6,24 @@ import { useState } from "react";
 
 const Quotes = () => {
     // Declaring Constants
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     return (
-        <Box m="20px">
+        <Box >
             <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
-
             <div>
                 <AddNewButton destination="create" item="Quote" />
             </div>
-            <div>
-                <AddNewButton destination="update" item="EditQuote" />
-            </div>
-            {!loading ? (
+            
+            {loading ? (
 
                 <div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>
             ) : (
                 <Box>
                     {/* Quote Request List will go here */}
                     
+                    
                 </Box>
-                
             )}
         </Box>
     )

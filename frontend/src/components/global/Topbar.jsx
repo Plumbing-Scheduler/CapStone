@@ -25,7 +25,7 @@ const Topbar = () => {
 
     return (<Box display="flex" justifyContent="space-between" p={3}>
         <Link to='..' relative="path" className="link">
-            <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px">
+            <Box display="flex" backgroundColor={colors.buttonBase} borderRadius="3px">
                 <Button variant="Text"> Back</Button>
             </Box>
         </Link>
