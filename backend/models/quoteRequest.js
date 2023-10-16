@@ -3,7 +3,15 @@ import mongoose from "mongoose";
 //Quote Request Database Model
 
 const quoteRequestSchema = mongoose.Schema(
-    {
+    {   
+        firstName: {
+            type: String,
+            required: true
+        },
+        lastName: {
+            type: String,
+            required: true
+        },
         phone: {
             type: String,
             required: true

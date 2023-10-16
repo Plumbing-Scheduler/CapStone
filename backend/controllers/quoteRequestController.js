@@ -1,10 +1,12 @@
 import { QuoteRequest } from "../models/quoteRequest.js";
 const createQuoteRequest = async (request, response) => { 
     try {
-        if(!request.body.description || !request.body.phone || !request.body.address){
+        if(!request.body.description || !request.body.phone || !request.body.address || !request.body.firstName || !request.body.lastName){
             return response.status(400).send({message: 'All required fields must be filled'});
         };
         const newQuoteRequest = {
+            firstName: request.body.firstName,
+            lastName: request.body.lastName,
             phone: request.body.phone,
             description: request.body.description,
             cost: request.body.cost,
