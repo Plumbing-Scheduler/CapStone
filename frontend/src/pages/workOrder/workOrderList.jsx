@@ -56,7 +56,7 @@ export const WorkOrders = () => {
                                             {wo.title}
                                         </td>
                                         <td className='pl-2'>
-                                            {wo.s_cost}
+                                            {wo.cost}
                                         </td>
                                         <td className='pl-2'>
                                             {wo.assignedEmp}

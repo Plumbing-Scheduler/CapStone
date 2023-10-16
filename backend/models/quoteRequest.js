@@ -16,10 +16,7 @@ const quoteRequestSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        cost: {
-            type: Number,
-            required: true
-        },
+        cost: Number,
         busName: String,
         email: String,
     }

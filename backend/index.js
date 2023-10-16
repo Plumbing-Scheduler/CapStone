@@ -4,6 +4,7 @@ import cors from 'cors';
 import workOrder from './routes/api/workOrders.js';
 import calendar from './routes/api/calendar.js';
 import Customer from './routes/api/customer.js'
+import Quote from './routes/api/quoteRequest.js';
 const app = express();
 
 const PORT = process.env.port || 3500;
@@ -21,6 +22,7 @@ app.get('/' ,(request, response) => {
 app.use('/workorders', workOrder);
 app.use('/schedule', calendar);
 app.use('/customer', Customer);
+app.use('/quote', Quote)
 //Connection to MongoDB
 //Connection Process will need to be changed so than Mongo URL isnt in plain text!!!!!!
 //for Development Process mongodb+srv://Admin:hvHVFgTb1Ljxf4oC@plumbing-scheduler.rqelmif.mongodb.net/?retryWrites=true&w=majority
