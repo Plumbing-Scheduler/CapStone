@@ -32,7 +32,7 @@ const employment = [
     },
     {
         value: 0,
-        label : 'Part Time'
+        label: 'Part Time'
     }
 ]
 //dropdown constants for status
@@ -43,36 +43,36 @@ const status = [
     },
     {
         value: 0,
-        label : 'Inactive'
+        label: 'Inactive'
     }
 ]
 
 const Employee = () => {
 
-    return (    <Box m="20px">
-    <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
-    <Typography
-        //display="flex"
-        variant="h4"
-        //justifyContent="space-between"
-        sx={{
-            m: "10px auto",
-            width: '75%',
-        }}>
-        Employee Information
-    </Typography>
+    return (<Box m="20px">
+        <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
+        <Typography
+            //display="flex"
+            variant="h4"
+            //justifyContent="space-between"
+            sx={{
+                m: "10px auto",
+                width: '75%',
+            }}>
+            Employee Information
+        </Typography>
 
-    <Box 
-        display="grid"
-        gap="30px"
-        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-        sx={{
-            gridColumn: "span 4",
-            margin: "auto",
-            width: '75%'
-        }}
-    >
-        <TextField
+        <Box
+            display="grid"
+            gap="30px"
+            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+            sx={{
+                gridColumn: "span 4",
+                margin: "auto",
+                width: '75%'
+            }}
+        >
+            <TextField
                 fullWidth
                 required
                 type="text"
@@ -81,8 +81,8 @@ const Employee = () => {
                 name="firstName"
                 sx={{ gridColumn: "span 1" }}
             />
-        
-        <TextField
+
+            <TextField
                 fullWidth
                 required
                 type="text"
@@ -92,7 +92,7 @@ const Employee = () => {
                 sx={{ gridColumn: "span 1" }}
             />
 
-        <TextField
+            <TextField
                 fullWidth
                 required
                 type="text"
@@ -101,7 +101,7 @@ const Employee = () => {
                 name="email"
                 sx={{ gridColumn: "span 2" }}
             />
-        <TextField
+            <TextField
                 fullWidth
                 required
                 type="text"
@@ -110,7 +110,7 @@ const Employee = () => {
                 name="address"
                 sx={{ gridColumn: "span 1" }}
             />
-        <TextField
+            <TextField
                 fullWidth
                 required
                 type="text"
@@ -119,7 +119,7 @@ const Employee = () => {
                 name="postalCode"
                 sx={{ gridColumn: "span 1" }}
             />
-        <TextField
+            <TextField
                 fullWidth
                 required
                 type="number"
@@ -128,7 +128,7 @@ const Employee = () => {
                 name="phone #"
                 sx={{ gridColumn: "span 2" }}
             />
-        <TextField
+            <TextField
                 fullWidth
                 required
                 type="text"
@@ -137,7 +137,7 @@ const Employee = () => {
                 name="city"
                 sx={{ gridColumn: "span 1" }}
             />
-        <TextField
+            <TextField
                 fullWidth
                 required
                 type="text"
@@ -146,44 +146,44 @@ const Employee = () => {
                 name="province"
                 sx={{ gridColumn: "span 1" }}
             />
-    </Box>
+        </Box>
 
-    <Typography
-        //display="flex"
-        variant="h4"
-        //justifyContent="space-between"
-        sx={{
-            m: "10px auto",
-            width: '75%',
-        }}>
-        Education
-    </Typography>
+        <Typography
+            //display="flex"
+            variant="h4"
+            //justifyContent="space-between"
+            sx={{
+                m: "10px auto",
+                width: '75%',
+            }}>
+            Education
+        </Typography>
 
-    <Box
-          display="grid"
-          gap="30px"
-          gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-          sx={{
-              gridColumn: "span 4",
-              margin: "auto",
-              width: '75%'
-          }}
-    >
-         <TextField
-            select
-            required
-            label="Education Level"
-            variant='filled'
-            name="educationLevel"
-            sx={{ gridColumn: "span 1" }}
+        <Box
+            display="grid"
+            gap="30px"
+            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+            sx={{
+                gridColumn: "span 4",
+                margin: "auto",
+                width: '75%'
+            }}
         >
-        {education.map((option) =>(
-            <MenuItem key={option.value} value={option.value}>
-                {option.label}
-            </MenuItem>
-        ))}    
-        </TextField>
-        <TextField
+            <TextField
+                select
+                required
+                label="Education Level"
+                variant='filled'
+                name="educationLevel"
+                sx={{ gridColumn: "span 1" }}
+            >
+                {education.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                    </MenuItem>
+                ))}
+            </TextField>
+            <TextField
                 fullWidth
                 required
                 type="number"
@@ -192,61 +192,61 @@ const Employee = () => {
                 name="yearsofExperience"
                 sx={{ gridColumn: "span 1" }}
             />
-    </Box>
+        </Box>
 
-    <Typography
-        //display="flex"
-        variant="h4"
-        //justifyContent="space-between"
-        sx={{
-            m: "10px auto",
-            width: '75%',
-        }}>
-        Hours
-    </Typography>
+        <Typography
+            //display="flex"
+            variant="h4"
+            //justifyContent="space-between"
+            sx={{
+                m: "10px auto",
+                width: '75%',
+            }}>
+            Hours
+        </Typography>
         <Box
-                display="grid"
-                gap="30px"
-                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                sx={{
-                    gridColumn: "span 4",
-                    margin: "auto",
-                    width: '75%'
-                }}
+            display="grid"
+            gap="30px"
+            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+            sx={{
+                gridColumn: "span 4",
+                margin: "auto",
+                width: '75%'
+            }}
         >
-        <TextField
-            select
-            required
-            label="Employment Type"
-            variant='filled'
-            name="employmentType"
-            sx={{ gridColumn: "span 1" }}
-        >
-        {employment.map((option) =>(
-            <MenuItem key={option.value} value={option.value}>
-                {option.label}
-            </MenuItem>
-        ))}    
-        </TextField>
+            <TextField
+                select
+                required
+                label="Employment Type"
+                variant='filled'
+                name="employmentType"
+                sx={{ gridColumn: "span 1" }}
+            >
+                {employment.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                    </MenuItem>
+                ))}
+            </TextField>
 
-        <TextField
-            select
-            required
-            label="Status"
-            variant='filled'
-            name="status"
-            sx={{ gridColumn: "span 1" }}
-        >
-        {status.map((option) =>(
-            <MenuItem key={option.value} value={option.value}>
-                {option.label}
-            </MenuItem>
-        ))}    
-        </TextField>
+            <TextField
+                select
+                required
+                label="Status"
+                variant='filled'
+                name="status"
+                sx={{ gridColumn: "span 1" }}
+            >
+                {status.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                    </MenuItem>
+                ))}
+            </TextField>
 
         </Box>
 
-</Box>
+    </Box>
     )
 }
 export default CreateEmployee;

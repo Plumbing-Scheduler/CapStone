@@ -28,6 +28,14 @@ const employeeSchema = mongoose.Schema(
             type: Date,
             required: true
         },
+        employmentType:{
+            type: Number,
+            required: true
+        },
+        status:{
+            type: String,
+            required: true
+        },
         serviceList: String
     }
 );
