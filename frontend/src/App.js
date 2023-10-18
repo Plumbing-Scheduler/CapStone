@@ -40,6 +40,7 @@ function App() {
             <Route path="/quotes" >
               <Route index element={<Quotes />} />
               <Route path='create' element={<CreateQuote />}/>
+              <Route path='edit/:id' element={<EditQuote />}/>
             </Route>
 
             <Route path='workorder'>
