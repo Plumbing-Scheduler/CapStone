@@ -1,5 +1,4 @@
 import { WorkOrder } from "../models/workOrderModel.js";
-import calendarController from "./calendarController.js";
 const createWorkOrder = async (request, response) => { 
     try {
         if(!request.body.description || !request.body.startDate || !request.body.cost || !request.body.customerID || !request.body.address){
@@ -56,7 +55,7 @@ const getWorkOrder = async (request, response) => {
 
 const updateWorkOrder = async (request, response) => { 
     try {
-        if(!request.body.description || !request.body.startDate || !request.body.cost || !request.body.customerID){
+        if(!request.body.description || !request.body.startDate || !request.body.cost || !request.body.customerID || !request.body.address){
             return response.status(400).send({message: 'All required fields must be filled'});
         };
 

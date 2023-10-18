@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, TextField, Typography } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import dayjs from 'dayjs';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
 
@@ -9,25 +13,25 @@ import Header from '../../components/Header';
 export const CreateWorkOrder = () => {
 
     const [serviceStatus, setServiceStatus] = useState(''); //Newly created work orders will always be set to "1" for in progress. 
-    const [s_description, setDescription] = useState('');
+    const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
-    const [s_startDate, setStartDate] = useState('');
-    const [s_cost, setCost] = useState('');
+    const [startDate, setStartDate] = useState(Date.now());
+    const [cost, setCost] = useState('');
     const [assignedEmp, setAssignedEmp] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [endDate, setEndDate] = useState(startDate);
     const [customerID, setCustomerID] = useState('');
     const [busName, setBusName] = useState('');
     const [address, setAddress] = useState('');
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { id } = useParams({});
     const [loading, setLoading] = useState(false);
 
     const data = {
         serviceStatus,
-        s_description,
+        description,
         title,
-        s_startDate,
-        s_cost,
+        startDate,
+        cost,
         assignedEmp,
         endDate,
         customerID,
@@ -41,10 +45,10 @@ export const CreateWorkOrder = () => {
             .get(`http://localhost:3500/workorders/${id}`)
             .then((response) => {
                 setServiceStatus(response.data.serviceStatus);
-                setDescription(response.data.s_description);
+                setDescription(response.data.description);
                 setTitle(response.data.title);
-                setStartDate(response.data.s_startDate);
-                setCost(response.data.s_cost);
+                setStartDate(response.data.startDate);
+                setCost(response.data.cost);
                 setAssignedEmp(response.data.assignedEmp);
                 setEndDate(response.data.endDate);
                 setCustomerID(response.data.customerID);
@@ -56,7 +60,7 @@ export const CreateWorkOrder = () => {
                 setLoading(false);
                 console.log(error)
             });
-    }, [])
+    }, [id])
 
     const handleSave = () => {
         axios
@@ -102,7 +106,7 @@ export const CreateWorkOrder = () => {
                             multiline
                             variant="filled"
                             label="Description"
-                            value={s_description}
+                            value={description}
                             required
                             cols="30"
                             rows="4"
@@ -123,30 +127,25 @@ export const CreateWorkOrder = () => {
                             id=""
                             sx={{ gridColumn: "span 2" }}
                         />
-                        <TextField
-                            fullWidth
-                            type="date"
-                            variant="filled"
-                            label="Start Date"
-                            value={s_startDate}
-                            required
-                            onChange={e => setStartDate(e.target.value)}
-                            name="startdate"
-                            id=""
-                            sx={{ gridColumn: "span 2" }}
-                        />
-                        <TextField
-                            fullWidth
-                            type="date"
-                            variant="filled"
-                            label="End Date"
-                            value={endDate}
-                            required
-                            onChange={e => setEndDate(e.target.value)}
-                            name="enddate"
-                            id=""
-                            sx={{ gridColumn: "span 2" }}
-                        />
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DateTimePicker
+                                label='Start Date'
+                                renderInput={(params) => <TextField {...params} />}
+                                value={dayjs(startDate).toISOString()}
+                                onChange={(e) => { setStartDate(e) }}
+                                minutesStep={5}
+                            />
+                        </LocalizationProvider>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DateTimePicker
+                                label='End Date'
+                                renderInput={(params) => <TextField {...params} />}
+                                value={dayjs(endDate).toISOString()}
+                                onChange={(e) => { setEndDate(e) }}
+                                minDate={startDate}
+                                minutesStep={5}
+                            />
+                        </LocalizationProvider>
                         <TextField
                             fullWidth
                             type="text"
@@ -186,7 +185,7 @@ export const CreateWorkOrder = () => {
                             type="number"
                             variant='filled'
                             label="Cost"
-                            value={s_cost}
+                            value={cost}
                             onChange={e => setCost(e.target.value)}
                             name="cost"
                             id=""

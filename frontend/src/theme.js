@@ -60,6 +60,7 @@ export const tokens = (mode) => ({
                 800: "#2a2d64",
                 900: "#151632"
             },
+            buttonBase: "#434957",
         } : {
             grey: {
                 100: "#141414",
@@ -116,6 +117,7 @@ export const tokens = (mode) => ({
                 800: "#c3c6fd",
                 900: "#e1e2fe",
             },
+            buttonBase: "#6b7385",
         }),
 });
 

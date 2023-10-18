@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import AddNewButton from '../components/AddNewButton';
+import AddNewButton from '../../components/AddNewButton';
 import axios from 'axios';
-import Header from '../components/Header';
+import Header from '../../components/Header';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -28,15 +28,12 @@ export const WorkOrders = () => {
         <div>
 
             <Header title="WORK ORDER" subtitle="Show Work Orders" />
-            
+            <div >
+                <AddNewButton destination="form" item="Work Order" className='bg-sky-900' /> {/* "Add new" button at top of list, Routes to Work order Form*/}
+            </div>
+
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <div>
-                    <div >
-                        <AddNewButton destination="form" item="Work Order" className='bg-sky-900' /> {/* "Add new" button at top of list, Routes to Work order Form*/}
-                    </div>
-
-
-
                     <Paper sx={{ width: '70%', margin: 'auto', border: "2px solid gray", borderRadius: '5px', bgcolor: "#141414", color: "#d0d1d5", }}>
                         <table className='w-full text-xl'>
                             <thead>
@@ -59,7 +56,7 @@ export const WorkOrders = () => {
                                             {wo.title}
                                         </td>
                                         <td className='pl-2'>
-                                            {wo.s_cost}
+                                            {wo.cost}
                                         </td>
                                         <td className='pl-2'>
                                             {wo.assignedEmp}
@@ -81,9 +78,7 @@ export const WorkOrders = () => {
 
                                         </td>
                                     </tr>
-                                ))
-                                }
-
+                                ))}
                             </tbody>
                         </table>
                     </Paper>
