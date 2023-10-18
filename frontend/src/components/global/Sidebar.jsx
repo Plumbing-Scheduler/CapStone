@@ -78,7 +78,7 @@ const Sidebar = () => {
                         )}
                     </MenuItem>
 
-                    {/* {!isCollapsed && (
+                    {!isCollapsed && (
                 <Box mb="25px">
                     <Box display="flex" justifyContent="center" alignItems="center"> 
                         <img
@@ -88,9 +88,7 @@ const Sidebar = () => {
                         src={`../..assets/companylogo.png`}
                         style={{ cursor: "pointer", borderRadius: "50%" }}
                         />
-                    </Box> */}
-                    {/* </Box> */}
-                    {/* )} */}
+                    </Box> 
 
                     <Box textAlign="center">
                         <Typography
@@ -147,6 +145,8 @@ const Sidebar = () => {
                         />
 
                     </Box>
+                    </Box>
+                    )}
                 </Menu>
             </ProSidebar>
         </Box>
