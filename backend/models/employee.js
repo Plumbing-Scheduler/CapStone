@@ -47,7 +47,7 @@ const employeeSchema = mongoose.Schema(
             required: true
         },
         employmentType:{
-            type: Number,
+            type: String,
             required: true
         },
         status:{

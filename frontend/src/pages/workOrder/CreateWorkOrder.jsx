@@ -117,7 +117,7 @@ export const CreateWorkOrder = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
                         label='Start Date' 
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params) => <TextField variant="filled" required {...params} />}
                         value={dayjs(startDate).toISOString()}
                         onChange={(e) => {setStartDate(e)}}
                         minutesStep={5}
@@ -126,7 +126,7 @@ export const CreateWorkOrder = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
                         label='End Date' 
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params) => <TextField variant="filled" required {...params} />}
                         value={dayjs(endDate).toISOString()}
                         onChange={(e) => {setEndDate(e)}}
                         minDate={startDate}
