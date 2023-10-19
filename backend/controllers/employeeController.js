@@ -3,7 +3,8 @@ import { Employee } from "../models/employee.js";
 const createEmployee = async (request, response) => {
     try {
         if (!request.body.firstName || !request.body.lastName || !request.body.phone || !request.body.email || !request.body.role
-            || !request.body.startDate || !request.body.employmentType || !request.body.status) {
+            || !request.body.startDate || !request.body.employmentType || !request.body.status || !request.body.address.street || !request.body.address.postalCode 
+            || !request.body.address.city || !request.body.address.province) {
             return response.status(400).send({ message: 'All required fields must be filled' });
         };
         const newEmployee = {
@@ -11,6 +12,12 @@ const createEmployee = async (request, response) => {
             lastName: request.body.lastName,
             phone: request.body.phone,
             email: request.body.email,
+            address: {
+                street: request.body.address.street,
+                postalCode: request.body.address.postalCode,
+                city: request.body.address.city,
+                province: request.body.address.province,
+            },
             role: request.body.role,
             startDate: request.body.startDate,
             employmentType: request.body.employmentType,
@@ -57,7 +64,8 @@ const getEmployee = async (request, response) => {
 const updateEmployee = async (request, response) => {
     try {
         if (!request.body.firstName || !request.body.lastName || !request.body.phone || !request.body.email || !request.body.role
-            || !request.body.startDate || !request.body.employmentType || !request.body.status) {
+            || !request.body.startDate || !request.body.employmentType || !request.body.status || !request.body.address.street || !request.body.address.postalCode 
+            || !request.body.address.city || !request.body.address.province) {
             return response.status(400).send({ message: 'All required fields must be filled' });
         };
 

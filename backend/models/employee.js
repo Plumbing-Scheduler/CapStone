@@ -20,6 +20,24 @@ const employeeSchema = mongoose.Schema(
             type: String,
             required: true
         },
+        address : {
+            street:{
+                type: String,
+                required: true
+            },
+            postalCode:{
+                type: String,
+                required: true
+            },
+            city:{
+                type: String,
+                required: true
+            },
+            province:{
+                type: String,
+                required: true
+            }
+        },
         role:{
             type: String,
             required: true
