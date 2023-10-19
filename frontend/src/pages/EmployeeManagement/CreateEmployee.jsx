@@ -4,6 +4,7 @@ import { MenuItem } from "react-pro-sidebar";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import useMediaQuery from '@mui/material/useMediaQuery';
 //start of Marcus' Code
 
 //Dropdown constants for education
@@ -49,16 +50,21 @@ const status = [
 ]
 
 export const CreateEmployee = () => {
+const minwidth1 = useMediaQuery('(min-width:800px)');
+const minwidth2 = useMediaQuery('(min-width:500px)');
 
+const handleSave = () => {
+    
+}
     return (
-        <Box m="20px">
+        <Box m="10px auto" width={"90%"} >
             <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
             <Typography
                 //display="flex"
                 variant="h4"
                 //justifyContent="space-between"
                 sx={{
-                    m: "10px auto",
+                    m: "30px auto 5px auto",
                     width: '75%',
                 }}>
                 Employee Information
@@ -67,11 +73,11 @@ export const CreateEmployee = () => {
             <Box
                 display="grid"
                 gap="30px"
-                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                gridTemplateColumns={ minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                 sx={{
                     gridColumn: "span 4",
                     margin: "auto",
-                    width: '75%'
+                    width: '75%',
                 }}
             >
                 <TextField
@@ -101,7 +107,16 @@ export const CreateEmployee = () => {
                     variant='filled'
                     label="Email"
                     name="email"
-                    sx={{ gridColumn: "span 2" }}
+                    sx={{ gridColumn: "span 1" }}
+                />
+                <TextField
+                    fullWidth
+                    required
+                    type="number"
+                    variant='filled'
+                    label="Phone"
+                    name="phone #"
+                    sx={{ gridColumn: "span 1" }}
                 />
                 <TextField
                     fullWidth
@@ -121,15 +136,7 @@ export const CreateEmployee = () => {
                     name="postalCode"
                     sx={{ gridColumn: "span 1" }}
                 />
-                <TextField
-                    fullWidth
-                    required
-                    type="number"
-                    variant='filled'
-                    label="Phone"
-                    name="phone #"
-                    sx={{ gridColumn: "span 2" }}
-                />
+                
                 <TextField
                     fullWidth
                     required
@@ -155,7 +162,7 @@ export const CreateEmployee = () => {
                 variant="h4"
                 //justifyContent="space-between"
                 sx={{
-                    m: "10px auto",
+                    m: "30px auto 5px auto",
                     width: '75%',
                 }}>
                 Education
@@ -164,7 +171,7 @@ export const CreateEmployee = () => {
             <Box
                 display="grid"
                 gap="30px"
-                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                 sx={{
                     gridColumn: "span 4",
                     margin: "auto",
@@ -201,7 +208,7 @@ export const CreateEmployee = () => {
                 variant="h4"
                 //justifyContent="space-between"
                 sx={{
-                    m: "10px auto",
+                    m: "30px auto 5px auto",
                     width: '75%',
                 }}>
                 Hours
@@ -209,11 +216,12 @@ export const CreateEmployee = () => {
             <Box
                 display="grid"
                 gap="30px"
-                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                 sx={{
                     gridColumn: "span 4",
                     margin: "auto",
-                    width: '75%'
+                    width: '75%',
+                    
                 }}
             >
                 <TextField
@@ -245,9 +253,11 @@ export const CreateEmployee = () => {
                         </MenuItem>
                     ))}
                 </TextField>
-
+                
             </Box>
-
+                <button onClick={handleSave} className='bg-gray-500 w-auto m-auto'>
+                    Save and Add
+                </button>
         </Box>
     )
 }
