@@ -12,10 +12,13 @@ const customerSchema = mongoose.Schema(
             type: String,
             required: true
         },
+        address: {
+            type: String,
+            required: true
+        },
         busName: String,
         phone: String,
-        email: String,
-        address: String,
+        email: String
     }
 );
 

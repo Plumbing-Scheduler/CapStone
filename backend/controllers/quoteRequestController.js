@@ -53,7 +53,7 @@ const getQuoteRequest = async (request, response) => {
 
 const updateQuoteRequest = async (request, response) => { 
     try {
-        if(!request.body.description || !request.body.phone || !request.body.address){
+        if(!request.body.description || !request.body.phone || !request.body.address || !request.body.firstName || !request.body.lastName){
             return response.status(400).send({message: 'All required fields must be filled'});
         };
 
