@@ -1,4 +1,4 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
@@ -10,6 +10,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { tokens } from "../../theme.js";
 //start of Marcus' Code
 
 //Dropdown constants for education
@@ -55,54 +56,57 @@ const statusOptions = [
 ]
 
 export const CreateEmployee = () => {
-const minwidth1 = useMediaQuery('(min-width:800px)');
-const minwidth2 = useMediaQuery('(min-width:500px)');
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
 
-const [firstName, setFirstName] = useState('');
-const [lastName, setLastName] = useState('');
-const [email, setEmail] = useState('');
-const [phone, setPhone] = useState('');
-const [street, setStreet] = useState('');
-const [postalCode, setPostalCode] = useState('');
-const [city, setCity] = useState('');
-const [province, setProvince] = useState('');
-const [role, setRole] = useState('');
-const [employmentType, setEmploymentType] = useState('');
-const [status, setStatus] = useState('');
-const [startDate, setStartDate] = useState(Date.now());
+    const minwidth1 = useMediaQuery('(min-width:800px)');
+    const minwidth2 = useMediaQuery('(min-width:500px)');
 
-dayjs.extend(localizedFormat);
-const navigate = useNavigate();
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [street, setStreet] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [city, setCity] = useState('');
+    const [province, setProvince] = useState('');
+    const [role, setRole] = useState('');
+    const [employmentType, setEmploymentType] = useState('');
+    const [status, setStatus] = useState('');
+    const [startDate, setStartDate] = useState(Date.now());
 
-const newEmployee = {
-    firstName,
-    lastName,
-    email,
-    phone,
-    address: {
-        street,
-        postalCode,
-        city,
-        province
-    },
-    role,
-    startDate,
-    employmentType,
-    status
-}
+    dayjs.extend(localizedFormat);
+    const navigate = useNavigate();
 
-const handleSave = () => {
-    axios
-        .post('http://localhost:3500/employees', newEmployee)
-        .then(
-            navigate('/employee')
-        )
-        .catch((error) => {
-            console.log(error)
-        })
-}
+    const newEmployee = {
+        firstName,
+        lastName,
+        email,
+        phone,
+        address: {
+            street,
+            postalCode,
+            city,
+            province
+        },
+        role,
+        startDate,
+        employmentType,
+        status
+    }
+
+    const handleSave = () => {
+        axios
+            .post('http://localhost:3500/employees', newEmployee)
+            .then(
+                navigate('/employee')
+            )
+            .catch((error) => {
+                console.log(error)
+            })
+    }
     return (
-        <Box m="10px auto" width={"90%"} >
+        <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
             <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
             <Typography
                 //display="flex"
@@ -118,7 +122,7 @@ const handleSave = () => {
             <Box
                 display="grid"
                 gap="30px"
-                gridTemplateColumns={ minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                 sx={{
                     gridColumn: "span 4",
                     margin: "auto",
@@ -199,7 +203,7 @@ const handleSave = () => {
                     onChange={(e) => setPostalCode(e.target.value)}
                     sx={{ gridColumn: "span 1" }}
                 />
-                
+
                 <TextField
                     fullWidth
                     required
@@ -225,12 +229,12 @@ const handleSave = () => {
                     sx={{ gridColumn: "span 1" }}
                 />
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker 
+                    <DatePicker
                         required
                         label='Start Date'
                         renderInput={(params) => <TextField variant="filled" required {...params} />}
                         value={startDate}
-                        onChange={(e) => {setStartDate(dayjs(e).toISOString())}}
+                        onChange={(e) => { setStartDate(dayjs(e).toISOString()) }}
                         orientation="landscape"
                     />
                 </LocalizationProvider>
@@ -302,7 +306,7 @@ const handleSave = () => {
                     gridColumn: "span 4",
                     margin: "auto",
                     width: '75%',
-                    
+
                 }}
             >
                 <TextField
@@ -335,18 +339,29 @@ const handleSave = () => {
                     sx={{ gridColumn: "span 1" }}
                 >
                     {statusOptions.map((option) => (
-                        <MenuItem 
-                        key={option.value} 
-                        value={option.value}
+                        <MenuItem
+                            key={option.value}
+                            value={option.value}
                         >
                             {option.label}
                         </MenuItem>
                     ))}
                 </TextField>
             </Box>
-                <button onClick={handleSave} className='bg-gray-500 w-auto m-auto'>
+            <Box
+                backgroundColor={colors.buttonBase}
+                display="grid"
+                sx={{
+                    margin: "30px auto",
+                    width: '150px',
+                    borderRadius: "5px"
+                }}
+            >
+                <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
                     Save and Add
-                </button>
+                </Button>
+            </Box>
+
         </Box>
     )
 }
