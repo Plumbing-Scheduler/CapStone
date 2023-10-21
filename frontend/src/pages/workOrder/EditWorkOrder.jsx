@@ -23,7 +23,7 @@ export const CreateWorkOrder = () => {
     const [busName, setBusName] = useState('');
     const [address, setAddress] = useState('');
     const navigate = useNavigate();
-    const { id } = useParams({});
+    const { id } = useParams('');
     const [loading, setLoading] = useState(false);
 
     const data = {

@@ -20,6 +20,7 @@ import Schedule from "./pages/Schedule";
 import Employee from "./pages/Employee";
 import CreateEmployee from './pages/EmployeeManagement/CreateEmployee';
 import EmployeeDetails from './pages/EmployeeManagement/EmployeeDetails';
+import EditEmployee from './pages/EmployeeManagement/EditEmployee';
 
 import Reports from "./pages/Reports";
 
@@ -59,6 +60,7 @@ function App() {
               <Route index element={<Employee />} />
               <Route path='details/:id' element={<EmployeeDetails/>}/>
               <Route path="create" element={<CreateEmployee />} />
+              <Route path="edit/:id" element={<EditEmployee />} />
             </Route>
 
             

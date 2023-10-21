@@ -42,6 +42,7 @@ const employeeSchema = mongoose.Schema(
             type: String,
             required: true
         },
+        experience: Number,
         startDate:{
             type: Date,
             required: true

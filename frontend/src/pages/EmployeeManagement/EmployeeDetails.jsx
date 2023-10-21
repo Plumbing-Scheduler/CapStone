@@ -81,6 +81,7 @@ const EmployeeDetails = () => {
                         Eduation/Experience
                     </Typography>
                     <Typography variant='body1'>{employee.role}</Typography>
+                    <Typography variant='body1'>Years of Experience: {employee.experience} </Typography>
                 </Box>
             </Box>
             )}

@@ -19,6 +19,7 @@ const createEmployee = async (request, response) => {
                 province: request.body.address.province,
             },
             role: request.body.role,
+            experience: request.body.experience,
             startDate: request.body.startDate,
             employmentType: request.body.employmentType,
             status: request.body.status,

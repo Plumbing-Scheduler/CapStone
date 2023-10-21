@@ -1,4 +1,4 @@
-import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
+import { Box, TextField, Typography, Button, useTheme, NativeSelect } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
@@ -16,19 +16,19 @@ import { tokens } from "../../theme.js";
 //Dropdown constants for education
 const educationOptions = [
     {
-        value: 'journeyman',
+        value: 'Journeyman',
         label: 'Journeyman'
     },
     {
-        value: 'apprentice1',
+        value: 'Apprentice First Year',
         label: 'Apprentice First Year'
     },
     {
-        value: 'apprentice2',
+        value: 'Apprentice Second Year',
         label: 'Apprentice Second Year'
     },
     {
-        value: 'apprentice3',
+        value: 'Apprentice Third Year',
         label: 'Apprentice Third Year'
     }
 ]
@@ -71,6 +71,7 @@ export const CreateEmployee = () => {
     const [city, setCity] = useState('');
     const [province, setProvince] = useState('');
     const [role, setRole] = useState('');
+    const [experience, setExperience] = useState('');
     const [employmentType, setEmploymentType] = useState('');
     const [status, setStatus] = useState('');
     const [startDate, setStartDate] = useState(Date.now());
@@ -90,6 +91,7 @@ export const CreateEmployee = () => {
             province
         },
         role,
+        experience,
         startDate,
         employmentType,
         status
@@ -106,8 +108,10 @@ export const CreateEmployee = () => {
             })
     }
     return (
-        <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
+        <Box ml={'20px'}>
             <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
+        <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
+            
             <Typography
                 //display="flex"
                 variant="h4"
@@ -284,6 +288,8 @@ export const CreateEmployee = () => {
                     variant='filled'
                     label="Years of Experience"
                     name="yearsofExperience"
+                    value={experience}
+                    onChange={(e) => setExperience(e.target.value)}
                     sx={{ gridColumn: "span 1" }}
                 />
             </Box>
@@ -362,6 +368,7 @@ export const CreateEmployee = () => {
                 </Button>
             </Box>
 
+        </Box>
         </Box>
     )
 }
