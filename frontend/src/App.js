@@ -8,6 +8,7 @@ import Sidebar from "./components/global/Sidebar";
 import Quotes from "./pages/QuoteRequest";
 import CreateQuote from './pages/Quotes/CreateQuote';
 import EditQuote from './pages/Quotes/EditQuote';
+import DeleteQuote from './pages/Quotes/DeleteQuote';
 
 import WorkOrderList from "./pages/workOrder/workOrderList";
 import CreateWorkOrder from './pages/workOrder/CreateWorkOrder'
@@ -44,6 +45,7 @@ function App() {
               <Route index element={<Quotes />} />
               <Route path='create' element={<CreateQuote />}/>
               <Route path='edit/:id' element={<EditQuote />}/>
+              <Route path="delete/:id" element={<DeleteQuote />} />
             </Route>
 
             <Route path='workorder'>
