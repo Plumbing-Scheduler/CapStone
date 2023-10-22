@@ -1,4 +1,4 @@
-import { Box, TextField, Typography, Button, useTheme, NativeSelect } from "@mui/material";
+import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
@@ -110,265 +110,265 @@ export const CreateEmployee = () => {
     return (
         <Box ml={'20px'}>
             <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
-        <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
-            
-            <Typography
-                //display="flex"
-                variant="h4"
-                //justifyContent="space-between"
-                sx={{
-                    m: "30px auto 5px auto",
-                    width: '75%',
-                }}>
-                Employee Information
-            </Typography>
+            <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
 
-            <Box
-                display="grid"
-                gap="30px"
-                gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
-                sx={{
-                    gridColumn: "span 4",
-                    margin: "auto",
-                    width: '75%',
-                }}
-            >
-                <TextField
-                    fullWidth
-                    required
-                    type="text"
-                    variant='filled'
-                    label="First Name"
-                    name="firstName"
-                    id="firstName"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
-                />
+                <Typography
+                    //display="flex"
+                    variant="h4"
+                    //justifyContent="space-between"
+                    sx={{
+                        m: "30px auto 5px auto",
+                        width: '75%',
+                    }}>
+                    Employee Information
+                </Typography>
 
-                <TextField
-                    fullWidth
-                    required
-                    type="text"
-                    variant='filled'
-                    label="Last Name"
-                    name="lastName"
-                    id="lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
-                />
-
-                <TextField
-                    fullWidth
-                    required
-                    type="text"
-                    variant='filled'
-                    label="Email"
-                    name="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
-                />
-                <TextField
-                    fullWidth
-                    required
-                    type="number"
-                    variant='filled'
-                    label="Phone"
-                    name="phone #"
-                    id="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
-                />
-                <TextField
-                    fullWidth
-                    required
-                    type="text"
-                    variant='filled'
-                    label="Address"
-                    name="address"
-                    id="address"
-                    value={street}
-                    onChange={(e) => setStreet(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
-                />
-                <TextField
-                    fullWidth
-                    required
-                    type="text"
-                    variant='filled'
-                    label="Postal Code"
-                    name="postalCode"
-                    id="postalCode"
-                    value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
-                />
-
-                <TextField
-                    fullWidth
-                    required
-                    type="text"
-                    variant='filled'
-                    label="City"
-                    name="city"
-                    id="city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
-                />
-                <TextField
-                    fullWidth
-                    required
-                    type="text"
-                    variant='filled'
-                    label="Province"
-                    name="province"
-                    id="province"
-                    value={province}
-                    onChange={(e) => setProvince(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
-                />
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
+                <Box
+                    display="grid"
+                    gap="30px"
+                    gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                    sx={{
+                        gridColumn: "span 4",
+                        margin: "auto",
+                        width: '75%',
+                    }}
+                >
+                    <TextField
+                        fullWidth
                         required
-                        label='Start Date'
-                        renderInput={(params) => <TextField variant="filled" required {...params} />}
-                        value={startDate}
-                        onChange={(e) => { setStartDate(dayjs(e).toISOString()) }}
-                        orientation="landscape"
+                        type="text"
+                        variant='filled'
+                        label="First Name"
+                        name="firstName"
+                        id="firstName"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
                     />
-                </LocalizationProvider>
-            </Box>
 
-            <Typography
-                //display="flex"
-                variant="h4"
-                //justifyContent="space-between"
-                sx={{
-                    m: "30px auto 5px auto",
-                    width: '75%',
-                }}>
-                Education
-            </Typography>
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Last Name"
+                        name="lastName"
+                        id="lastName"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
 
-            <Box
-                display="grid"
-                gap="30px"
-                gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
-                sx={{
-                    gridColumn: "span 4",
-                    margin: "auto",
-                    width: '75%'
-                }}
-            >
-                <TextField
-                    select
-                    required
-                    label="Education Level"
-                    variant='filled'
-                    name="educationLevel"
-                    id="education"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Email"
+                        name="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="number"
+                        variant='filled'
+                        label="Phone"
+                        name="phone #"
+                        id="phone"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Address"
+                        name="address"
+                        id="address"
+                        value={street}
+                        onChange={(e) => setStreet(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Postal Code"
+                        name="postalCode"
+                        id="postalCode"
+                        value={postalCode}
+                        onChange={(e) => setPostalCode(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="City"
+                        name="city"
+                        id="city"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Province"
+                        name="province"
+                        id="province"
+                        value={province}
+                        onChange={(e) => setProvince(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            required
+                            label='Start Date'
+                            renderInput={(params) => <TextField variant="filled" required {...params} />}
+                            value={startDate}
+                            onChange={(e) => { setStartDate(dayjs(e).toISOString()) }}
+                            orientation="landscape"
+                        />
+                    </LocalizationProvider>
+                </Box>
+
+                <Typography
+                    //display="flex"
+                    variant="h4"
+                    //justifyContent="space-between"
+                    sx={{
+                        m: "30px auto 5px auto",
+                        width: '75%',
+                    }}>
+                    Education
+                </Typography>
+
+                <Box
+                    display="grid"
+                    gap="30px"
+                    gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                    sx={{
+                        gridColumn: "span 4",
+                        margin: "auto",
+                        width: '75%'
+                    }}
                 >
-                    {educationOptions.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
-                <TextField
-                    fullWidth
-                    type="number"
-                    variant='filled'
-                    label="Years of Experience"
-                    name="yearsofExperience"
-                    value={experience}
-                    onChange={(e) => setExperience(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
-                />
-            </Box>
+                    <TextField
+                        select
+                        required
+                        label="Education Level"
+                        variant='filled'
+                        name="educationLevel"
+                        id="education"
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    >
+                        {educationOptions.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                    <TextField
+                        fullWidth
+                        type="number"
+                        variant='filled'
+                        label="Years of Experience"
+                        name="yearsofExperience"
+                        value={experience}
+                        onChange={(e) => setExperience(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                </Box>
 
-            <Typography
-                //display="flex"
-                variant="h4"
-                //justifyContent="space-between"
-                sx={{
-                    m: "30px auto 5px auto",
-                    width: '75%',
-                }}>
-                Hours
-            </Typography>
-            <Box
-                display="grid"
-                gap="30px"
-                gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
-                sx={{
-                    gridColumn: "span 4",
-                    margin: "auto",
-                    width: '75%',
+                <Typography
+                    //display="flex"
+                    variant="h4"
+                    //justifyContent="space-between"
+                    sx={{
+                        m: "30px auto 5px auto",
+                        width: '75%',
+                    }}>
+                    Hours
+                </Typography>
+                <Box
+                    display="grid"
+                    gap="30px"
+                    gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                    sx={{
+                        gridColumn: "span 4",
+                        margin: "auto",
+                        width: '75%',
 
-                }}
-            >
-                <TextField
-                    select
-                    required
-                    label="Employment Type"
-                    variant='filled'
-                    name="employmentType"
-                    id="employmentType"
-                    value={employmentType}
-                    onChange={(e) => setEmploymentType(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
+                    }}
                 >
-                    {employmentOptions.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
+                    <TextField
+                        select
+                        required
+                        label="Employment Type"
+                        variant='filled'
+                        name="employmentType"
+                        id="employmentType"
+                        value={employmentType}
+                        onChange={(e) => setEmploymentType(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    >
+                        {employmentOptions.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
 
-                <TextField
-                    select
-                    required
-                    label="Status"
-                    variant='filled'
-                    name="status"
-                    id="status"
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    sx={{ gridColumn: "span 1" }}
+                    <TextField
+                        select
+                        required
+                        label="Status"
+                        variant='filled'
+                        name="status"
+                        id="status"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    >
+                        {statusOptions.map((option) => (
+                            <MenuItem
+                                key={option.value}
+                                value={option.value}
+                            >
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Box>
+                <Box
+                    backgroundColor={colors.buttonBase}
+                    display="grid"
+                    sx={{
+                        margin: "30px auto",
+                        width: '150px',
+                        borderRadius: "5px"
+                    }}
                 >
-                    {statusOptions.map((option) => (
-                        <MenuItem
-                            key={option.value}
-                            value={option.value}
-                        >
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
-            </Box>
-            <Box
-                backgroundColor={colors.buttonBase}
-                display="grid"
-                sx={{
-                    margin: "30px auto",
-                    width: '150px',
-                    borderRadius: "5px"
-                }}
-            >
-                <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
-                    Save and Add
-                </Button>
-            </Box>
+                    <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
+                        Save and Add
+                    </Button>
+                </Box>
 
-        </Box>
+            </Box>
         </Box>
     )
 }

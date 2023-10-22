@@ -9,6 +9,7 @@ import Quotes from "./pages/QuoteRequest";
 import CreateQuote from './pages/Quotes/CreateQuote';
 import EditQuote from './pages/Quotes/EditQuote';
 import DeleteQuote from './pages/Quotes/DeleteQuote';
+import ShowQuote from './pages/Quotes/ShowQuote';
 
 import WorkOrderList from "./pages/workOrder/workOrderList";
 import CreateWorkOrder from './pages/workOrder/CreateWorkOrder'
@@ -46,6 +47,7 @@ function App() {
               <Route path='create' element={<CreateQuote />}/>
               <Route path='edit/:id' element={<EditQuote />}/>
               <Route path="delete/:id" element={<DeleteQuote />} />
+              <Route path="details/:id" element={<ShowQuote />} />
             </Route>
 
             <Route path='workorder'>
