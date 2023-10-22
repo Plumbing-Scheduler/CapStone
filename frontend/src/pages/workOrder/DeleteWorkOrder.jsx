@@ -11,7 +11,7 @@ export const DeleteWorkOrder = () => {
   const { id } = useParams('');
   const navigate = useNavigate();
   const [workOrder, setWorkOrder] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);

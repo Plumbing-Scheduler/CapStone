@@ -12,7 +12,7 @@ const DeleteEmployee = () => {
   const colors = tokens(theme.palette.mode);
   const { id } = useParams();
   const [employee, setEmployee] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {

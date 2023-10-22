@@ -12,7 +12,7 @@ const DeleteQuote = () => {
     const colors = tokens(theme.palette.mode);
     const { id } = useParams();
     const [quote, setQuote] = useState({});
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -43,7 +43,11 @@ const DeleteQuote = () => {
     return (
         <Box >
             <Header title={"QUOTE REQUEST"} subtitle={"DELETE QUOTE REQUEST"} />
-            {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
+            {loading ? (
+                <div className='w-5 m-auto h-5 pt-11 text-center'>
+                    <Spinner />
+                </div>
+            ) : (
                 <Paper elevation={100} sx={{ width: "30%", margin: '0 auto', border: '1px solid', bgcolor: colors.buttonBase, color: 'black' }}>
                     <Typography
                         variant='h2'

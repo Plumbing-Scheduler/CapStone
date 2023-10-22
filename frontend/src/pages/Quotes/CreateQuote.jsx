@@ -156,7 +156,7 @@ const Quotes = () => {
                     onChange={(e) => setDescription(e.target.value)}
                     sx={{ gridColumn: "span 2" }}
                 />
-                <button onClick={handleSave} className='bg-gray-500 w-1/2 h-12 '>
+                <button onClick={handleSave} className='bg-gray-500 w-1/2 h-12 rounded-sm'>
                     Save and Add
                 </button>
             </Box>
