@@ -37,7 +37,7 @@ export const Employee = () => {
             <div className="">
                 <AddNewButton destination="create" item="Employee" />
             </div>
-
+            
             <Paper sx={{ width: '70%', margin: 'auto', border: "2px solid gray", borderRadius: '5px', bgcolor: "#141414", color: "#d0d1d5", }}>
                 <table className='w-full text-xl'>
                     <thead>
@@ -70,7 +70,7 @@ export const Employee = () => {
                     </tbody>
                 </table>
             </Paper>
-            <Outlet/>
+            {/* <Outlet/> */}
         </Box>
     )
 }
