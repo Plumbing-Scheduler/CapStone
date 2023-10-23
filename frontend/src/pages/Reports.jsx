@@ -46,39 +46,41 @@ const Reports = () => {
 
     ];
 
-    return (<div className=" m-20px ">
+    return (<div className=" m-10 p-2">
         <Header title="REPORTS" subtitle="Select Report" />
-        <Box m="40px 0 0 0"
-            height="75vh"
-            sx={{
-                "& .MuiDataGrid-root": {
-                    border: "ActiveBorder",
-                },
-                "& .MuiDataGrid-cell": {
-                    borderBottom: "none"
-                },
-                "& .name-column--cell": {
-                    color: colors.greenAccent[300]
-                },
-                "& .MuiDataGrid-columnHeaders": {
-                    backgroundColor: colors.blueAccent[700],
-                    borderBottom: "none"
-                },
-                "& .MuiDataGrid-VirtualScroller": {
-                    backgroundColor: colors.primary[400]
-                },
-                "& .MuiDataGrid-footerContainer": {
-                    borderTop: "none",
-                    backgroundColor: colors.blueAccent[700]
-                }
+        <div className=' shadow-lg '>
+            <Box m="40px 0 0 0"
+                height="75vh"
+                sx={{
+                    "& .MuiDataGrid-root": {
+                        border: "ActiveBorder",
+                    },
+                    "& .MuiDataGrid-cell": {
+                        borderBottom: "none"
+                    },
+                    "& .name-column--cell": {
+                        color: colors.greenAccent[300]
+                    },
+                    "& .MuiDataGrid-columnHeaders": {
+                        backgroundColor: colors.redAccent[400],
+                        borderBottom: "none"
+                    },
+                    "& .MuiDataGrid-VirtualScroller": {
+                        backgroundColor: colors.primary[400]
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                        borderTop: "none",
+                        backgroundColor: colors.redAccent[400]
+                    }
 
-            }}>
-            <DataGrid
-                rows={mockDataTeam}
-                columns={columns}
+                }}>
+                <DataGrid
+                    rows={mockDataTeam}
+                    columns={columns}
 
-            />
-        </Box>
+                />
+            </Box>
+        </div>
     </div>
     )
 }
