@@ -14,4 +14,3 @@ const Header = ({ title, subtitle}) => {
 
 export default Header;
 
-// m={"20px"} sx={{m: 'auto', width: '20%', textAlign: "center"}}

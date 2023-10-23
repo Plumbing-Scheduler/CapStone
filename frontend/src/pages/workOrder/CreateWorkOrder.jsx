@@ -74,7 +74,7 @@ export const CreateWorkOrder = () => {
                 //justifyContent="space-between"
                 sx={{
                     m: "10px auto",
-                    width: '20%',
+                    width: '100%',
                     textAlign: 'center'
                 }}>
                 Add Work Order Details
@@ -86,7 +86,7 @@ export const CreateWorkOrder = () => {
                 sx={{
                     gridColumn: "span 4",
                     margin: "auto",
-                    width: '75%'
+                    width: '100%'
                 }} >
                 <TextField
                     fullWidth
