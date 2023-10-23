@@ -59,22 +59,22 @@ const Sidebar = () => {
                         onClick={() => setIsCollapased(!isCollapsed)}
                         icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
                         style={{
-                            margin: "10px 0 20px 0",
+                            margin: "4px 0 20px 0",
                             color: colors.grey[100],
                         }}
                     >
 
                         {!isCollapsed && (
-                            <Box
-                                display="flex"
-                                justifyContent="space-between"
-                                alignItems="center"
-                                ml="15px"
+                            <div className="sm:max-2xl:flex justify-between box-border ml-15px "
+                                // display="flex"
+                                // justifyContent="space-between"
+                                // alignItems="center"
+                                // ml="15px"
                             >
                                 <Typography variant="h6" color={colors.grey[100]}> Welcome </Typography>
                                 <IconButton onClick={() => setIsCollapased(!isCollapsed)}></IconButton>
                                 <MenuOutlinedIcon />
-                            </Box>
+                            </div>
                         )}
                     </MenuItem>
 

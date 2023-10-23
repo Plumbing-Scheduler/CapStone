@@ -39,30 +39,30 @@ const Schedule = () => {
                 console.log(error)
             })
     }, []);
-    return <Box >
-        <Header title="SCHEDULE" subtitle="Calendar"/>
-        <Box display="flex" justifyContent="space-between" p="10px" m="20px" sx={{ boxShadow: 3}}>
+    return <div>
+        <Header title="SCHEDULE" subtitle="Calendar" />
+        <div className='text-center sm:max-2xl:flex justify-between p-2 m-3 shadow-lg' >
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                <Paper variant="h4"> 
+                <Paper variant="h4">
                     <Box flex="1 1 20%" >
-                    <Scheduler data={data} >
-                        <ViewState defaultCurrentDate={currDate} defaultCurrentViewName="Week" />
+                        <Scheduler data={data} >
+                            <ViewState defaultCurrentDate={currDate} defaultCurrentViewName="Week" />
 
-                        <DayView startDayHour={6} endDayHour={18} />
-                        <WeekView startDayHour={6} endDayHour={18} />
-                        <MonthView />
+                            <DayView startDayHour={6} endDayHour={18} />
+                            <WeekView startDayHour={6} endDayHour={18} />
+                            <MonthView />
 
-                        <Appointments />
-                        <Toolbar />
-                        <DateNavigator />
-                        <ViewSwitcher />
-                    </Scheduler>
+                            <Appointments />
+                            <Toolbar />
+                            <DateNavigator />
+                            <ViewSwitcher />
+                        </Scheduler>
                     </Box>
                 </Paper>
             )}
-            
-        </Box>
-    </Box>
+
+        </div>
+    </div>
 }
 
 export default Schedule;
