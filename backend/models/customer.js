@@ -17,7 +17,10 @@ const customerSchema = mongoose.Schema(
             required: true
         },
         busName: String,
-        phone: String,
+        phone: {
+            type: Number,
+            required: true
+        },
         email: String
     }
 );

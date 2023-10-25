@@ -86,7 +86,7 @@ export const CreateWorkOrder = () => {
                 sx={{
                     gridColumn: "span 4",
                     margin: "auto",
-                    width: '100%'
+                    width: '75%'
                 }} >
                 <TextField
                     fullWidth
@@ -176,6 +176,7 @@ export const CreateWorkOrder = () => {
                     onChange={(e) => setCost(e.target.value)}
                     name="cost"
                     id=""
+                    inputProps={{min: 0}}
                     sx={{ gridColumn: "span 1" }}
                 />
                 <TextField
