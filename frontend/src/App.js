@@ -21,6 +21,7 @@ import EmployeeDetails from './pages/EmployeeManagement/EmployeeDetails';
 import EditEmployee from './pages/EmployeeManagement/EditEmployee';
 import DeleteEmployee from './pages/EmployeeManagement/DeleteEmployee';
 import Customer from './pages/Customer';
+import CreateCustomer from './pages/CustomerManagement/CreateCustomer';
 import Reports from "./pages/Reports";
 
 // import WorkOrderform from "./scenes/form";
@@ -65,7 +66,9 @@ function App() {
               <Route path="delete/:id" element={<DeleteEmployee />} />
             </Route>
 
-            <Route path="/customers" element={<Customer />} >
+            <Route path="/customers">
+            <Route index element={<Customer />} />
+            <Route path="create" element={<CreateCustomer />} />
             </Route>
 
             <Route path="/reports" element={<Reports />} >
