@@ -4,7 +4,10 @@ import mongoose from "mongoose";
 //This will be how the data is displayed in the database
 const workOrderSchema = mongoose.Schema(
     {
-        serviceStatus: Number,
+        serviceStatus: {
+            type: String,
+            required: true
+        },
         description: {
             type: String,
             required: true
