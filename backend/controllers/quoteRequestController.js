@@ -1,7 +1,8 @@
 import { QuoteRequest } from "../models/quoteRequest.js";
 const createQuoteRequest = async (request, response) => { 
     try {
-        if(!request.body.description || !request.body.phone || !request.body.address || !request.body.firstName || !request.body.lastName){
+        if(!request.body.description || !request.body.phone || !request.body.address.street || !request.body.address.postalCode 
+            || !request.body.address.city || !request.body.address.province || !request.body.firstName || !request.body.lastName){
             return response.status(400).send({message: 'All required fields must be filled'});
         };
         const newQuoteRequest = {
@@ -10,7 +11,12 @@ const createQuoteRequest = async (request, response) => {
             phone: request.body.phone,
             description: request.body.description,
             cost: request.body.cost,
-            address: request.body.address, 
+            address: {
+                street: request.body.address.street,
+                postalCode: request.body.address.postalCode,
+                city: request.body.address.city,
+                province: request.body.address.province,
+            }, 
             busName: request.body.busName,
             email: request.body.email
         };
@@ -53,7 +59,8 @@ const getQuoteRequest = async (request, response) => {
 
 const updateQuoteRequest = async (request, response) => { 
     try {
-        if(!request.body.description || !request.body.phone || !request.body.address || !request.body.firstName || !request.body.lastName){
+        if(!request.body.description || !request.body.phone || !request.body.address.street || !request.body.address.postalCode 
+            || !request.body.address.city || !request.body.address.province || !request.body.firstName || !request.body.lastName){
             return response.status(400).send({message: 'All required fields must be filled'});
         };
 
