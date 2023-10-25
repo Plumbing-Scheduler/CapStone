@@ -1,7 +1,8 @@
 import { Customer } from '../models/customer.js';
 
 const createCustomer = async (request, response) => {
-    if (!request.body.firstName || !request.body.lastName || !request.body.address) {
+    if (!request.body.firstName || !request.body.lastName || !request.body.address.street || !request.body.address.postalCode 
+        || !request.body.address.city || !request.body.address.province) {
         return response.status(400).send({message: 'All required fields must be filled'});
     };
  
@@ -12,7 +13,12 @@ const createCustomer = async (request, response) => {
             busName: request.body.busName,
             phone: request.body.phone,
             email: request.body.email,
-            address: request.body.address
+            address: {
+                street: request.body.address.street,
+                postalCode: request.body.address.postalCode,
+                city: request.body.address.city,
+                province: request.body.address.province,
+            }
         }
         const result = await Customer.create(newCustomer);
         return response.status(201).send(result)
@@ -53,7 +59,8 @@ const getCustomer = async (request, response) => {
 };
 
 const updateCustomer = async (request, response) => {
-    if (!request.body.firstName || !request.body.lastName || !request.body.address) {
+    if (!request.body.firstName || !request.body.lastName || !request.body.address.street || !request.body.address.postalCode 
+        || !request.body.address.city || !request.body.address.province) {
         return response.status(400).send({message: 'All required fields must be filled'});
     };
     const { id } = request.params;

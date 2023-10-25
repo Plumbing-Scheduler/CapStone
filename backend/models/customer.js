@@ -13,8 +13,22 @@ const customerSchema = mongoose.Schema(
             required: true
         },
         address: {
-            type: String,
-            required: true
+            street:{
+                type: String,
+                required: true
+            },
+            postalCode:{
+                type: String,
+                required: true
+            },
+            city:{
+                type: String,
+                required: true
+            },
+            province:{
+                type: String,
+                required: true
+            }
         },
         busName: String,
         phone: String,

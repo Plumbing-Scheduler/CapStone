@@ -20,7 +20,7 @@ const employeeSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        address : {
+        address: {
             street:{
                 type: String,
                 required: true
