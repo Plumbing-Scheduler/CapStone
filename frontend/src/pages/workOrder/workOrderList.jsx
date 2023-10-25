@@ -17,6 +17,7 @@ export const WorkOrders = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [workOrders, setWorkOrders] = useState([]);
+    const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
     dayjs(localizedFormat);
 
@@ -26,6 +27,10 @@ export const WorkOrders = () => {
             .get('http://localhost:3500/workorders')
             .then((response) => {
                 setWorkOrders(response.data.data);
+                axios.get('http://localhost:3500/employees')
+                    .then((responce) => {
+                        setEmployees(responce.data.data);
+                    })
                 setLoading(false);
             }).catch((error) => {
                 setLoading(false);
@@ -35,12 +40,12 @@ export const WorkOrders = () => {
 
     const columns = [
         { field: "no", headerName: "No.", width: 70, },
-        { field: "title", headerName: "Title", width: 150, flex: 1},
-        { field: "cost", headerName: "Cost", width: 70,},
-        { field: "startDate", headerName: "Date", width: 200, flex: 1},
-        { field: "customer", headerName: "Customer", width: 10, flex: 1},
-        { field: "employee", headerName: "Employee", width: 200, flex: 1},
-        { field: "address", headerName: "Address", width: 200, flex: 1},
+        { field: "title", headerName: "Title", width: 150, flex: 1 },
+        { field: "cost", headerName: "Cost", width: 70, },
+        { field: "startDate", headerName: "Date", width: 200, flex: 1 },
+        { field: "customer", headerName: "Customer", width: 10, flex: 1 },
+        { field: "employee", headerName: "Employee", width: 200, flex: 1 },
+        { field: "address", headerName: "Address", width: 200, flex: 1 },
         {
             field: "Operations", headerName: "Operations", width: 150, flex: 1, renderCell: ({ row: id }) => {
                 return (
@@ -59,7 +64,13 @@ export const WorkOrders = () => {
             }
         },
     ]
-
+    const getEmployee = (empId) => {
+        for(let i = 0; employees.length > i; i++){
+            if(employees[i]._id == empId){
+                return employees[i].firstName + ' ' +  employees[i].lastName
+            }
+        }
+    }
     const rows = workOrders.map((wo, index) => ({
         id: wo._id,
         no: index + 1,
@@ -67,9 +78,11 @@ export const WorkOrders = () => {
         cost: "$" + wo.cost,
         startDate: dayjs(wo.startDate).format('LLL'),
         customer: wo.customerID,
-        employee: wo.assignedEmp,
+        employee: getEmployee(wo.assignedEmp),
         address: wo.address
     }))
+
+    
 
     return (
         <div>
@@ -87,7 +100,7 @@ export const WorkOrders = () => {
                             border: "ActiveBorder",
                         },
                         "& .MuiDataGrid-cell:focus": {
-                            outline: "none",
+                            outline: "none !important",
                         },
                         "& .MuiDataGrid-row:selected": {
                             backgroundColor: colors.redAccent[400],
