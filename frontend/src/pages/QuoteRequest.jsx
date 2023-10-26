@@ -1,5 +1,5 @@
 import { Box, Typography, TextField, Paper } from "@mui/material";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from "../components/Header";
 import Spinner from "react-bootstrap/esm/Spinner";
 import AddNewButton from "../components/AddNewButton";
@@ -8,6 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import DataList from '../components/DataList';
 
 const Quotes = () => {
     // Declaring Constants
@@ -28,6 +29,39 @@ const Quotes = () => {
             })
     }, []);
 
+    const columns = [ 
+        {field: 'no', headerName: "No.", width: 70},
+        {field: 'name', headerName: "Name", flex: 1},
+        {field: 'phone', headerName: "Phone", flex: 1},
+        {field: 'email', headerName: "Email", flex: 1},
+        {field: 'cost', headerName: "Est. Cost", flex: 1},
+        {
+            field: "Operations", headerName: "Operations", width: 200,  renderCell: ({ row: id }) => {
+                return (
+                    <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+                        <Link to={`edit/${id.id}`} className='link mr-auto'>
+                            <EditIcon />
+                        </Link>
+                        <Link to={`details/${id.id}`} className='link m-auto'>
+                            <InfoOutlinedIcon />
+                        </Link>
+                        <Link to={`delete/${id.id}`} className='link m-auto'>
+                            <DeleteOutlineIcon />
+                        </Link>
+                    </Box>
+                )
+            }
+        },
+    ]
+
+    const rows = quotes.map((qu, index) => ({
+        id: qu._id,
+        name: qu.firstName + ' ' + qu.lastName,
+        phone: qu.phone,
+        email: qu.email,
+        cost: "$"+qu.cost
+    }))
+
     return (
         <Box >
             <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
@@ -36,42 +70,9 @@ const Quotes = () => {
             </div>
 
             {loading ? (
-
                 <div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>
             ) : (
-                <Paper sx={{ width: '70%', margin: 'auto', border: "2px solid gray", borderRadius: '5px', bgcolor: "#141414", color: "#d0d1d5", }}>
-                    {/* Quote Request List will go here */}
-                    <table className='w-full text-xl'>
-                        <thead className='border-b-4 border-slate-600 text-left pl-2'>
-                            <tr>
-                                <th className="pl-2">No.</th>
-                                <th className="pl-2">Name</th>
-
-                                <th className="pl-2">Operations</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {quotes.map((quote, index) => (
-                                <tr key={quote._id} className='h-20 border-b border-slate-700'>
-                                    <td className="pl-2">{index + 1}</td>
-                                    <td className="pl-2">{quote.firstName + " " + quote.lastName}</td>
-                                    <td className='flex justify-evenly items-center  h-20'>
-                                        <Link to={`edit/${quote._id}`} className='link '>
-                                            <EditIcon />
-                                        </Link>
-                                        <Link to={`details/${quote._id}`} className='link'>
-                                            <InfoOutlinedIcon />
-                                        </Link>
-                                        <Link to={`delete/${quote._id}`} className='link'>
-                                            <DeleteOutlineIcon />
-                                        </Link>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-
-                </Paper>
+                <DataList columnData={columns} rowData={rows} />
             )}
         </Box>
     )
