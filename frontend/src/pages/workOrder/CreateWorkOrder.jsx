@@ -11,7 +11,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 import MenuItem from '@mui/material/MenuItem';
 
 export const CreateWorkOrder = () => {
-    const serviceStatus = 1 //Newly created work orders will always be set to "1" for in progress. 
+    const serviceStatus = "In Progress" //Newly created work orders will always be set to "1" for in progress. 
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
     const [startDate, setStartDate] = useState(Date.now());
@@ -186,17 +186,6 @@ export const CreateWorkOrder = () => {
                         </MenuItem>
                     ))}
                 </TextField>
-                {/* <TextField
-                    fullWidth
-                    type="text"
-                    variant='filled'
-                    label="Assign Employee"
-                    value={assignedEmp}
-                    onChange={(e) => setAssignedEmp(e.target.value)}
-                    name="assignemployee"
-                    id=""
-                    sx={{ gridColumn: "span 2" }}
-                /> */}
                 <TextField
                     fullWidth
                     type="number"
