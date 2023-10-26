@@ -2,11 +2,32 @@ import React from 'react'
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import { Box, useTheme } from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Link } from 'react-router-dom';
 
 const DataList = ({ columnData = [{}], rowData = [{}] }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-
+    columnData = [...columnData, {
+        field: "Operations", headerName: "Operations", width: 200,  renderCell: ({ row: id }) => {
+            return (
+                <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+                    <Link to={`edit/${id.id}`} className='link mr-auto'>
+                        <EditIcon />
+                    </Link>
+                    <Link to={`details/${id.id}`} className='link m-auto'>
+                        <InfoOutlinedIcon />
+                    </Link>
+                    <Link to={`delete/${id.id}`} className='link m-auto'>
+                        <DeleteOutlineIcon />
+                    </Link>
+                </Box>
+            )
+        }
+    },]
+    
     return (
         <div>
             <Box m="40px"

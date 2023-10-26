@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import AddNewButton from '../../components/AddNewButton';
 import axios from 'axios';
 import Header from '../../components/Header';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import EditIcon from '@mui/icons-material/Edit';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Box, useTheme } from '@mui/material';
 import Spinner from 'react-bootstrap/Spinner';
-import { tokens } from "../../theme";
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import DataList from '../../components/DataList';
 
 export const WorkOrders = () => {
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     const [workOrders, setWorkOrders] = useState([]);
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -46,28 +38,11 @@ export const WorkOrders = () => {
         { field: "customer", headerName: "Customer", width: 10, flex: 1 },
         { field: "employee", headerName: "Employee", width: 200, flex: 1 },
         { field: "address", headerName: "Address", width: 200, flex: 1 },
-        {
-            field: "Operations", headerName: "Operations", width: 200, renderCell: ({ row: id }) => {
-                return (
-                    <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                        <Link to={`edit/${id.id}`} className='link mr-auto'>
-                            <EditIcon />
-                        </Link>
-                        <Link to={`details/${id.id}`} className='link m-auto'>
-                            <InfoOutlinedIcon />
-                        </Link>
-                        <Link to={`delete/${id.id}`} className='link m-auto'>
-                            <DeleteOutlineIcon />
-                        </Link>
-                    </Box>
-                )
-            }
-        },
     ]
 
     const getEmployee = (empId) => {
         for (let i = 0; employees.length > i; i++) {
-            if (employees[i]._id == empId) {
+            if (employees[i]._id === empId) {
                 return employees[i].firstName + ' ' + employees[i].lastName
             }
         }

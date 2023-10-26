@@ -1,11 +1,7 @@
-import { Box, Typography, TextField, Paper } from "@mui/material";
-import { Link } from 'react-router-dom';
+import { Box } from "@mui/material";
 import Header from "../components/Header";
 import Spinner from "react-bootstrap/esm/Spinner";
 import AddNewButton from "../components/AddNewButton";
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import EditIcon from '@mui/icons-material/Edit';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import DataList from '../components/DataList';
@@ -35,27 +31,11 @@ const Quotes = () => {
         {field: 'phone', headerName: "Phone", flex: 1},
         {field: 'email', headerName: "Email", flex: 1},
         {field: 'cost', headerName: "Est. Cost", flex: 1},
-        {
-            field: "Operations", headerName: "Operations", width: 200,  renderCell: ({ row: id }) => {
-                return (
-                    <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                        <Link to={`edit/${id.id}`} className='link mr-auto'>
-                            <EditIcon />
-                        </Link>
-                        <Link to={`details/${id.id}`} className='link m-auto'>
-                            <InfoOutlinedIcon />
-                        </Link>
-                        <Link to={`delete/${id.id}`} className='link m-auto'>
-                            <DeleteOutlineIcon />
-                        </Link>
-                    </Box>
-                )
-            }
-        },
     ]
 
     const rows = quotes.map((qu, index) => ({
         id: qu._id,
+        no: index + 1,
         name: qu.firstName + ' ' + qu.lastName,
         phone: qu.phone,
         email: qu.email,
