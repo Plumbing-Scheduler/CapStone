@@ -48,7 +48,7 @@ export const WorkOrders = () => {
         { field: "employee", headerName: "Employee", width: 200, flex: 1 },
         { field: "address", headerName: "Address", width: 200, flex: 1 },
         {
-            field: "Operations", headerName: "Operations", width: 150, flex: 1, renderCell: ({ row: id }) => {
+            field: "Operations", headerName: "Operations", width: 200, renderCell: ({ row: id }) => {
                 return (
                     <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                         <Link to={`edit/${id.id}`} className='link mr-auto'>
