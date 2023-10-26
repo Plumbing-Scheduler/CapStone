@@ -12,6 +12,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import DataList from '../../components/DataList';
 
 export const WorkOrders = () => {
     const theme = useTheme();
@@ -64,13 +65,15 @@ export const WorkOrders = () => {
             }
         },
     ]
+
     const getEmployee = (empId) => {
-        for(let i = 0; employees.length > i; i++){
-            if(employees[i]._id == empId){
-                return employees[i].firstName + ' ' +  employees[i].lastName
+        for (let i = 0; employees.length > i; i++) {
+            if (employees[i]._id == empId) {
+                return employees[i].firstName + ' ' + employees[i].lastName
             }
         }
     }
+
     const rows = workOrders.map((wo, index) => ({
         id: wo._id,
         no: index + 1,
@@ -82,8 +85,6 @@ export const WorkOrders = () => {
         address: wo.address
     }))
 
-    
-
     return (
         <div>
 
@@ -93,49 +94,7 @@ export const WorkOrders = () => {
             </div>
 
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                <Box m="40px"
-                    height="55vh"
-                    sx={{
-                        "& .MuiDataGrid-root": {
-                            border: "ActiveBorder",
-                        },
-                        "& .MuiDataGrid-cell:focus": {
-                            outline: "none !important",
-                        },
-                        "& .MuiDataGrid-row:selected": {
-                            backgroundColor: colors.redAccent[400],
-                        },
-                        "& .MuiDataGrid-cell": {
-                            borderBottom: "solid 1px grey",
-                            fontSize: "14px",
-                        },
-                        "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: colors.redAccent[400],
-                            borderBottom: "none",
-                            fontSize: "20px",
-                            color: "black"
-                        },
-                        "& .MuiDataGrid-VirtualScroller": {
-                            backgroundColor: colors.primary[400]
-                        },
-                        "& .MuiDataGrid-footerContainer": {
-                            borderTop: "none",
-                            backgroundColor: colors.redAccent[400]
-                        },
-                        width: "90%",
-                        margin: "0 auto"
-                    }}>
-                    <DataGrid
-                        columns={columns}
-                        rows={rows}
-                        rowHeight={60}
-                        initialState={{
-                            pagination: { paginationModel: { pageSize: 10 } }
-                        }}
-                        pageSizeOptions={[10, 25, 50, 100]}
-
-                    />
-                </Box>
+                <DataList columnData={columns} rowData={rows} />
             )}
         </div>
     )
