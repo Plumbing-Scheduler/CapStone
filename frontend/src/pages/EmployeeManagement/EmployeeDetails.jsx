@@ -8,17 +8,6 @@ import Header from '../../components/Header';
 import { DeleteButton } from '../../components/global/DeleteButton';
 import { EditButton } from '../../components/global/EditButton';
 
- 
-  
-  
-  
-  
-  
-  
-
-
-
-
 const EmployeeDetails = () => {
     const { id } = useParams();
     const [employee, setEmployee] = useState('');
