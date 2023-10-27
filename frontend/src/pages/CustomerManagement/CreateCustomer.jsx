@@ -131,7 +131,6 @@ export const CreateCustomer = () => {
                     />
                     <TextField
                         fullWidth
-                        required
                         type="text"
                         variant='filled'
                         label="Buisness Name"
@@ -200,7 +199,7 @@ export const CreateCustomer = () => {
                         borderRadius: "5px"
                     }}
                 >
-                    <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
+                    <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
                         Save and Add
                     </Button>
                 </Box>
