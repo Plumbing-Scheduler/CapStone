@@ -1,19 +1,14 @@
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from "../components/Header";
 import AddNewButton from "../components/AddNewButton";
 import { useState, useEffect } from "react";
-import { Outlet, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Spinner from 'react-bootstrap/Spinner';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import EditIcon from '@mui/icons-material/Edit';
+import DataList from '../components/DataList';
 
 export const Employee = () => {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [employees, setEmployees] = useState([]);
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
@@ -30,48 +25,37 @@ export const Employee = () => {
 
     }, [])
 
+    const columns = [
+        {field: 'no', headerName: "No.", width: 70},
+        {field: 'name', headerName: "Name", flex: 1},
+        {field: 'phone', headerName: "Phone", flex: 1},
+        {field: 'email', headerName: "Email", flex: 1},
+        {field: 'type', headerName: "Employement Type", flex: 1},
+        {field: 'status', headerName: "Status", flex: 1},
+    ];
+
+    const rows = employees.map((emp, index) => ({
+        id: emp._id,
+        no: index + 1,
+        name: emp.firstName + " " + emp.lastName,
+        phone: emp.phone,
+        email: emp.email,
+        type: emp.employmentType + " " + emp.role,
+        status: emp.status
+    }))
+
 
     return (
-        <Box m="px">
+        <Box m="20px">
             <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
             <div className="">
                 <AddNewButton destination="create" item="Employee" />
             </div>
             
             
-            <Paper sx={{ width: '70%', margin: 'auto', border: "2px solid gray", borderRadius: '5px', bgcolor: "#141414", color: "#d0d1d5", }}>
-                <table className='w-full text-xl'>
-                    <thead>
-                        <tr className='border-b-4 border-slate-600 text-left pl-2'>
-                            <th className='pl-2'>Name</th>
-                            <th className='pl-2'>Phone #</th>
-                            <th className='pl-2'>Employment Type</th>
-                            <th className='pl-2 text-center'>Operations</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {employees.map((emp) => (
-                            <tr key={emp._id} className='h-20 border-b border-slate-700'  >
-                                <td className='pl-2'>{emp.firstName + ' ' + emp.lastName}</td>
-                                <td className='pl-2'>{emp.phone}</td>
-                                <td className='pl-2'>{emp.employmentType}</td>
-                                <td className="flex justify-evenly items-center  h-20">
-                                    <Link to={`edit/${emp._id}`} className="link">
-                                        <EditIcon/>
-                                    </Link>
-                                    <Link to={`details/${emp._id}`} className="link">
-                                        <InfoOutlinedIcon/>
-                                    </Link>
-                                    <Link to={`delete/${emp._id}`} className="link">
-                                        <DeleteOutlineIcon/>
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </Paper>
-            {/* <Outlet/> */}
+            {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
+                <DataList columnData={columns} rowData={rows} />
+            )}
         </Box>
     )
 }

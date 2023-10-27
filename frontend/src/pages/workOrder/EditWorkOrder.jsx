@@ -8,11 +8,11 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
-
+import MenuItem from '@mui/material/MenuItem';
 
 export const CreateWorkOrder = () => {
 
-    const [serviceStatus, setServiceStatus] = useState(''); //Newly created work orders will always be set to "1" for in progress. 
+    const [serviceStatus, setServiceStatus] = useState('');
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
     const [startDate, setStartDate] = useState(Date.now());
@@ -24,7 +24,8 @@ export const CreateWorkOrder = () => {
     const [address, setAddress] = useState('');
     const navigate = useNavigate();
     const { id } = useParams('');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [employees, setEmployees] = useState([]);
 
     const data = {
         serviceStatus,
@@ -54,6 +55,10 @@ export const CreateWorkOrder = () => {
                 setCustomerID(response.data.customerID);
                 setBusName(response.data.busName);
                 setAddress(response.data.address);
+                axios.get('http://localhost:3500/employees')
+                    .then((responce) => {
+                        setEmployees(responce.data.data);
+                    })
                 setLoading(false);
             })
             .catch((error) => {
@@ -99,7 +104,7 @@ export const CreateWorkOrder = () => {
                         sx={{
                             gridColumn: "span 4",
                             margin: "auto",
-                            width: '100%'
+                            width: '75%'
                         }} >
                         <TextField
                             fullWidth
@@ -170,16 +175,22 @@ export const CreateWorkOrder = () => {
                             sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
-                            fullWidth
-                            type="text"
+                            select
+                            required
                             variant='filled'
                             label="Assign Employee"
                             value={assignedEmp}
-                            onChange={e => setAssignedEmp(e.target.value)}
+                            onChange={(e) => setAssignedEmp(e.target.value)}
                             name="assignemployee"
                             id=""
-                            sx={{ gridColumn: "span 2" }}
-                        />
+                            sx={{ gridColumn: "span 1" }}
+                        >
+                            {employees.map((emp) => (
+                                <MenuItem key={emp._id} value={emp._id}>
+                                    {emp.firstName + ' ' + emp.lastName}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                         <TextField
                             fullWidth
                             type="number"
@@ -189,6 +200,7 @@ export const CreateWorkOrder = () => {
                             onChange={e => setCost(e.target.value)}
                             name="cost"
                             id=""
+                            inputProps={{ min: 0 }}
                             sx={{ gridColumn: "span 1" }}
                         />
                         <button onClick={handleSave} className='bg-gray-500 w-1/2 '>
