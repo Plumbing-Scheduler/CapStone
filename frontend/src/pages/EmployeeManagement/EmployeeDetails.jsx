@@ -1,10 +1,23 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner';
 import dayjs from 'dayjs';
 import Header from '../../components/Header';
+import { DeleteButton } from '../../components/global/DeleteButton';
+import { EditButton } from '../../components/global/EditButton';
+
+ 
+  
+  
+  
+  
+  
+  
+
+
+
 
 const EmployeeDetails = () => {
     const { id } = useParams();
@@ -59,7 +72,7 @@ const EmployeeDetails = () => {
                             <Typography variant='body1'>Start Date: {dayjs(employee.address.startDate).toISOString().substring(0, 10)}</Typography>
                         </Box>
                     </Box>
-
+                    
                     <Box>
                         <Typography
                             variant="h2"
@@ -72,7 +85,10 @@ const EmployeeDetails = () => {
                         <Typography variant='body1'>{employee.employmentType}</Typography>
                         <Typography variant='body1'>{employee.status}</Typography>
                     </Box>
-
+                    
+                    <DeleteButton></DeleteButton>
+                    <EditButton></EditButton>
+                
                     <Box>
                         <Typography
                             variant="h2"
@@ -88,7 +104,10 @@ const EmployeeDetails = () => {
                 </Box>
             )}
         </Box>
+        
+        
     )
 }
+
 
 export default EmployeeDetails
