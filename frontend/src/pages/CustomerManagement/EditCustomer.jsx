@@ -1,7 +1,7 @@
 import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
-import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { tokens } from "../../theme.js";
@@ -29,7 +29,7 @@ export const EditCustomer = () => {
 
     
     
-    const newCustomer = {
+    const updateCustomer = {
         firstName,
         lastName,
         phone,
@@ -49,7 +49,7 @@ export const EditCustomer = () => {
         setLoading(true);
 
         axios
-            .get(`http://localhost:3500/customers/${id}`)
+            .get(`http://localhost:3500/customer/${id}`)
             .then((responce) => {
                 setFirstName(responce.data.firstName)
                 setLastName(responce.data.lastName)
@@ -60,14 +60,18 @@ export const EditCustomer = () => {
                 setStreet(responce.data.address.street)
                 setCity(responce.data.address.city)
                 setProvince(responce.data.address.province)
-                setStatus(responce.data.status)
+                
+                setLoading(false)
+            })
+            .catch((error) => {
+                console.log(error)
                 setLoading(false)
             })
     }, [])
 
     const handleSave = () => {
         axios
-            .put('http://localhost:3500/customer/${id}', newCustomer)
+            .put(`http://localhost:3500/customer/${id}`, updateCustomer)
             .then(
                 navigate('/customers')
             )
@@ -115,7 +119,6 @@ export const EditCustomer = () => {
                         onChange={(e) => setFirstName(e.target.value)}
                         sx={{ gridColumn: "span 2" }}
                     />
-
                     <TextField
                         fullWidth
                         required
@@ -126,7 +129,7 @@ export const EditCustomer = () => {
                         id="lastName"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
-                        sx={{ gridColumn: "span 2" }}
+                        sx={{gridColumn: "span 2" }}
                     />
 
                     <TextField
@@ -153,17 +156,7 @@ export const EditCustomer = () => {
                         onChange={(e) => setPhone(e.target.value)}
                         sx={{ gridColumn: "span 2" }}
                     />
-                    <TextField
-                        fullWidth
-                        type="text"
-                        variant='filled'
-                        label="Buisness Name"
-                        name="busName"
-                        id="busName"
-                        value={busName}
-                        onChange={(e) => setBusName(e.target.value)}
-                        sx={{ gridColumn: "span 2" }}
-                    />
+                    
                     <TextField
                         fullWidth
                         required
@@ -174,7 +167,7 @@ export const EditCustomer = () => {
                         id="address"
                         value={street}
                         onChange={(e) => setStreet(e.target.value)}
-                        sx={{ gridColumn: "span 2" }}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
                     />
                     <TextField
                         fullWidth
@@ -186,7 +179,7 @@ export const EditCustomer = () => {
                         id="postalCode"
                         value={postalCode}
                         onChange={(e) => setPostalCode(e.target.value)}
-                        sx={{ gridColumn: "span 1" }}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
                     />
 
                     <TextField
@@ -199,7 +192,7 @@ export const EditCustomer = () => {
                         id="city"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
-                        sx={{ gridColumn: "span 1" }}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
                     />
                     <TextField
                         fullWidth
@@ -211,6 +204,17 @@ export const EditCustomer = () => {
                         id="province"
                         value={province}
                         onChange={(e) => setProvince(e.target.value)}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        type="text"
+                        variant='filled'
+                        label="Buisness Name"
+                        name="busName"
+                        id="busName"
+                        value={busName}
+                        onChange={(e) => setBusName(e.target.value)}
                         sx={{ gridColumn: "span 2" }}
                     />
                   </Box>

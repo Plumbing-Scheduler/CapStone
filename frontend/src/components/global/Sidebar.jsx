@@ -56,6 +56,7 @@ const Sidebar = () => {
   }, []);
 
   return (
+    <Box sx={!isCollapsed? {width: '320px', transition:'.3s'}: {width: '80px', transition:'.3s'}} >
     <Box
       sx={{
         '& .pro-sidebar-inner': {
@@ -73,10 +74,11 @@ const Sidebar = () => {
         '& .pro-menu-item.active': {
           color: '#6870fa !important',
         },
+        height: '200%',
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
-        <Menu iconShape="square">
+      <ProSidebar collapsed={isCollapsed} style={{position: 'fixed', top: 0}}>
+        <Menu iconShape="square"  >
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
@@ -174,6 +176,7 @@ const Sidebar = () => {
           )}
         </Menu>
       </ProSidebar>
+    </Box>
     </Box>
   );
 };

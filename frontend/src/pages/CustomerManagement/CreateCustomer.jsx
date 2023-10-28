@@ -131,17 +131,6 @@ export const CreateCustomer = () => {
                     />
                     <TextField
                         fullWidth
-                        type="text"
-                        variant='filled'
-                        label="Buisness Name"
-                        name="busName"
-                        id="busName"
-                        value={busName}
-                        onChange={(e) => setBusName(e.target.value)}
-                        sx={{ gridColumn: "span 2" }}
-                    />
-                    <TextField
-                        fullWidth
                         required
                         type="text"
                         variant='filled'
@@ -150,7 +139,7 @@ export const CreateCustomer = () => {
                         id="address"
                         value={street}
                         onChange={(e) => setStreet(e.target.value)}
-                        sx={{ gridColumn: "span 2" }}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
                     />
                     <TextField
                         fullWidth
@@ -162,7 +151,7 @@ export const CreateCustomer = () => {
                         id="postalCode"
                         value={postalCode}
                         onChange={(e) => setPostalCode(e.target.value)}
-                        sx={{ gridColumn: "span 1" }}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
                     />
 
                     <TextField
@@ -175,7 +164,7 @@ export const CreateCustomer = () => {
                         id="city"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
-                        sx={{ gridColumn: "span 1" }}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
                     />
                     <TextField
                         fullWidth
@@ -187,6 +176,17 @@ export const CreateCustomer = () => {
                         id="province"
                         value={province}
                         onChange={(e) => setProvince(e.target.value)}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        type="text"
+                        variant='filled'
+                        label="Buisness Name"
+                        name="busName"
+                        id="busName"
+                        value={busName}
+                        onChange={(e) => setBusName(e.target.value)}
                         sx={{ gridColumn: "span 2" }}
                     />
                   </Box>

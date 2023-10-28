@@ -16,7 +16,6 @@ const Customer = () => {
       .get('http://localhost:3500/customer')
       .then((responce) => {
         setCustomers(responce.data.data);
-        console.log(customers)
         setLoading(false);
       })
       .catch((error) => {
