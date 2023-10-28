@@ -48,34 +48,39 @@ const DeleteQuote = () => {
                     <Spinner />
                 </div>
             ) : (
-                <Paper elevation={100} sx={{ width: "30%", margin: '0 auto', border: '1px solid', bgcolor: colors.buttonBase, color: 'black' }}>
-                    <Typography
-                        variant='h2'
-                        textAlign={'center'}
-                    >
-                        <DeleteForeverIcon sx={{ height: '100px', width: '100px', color: "red" }} />
-                        Delete Forever?
-                    </Typography>
-                    <Typography
-                        variant='h4'
-                        textAlign={'center'}
-                        m={'10px 0'}
-                    >
-                        <div>
-                            This will Delete Quote Request From <b>{quote.firstName + " " + quote.lastName}</b> Forever!
-                        </div>
-                        <div>
-                            <b>Description:</b> {quote.description}
-                        </div>
-                        <br />
-                        Are You sure you want to Delete?
-                    </Typography>
-                    <Box display="flex" justifyContent="space-evenly" m={'10px 0'}>
+                <Box m="100px">
+                    <Box sx={{margin: 'auto', width: '60%', boxShadow: '4', border: 'solid', borderWidth: "2px", borderRadius: '5px' }}>
+                        <Typography
+                            variant='h2'
+                            textAlign={'center'}
+                            m="10px"
+                            p="10px"
+                        >
+                            <DeleteForeverIcon sx={{ height: '50px', width: '50px', color: "red" }} />
+                            Delete Forever?
+                        </Typography>
+                        <Typography
+                            variant='h4'
+                            textAlign={'center'}
+                            m={'10px 0'} 
+                            p={'40px'}   
+                        >
+                            <div>
+                                This will Delete Quote Request From <b>{quote.firstName + " " + quote.lastName}</b> Forever!
+                            </div>
+                            <div>
+                                <b>Description:</b> {quote.description}
+                            </div>
+                            <br />
+                            Are You sure you want to Delete?
+                        </Typography>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between" sx={{ width: '20%', margin: 'auto', pt: '2%' }}>
                         <Link to={'/quotes'}>
                             <Button sx={{
                                 backgroundColor: colors.greenButton,
-                                fontWeight: 'bold', fontSize: '13px',
-                                color: 'black'
+                                fontWeight: 'bold',
+                                fontSize: '13px',
                             }}
                             >
                                 No, Go Back
@@ -85,14 +90,14 @@ const DeleteQuote = () => {
                             backgroundColor: colors.redButton,
                             fontWeight: 'bold',
                             fontSize: '13px',
-                            color: 'black'
                         }}
                             onClick={handleDelete}
                         >
                             Yes, Im Sure!
                         </Button>
                     </Box>
-                </Paper>
+                </Box>
+
             )}
         </Box>
     )
