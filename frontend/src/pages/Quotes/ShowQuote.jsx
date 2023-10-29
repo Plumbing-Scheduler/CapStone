@@ -5,6 +5,8 @@ import Spinner from 'react-bootstrap/esm/Spinner';
 import { Box, Typography } from '@mui/material';
 import Header from '../../components/Header';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { DeleteButton } from '../../components/global/DeleteButton';
+import { EditButton } from '../../components/global/EditButton';
 
 const ShowQuote = () => {
     const { id } = useParams();
@@ -30,7 +32,13 @@ const ShowQuote = () => {
 
     return (
         <Box>
-            <Header title="QUOTE REQUEST" subtitle="DETAILS" />
+            <div className='flex justify-between w-full'>
+                <Header title="QUOTE REQUEST" subtitle="DETAILS" />
+                <div className='flex justify-end'>
+                    <EditButton />
+                    <DeleteButton />
+                </div>
+            </div>
             {loading ? (
                 <div className='w-5 m-auto h-5 pt-11 text-center'>
                     <Spinner />

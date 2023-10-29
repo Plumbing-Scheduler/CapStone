@@ -7,6 +7,8 @@ import Spinner from 'react-bootstrap/esm/Spinner';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { DeleteButton } from '../../components/global/DeleteButton';
+import { EditButton } from '../../components/global/EditButton';
 
 const ShowWorkOrder = () => {
   const { id } = useParams();
@@ -32,7 +34,13 @@ const ShowWorkOrder = () => {
 
   return (
     <Box>
-      <Header title={"WORK ORDER"} subtitle={"DETAILS"} />
+      <div className='flex justify-between w-full'>
+        <Header title={"WORK ORDER"} subtitle={"DETAILS"} />
+        <div className='flex justify-end'>
+          <EditButton />
+          <DeleteButton />
+        </div>
+      </div>
       {loading ? (
         <div className='w-5 m-auto h-5 pt-11 text-center'>
           <Spinner />

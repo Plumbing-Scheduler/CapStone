@@ -24,6 +24,7 @@ import Customer from './pages/Customer';
 import CreateCustomer from './pages/CustomerManagement/CreateCustomer';
 import EditCustomer from './pages/CustomerManagement/EditCustomer';
 import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
+import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
 
 // import WorkOrderform from "./scenes/form";
@@ -73,6 +74,7 @@ function App() {
               <Route path="create" element={<CreateCustomer />} />
               <Route path="edit/:id" element={<EditCustomer />} />
               <Route path="delete/:id" element={<DeleteCustomer />} />
+              <Route path="details/:id" element={<CustomerDetails />} />
             </Route>
 
             <Route path="/reports" element={<Reports />} >

@@ -8,8 +8,6 @@ const Home = () => {
         <Box display="flex" justifyContent="space-between" alignItems="center">
             <Header title="HOME" subtitle="" /> 
         </Box>
-        <EditButton/> 
-        <DeleteButton/>
     </Box>
     );
 };
