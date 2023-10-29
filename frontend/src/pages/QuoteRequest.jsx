@@ -45,7 +45,7 @@ const Quotes = () => {
     return (
         <Box >
             <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
-            <div>
+            <div className='flex justify-end' >
                 <AddNewButton destination="create" item="Quote" />
             </div>
 

@@ -8,13 +8,13 @@ export const EditButton = () => {
     const colors = tokens(theme.palette.mode);
 
     return (
-            <Box display="flex" justifyContent="flex-end" p={3}>
-                <Link to='..' relative='path' className='link'>
-                    <Box display="flex" justifyContent="space-between" backgroundColor={colors.primary[400]} borderRadius="3px">
-                        <Button variant="Text">Edit</Button>
-                    </Box>
-                </Link>
-            </Box>
+        <Box >
+            <Link to='..' relative='path' className='link'>
+                <Box backgroundColor={colors.primary[400]} borderRadius="3px">
+                    <Button variant="Text">Edit</Button>
+                </Box>
+            </Link>
+        </Box>
     )
 }
 

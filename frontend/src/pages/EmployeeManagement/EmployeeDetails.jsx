@@ -30,73 +30,74 @@ const EmployeeDetails = () => {
 
     return (
         <Box>
-            <div className='flex justify-between w-full'>
+            <Box>
                 <Header title={"EMPLOYEE"} subtitle={"DETAILS"} />
-                <div className='flex justify-end'>
-                    <EditButton />
-                    <DeleteButton />
-                </div>
-
-            </div>
+            </Box>
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
 
-                <Box
-                    display="grid"
-                    gap="30px"
-                    gridTemplateColumns={"repeat(2, minmax(0, 1fr))"}
-                    sx={{
-                        gridColumn: "span 4",
-                        margin: "auto",
-                        width: '75%',
-                    }}
-                >
-                    <Box>
-                        <Typography
-                            variant="h2"
-                            sx={{
-                                width: '75%',
-                                paddingBottom: '10px'
-                            }}>
-                            Employee Information
-                        </Typography>
+                <div>
+                    <div className='flex justify-end m-4 space-x-3'>
+                        <EditButton />
+                        <DeleteButton />
+                    </div>
+                    <Box
+                        display="grid"
+                        gap="30px"
+                        gridTemplateColumns={"repeat(2, minmax(0, 1fr))"}
+                        sx={{
+                            gridColumn: "span 4",
+                            margin: "auto",
+                            width: '75%',
+                        }}
+                    >
                         <Box>
-                            <Typography variant='body1'>{employee.firstName} {employee.lastName}</Typography>
-                            <Typography variant='body1'>{employee.phone}</Typography>
-                            <Typography variant='body1'>{employee.email}</Typography>
-                            <Typography variant='body1'>{employee.address.street}, {employee.address.city}, {employee.address.province}</Typography>
-                            <Typography variant='body1'>{employee.address.postalCode}</Typography>
-                            <Typography variant='body1'>Start Date: {dayjs(employee.address.startDate).toISOString().substring(0, 10)}</Typography>
+                            <Typography
+                                variant="h2"
+                                sx={{
+                                    width: '75%',
+                                    paddingBottom: '10px'
+                                }}>
+                                Employee Information
+                            </Typography>
+                            <Box>
+                                <Typography variant='body1'>{employee.firstName} {employee.lastName}</Typography>
+                                <Typography variant='body1'>{employee.phone}</Typography>
+                                <Typography variant='body1'>{employee.email}</Typography>
+                                <Typography variant='body1'>{employee.address.street}, {employee.address.city}, {employee.address.province}</Typography>
+                                <Typography variant='body1'>{employee.address.postalCode}</Typography>
+                                <Typography variant='body1'>Start Date: {dayjs(employee.address.startDate).toISOString().substring(0, 10)}</Typography>
+                            </Box>
+                        </Box>
+
+                        <Box>
+                            <Typography
+                                variant="h2"
+                                sx={{
+                                    width: '75%',
+                                    paddingBottom: '10px'
+                                }}>
+                                Availability/Hours
+                            </Typography>
+                            <Typography variant='body1'>{employee.employmentType}</Typography>
+                            <Typography variant='body1'>{employee.status}</Typography>
+                        </Box>
+
+
+
+                        <Box>
+                            <Typography
+                                variant="h2"
+                                sx={{
+                                    width: '75%',
+                                    paddingBottom: '10px'
+                                }}>
+                                Eduation/Experience
+                            </Typography>
+                            <Typography variant='body1'>{employee.role}</Typography>
+                            <Typography variant='body1'>Years of Experience: {employee.experience} </Typography>
                         </Box>
                     </Box>
-
-                    <Box>
-                        <Typography
-                            variant="h2"
-                            sx={{
-                                width: '75%',
-                                paddingBottom: '10px'
-                            }}>
-                            Availability/Hours
-                        </Typography>
-                        <Typography variant='body1'>{employee.employmentType}</Typography>
-                        <Typography variant='body1'>{employee.status}</Typography>
-                    </Box>
-
-
-
-                    <Box>
-                        <Typography
-                            variant="h2"
-                            sx={{
-                                width: '75%',
-                                paddingBottom: '10px'
-                            }}>
-                            Eduation/Experience
-                        </Typography>
-                        <Typography variant='body1'>{employee.role}</Typography>
-                        <Typography variant='body1'>Years of Experience: {employee.experience} </Typography>
-                    </Box>
-                </Box>
+                </div>
             )}
         </Box>
 

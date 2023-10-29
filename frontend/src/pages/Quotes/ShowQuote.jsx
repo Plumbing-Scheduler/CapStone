@@ -34,63 +34,66 @@ const ShowQuote = () => {
         <Box>
             <div className='flex justify-between w-full'>
                 <Header title="QUOTE REQUEST" subtitle="DETAILS" />
-                <div className='flex justify-end'>
-                    <EditButton />
-                    <DeleteButton />
-                </div>
             </div>
             {loading ? (
                 <div className='w-5 m-auto h-5 pt-11 text-center'>
                     <Spinner />
                 </div>
             ) : (
-                <Box>
-                    <Box
-                        display="grid"
-                        gap="30px"
-                        gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
-                        sx={{
-                            gridColumn: "span 2",
-                            margin: "auto",
-                            width: '80%',
-                        }}
-                    >
-                        <Box
-                            sx={{ m: '0 auto', width: "70%" }}
-                        >
-                            <Typography
-                                variant="h2"
-                                sx={{
-                                    width: '75%',
-                                    paddingBottom: '10px'
-                                }}
-                            >
-                                Customer Info
-                            </Typography>
-                            <Typography variant='body1'>{quote.firstName + " " + quote.lastName}</Typography>
-                            <Typography variant='body1'>{quote.phone}</Typography>
-                            <Typography variant='body1'>{quote.email}</Typography>
-                            <Typography variant='body1'>{quote.address}</Typography>
-                            <Typography variant='body1'>{quote.busName}</Typography>
-                        </Box>
-                        <Box
-                            sx={{ m: ' 0 auto', width: "70%" }}
-                        >
-                            <Typography
-                                variant="h2"
-                                sx={{
-                                    width: '75%',
-                                    paddingBottom: '10px'
-                                }}
-                            >
-                                Quote Info
-                            </Typography>
-                            <Typography variant='body1'>{quote.description}</Typography>
-                            <Typography variant='body1'>Estimate Cost: ${quote.cost}</Typography>
-                        </Box>
-                    </Box>
 
-                </Box>
+                <div>
+                    <div className='flex justify-end m-4 space-x-3'>
+                        <EditButton />
+                        <DeleteButton />
+                    </div>
+                    <Box>
+                        <Box
+                            display="grid"
+                            gap="30px"
+                            gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                            sx={{
+                                gridColumn: "span 2",
+                                margin: "auto",
+                                width: '80%',
+                            }}
+                        >
+                            <Box
+                                sx={{ m: '0 auto', width: "70%" }}
+                            >
+                                <Typography
+                                    variant="h2"
+                                    sx={{
+                                        width: '75%',
+                                        paddingBottom: '10px'
+                                    }}
+                                >
+                                    Customer Info
+                                </Typography>
+                                <Typography variant='body1'>{quote.firstName + " " + quote.lastName}</Typography>
+                                <Typography variant='body1'>{quote.phone}</Typography>
+                                <Typography variant='body1'>{quote.email}</Typography>
+                                <Typography variant='body1'>{quote.address}</Typography>
+                                <Typography variant='body1'>{quote.busName}</Typography>
+                            </Box>
+                            <Box
+                                sx={{ m: ' 0 auto', width: "70%" }}
+                            >
+                                <Typography
+                                    variant="h2"
+                                    sx={{
+                                        width: '75%',
+                                        paddingBottom: '10px'
+                                    }}
+                                >
+                                    Quote Info
+                                </Typography>
+                                <Typography variant='body1'>{quote.description}</Typography>
+                                <Typography variant='body1'>Estimate Cost: ${quote.cost}</Typography>
+                            </Box>
+                        </Box>
+
+                    </Box>
+                </div>
             )}
         </Box>
     )

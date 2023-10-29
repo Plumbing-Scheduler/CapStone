@@ -46,9 +46,9 @@ export const Employee = () => {
 
 
     return (
-        <Box m="20px">
+        <Box>
             <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
-            <div className="">
+            <div className='flex justify-end' >
                 <AddNewButton destination="create" item="Employee" />
             </div>
             
