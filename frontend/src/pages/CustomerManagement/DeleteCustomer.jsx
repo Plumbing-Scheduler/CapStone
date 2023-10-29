@@ -7,20 +7,20 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/esm/Spinner';
 
-const DeleteQuote = () => {
+const DeleteCustomer = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const { id } = useParams();
-    const [quote, setQuote] = useState({});
+    const [customer, setCustomer] = useState({});
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
         axios
-            .get(`http://localhost:3500/quote/${id}`)
+            .get(`http://localhost:3500/customer/${id}`)
             .then((responce) => {
-                setQuote(responce.data);
+                setCustomer(responce.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -31,9 +31,9 @@ const DeleteQuote = () => {
 
     const handleDelete = () => {
         axios
-            .delete(`http://localhost:3500/quote/${id}`)
+            .delete(`http://localhost:3500/customer/${id}`)
             .then(
-                navigate('/quotes')
+                navigate('/customer')
             )
             .catch((error) => {
                 console.log(error);
@@ -42,14 +42,14 @@ const DeleteQuote = () => {
 
     return (
         <Box >
-            <Header title={"QUOTE REQUEST"} subtitle={"DELETE QUOTE REQUEST"} />
+            <Header title={"CUSTOMERS"} subtitle={"DELETE CUSTOMER"} />
             {loading ? (
                 <div className='w-5 m-auto h-5 pt-11 text-center'>
                     <Spinner />
                 </div>
             ) : (
                 <Box m="100px">
-                    <Box sx={{margin: 'auto', width: '60%', boxShadow: '4', border: 'solid', borderWidth: "2px", borderRadius: '5px' }}>
+                    <Box sx={{ margin: 'auto', width: '60%', boxShadow: '4', border: 'solid', borderWidth: "2px", borderRadius: '5px' }}>
                         <Typography
                             variant='h2'
                             textAlign={'center'}
@@ -62,21 +62,18 @@ const DeleteQuote = () => {
                         <Typography
                             variant='h4'
                             textAlign={'center'}
-                            m={'10px 0'} 
-                            p={'40px'}   
+                            m={'10px 0'}
+                            p={'40px'}
                         >
                             <div>
-                                This will Delete Quote Request From <b>{quote.firstName + " " + quote.lastName}</b> Forever!
-                            </div>
-                            <div>
-                                <b>Description:</b> {quote.description}
+                                This will Delete Customer <b>{customer.firstName + " " + customer.lastName}</b> Forever!
                             </div>
                             <br />
                             Are You sure you want to Delete?
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="space-between" sx={{ width: '20%', margin: 'auto', pt: '2%' }}>
-                        <Link to={'/quotes'}>
+                        <Link to={'/customers'}>
                             <Button sx={{
                                 backgroundColor: colors.greenButton,
                                 fontWeight: 'bold',
@@ -103,4 +100,4 @@ const DeleteQuote = () => {
     )
 }
 
-export default DeleteQuote
+export default DeleteCustomer

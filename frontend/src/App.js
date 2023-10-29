@@ -23,6 +23,7 @@ import DeleteEmployee from './pages/EmployeeManagement/DeleteEmployee';
 import Customer from './pages/Customer';
 import CreateCustomer from './pages/CustomerManagement/CreateCustomer';
 import EditCustomer from './pages/CustomerManagement/EditCustomer';
+import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import Reports from "./pages/Reports";
 
 // import WorkOrderform from "./scenes/form";
@@ -42,8 +43,8 @@ function App() {
 
             <Route path="/quotes" >
               <Route index element={<Quotes />} />
-              <Route path='create' element={<CreateQuote />}/>
-              <Route path='edit/:id' element={<EditQuote />}/>
+              <Route path='create' element={<CreateQuote />} />
+              <Route path='edit/:id' element={<EditQuote />} />
               <Route path="delete/:id" element={<DeleteQuote />} />
               <Route path="details/:id" element={<ShowQuote />} />
             </Route>
@@ -61,16 +62,17 @@ function App() {
 
             <Route path="employee">
               <Route index element={<Employee />} />
-              <Route path='details/:id' element={<EmployeeDetails/>}/>
+              <Route path='details/:id' element={<EmployeeDetails />} />
               <Route path="create" element={<CreateEmployee />} />
               <Route path="edit/:id" element={<EditEmployee />} />
               <Route path="delete/:id" element={<DeleteEmployee />} />
             </Route>
 
             <Route path="/customers">
-            <Route index element={<Customer />} />
-            <Route path="create" element={<CreateCustomer />} />
-            <Route path="edit/:id" element={<EditCustomer />} />
+              <Route index element={<Customer />} />
+              <Route path="create" element={<CreateCustomer />} />
+              <Route path="edit/:id" element={<EditCustomer />} />
+              <Route path="delete/:id" element={<DeleteCustomer />} />
             </Route>
 
             <Route path="/reports" element={<Reports />} >

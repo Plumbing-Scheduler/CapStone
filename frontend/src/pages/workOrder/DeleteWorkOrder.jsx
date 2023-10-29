@@ -42,7 +42,7 @@ export const DeleteWorkOrder = () => {
   };
 
   return (<div>
-    <Header title={"QUOTE REQUEST"} subtitle={"DELETE QUOTE REQUEST"} />
+    <Header title={"WORK ORDER"} subtitle={"DELETE WORK ORDER"} />
     {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
       <Box m="30px">
         <Box sx={{ width: "90%", margin: "auto", boxShadow: '4', border: 'solid', borderWidth: "2px", borderRadius: '5px' }}>
