@@ -33,7 +33,7 @@ const DeleteCustomer = () => {
         axios
             .delete(`http://localhost:3500/customer/${id}`)
             .then(
-                navigate('/customer')
+                navigate('/customers')
             )
             .catch((error) => {
                 console.log(error);
