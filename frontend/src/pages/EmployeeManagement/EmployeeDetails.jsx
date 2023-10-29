@@ -30,10 +30,13 @@ const EmployeeDetails = () => {
 
     return (
         <Box>
-            <div class="flex">
-                <Header title={"EMPLOYEE"} subtitle={"DETAILS"} class="flex"/>
-                <EditButton></EditButton>
-                <DeleteButton></DeleteButton>
+            <div className='flex justify-between w-full'>
+                <Header title={"EMPLOYEE"} subtitle={"DETAILS"} />
+                <div className='flex justify-end'>
+                    <EditButton />
+                    <DeleteButton />
+                </div>
+
             </div>
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
 
@@ -65,7 +68,7 @@ const EmployeeDetails = () => {
                             <Typography variant='body1'>Start Date: {dayjs(employee.address.startDate).toISOString().substring(0, 10)}</Typography>
                         </Box>
                     </Box>
-                    
+
                     <Box>
                         <Typography
                             variant="h2"
@@ -78,9 +81,9 @@ const EmployeeDetails = () => {
                         <Typography variant='body1'>{employee.employmentType}</Typography>
                         <Typography variant='body1'>{employee.status}</Typography>
                     </Box>
-                    
-            
-                
+
+
+
                     <Box>
                         <Typography
                             variant="h2"
@@ -96,8 +99,8 @@ const EmployeeDetails = () => {
                 </Box>
             )}
         </Box>
-        
-        
+
+
     )
 }
 
