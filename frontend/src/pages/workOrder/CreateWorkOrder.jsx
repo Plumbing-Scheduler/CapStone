@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Box, TextField, Typography } from '@mui/material';
@@ -8,9 +8,10 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Header from '../../components/Header';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import MenuItem from '@mui/material/MenuItem';
 
 export const CreateWorkOrder = () => {
-    const serviceStatus = 1 //Newly created work orders will always be set to "1" for in progress. 
+    const serviceStatus = "In Progress" //Newly created work orders will always be set to "1" for in progress. 
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
     const [startDate, setStartDate] = useState(Date.now());
@@ -20,6 +21,8 @@ export const CreateWorkOrder = () => {
     const [customerID, setCustomerID] = useState('');
     const [busName, setBusName] = useState('');
     const [address, setAddress] = useState('');
+
+    const [employees, setEmployees] = useState([]);
     const navigate = useNavigate();
 
     dayjs.extend(localizedFormat);
@@ -36,6 +39,16 @@ export const CreateWorkOrder = () => {
         busName,
         address,
     };
+
+    useEffect(() => {
+        axios.get('http://localhost:3500/employees')
+            .then((responce) => {
+                setEmployees(responce.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    })
 
     const handleSave = () => {
         axios
@@ -74,7 +87,7 @@ export const CreateWorkOrder = () => {
                 //justifyContent="space-between"
                 sx={{
                     m: "10px auto",
-                    width: '20%',
+                    width: '100%',
                     textAlign: 'center'
                 }}>
                 Add Work Order Details
@@ -116,19 +129,19 @@ export const CreateWorkOrder = () => {
                 />
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
-                        label='Start Date' 
-                        renderInput={(params) => <TextField {...params} />}
+                        label='Start Date'
+                        renderInput={(params) => <TextField variant="filled" required {...params} />}
                         value={dayjs(startDate).toISOString()}
-                        onChange={(e) => {setStartDate(e)}}
+                        onChange={(e) => { setStartDate(e) }}
                         minutesStep={5}
                     />
                 </LocalizationProvider>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
-                        label='End Date' 
-                        renderInput={(params) => <TextField {...params} />}
+                        label='End Date'
+                        renderInput={(params) => <TextField variant="filled" required {...params} />}
                         value={dayjs(endDate).toISOString()}
-                        onChange={(e) => {setEndDate(e)}}
+                        onChange={(e) => { setEndDate(e) }}
                         minDate={startDate}
                         minutesStep={5}
                     />
@@ -157,16 +170,22 @@ export const CreateWorkOrder = () => {
                     sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
-                    fullWidth
-                    type="text"
+                    select
+                    required
                     variant='filled'
                     label="Assign Employee"
                     value={assignedEmp}
                     onChange={(e) => setAssignedEmp(e.target.value)}
                     name="assignemployee"
                     id=""
-                    sx={{ gridColumn: "span 2" }}
-                />
+                    sx={{ gridColumn: "span 1" }}
+                >
+                    {employees.map((emp) => (
+                        <MenuItem key={emp._id} value={emp._id}>
+                            {emp.firstName + ' ' + emp.lastName}
+                        </MenuItem>
+                    ))}
+                </TextField>
                 <TextField
                     fullWidth
                     type="number"
@@ -176,6 +195,7 @@ export const CreateWorkOrder = () => {
                     onChange={(e) => setCost(e.target.value)}
                     name="cost"
                     id=""
+                    inputProps={{ min: 0 }}
                     sx={{ gridColumn: "span 1" }}
                 />
                 <TextField

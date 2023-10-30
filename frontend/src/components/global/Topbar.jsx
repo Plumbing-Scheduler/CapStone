@@ -23,14 +23,14 @@ const Topbar = () => {
     //         </IconButton>
     //     </Box>
 
-    return (<Box display="flex" justifyContent="space-between" p={3}>
+    return (<div className="flex justify-between p-3" >
         <Link to='..' relative="path" className="link">
-            <Box display="flex" backgroundColor={colors.buttonBase} borderRadius="3px">
+            <div className="hidden md:max-2xl:flex rounded-sm bg-gray-600">
                 <Button variant="Text"> Back</Button>
-            </Box>
+            </div>
         </Link>
         {/* Icons */}
-        <Box display="flex">
+        <div className="flex">
             <IconButton onClick={colorMode.toggleColorMode}>
                 {theme.palette.mode === 'dark' ? (
                     < DarkModeOutlinedIcon />
@@ -50,8 +50,8 @@ const Topbar = () => {
             <IconButton>
 
             </IconButton>
-        </Box>
-    </Box>
+        </div>
+    </div>
     );
 };
 

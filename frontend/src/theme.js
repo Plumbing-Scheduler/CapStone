@@ -61,6 +61,8 @@ export const tokens = (mode) => ({
                 900: "#151632"
             },
             buttonBase: "#434957",
+            redButton: '#ff0000',
+            greenButton: '#38ba36'
         } : {
             grey: {
                 100: "#141414",
@@ -118,6 +120,8 @@ export const tokens = (mode) => ({
                 900: "#e1e2fe",
             },
             buttonBase: "#6b7385",
+            redButton: '#ff0000',
+            greenButton: '#38ba36'
         }),
 });
 
@@ -132,7 +136,8 @@ export const themeSettings = (mode) => {
             ...(mode === 'dark'
                 ? {
                     primary: {
-                        main: colors.primary[500],
+                        main: colors.primary[100],
+
                     },
                     secondary: {
                         main: colors.greenAccent[500],

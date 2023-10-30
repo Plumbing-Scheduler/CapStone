@@ -1,26 +1,19 @@
-import { Customer } from '../models/customer.js';
+import { Management } from '../models/management.js';
 
-const createCustomer = async (request, response) => {
-    if (!request.body.firstName || !request.body.lastName || !request.body.address.street || !request.body.address.postalCode 
-        || !request.body.address.city || !request.body.address.province) {
+const createManagement = async (request, response) => {
+    if (!request.body.firstName || !request.body.lastName || !request.body.phone || !request.body.email || !request.body.role) {
         return response.status(400).send({message: 'All required fields must be filled'});
     };
  
     try {
-        const newCustomer = {
+        const newManagement = {
             firstName: request.body.firstName,
             lastName: request.body.lastName,
-            busName: request.body.busName,
             phone: request.body.phone,
             email: request.body.email,
-            address: {
-                street: request.body.address.street,
-                postalCode: request.body.address.postalCode,
-                city: request.body.address.city,
-                province: request.body.address.province,
-            }
+            role: request.body.role
         }
-        const result = await Customer.create(newCustomer);
+        const result = await Management.create(newManagement);
         return response.status(201).send(result)
     } catch (error) {
         console.log(error);
@@ -28,9 +21,9 @@ const createCustomer = async (request, response) => {
     };
 };
 
-const getAllCustomer = async (request, response) => {
+const getAllManagement = async (request, response) => {
     try {
-        const result = await Customer.find({});
+        const result = await Management.find({});
 
         return response.status(200).send({
             count: result.length,
@@ -42,10 +35,10 @@ const getAllCustomer = async (request, response) => {
     };
 };
 
-const getCustomer = async (request, response) => {
+const getManagement = async (request, response) => {
     const { id } = request.params
     try {
-        const result = await Customer.findById(id);
+        const result = await Management.findById(id);
 
         if(!result){
             return response.status(204).send({message: "No Content Found"});
@@ -58,14 +51,13 @@ const getCustomer = async (request, response) => {
     };
 };
 
-const updateCustomer = async (request, response) => {
-    if (!request.body.firstName || !request.body.lastName || !request.body.address.street || !request.body.address.postalCode 
-        || !request.body.address.city || !request.body.address.province) {
+const updateManagement = async (request, response) => {
+    if (!request.body.firstName || !request.body.lastName || !request.body.phone || !request.body.email || !request.body.role) {
         return response.status(400).send({message: 'All required fields must be filled'});
     };
     const { id } = request.params;
     try {
-        const result = await Customer.findByIdAndUpdate(id, request.body);
+        const result = await Management.findByIdAndUpdate(id, request.body);
 
         if(!result){
             return response.status(204).send({message: "No Content Found"});
@@ -78,10 +70,10 @@ const updateCustomer = async (request, response) => {
     };
 };
 
-const deleteCustomer = async (request, response) => {
+const deleteManagement = async (request, response) => {
     const { id } = request.params;
     try {
-        const result = await Customer.findByIdAndDelete(id);
+        const result = await Management.findByIdAndDelete(id);
 
         if(!result){
             return response.status(204).send({message: "No Content Found"});
@@ -94,4 +86,4 @@ const deleteCustomer = async (request, response) => {
     };
 };
 
-export default {createCustomer, getAllCustomer, getCustomer, updateCustomer, deleteCustomer};
+export default {createManagement, getAllManagement, getManagement, updateManagement, deleteManagement};

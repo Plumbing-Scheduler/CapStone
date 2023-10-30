@@ -1,88 +1,74 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import AddNewButton from '../../components/AddNewButton';
 import axios from 'axios';
 import Header from '../../components/Header';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import EditIcon from '@mui/icons-material/Edit';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Paper } from '@mui/material';
 import Spinner from 'react-bootstrap/Spinner';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import DataList from '../../components/DataList';
 
 export const WorkOrders = () => {
     const [workOrders, setWorkOrders] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [employees, setEmployees] = useState([]);
+    const [loading, setLoading] = useState(true);
+    dayjs(localizedFormat);
+
     useEffect(() => {
         setLoading(true);
         axios
             .get('http://localhost:3500/workorders')
             .then((response) => {
                 setWorkOrders(response.data.data);
+                axios.get('http://localhost:3500/employees')
+                    .then((responce) => {
+                        setEmployees(responce.data.data);
+                    })
                 setLoading(false);
             }).catch((error) => {
                 setLoading(false);
                 console.log(error);
             })
     }, []);
+
+    const columns = [
+        { field: "no", headerName: "No.", width: 70, },
+        { field: "title", headerName: "Title", width: 150, flex: 1 },
+        { field: "cost", headerName: "Cost", width: 70, },
+        { field: "startDate", headerName: "Date", width: 200, flex: 1 },
+        { field: "customer", headerName: "Customer", width: 10, flex: 1 },
+        { field: "employee", headerName: "Employee", width: 200, flex: 1 },
+        { field: "address", headerName: "Address", width: 200, flex: 1 },
+    ]
+
+    const getEmployee = (empId) => {
+        for (let i = 0; employees.length > i; i++) {
+            if (employees[i]._id === empId) {
+                return employees[i].firstName + ' ' + employees[i].lastName
+            }
+        }
+    }
+
+    const rows = workOrders.map((wo, index) => ({
+        id: wo._id,
+        no: index + 1,
+        title: wo.title,
+        cost: "$" + wo.cost,
+        startDate: dayjs(wo.startDate).format('LLL'),
+        customer: wo.customerID,
+        employee: getEmployee(wo.assignedEmp),
+        address: wo.address
+    }))
+
     return (
         <div>
 
             <Header title="WORK ORDER" subtitle="Show Work Orders" />
-            <div >
-                <AddNewButton destination="form" item="Work Order" className='bg-sky-900' /> {/* "Add new" button at top of list, Routes to Work order Form*/}
+            <div className='flex justify-end' >
+                <AddNewButton destination="form" item="Work Order" className='bg-sky-900' />
             </div>
 
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                <div>
-                    <Paper sx={{ width: '70%', margin: 'auto', border: "2px solid gray", borderRadius: '5px', bgcolor: "#141414", color: "#d0d1d5", }}>
-                        <table className='w-full text-xl'>
-                            <thead>
-                                <tr className='border-b-4 border-slate-600 text-left pl-2'>
-                                    <th className='pl-2'>No.</th>
-                                    <th className='pl-2'>Title</th>
-                                    <th className='pl-2'>Cost</th>
-                                    <th className='pl-2'>Emp</th>
-                                    <th className='pl-2'>Customer</th>
-                                    <th className='pl-2'>Operations</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {workOrders.map((wo, index) => (
-                                    <tr key={wo._id} className='h-20 border-b border-slate-700'>
-                                        <td className='pl-2'>
-                                            {index + 1}
-                                        </td>
-                                        <td className='pl-2'>
-                                            {wo.title}
-                                        </td>
-                                        <td className='pl-2'>
-                                            {wo.cost}
-                                        </td>
-                                        <td className='pl-2'>
-                                            {wo.assignedEmp}
-                                        </td>
-                                        <td className='pl-2'>
-                                            {wo.customerID}
-                                        </td>
-                                        <td className='flex justify-evenly items-center  h-20'>
-
-                                            <Link to={`edit/${wo._id}`} className='link '>
-                                                <EditIcon />
-                                            </Link>
-                                            <Link to={`details/${wo._id}`} className='link'>
-                                                <InfoOutlinedIcon />
-                                            </Link>
-                                            <Link to={`delete/${wo._id}`} className='link'>
-                                                <DeleteOutlineIcon />
-                                            </Link>
-
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </Paper>
-                </div>
+                <DataList columnData={columns} rowData={rows} />
             )}
         </div>
     )

@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-//Quote Request Database Model
-
-const quoteRequestSchema = mongoose.Schema(
-    {   
-        firstName: {
+//Employee Database Model
+//This will be how the data is displayed in the database
+const employeeSchema = mongoose.Schema(
+    {
+        firstName:{
             type: String,
             required: true
         },
@@ -16,7 +16,7 @@ const quoteRequestSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        description: {
+        email:{
             type: String,
             required: true
         },
@@ -38,10 +38,25 @@ const quoteRequestSchema = mongoose.Schema(
                 required: true
             }
         },
-        cost: Number,
-        busName: String,
-        email: String,
+        role:{
+            type: String,
+            required: true
+        },
+        experience: Number,
+        startDate:{
+            type: Date,
+            required: true
+        },
+        employmentType:{
+            type: String,
+            required: true
+        },
+        status:{
+            type: String,
+            required: true
+        },
+        serviceList: String
     }
 );
 
-export const QuoteRequest = mongoose.model('QuoteRequest', quoteRequestSchema);
+export const Employee = mongoose.model('Employee', employeeSchema);
