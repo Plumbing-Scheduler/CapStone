@@ -46,9 +46,9 @@ const Reports = () => {
 
     ];
 
-    return (<div className=" m-10 p-2">
+    return (<Box m="20px">
         <Header title="REPORTS" subtitle="Select Report" />
-        <div className=' shadow-lg '>
+        <div className='shadow-lg m-10 p-2'>
             <Box m="40px 0 0 0"
                 height="75vh"
                 sx={{
@@ -81,7 +81,7 @@ const Reports = () => {
                 />
             </Box>
         </div>
-    </div>
+    </Box>
     )
 }
 
