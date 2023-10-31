@@ -26,6 +26,11 @@ import EditCustomer from './pages/CustomerManagement/EditCustomer';
 import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
+// import WorkOrderReports from './pages/Reports/WorkOrderReports';
+// import QuoteHistoryReports from './pages/Reports/QuoteHistoryReports';
+// import ClientReports from './pages/Reports/ClientReportsReports';
+// import EmployeeReports from './pages/Reports/EmployeeReports';
+// import PaymentReports from './pages/Reports/PaymentReports';
 
 // import WorkOrderform from "./scenes/form";
 
@@ -77,7 +82,8 @@ function App() {
               <Route path="details/:id" element={<CustomerDetails />} />
             </Route>
 
-            <Route path="/reports" element={<Reports />} >
+            <Route path="/reports">
+              <Route index element={<Reports />} />
             </Route>
 
           </Routes>

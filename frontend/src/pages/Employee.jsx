@@ -51,8 +51,6 @@ export const Employee = () => {
             <div className='flex justify-end' >
                 <AddNewButton destination="create" item="Employee" />
             </div>
-            
-            
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <DataList columnData={columns} rowData={rows} />
             )}

@@ -1,88 +1,63 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from "../components/Header";
-import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../theme";
-import { mockDataTeam } from "../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Spinner from 'react-bootstrap/Spinner';
+import ReportsDataList from '../components/ReportsDataList';
+import Tabs from '../components/ReportTabs';
 
-const Reports = () => {
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
+export const Reports = () => {
+    const [loading, setLoading] = useState(true);
+    const [reports, setReports] = useState([]);
+
+    useEffect(() => {
+        setLoading(true);
+        axios
+            .get('http://localhost:3500/reports')
+            .then((responce) => {
+                setReports(responce.data.data)
+                setLoading(false)
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false)
+            })
+
+    }, [])
 
     const columns = [
-        { field: "id", headerName: "ID" },
-        { field: "name", headerName: "Name", flex: 1, cellClassName: "name-column--cell", },
-        { field: "age", headerName: "Age", type: "number", headerAlign: "left", align: "left", },
-        { field: "phone", headerName: "Phone Number", flex: 1, },
-        { field: "email", headerName: "Email", flex: 1, },
-        {
-            field: "access", headerName: "Access Level", flex: 1, renderCell: ({ row: { access } }) => {
-                return (
-                    <Box
-                        width="60%"
-                        m="0 auto"
-                        p="5px"
-                        display="flex"
-                        justifyContent="center"
-                        backgroundColor={
-                            access === "admin"
-                                ? colors.redAccent[600]
-                                : colors.greenAccent[700]
-                        }
-                        borderRadius="4px"
-                    >
-                        {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-                        {access === "manager" && <SecurityOutlinedIcon />}
-                        {access === "user" && <LockOpenOutlinedIcon />}
-                        <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-                            {access}
-                        </Typography>
-                    </Box>
-                )
-            }
-        },
-
+        { field: 'no', headerName: "No.", width: 70 },
+        { field: 'name', headerName: "Name", flex: 1 },
+        { field: 'phone', headerName: "Phone", flex: 1 },
+        { field: 'email', headerName: "Email", flex: 1 },
+        { field: 'type', headerName: "Employement Type", flex: 1 },
+        { field: 'status', headerName: "Status", flex: 1 },
     ];
 
-    return (<Box m="20px">
-        <Header title="REPORTS" subtitle="Select Report" />
-        <div className='shadow-lg m-10 p-2'>
-            <Box m="40px 0 0 0"
-                height="75vh"
-                sx={{
-                    "& .MuiDataGrid-root": {
-                        border: "ActiveBorder",
-                    },
-                    "& .MuiDataGrid-cell": {
-                        borderBottom: "none"
-                    },
-                    "& .name-column--cell": {
-                        color: colors.greenAccent[300]
-                    },
-                    "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: colors.redAccent[400],
-                        borderBottom: "none"
-                    },
-                    "& .MuiDataGrid-VirtualScroller": {
-                        backgroundColor: colors.primary[400]
-                    },
-                    "& .MuiDataGrid-footerContainer": {
-                        borderTop: "none",
-                        backgroundColor: colors.redAccent[400]
-                    }
+    const rows = reports.map((emp, index) => ({
+        id: emp._id,
+        no: index + 1,
+        name: emp.firstName + " " + emp.lastName,
+        phone: emp.phone,
+        email: emp.email,
+        type: emp.employmentType + " " + emp.role,
+        status: emp.status
+    }))
 
-                }}>
-                <DataGrid
-                    rows={mockDataTeam}
-                    columns={columns}
 
-                />
+    return (
+        <Box>
+            <Box>
+                <Header title="REPORTS" subtitle="Select Report" />
+            </Box >
+            <Box >
+                <Tabs />
+                {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
+                    <ReportsDataList columnData={columns} rowData={rows} />
+                )}
             </Box>
-        </div>
-    </Box>
+        </Box>
     )
 }
 
-export default Reports; 
+export default Reports;
