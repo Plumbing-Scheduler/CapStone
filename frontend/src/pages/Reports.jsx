@@ -1,10 +1,11 @@
-import { Box } from "@mui/material";
+import { Box, Tabs } from "@mui/material";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from 'react-bootstrap/Spinner';
-import ReportsDataList from '../components/ReportsDataList';
-import Tabs from '../components/ReportTabs';
+// import ReportsDataList from '../components/ReportsDataList';
+import ReportTabs from '../components/ReportTabs';
+import { Outlet } from "react-router-dom";
 
 export const Reports = () => {
     const [loading, setLoading] = useState(true);
@@ -22,7 +23,6 @@ export const Reports = () => {
                 console.log(error);
                 setLoading(false)
             })
-
     }, [])
 
     const columns = [
@@ -51,9 +51,9 @@ export const Reports = () => {
                 <Header title="REPORTS" subtitle="Select Report" />
             </Box >
             <Box >
-                <Tabs />
+                <ReportTabs />
                 {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                    <ReportsDataList columnData={columns} rowData={rows} />
+                    <Outlet />
                 )}
             </Box>
         </Box>

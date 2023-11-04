@@ -15,7 +15,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
             return (
                 <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                     <Link to={`edit/${id.id}`} className='link mr-auto'>
-                        <EditIcon />
+                        <EditIcon style={{color: 'black'}}/>
                     </Link>
                     <Link to={`details/${id.id}`} className='link m-auto'>
                         <InfoOutlinedIcon />
