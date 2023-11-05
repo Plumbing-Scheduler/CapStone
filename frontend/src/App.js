@@ -29,8 +29,8 @@ import Reports from "./pages/Reports";
 import ClientReports from './pages/Reports/ClientReports';
 import WorkOrderReports from './pages/Reports/WorkOrderReports';
 import EmployeeReports from './pages/Reports/EmployeeReports';
-// import QuoteHistoryReports from './pages/Reports/QuoteHistoryReports';
-// import PaymentReports from './pages/Reports/PaymentReports';
+import QuoteHistoryReports from './pages/Reports/QuoteHistoryReports';
+import PaymentReports from './pages/Reports/PaymentReports';
 
 // import WorkOrderform from "./scenes/form";
 
@@ -86,8 +86,9 @@ function App() {
               <Route path="" element={<WorkOrderReports />} />
               <Route path="clients" element={<ClientReports />} />
               <Route path="employeereports" element={<EmployeeReports />} />
-              {/* <Route path="quotes" element={<QuoteHistoryReports />} />
-              <Route path="payment" element={<PaymentReports />} /> */}
+              <Route path="paymentreports" element={<PaymentReports />} /> 
+              <Route path="quotehistoryreports" element={<QuoteHistoryReports />} /> 
+              
             </Route>
 
           </Routes>
