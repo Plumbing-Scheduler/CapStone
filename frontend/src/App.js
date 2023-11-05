@@ -26,7 +26,7 @@ import EditCustomer from './pages/CustomerManagement/EditCustomer';
 import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
-import { Login } from "./pages/Login";
+import Login from "./pages/Login";
 
 // import WorkOrderform from "./scenes/form";
 
@@ -37,13 +37,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="app">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-        </Routes>
         <Sidebar />
         <main className="content">
           <Topbar />
           <Routes>
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
 
             <Route path="/quotes" >
