@@ -1,9 +1,8 @@
-import { Box, Tabs } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from 'react-bootstrap/Spinner';
-// import ReportsDataList from '../components/ReportsDataList';
 import ReportTabs from '../components/ReportTabs';
 import { Outlet } from "react-router-dom";
 
@@ -34,7 +33,7 @@ export const Reports = () => {
         { field: 'status', headerName: "Status", flex: 1 },
     ];
 
-    const rows = reports.map((emp, index) => ({
+    const rows = ((emp, index) => ({
         id: emp._id,
         no: index + 1,
         name: emp.firstName + " " + emp.lastName,

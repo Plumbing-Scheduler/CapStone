@@ -28,8 +28,8 @@ import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
 import ClientReports from './pages/Reports/ClientReports';
 import WorkOrderReports from './pages/Reports/WorkOrderReports';
+import EmployeeReports from './pages/Reports/EmployeeReports';
 // import QuoteHistoryReports from './pages/Reports/QuoteHistoryReports';
-// import EmployeeReports from './pages/Reports/EmployeeReports';
 // import PaymentReports from './pages/Reports/PaymentReports';
 
 // import WorkOrderform from "./scenes/form";
@@ -83,10 +83,10 @@ function App() {
             </Route>
 
             <Route path="/reports" element={<Reports />}>
-              <Route path="clients" element={<ClientReports />} />
               <Route path="" element={<WorkOrderReports />} />
+              <Route path="clients" element={<ClientReports />} />
+              <Route path="employeereports" element={<EmployeeReports />} />
               {/* <Route path="quotes" element={<QuoteHistoryReports />} />
-              <Route path="employee" element={<EmployeeReports />} />
               <Route path="payment" element={<PaymentReports />} /> */}
             </Route>
 

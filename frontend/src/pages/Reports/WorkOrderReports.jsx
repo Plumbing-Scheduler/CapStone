@@ -1,43 +1,61 @@
 import React, { useEffect, useState } from 'react'
 import { Box } from "@mui/material";
-// import AddNewButton from "../components/AddNewButton";
 import ReportsDataList from '../../components/ReportsDataList';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 const WorkOrderReports = () => {
+    const [workOrders, setWorkOrders] = useState([]);
+    const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [reports, setReports] = useState([]);
+    dayjs(localizedFormat);
 
     useEffect(() => {
         setLoading(true);
         axios
-            .get('http://localhost:3500/report')
-            .then((responce) => {
-                setReports(responce.data.data);
+            .get('http://localhost:3500/workorders')
+            .then((response) => {
+                setWorkOrders(response.data.data);
+                axios.get('http://localhost:3500/employees')
+                    .then((responce) => {
+                        setEmployees(responce.data.data);
+                    })
                 setLoading(false);
-            })
-            .catch((error) => {
+            }).catch((error) => {
+                setLoading(false);
                 console.log(error);
-                setLoading(false);
-            });
+            })
     }, []);
 
+    const getEmployee = (empId) => {
+        for (let i = 0; employees.length > i; i++) {
+            if (employees[i]._id === empId) {
+                return employees[i].firstName + ' ' + employees[i].lastName
+            }
+        }
+    }
+
     const columns = [
-        { field: 'no', headerName: "No.", width: 70 },
-        { field: 'name', headerName: "Name", flex: 1 },
-        { field: 'phone', headerName: "Phone", flex: 1 },
-        { field: 'email', headerName: "Email", flex: 1 },
-        { field: 'address', headerName: "Address", flex: 1 },
+        { field: "no", headerName: "No.", width: 70, },
+        { field: "title", headerName: "Title", width: 150, flex: 1 },
+        { field: "cost", headerName: "Cost", width: 70, },
+        { field: "startDate", headerName: "Date", width: 200, flex: 1 },
+        { field: "customer", headerName: "Customer", width: 10, flex: 1 },
+        { field: "employee", headerName: "Employee", width: 200, flex: 1 },
+        { field: "address", headerName: "Address", width: 200, flex: 1 },
     ]
 
-    const rows = reports.map((cust, index) => ({
-        id: cust._id,
+    const rows = workOrders.map((wo, index) => ({
+        id: wo._id,
         no: index + 1,
-        name: cust.firstName + ' ' + cust.lastName,
-        phone: cust.phone,
-        email: cust.email,
-        address: cust.address.street
+        title: wo.title,
+        cost: "$" + wo.cost,
+        startDate: dayjs(wo.startDate).format('LLL'),
+        customer: wo.customerID,
+        employee: getEmployee(wo.assignedEmp),
+        address: wo.address
     }))
 
     return (

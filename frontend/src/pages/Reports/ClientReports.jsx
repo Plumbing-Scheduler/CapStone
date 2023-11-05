@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from 'react-bootstrap/Spinner';
 import ReportsDataList from '../../components/ReportsDataList';
-import ReportTabs from '../../components/ReportTabs';
+
 
 const ClientReports = () => {
     const [loading, setLoading] = useState(true);
-    const [reports, setReports] = useState([]);
+    const [customers, setReports] = useState([]);
 
     useEffect(() => {
         setLoading(true);
@@ -29,17 +29,17 @@ const ClientReports = () => {
         { field: 'name', headerName: "Name", flex: 1 },
         { field: 'phone', headerName: "Phone", flex: 1 },
         { field: 'email', headerName: "Email", flex: 1 },
-        // { field: 'address', headerName: "Address", flex: 1 },
-    ]
-
-    const rows = reports.map((cust, index) => ({
+        { field: 'address', headerName: "Address", flex: 1 },
+      ]
+    
+      const rows = customers.map((cust, index) => ({
         id: cust._id,
         no: index + 1,
         name: cust.firstName + ' ' + cust.lastName,
         phone: cust.phone,
         email: cust.email,
-        // address: cust.address.street
-    }))
+        address: cust.address.street
+      }))
 
     return (
 
