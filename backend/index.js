@@ -6,6 +6,8 @@ import calendar from './routes/api/calendar.js';
 import Customer from './routes/api/customer.js'
 import Quote from './routes/api/quoteRequest.js';
 import Employee from './routes/api/employee.js';
+import Management from './routes/api/management.js';
+import auth from './routes/auth.js';
 const app = express();
 
 const PORT = process.env.port || 3500;
@@ -20,6 +22,8 @@ app.get('/' ,(request, response) => {
     return response.status(234).send('Welcome to the beggining of the end!')
 });
 
+app.use('/login', auth)
+app.use('/management', Management)
 app.use('/workorders', workOrder);
 app.use('/schedule', calendar);
 app.use('/customer', Customer);
