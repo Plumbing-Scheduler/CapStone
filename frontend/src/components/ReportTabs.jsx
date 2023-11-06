@@ -30,13 +30,13 @@ const ReportTabs = () => {
                 <Link to={`employeereports`}>
                     <Tab value="employee" label="Employee Report" />
                 </Link>
-                <Link to={`payment`}>
-                    <Tab value="payment" label="Transaction Report" />
+                <Link to={`paymentreports`}>
+                    <Tab value="payment" label="Payment Report" />
                 </Link>
-                <Link to={`quotereports`}>
-                    <Tab value="quote" label="Quote History Report" />
+                <Link to={`quotehistoryreports`}>
+                    <Tab value="quotehistoryreports" label="Quote History Report" />
                 </Link>
-            </Tabs>
+        </Tabs>
         </Box >
     )
 }
