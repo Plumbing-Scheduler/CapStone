@@ -38,7 +38,7 @@ const Sidebar = () => {
   useEffect(() => {
     // Add a listener for window resize event
     const handleResize = () => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 400) {
         setIsCollapsed(true); // Collapse sidebar for mobile and tablet (adjust the width as needed)
       } else {
         setIsCollapsed(false);
@@ -100,7 +100,7 @@ const Sidebar = () => {
 
             {isCollapsed ? null : (
               <Box mb="25px">
-                <Box display="flex" justifyContent="center" alignItems="center">
+                {/* <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="company-logo"
                     width="100px"
@@ -108,7 +108,7 @@ const Sidebar = () => {
                     src={`../../assets/companylogo.png`}
                     style={{ cursor: 'pointer', borderRadius: '50%' }}
                   />
-                </Box>
+                </Box> */}
 
                 <Box textAlign="center">
                   <Typography

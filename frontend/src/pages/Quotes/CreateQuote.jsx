@@ -41,8 +41,8 @@ const Quotes = () => {
 
 
     return (
-        <Box m="20px">
-            <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
+        <Box >
+            <Header title="QUOTE REQUESTS" subtitle="Add New Quote" />
 
             <Typography
                 //display="flex"
@@ -53,7 +53,6 @@ const Quotes = () => {
                     width: '80%',
                     textAlign: 'center'
                 }}>
-                Add New Quote
             </Typography>
             <Box
                 display="grid"
@@ -62,6 +61,7 @@ const Quotes = () => {
                 sx={{
                     gridColumn: "span 4",
                     margin: "auto",
+                    padding: "30px",
                     width: '75%'
                 }} >
                 <TextField
