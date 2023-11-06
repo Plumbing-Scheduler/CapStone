@@ -28,12 +28,15 @@ const ReportTabs = () => {
                     <Tab value="client" label="Client History Report" />
                 </Link>
                 <Link to={`employeereports`}>
-                <Tab value="employee" label="Employee Report" />
+                    <Tab value="employee" label="Employee Report" />
                 </Link>
-
-            <Tab value="payment" label="Transaction Report" />
-            <Tab value="quote" label="Quote History Report" />
-        </Tabs>
+                <Link to={`payment`}>
+                    <Tab value="payment" label="Transaction Report" />
+                </Link>
+                <Link to={`quotereports`}>
+                    <Tab value="quote" label="Quote History Report" />
+                </Link>
+            </Tabs>
         </Box >
     )
 }
