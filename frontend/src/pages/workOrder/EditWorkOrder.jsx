@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, TextField, Typography } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -17,7 +17,7 @@ export const CreateWorkOrder = () => {
     const [title, setTitle] = useState('')
     const [startDate, setStartDate] = useState(Date.now());
     const [cost, setCost] = useState('');
-    const [assignedEmp, setAssignedEmp] = useState('');
+    const [assignedEmp, setAssignedEmp] = useState("");
     const [endDate, setEndDate] = useState(startDate);
     const [customerID, setCustomerID] = useState('');
     const [busName, setBusName] = useState('');
@@ -42,8 +42,8 @@ export const CreateWorkOrder = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get(`http://localhost:3500/workorders/${id}`)
+        axiosInstance
+            .get(`/workorders/${id}`)
             .then((response) => {
                 setServiceStatus(response.data.serviceStatus);
                 setDescription(response.data.description);
@@ -55,7 +55,7 @@ export const CreateWorkOrder = () => {
                 setCustomerID(response.data.customerID);
                 setBusName(response.data.busName);
                 setAddress(response.data.address);
-                axios.get('http://localhost:3500/employees')
+                axiosInstance.get('/employees')
                     .then((responce) => {
                         setEmployees(responce.data.data);
                     })
@@ -68,8 +68,8 @@ export const CreateWorkOrder = () => {
     }, [id])
 
     const handleSave = () => {
-        axios
-            .put(`http://localhost:3500/workorders/${id}`, data)
+        axiosInstance
+            .put(`/workorders/${id}`, data)
             .then(
                 navigate('/workorder')
             )

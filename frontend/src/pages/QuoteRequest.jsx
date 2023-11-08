@@ -3,9 +3,8 @@ import Header from "../components/Header";
 import Spinner from "react-bootstrap/esm/Spinner";
 import AddNewButton from "../components/AddNewButton";
 import { useEffect, useState } from "react";
-import axios from 'axios';
 import DataList from '../components/DataList';
-import instance from "../axiosInstance";
+import axiosInstance from "../axiosInstance";
 
 const Quotes = () => {
     // Declaring Constants
@@ -14,7 +13,7 @@ const Quotes = () => {
 
     useEffect(() => {
         setLoading(true);
-        instance
+        axiosInstance
             .get('/quote')
             .then((response) => {
                 setQuotes(response.data.data)

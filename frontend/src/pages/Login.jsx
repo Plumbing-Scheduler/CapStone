@@ -1,7 +1,7 @@
 import { AlertTitle, Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import { tokens } from "../theme.js";
-import instance from "../axiosInstance.js";
+import axiosInstance from "../axiosInstance.js";
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 
@@ -23,12 +23,12 @@ const Login = () => {
       
     const handleLogin = () => {
 
-        instance
+        axiosInstance
             .post('/login', login)
             .then((response) => {
                 console.log(response.status)
-                instance.defaults.headers.common['Authorization'] = "Bearer " + response.data.token;
-                console.log(instance.defaults.headers.common['Authorization'])
+                axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.token;
+                console.log(axiosInstance.defaults.headers.common['Authorization'])
             })
             .catch((error) => {
                 setUnauth(false);

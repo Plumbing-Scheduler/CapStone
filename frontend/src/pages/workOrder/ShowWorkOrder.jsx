@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import axios from 'axios';
+import axiosInstance from "../../axiosInstance";
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Header from '../../components/Header';
@@ -19,7 +19,7 @@ const ShowWorkOrder = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
+    axiosInstance
       .get(`http://localhost:3500/workorders/${id}`)
       .then((responce) => {
         setWorkOrder(responce.data);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { Box, TextField, Typography } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -41,7 +41,8 @@ export const CreateWorkOrder = () => {
     };
 
     useEffect(() => {
-        axios.get('http://localhost:3500/employees')
+        axiosInstance
+            .get('/employees')
             .then((responce) => {
                 setEmployees(responce.data.data);
             })
@@ -51,8 +52,8 @@ export const CreateWorkOrder = () => {
     })
 
     const handleSave = () => {
-        axios
-            .post('http://localhost:3500/workorders', newWorkOrder)
+        axiosInstance
+            .post('/workorders', newWorkOrder)
             .then((response) => {
                 const newCal = {
                     title: response.data.title,
@@ -61,8 +62,8 @@ export const CreateWorkOrder = () => {
                     serviceId: response.data._id,
                     empId: response.data.assignedEmp,
                 }
-                axios
-                    .post('http://localhost:3500/schedule', newCal)
+                axiosInstance
+                    .post('/schedule', newCal)
                     .then((response) => {
                         console.log(response.data)
                         navigate('/workorder')

@@ -16,7 +16,7 @@ const handleLogin = async (req, res) => {
                 "email": found.email,
             },
             process.env.ACCESS_TOKEN,
-            { expiresIn: '5m' },
+            { expiresIn: '15m' },
         );
         res.cookie('jwt', token, {httpOnly: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000})
         res.json({token});

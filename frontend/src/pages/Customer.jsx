@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import AddNewButton from "../components/AddNewButton";
 import DataList from '../components/DataList';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import instance from "../axiosInstance";
+import axiosInstance from "../axiosInstance";
 
 const Customer = () => {
   const [loading, setLoading] = useState(true);
@@ -12,7 +12,7 @@ const Customer = () => {
 
   useEffect(() => {
     setLoading(true);
-    instance
+    axiosInstance
       .get('/customer')
       .then((responce) => {
         setCustomers(responce.data.data);
