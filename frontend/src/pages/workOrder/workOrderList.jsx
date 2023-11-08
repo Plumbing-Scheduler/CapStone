@@ -6,6 +6,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import DataList from '../../components/DataList';
+import instance from "../../axiosInstance";
 
 export const WorkOrders = () => {
     const [workOrders, setWorkOrders] = useState([]);
@@ -15,11 +16,11 @@ export const WorkOrders = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get('http://localhost:3500/workorders')
+        instance
+            .get('/workorders')
             .then((response) => {
                 setWorkOrders(response.data.data);
-                axios.get('http://localhost:3500/employees')
+                instance.get('/employees')
                     .then((responce) => {
                         setEmployees(responce.data.data);
                     })

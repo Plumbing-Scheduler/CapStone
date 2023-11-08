@@ -1,11 +1,48 @@
-import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
-import React from "react";
+import { AlertTitle, Box, Button, TextField, Typography, useTheme } from "@mui/material";
+import React, { useState } from "react";
 import { tokens } from "../theme.js";
-import { Link } from "react-router-dom";
+import instance from "../axiosInstance.js";
+import { useNavigate } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
 
 const Login = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [unauth, setUnauth] = useState(false);
+    const [noInput, setNoInput] = useState(false);
+    const navigate = useNavigate();
+    
+    const login = {
+        email,
+        password
+    }
+
+    
+      
+    const handleLogin = () => {
+
+        instance
+            .post('/login', login)
+            .then((response) => {
+                console.log(response.status)
+                instance.defaults.headers.common['Authorization'] = "Bearer " + response.data.token;
+                console.log(instance.defaults.headers.common['Authorization'])
+            })
+            .catch((error) => {
+                setUnauth(false);
+                setNoInput(false);
+                console.log(error.response.status)
+                if (error.response.status === 401 || error.response.status == 403 ) {
+                    setUnauth(true);
+                }
+                else if (error.response.status === 404) {
+                    setNoInput(true);
+                }
+            })
+    
+    }
 
     return (<Box>
         <Box display="flex" justifyContent="center" alignItems="center">
@@ -31,6 +68,17 @@ const Login = () => {
                 // gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                 sx={{ margin: 'auto', width: '90%' }}
             >
+                {unauth &&
+                    <Alert severity="error">
+                        <AlertTitle>Unauthorized</AlertTitle>
+                        Incorrect Email and/or Password
+                    </Alert>}
+
+                {noInput &&
+                    <Alert severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                        Please Fill Out All Fields
+                    </Alert>}
                 <TextField
                     fullWidth
                     required
@@ -39,6 +87,8 @@ const Login = () => {
                     label="Email Address"
                     name="email"
                     id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <TextField
                     fullWidth
@@ -48,7 +98,8 @@ const Login = () => {
                     label="Password"
                     name="password"
                     id="password"
-
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
 
             </Box>
@@ -57,9 +108,9 @@ const Login = () => {
                     backgroundColor={colors.redAccent[500]}
                     display="grid"
                     gap="30px"
-                    sx={{ p: '4px', m: 'auto', width:'90%', borderRadius: '4px' }}
+                    sx={{ p: '4px', m: 'auto', width: '90%', borderRadius: '4px' }}
                 >
-                    <Button >Login</Button>
+                    <Button onClick={handleLogin}>Login</Button>
                 </Box>
             </Box>
         </Box>

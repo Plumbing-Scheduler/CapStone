@@ -2,9 +2,9 @@ import { Box } from "@mui/material";
 import Header from "../components/Header";
 import AddNewButton from "../components/AddNewButton";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Spinner from 'react-bootstrap/Spinner';
 import DataList from '../components/DataList';
+import instance from "../axiosInstance";
 
 export const Employee = () => {
     const [loading, setLoading] = useState(true);
@@ -12,7 +12,7 @@ export const Employee = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
+        instance
             .get('http://localhost:3500/employees')
             .then((responce) => {
                 setEmployees(responce.data.data)

@@ -5,6 +5,7 @@ import AddNewButton from "../components/AddNewButton";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import DataList from '../components/DataList';
+import instance from "../axiosInstance";
 
 const Quotes = () => {
     // Declaring Constants
@@ -13,14 +14,15 @@ const Quotes = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get('http://localhost:3500/quote')
+        instance
+            .get('/quote')
             .then((response) => {
                 setQuotes(response.data.data)
                 setLoading(false);
                 console.log(response.data.data);
             })
             .catch((error) => {
+                setLoading(false);
                 console.log(error)
             })
     }, []);

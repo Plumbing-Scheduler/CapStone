@@ -8,6 +8,9 @@ import Quote from './routes/api/quoteRequest.js';
 import Employee from './routes/api/employee.js';
 import Management from './routes/api/management.js';
 import auth from './routes/auth.js';
+import verifyJWT from './middleware/verifyJWT.js';
+import cookieParser from 'cookie-parser';
+import 'dotenv/config'
 const app = express();
 
 const PORT = process.env.port || 3500;
@@ -16,13 +19,15 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use(cookieParser())
 //Default Route
 app.get('/' ,(request, response) => {
     //console.log(request);
     return response.status(234).send('Welcome to the beggining of the end!')
 });
-
 app.use('/login', auth)
+
+app.use(verifyJWT)
 app.use('/management', Management)
 app.use('/workorders', workOrder);
 app.use('/schedule', calendar);

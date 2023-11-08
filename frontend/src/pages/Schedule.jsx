@@ -19,6 +19,7 @@
     } from '@devexpress/dx-react-scheduler-material-ui';
     import Header from "../components/Header";
     import { tokens } from "../theme";
+    import instance from "../axiosInstance";
 
     const Schedule = () => {
         const theme = useTheme();
@@ -27,7 +28,7 @@
         const [loading, setLoading] = useState(true);
 
         useEffect(() => {
-            axios.get('http://localhost:3500/schedule')
+            instance.get('/schedule')
                 .then((response) => {
                     setData(response.data.data);
                     setLoading(false);
