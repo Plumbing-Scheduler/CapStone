@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from "axios";
+import axiosInstance from "../../axiosInstance.js";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -102,8 +102,8 @@ export const EditEmployee = () => {
     useEffect(() => {
         setLoading(true);
 
-        axios
-            .get(`http://localhost:3500/employees/${id}`)
+        axiosInstance
+            .get(`/employees/${id}`)
             .then((responce) => {
                 setFirstName(responce.data.firstName)
                 setLastName(responce.data.lastName)
@@ -123,8 +123,8 @@ export const EditEmployee = () => {
     }, [])
 
     const handleSave = () => {
-        axios
-            .put(`http://localhost:3500/employees/${id}`, newEmployee)
+        axiosInstance
+            .put(`/employees/${id}`, newEmployee)
             .then(
                 navigate('/employee')
             )

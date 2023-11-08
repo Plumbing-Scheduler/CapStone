@@ -4,7 +4,7 @@ import { Box, Typography, Button, useTheme } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { tokens } from "../../theme.js";
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance.js';
 import Spinner from 'react-bootstrap/esm/Spinner';
 
 const DeleteEmployee = () => {
@@ -17,8 +17,8 @@ const DeleteEmployee = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:3500/employees/${id}`)
+    axiosInstance
+      .get(`/employees/${id}`)
       .then((responce) => {
         setEmployee(responce.data);
         setLoading(false);
@@ -30,8 +30,8 @@ const DeleteEmployee = () => {
   }, [])
 
   const handleDelete = () => {
-    axios
-      .delete(`http://localhost:3500/employees/${id}`)
+    axiosInstance
+      .delete(`/employees/${id}`)
       .then(
         navigate('/employee')
       )

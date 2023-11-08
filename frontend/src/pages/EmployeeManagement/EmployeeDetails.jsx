@@ -1,5 +1,5 @@
 import { Box, Typography, Button } from '@mui/material';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner';
@@ -15,8 +15,8 @@ const EmployeeDetails = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get(`http://localhost:3500/employees/${id}`)
+        axiosInstance
+            .get(`/employees/${id}`)
             .then((responce) => {
                 setEmployee(responce.data);
                 setLoading(false);

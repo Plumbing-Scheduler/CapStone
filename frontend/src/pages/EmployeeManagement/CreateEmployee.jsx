@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+import axiosInstance from '../../axiosInstance';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -98,8 +98,8 @@ export const CreateEmployee = () => {
     }
 
     const handleSave = () => {
-        axios
-            .post('http://localhost:3500/employees', newEmployee)
+        axiosInstance
+            .post('/employees', newEmployee)
             .then(
                 navigate('/employee')
             )
