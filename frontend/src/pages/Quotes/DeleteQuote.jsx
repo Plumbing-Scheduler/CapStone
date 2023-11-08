@@ -4,7 +4,7 @@ import { Box, Typography, Button, useTheme } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { tokens } from "../../theme.js";
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance.js';
 import Spinner from 'react-bootstrap/esm/Spinner';
 
 const DeleteQuote = () => {
@@ -17,8 +17,8 @@ const DeleteQuote = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get(`http://localhost:3500/quote/${id}`)
+        axiosInstance
+            .get(`/quote/${id}`)
             .then((responce) => {
                 setQuote(responce.data);
                 setLoading(false);
@@ -30,8 +30,8 @@ const DeleteQuote = () => {
     }, [])
 
     const handleDelete = () => {
-        axios
-            .delete(`http://localhost:3500/quote/${id}`)
+        axiosInstance
+            .delete(`/quote/${id}`)
             .then(
                 navigate('/quotes')
             )

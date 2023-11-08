@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Typography, TextField } from "@mui/material";
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
 const EditQuote = () => {
@@ -31,8 +31,8 @@ const EditQuote = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get(`http://localhost:3500/quote/${id}`)
+        axiosInstance
+            .get(`/quote/${id}`)
             .then((responce) => {
                 setFirstName(responce.data.firstName);
                 setLastName(responce.data.lastName);
@@ -52,8 +52,8 @@ const EditQuote = () => {
     }, [])
 
     const handleSave = () => {
-        axios
-            .put(`http://localhost:3500/quote/${id}`, data)
+        axiosInstance
+            .put(`/quote/${id}`, data)
             .then(
                 navigate('/quotes')
             )

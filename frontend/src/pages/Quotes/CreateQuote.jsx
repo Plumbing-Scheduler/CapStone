@@ -2,7 +2,7 @@ import { Box, TextField, Typography } from "@mui/material";
 import Header from "../../components/Header";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+import axiosInstance from '../../axiosInstance';
 
 
 const Quotes = () => {
@@ -28,8 +28,8 @@ const Quotes = () => {
     }
 
     const handleSave = () => {
-        axios
-            .post('http://localhost:3500/quote', newQuote)
+        axiosInstance
+            .post('/quote', newQuote)
             .then((response) => {
                 console.log(response.data)
                 navigate('/quotes')

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import { Box, Typography } from '@mui/material';
@@ -17,8 +17,8 @@ const ShowQuote = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get(`http://localhost:3500/quote/${id}`)
+        axiosInstance
+            .get(`/quote/${id}`)
             .then((responce) => {
                 setQuote(responce.data);
                 setLoading(false);
