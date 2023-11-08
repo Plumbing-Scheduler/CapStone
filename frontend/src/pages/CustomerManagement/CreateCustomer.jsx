@@ -2,7 +2,7 @@ import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+import axiosInstance from "../../axiosInstance.js";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { tokens } from "../../theme.js";
 
@@ -43,8 +43,8 @@ export const CreateCustomer = () => {
         
     }
     const handleSave = () => {
-        axios
-            .post('http://localhost:3500/customer', newCustomer)
+        axiosInstance
+            .post('/customer', newCustomer)
             .then(
                 navigate('/customers')
             )

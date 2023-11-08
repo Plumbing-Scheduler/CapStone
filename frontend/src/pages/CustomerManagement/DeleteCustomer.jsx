@@ -4,7 +4,7 @@ import { Box, Typography, Button, useTheme } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { tokens } from "../../theme.js";
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance.js';
 import Spinner from 'react-bootstrap/esm/Spinner';
 
 const DeleteCustomer = () => {
@@ -17,8 +17,8 @@ const DeleteCustomer = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get(`http://localhost:3500/customer/${id}`)
+        axiosInstance
+            .get(`/customer/${id}`)
             .then((responce) => {
                 setCustomer(responce.data);
                 setLoading(false);
@@ -30,8 +30,8 @@ const DeleteCustomer = () => {
     }, [])
 
     const handleDelete = () => {
-        axios
-            .delete(`http://localhost:3500/customer/${id}`)
+        axiosInstance
+            .delete(`/customer/${id}`)
             .then(
                 navigate('/customers')
             )

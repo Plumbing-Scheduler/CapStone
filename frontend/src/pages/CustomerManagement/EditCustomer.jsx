@@ -2,7 +2,7 @@ import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from "axios";
+import axiosInstance from "../../axiosInstance.js";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { tokens } from "../../theme.js";
 import Spinner from 'react-bootstrap/esm/Spinner';
@@ -48,8 +48,8 @@ export const EditCustomer = () => {
     useEffect(() => {
         setLoading(true);
 
-        axios
-            .get(`http://localhost:3500/customer/${id}`)
+        axiosInstance
+            .get(`/customer/${id}`)
             .then((responce) => {
                 setFirstName(responce.data.firstName)
                 setLastName(responce.data.lastName)
@@ -70,8 +70,8 @@ export const EditCustomer = () => {
     }, [])
 
     const handleSave = () => {
-        axios
-            .put(`http://localhost:3500/customer/${id}`, updateCustomer)
+        axiosInstance
+            .put(`/customer/${id}`, updateCustomer)
             .then(
                 navigate('/customers')
             )
