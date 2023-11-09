@@ -26,11 +26,11 @@ import EditCustomer from './pages/CustomerManagement/EditCustomer';
 import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
-import ClientReports from './pages/Reports/ClientReports';
+import CustomerReports from './pages/Reports/CustomerReports';
 import WorkOrderReports from './pages/Reports/WorkOrderReports';
 import EmployeeReports from './pages/Reports/EmployeeReports';
-import QuoteHistoryReports from './pages/Reports/QuoteHistoryReports';
-import PaymentReports from './pages/Reports/PaymentReports';
+// import QuoteHistoryReports from './pages/Reports/QuoteHistoryReports';
+import TransactionReports from './pages/Reports/TransactionReports';
 
 // import WorkOrderform from "./scenes/form";
 
@@ -84,10 +84,10 @@ function App() {
 
             <Route path="/reports" element={<Reports />}>
               <Route path="" element={<WorkOrderReports />} />
-              <Route path="clients" element={<ClientReports />} />
+              <Route path="customerreports" element={<CustomerReports />} />
               <Route path="employeereports" element={<EmployeeReports />} />
-              <Route path="paymentreports" element={<PaymentReports />} /> 
-              <Route path="quotehistoryreports" element={<QuoteHistoryReports />} /> 
+              <Route path="transactionreports" element={<TransactionReports />} /> 
+              {/* <Route path="quotehistoryreports" element={<QuoteHistoryReports />} />  */}
               
             </Route>
 

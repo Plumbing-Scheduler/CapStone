@@ -39,21 +39,21 @@ const WorkOrderReports = () => {
 
     const columns = [
         { field: "no", headerName: "No.", width: 70, },
+        {field: 'name', headerName: "Name", flex: 1},
         { field: "title", headerName: "Title", width: 150, flex: 1 },
-        { field: "cost", headerName: "Cost", width: 70, },
-        { field: "startDate", headerName: "Date", width: 200, flex: 1 },
-        { field: "customer", headerName: "Customer", width: 10, flex: 1 },
         { field: "employee", headerName: "Employee", width: 200, flex: 1 },
-        { field: "address", headerName: "Address", width: 200, flex: 1 },
+        { field: "startDate", headerName: "Date", width: 200, flex: 1 },
     ]
 
     const rows = workOrders.map((wo, index) => ({
         id: wo._id,
         no: index + 1,
+        name: wo.firstName + ' ' + wo.lastName,
+        customer: wo.customerID,
         title: wo.title,
         cost: "$" + wo.cost,
         startDate: dayjs(wo.startDate).format('LLL'),
-        customer: wo.customerID,
+        
         employee: getEmployee(wo.assignedEmp),
         address: wo.address
     }))

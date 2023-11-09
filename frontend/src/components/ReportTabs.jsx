@@ -13,7 +13,7 @@ const ReportTabs = () => {
         setValue(newValue);
     }
     return (
-        <Box sx={{ margin: 'auto', width: '63%', ml: '64px', boxShadow: "4" }}>
+        <Box sx={{ margin: 'auto', boxShadow: "4" }}>
             <Tabs
                 value={value}
                 onChange={handleChange}
@@ -22,20 +22,20 @@ const ReportTabs = () => {
                 aria-label="secondary tabs  example"
             >
                 <Link to={``}>
-                    <Tab value="workorder" label="Work Order" />
+                    <Tab value="workorder" label="Service History" />
                 </Link>
-                <Link to={`clients`}>
-                    <Tab value="client" label="Client History Report" />
+                <Link to={`customerreports`}>
+                    <Tab value="customer" label="Customer History" />
                 </Link>
                 <Link to={`employeereports`}>
                     <Tab value="employee" label="Employee Report" />
                 </Link>
-                <Link to={`paymentreports`}>
-                    <Tab value="payment" label="Payment Report" />
+                <Link to={`transactionreports`}>
+                    <Tab value="transaction" label="Transaction History" />
                 </Link>
-                <Link to={`quotehistoryreports`}>
+                {/* <Link to={`quotehistoryreports`}>
                     <Tab value="quotehistoryreports" label="Quote History Report" />
-                </Link>
+                </Link> */}
         </Tabs>
         </Box >
     )

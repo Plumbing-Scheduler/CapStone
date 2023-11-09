@@ -1,21 +1,20 @@
 import { Box, Tabs} from "@mui/material";
-import Header from "../../components/Header";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from 'react-bootstrap/Spinner';
 import ReportsDataList from '../../components/ReportsDataList';
 
 
-const ClientReports = () => {
+const TransactionReports = () => {
     const [loading, setLoading] = useState(true);
-    const [customers, setReports] = useState([]);
+    const [workOrders, setWorkOrders] = useState([]);
 
     useEffect(() => {
         setLoading(true);
         axios
-            .get('http://localhost:3500/report')
+            .get('http://localhost:3500/workorders')
             .then((responce) => {
-                setReports(responce.data.data);
+                setWorkOrders(responce.data.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -27,12 +26,13 @@ const ClientReports = () => {
     const columns = [
         { field: 'no', headerName: "No.", width: 70 },
         { field: 'name', headerName: "Name", flex: 1 },
-        { field: 'phone', headerName: "Phone", flex: 1 },
-        { field: 'email', headerName: "Email", flex: 1 },
-        { field: 'address', headerName: "Address", flex: 1 },
+        { field: 'paid', headerName: "Paid", flex: 1 },
+        { field: 'service', headerName: "Service", flex: 1 },
+        { field: 'payment', headerName: "Payment Type", flex: 1 },
+        { field: 'date', headerName: "Date", flex: 1 },
       ]
     
-      const rows = customers.map((cust, index) => ({
+      const rows = workOrders.map((cust, index) => ({
         id: cust._id,
         no: index + 1,
         name: cust.firstName + ' ' + cust.lastName,
@@ -54,4 +54,4 @@ const ClientReports = () => {
     )
 }
 
-export default ClientReports
+export default TransactionReports
