@@ -22,14 +22,13 @@ const handleLogin = async (req, res) => {
         const refreshToken = jwt.sign(
             {email: found.email},
             process.env.REFRESH_TOKEN,
-            {expiresIn: '2d'}
+            {expiresIn: '1d'}
         )
 
         found.refreshToken = refreshToken;
         const result = await found.save();
-        console.log(result);
 
-        res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000})
+        res.cookie('jwt2', refreshToken, {httpOnly: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000})
         res.json({accessToken});
     }
     else {

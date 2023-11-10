@@ -7,7 +7,7 @@ import Alert from '@mui/material/Alert';
 import { useCookies } from 'react-cookie';
 
 const Login = () => {
-    const [cookies, setCookie] = useCookies(['jwt']);
+    const [Cookies, setCookie] = useCookies(['']);
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -22,30 +22,26 @@ const Login = () => {
         password
     }
 
-    
-      
     const handleLogin = () => {
 
         axiosInstance
             .post('/login', login)
             .then((response) => {
-                console.log(response.status)
+                setCookie('jwt', response.data.accessToken, {maxAge: 30})
                 axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
-                //console.log(axiosInstance.defaults.headers.common['Authorization'])
-                console.log(axiosInstance.defaults)
-                setCookie('jwt', response.data.accessToken)
+                
                 navigate('/')
             })
             .catch((error) => {
                 setUnauth(false);
                 setNoInput(false);
-                console.log(error.response.status)
-                if (error.response.status === 401 || error.response.status == 403 ) {
-                    setUnauth(true);
-                }
-                else if (error.response.status === 404) {
-                    setNoInput(true);
-                }
+                console.log(error)
+                // if (error.response.status === 401 || error.response.status == 403 ) {
+                //     setUnauth(true);
+                // }
+                // else if (error.response.status === 404) {
+                //     setNoInput(true);
+                // }
             })
     
     }

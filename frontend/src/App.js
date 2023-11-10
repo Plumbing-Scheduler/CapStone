@@ -28,17 +28,32 @@ import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
 import Login from "./pages/Login";
 import { useCookies } from 'react-cookie';
-
+import { useEffect } from 'react';
+import axiosInstance from './axiosInstance';
 // import WorkOrderform from "./scenes/form";
 
 function App() {
   const [theme, colorMode] = useMode();
-  const [cookies, setCookie] = useCookies(['jwt']);
+  const [ cookies, setCookie ] = useCookies(['']);
+
+  useEffect(() => {
+    axiosInstance
+      .get('/refresh')
+      .then((response) => {
+        axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
+        setCookie('jwt', response.data.accessToken, {maxAge: 30})
+        console.log(document.cookie);
+    })
+      .catch((error) => {
+        console.log(error);
+        console.log(document.cookie);
+      })
+  })
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {!cookies.jwt ? (
+        {!cookies.jwt2 ? (
           <Login />
         ):(
         <div className="app">
@@ -46,7 +61,6 @@ function App() {
           <main className="content">
             <Topbar />
             <Routes>
-              <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
 
               <Route path="/quotes" >
