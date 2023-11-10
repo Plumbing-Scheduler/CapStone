@@ -11,15 +11,26 @@ const handleLogin = async (req, res) => {
     }
     const match = await found.password.localeCompare(password);
     if (match === 0) {
-        const token = jwt.sign(
+        const accessToken = jwt.sign(
             {
                 "email": found.email,
             },
             process.env.ACCESS_TOKEN,
-            { expiresIn: '15m' },
+            { expiresIn: '30s' },
         );
-        res.cookie('jwt', token, {httpOnly: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000})
-        res.json({token});
+        
+        const refreshToken = jwt.sign(
+            {email: found.email},
+            process.env.REFRESH_TOKEN,
+            {expiresIn: '2d'}
+        )
+
+        found.refreshToken = refreshToken;
+        const result = await found.save();
+        console.log(result);
+
+        res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000})
+        res.json({accessToken});
     }
     else {
         return res.status(401).json({ "message": "Unauthorized" })

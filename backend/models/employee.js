@@ -55,7 +55,10 @@ const employeeSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        serviceList: String
+        serviceList: String,
+        password: String,
+        refreshToken: String
+
     }
 );
 

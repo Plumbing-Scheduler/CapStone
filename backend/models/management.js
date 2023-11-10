@@ -26,7 +26,8 @@ const managementSchema = mongoose.Schema(
         password: {
             type: String,
             required: true
-        }
+        },
+        refreshToken: String
     }
 );
 

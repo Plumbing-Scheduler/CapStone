@@ -4,8 +4,11 @@ import { tokens } from "../theme.js";
 import axiosInstance from "../axiosInstance.js";
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
+    const [cookies, setCookie] = useCookies(['jwt']);
+
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [email, setEmail] = useState('');
@@ -27,8 +30,11 @@ const Login = () => {
             .post('/login', login)
             .then((response) => {
                 console.log(response.status)
-                axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.token;
-                console.log(axiosInstance.defaults.headers.common['Authorization'])
+                axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
+                //console.log(axiosInstance.defaults.headers.common['Authorization'])
+                console.log(axiosInstance.defaults)
+                setCookie('jwt', response.data.accessToken)
+                navigate('/')
             })
             .catch((error) => {
                 setUnauth(false);
