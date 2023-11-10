@@ -6,7 +6,7 @@ import {
     Paper,
     useTheme,
 } from "@mui/material";
-import { ViewState, EditingState, IntegratedEditing, AppointmentTooltip, ConfirmationDialog, AppointmentForm } from '@devexpress/dx-react-scheduler';
+import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
 import {
     Scheduler,
     DayView,
@@ -15,6 +15,9 @@ import {
     Appointments,
     Toolbar,
     DateNavigator,
+    AppointmentTooltip,
+    ConfirmationDialog,
+    AppointmentForm,
     ViewSwitcher
 } from '@devexpress/dx-react-scheduler-material-ui';
 import Header from "../components/Header";
@@ -44,14 +47,8 @@ const Schedule = () => {
     }, []);
 
     // Create a new appointment
-    const onCommitChanges = ({ added, changed, deleted }) => {
+    const onCommitChanges = ({ changed, deleted }) => {
         let updatedData = [...data];
-    
-        if (added) {
-            // Handle adding new appointments
-            added.appointmentData.id = Math.max(...updatedData.map(item => item.id), 0) + 1;
-            updatedData.push(added.appointmentData);
-        }
     
         if (changed) {
             // Handle editing existing appointments
@@ -84,6 +81,12 @@ const Schedule = () => {
                         <Box flex="1 1 20%">
                             <Scheduler data={data}>
                                 <ViewState defaultCurrentDate={currDate} defaultCurrentViewName={isMobile ? "Day" : "Week"} />
+                                <EditingState
+                                    onCommitChanges={onCommitChanges}
+                                    addedAppointment={addedAppointment}
+                                    changedAppointment={editingAppointment}
+                                    deletedAppointmentId={deletedAppointmentId}
+                                />
                                 <IntegratedEditing/>
                                 <DayView startDayHour={6} endDayHour={18} />
                                 <WeekView startDayHour={6} endDayHour={18} />
@@ -98,13 +101,6 @@ const Schedule = () => {
                                 <Toolbar />
                                 <DateNavigator />
                                 <ViewSwitcher />
-                                {/* Editing State */}
-                                <EditingState
-                                    onCommitChanges={onCommitChanges}
-                                    addedAppointment={addedAppointment}
-                                    changedAppointment={editingAppointment}
-                                    deletedAppointmentId={deletedAppointmentId}
-                                />
                             </Scheduler>
                         </Box>
                     </Paper>
