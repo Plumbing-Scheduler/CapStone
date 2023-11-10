@@ -22,7 +22,7 @@ const ReportTabs = () => {
                 aria-label="secondary tabs  example"
             >
                 <Link to={``}>
-                    <Tab value="workorder" label="Service History" />
+                    <Tab value="service" label="Service History" />
                 </Link>
                 <Link to={`customerreports`}>
                     <Tab value="customer" label="Customer History" />

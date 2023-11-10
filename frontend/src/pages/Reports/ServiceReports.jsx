@@ -6,7 +6,7 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-const WorkOrderReports = () => {
+const ServiceReports = () => {
     const [workOrders, setWorkOrders] = useState([]);
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -40,6 +40,10 @@ const WorkOrderReports = () => {
     const columns = [
         { field: "no", headerName: "No.", width: 70, },
         {field: 'name', headerName: "Name", flex: 1},
+        {field: 'phone', headerName: "Phone", flex: 1},
+        {field: 'email', headerName: "Email", flex: 1},
+        {field: 'address', headerName: "Address", flex: 1},
+        {field: 'customerid', headerName: "Customer ID", flex: 1},
         { field: "title", headerName: "Title", width: 150, flex: 1 },
         { field: "employee", headerName: "Employee", width: 200, flex: 1 },
         { field: "startDate", headerName: "Date", width: 200, flex: 1 },
@@ -67,4 +71,4 @@ const WorkOrderReports = () => {
     )
 }
 
-export default WorkOrderReports
+export default ServiceReports

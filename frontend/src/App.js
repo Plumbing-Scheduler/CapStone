@@ -27,7 +27,7 @@ import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
 import CustomerReports from './pages/Reports/CustomerReports';
-import WorkOrderReports from './pages/Reports/WorkOrderReports';
+import ServiceReports from './pages/Reports/ServiceReports';
 import EmployeeReports from './pages/Reports/EmployeeReports';
 // import QuoteHistoryReports from './pages/Reports/QuoteHistoryReports';
 import TransactionReports from './pages/Reports/TransactionReports';
@@ -83,7 +83,7 @@ function App() {
             </Route>
 
             <Route path="/reports" element={<Reports />}>
-              <Route path="" element={<WorkOrderReports />} />
+              <Route path="" element={<ServiceReports />} />
               <Route path="customerreports" element={<CustomerReports />} />
               <Route path="employeereports" element={<EmployeeReports />} />
               <Route path="transactionreports" element={<TransactionReports />} /> 

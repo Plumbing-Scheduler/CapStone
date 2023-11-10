@@ -49,7 +49,7 @@ export const Reports = () => {
             <Box>
                 <Header title="REPORTS" subtitle="Select Report" />
             </Box >
-            <Box >
+            <Box display="full">
                 <ReportTabs />
                 {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                     <Outlet />

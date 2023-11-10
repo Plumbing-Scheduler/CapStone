@@ -27,8 +27,9 @@ const CustomerReports = () => {
         { field: 'no', headerName: "No.", width: 70 },
         { field: 'name', headerName: "Name", flex: 1 },
         { field: 'phone', headerName: "Phone", flex: 1 },
-        { field: 'email', headerName: "Email", flex: 1 },
-        { field: 'address', headerName: "Address", flex: 1 },
+        { field: 'jobs', headerName: "Jobs Done", flex: 1 },
+        { field: 'customer.id', headerName: "Customer ID", flex: 1 },
+        { field: 'date', headerName: "date", flex: 1 },
       ]
     
       const rows = customers.map((cust, index) => ({

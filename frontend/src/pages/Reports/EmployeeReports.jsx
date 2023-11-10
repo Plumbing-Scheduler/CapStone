@@ -24,11 +24,14 @@ export const EmployeeReports = () => {
 
     const columns = [
         { field: 'no', headerName: "No.", width: 70 },
-        { field: 'name', headerName: "Name", flex: 1 },
-        { field: 'phone', headerName: "Phone", flex: 1 },
+        { field: 'employee', headerName: "Employee", flex: 1 },
+        { field: 'jobs', headerName: "Jobs Done", flex: 1 },
+        { field: 'phone', headerName: "Phone", flex: 1, 
+        renderCell: (params) => {
+            return params.value.replace(/^(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
+        }},
         { field: 'email', headerName: "Email", flex: 1 },
-        { field: 'type', headerName: "Employement Type", flex: 1 },
-        { field: 'status', headerName: "Status", flex: 1 },
+ 
     ];
 
     const rows = employees.map((emp, index) => ({
