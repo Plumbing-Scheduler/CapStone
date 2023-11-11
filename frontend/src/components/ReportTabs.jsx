@@ -6,20 +6,25 @@ import { Link } from 'react-router-dom';
 const ReportTabs = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [value, setValue] = React.useState('workorder')
 
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    }
     return (
         <Box sx={{ margin: 'auto', boxShadow: "4" }}>
-            <Tabs
-                value={value}
-                onChange={handleChange}
-                textColor="secondary"
-                indicatorColor="secondary"
-                aria-label="secondary tabs  example"
+            <Box
+                sx={{
+                    "& .MuiButtonBase-root": {
+                        color: `${colors.grey[100]} !important`,
+                        border: "none",
+                    },
+                    "& .MuiTab-root:focus": {
+                        outline: "none !important",
+                        borderBottom: "solid 1px grey",
+                        fontSize: "13px",
+                    },
+                    "& .MuiButtonBase-root:focus": {
+                        color: `${colors.redAccent[400]} !important`,
+                    },
+                }}
+
             >
                 <Link to={``}>
                     <Tab value="service" label="Service History" />
@@ -36,7 +41,7 @@ const ReportTabs = () => {
                 {/* <Link to={`quotehistoryreports`}>
                     <Tab value="quotehistoryreports" label="Quote History Report" />
                 </Link> */}
-        </Tabs>
+            </Box>
         </Box >
     )
 }
