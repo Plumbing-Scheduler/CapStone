@@ -36,7 +36,15 @@ const DeleteCustomer = () => {
                 navigate('/customers')
             )
             .catch((error) => {
-                console.log(error);
+                setServerError(false);
+                setNoInput(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
+                else if (error.response.status === 404) {
+                    setNoInput(true);
+                }
             })
     }
 

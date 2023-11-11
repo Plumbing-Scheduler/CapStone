@@ -36,7 +36,11 @@ const DeleteQuote = () => {
                 navigate('/quotes')
             )
             .catch((error) => {
-                console.log(error);
+                setServerError(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
             })
     }
 
@@ -50,6 +54,11 @@ const DeleteQuote = () => {
             ) : (
                 <Box m="100px">
                     <Box sx={{margin: 'auto', width: '60%', boxShadow: '4', border: 'solid', borderWidth: "2px", borderRadius: '5px' }}>
+                    {serverError &&
+                    <Alert severity="error">
+                        <AlertTitle>Server Error</AlertTitle>
+                            Internal Server Error. Please Try Again Later.
+                    </Alert>}
                         <Typography
                             variant='h2'
                             textAlign={'center'}
