@@ -2,12 +2,9 @@ import { AlertTitle, Box, Button, TextField, Typography, useTheme } from "@mui/m
 import React, { useState } from "react";
 import { tokens } from "../theme.js";
 import axiosInstance from "../axiosInstance.js";
-import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
-import { useCookies } from 'react-cookie';
 
 const Login = () => {
-    const [Cookies, setCookie] = useCookies(['']);
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -15,35 +12,34 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [unauth, setUnauth] = useState(false);
     const [noInput, setNoInput] = useState(false);
-    const navigate = useNavigate();
-    
+
     const login = {
         email,
         password
     }
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
 
-        axiosInstance
+        await axiosInstance
             .post('/login', login)
             .then((response) => {
-                setCookie('jwt', response.data.accessToken, {maxAge: 30})
                 axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
-                
-                navigate('/')
+                console.log(response.data);
+                localStorage.setItem("user", JSON.stringify(response.data.user));
+            }).then(() => {
+                window.location.reload()
             })
             .catch((error) => {
                 setUnauth(false);
                 setNoInput(false);
                 console.log(error)
-                // if (error.response.status === 401 || error.response.status == 403 ) {
-                //     setUnauth(true);
-                // }
-                // else if (error.response.status === 404) {
-                //     setNoInput(true);
-                // }
-            })
-    
+                if (error.response.status === 401 || error.response.status == 403 ) {
+                    setUnauth(true);
+                }
+                else if (error.response.status === 404) {
+                    setNoInput(true);
+                }
+            })  
     }
 
     return (<Box>

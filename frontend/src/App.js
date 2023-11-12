@@ -1,6 +1,6 @@
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Topbar from "./components/global/Topbar";
 import Home from "./pages/Home";
 import Sidebar from "./components/global/Sidebar";
@@ -27,33 +27,36 @@ import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
 import Login from "./pages/Login";
-import { useCookies } from 'react-cookie';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axiosInstance from './axiosInstance';
+
 // import WorkOrderform from "./scenes/form";
 
 function App() {
   const [theme, colorMode] = useMode();
-  const [ cookies, setCookie ] = useCookies(['']);
+  const navigate = useNavigate()
+  const [ user, setUser ] = useState();
+  const loggedInUser = localStorage.getItem("user");
 
   useEffect(() => {
+    
+
     axiosInstance
       .get('/refresh')
       .then((response) => {
         axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
-        setCookie('jwt', response.data.accessToken, {maxAge: 30})
-        console.log(document.cookie);
     })
       .catch((error) => {
         console.log(error);
-        console.log(document.cookie);
       })
-  })
+      navigate('/');
+  }, [])
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {!cookies.jwt2 ? (
+        {!loggedInUser  ? (
           <Login />
         ):(
         <div className="app">
@@ -104,7 +107,7 @@ function App() {
             </Routes>
           </main>
         </div>
-        )}
+         )} 
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

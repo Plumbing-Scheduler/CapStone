@@ -3,9 +3,9 @@ import {Management} from '../models/management.js';
 
 const handleRefresh = async (req, res) => {
     const cookies = req.cookies;
-    
-    if(!cookies?.jwt2) return res.sendStatus(401);
-    const refreshToken = cookies.jwt2;
+    console.log(cookies)
+    if(!cookies?.jwt) return res.sendStatus(401);
+    const refreshToken = cookies.jwt;
 
     const foundUser = await Management.findOne({ refreshToken });
 

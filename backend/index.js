@@ -10,7 +10,9 @@ import Management from './routes/api/management.js';
 import auth from './routes/auth.js';
 import refresh from './routes/refresh.js'
 import verifyJWT from './middleware/verifyJWT.js';
+import logout from './routes/logout.js'
 import cookieParser from 'cookie-parser';
+
 import 'dotenv/config'
 const PORT = process.env.port || 3500;
 const corsOptions ={
@@ -32,6 +34,7 @@ app.get('/' ,(request, response) => {
 });
 app.use('/login', auth)
 app.use('/refresh', refresh)
+app.use('/logout', logout)
 
 app.use(verifyJWT)
 app.use('/management', Management)
