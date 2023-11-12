@@ -1,4 +1,4 @@
-import { Management } from "../models/management.js";
+import { Employee } from "../models/employee.js";
 
 const handleLogout = async (req, res) => {
     const cookies = req.cookies;
@@ -6,7 +6,7 @@ const handleLogout = async (req, res) => {
     const refreshToken = cookies.jwt;
 
     //Checks for RefreshToken in DB
-    const foundUser = await Management.findOne({ refreshToken });
+    const foundUser = await Employee.findOne({ refreshToken });
     if(!foundUser) {
         res.clearCookie('jwt', {httpOnly: true, sameSite: 'strict', maxAge: 24 * 60 * 60 * 1000});
         return res.sendStatus(204);

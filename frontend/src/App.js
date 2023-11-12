@@ -35,12 +35,9 @@ import axiosInstance from './axiosInstance';
 function App() {
   const [theme, colorMode] = useMode();
   const navigate = useNavigate()
-  const [ user, setUser ] = useState();
   const loggedInUser = localStorage.getItem("user");
 
   useEffect(() => {
-    
-
     axiosInstance
       .get('/refresh')
       .then((response) => {

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import {Management} from '../models/management.js';
+import {Employee} from '../models/employee.js';
 
 const handleRefresh = async (req, res) => {
     const cookies = req.cookies;
@@ -7,7 +7,7 @@ const handleRefresh = async (req, res) => {
     if(!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
 
-    const foundUser = await Management.findOne({ refreshToken });
+    const foundUser = await Employee.findOne({ refreshToken });
 
     if(!foundUser) return res.sendStatus(403);//Forbidden
 
@@ -21,7 +21,7 @@ const handleRefresh = async (req, res) => {
                         "email": decoded.email,
                     },
                     process.env.ACCESS_TOKEN,
-                    { expiresIn: '120s' }
+                    { expiresIn: '2h' }
             );
             res.json({accessToken})
         }

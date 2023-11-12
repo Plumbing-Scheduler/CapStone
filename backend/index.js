@@ -36,7 +36,7 @@ app.use('/login', auth)
 app.use('/refresh', refresh)
 app.use('/logout', logout)
 
-app.use(verifyJWT)
+//app.use(verifyJWT)
 app.use('/management', Management)
 app.use('/workorders', workOrder);
 app.use('/schedule', calendar);

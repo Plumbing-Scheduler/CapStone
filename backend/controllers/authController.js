@@ -1,11 +1,11 @@
-import { Management } from "../models/management.js";
+import { Employee } from "../models/employee.js";
 import jwt from "jsonwebtoken";
 
 const handleLogin = async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) return res.status(404).json({ 'message': 'Username and Password are required' })
 
-    const found = await Management.findOne({ email: email });
+    const found = await Employee.findOne({ email: email });
     if (!found) {
         return res.status(401).json({ "message": "Unauthorized" })
     }
@@ -16,13 +16,13 @@ const handleLogin = async (req, res) => {
                 "email": found.email,
             },
             process.env.ACCESS_TOKEN,
-            { expiresIn: '30s' },
+            { expiresIn: '2h' },
         );
         
         const refreshToken = jwt.sign(
             {email: found.email},
             process.env.REFRESH_TOKEN,
-            {expiresIn: '1d'}
+            {expiresIn: '10d'}
         )
 
         found.refreshToken = refreshToken;
