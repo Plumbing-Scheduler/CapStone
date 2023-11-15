@@ -43,8 +43,6 @@ export const EditCustomer = () => {
             city,
             province
         }
-        
-        
     }
 
     useEffect(() => {
@@ -62,7 +60,6 @@ export const EditCustomer = () => {
                 setStreet(responce.data.address.street)
                 setCity(responce.data.address.city)
                 setProvince(responce.data.address.province)
-                
                 setLoading(false)
             })
             .catch((error) => {
@@ -81,11 +78,18 @@ export const EditCustomer = () => {
     const handleSave = () => {
         axiosInstance
             .put(`/customer/${id}`, updateCustomer)
-            .then(
+            .then(() => {
                 navigate('/customers')
+            }
             )
             .catch((error) => {
                 console.log(error)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
+                else if (error.response.status === 400) {
+                    setNoInput(true);
+                }
             })
     }
 
@@ -116,17 +120,6 @@ export const EditCustomer = () => {
                         width: '75%',
                     }}
                 >
-                    {serverError &&
-                    <Alert severity="error">
-                        <AlertTitle>Server Error</AlertTitle>
-                        Internal Server Error. Please Try Again Later.
-                    </Alert>}
-
-                    {noInput &&
-                        <Alert severity="warning">
-                            <AlertTitle>Warning</AlertTitle>
-                            Please Fill Out All Fields
-                        </Alert>}
                     <TextField
                         fullWidth
                         required
@@ -238,6 +231,19 @@ export const EditCustomer = () => {
                         sx={{ gridColumn: "span 2" }}
                     />
                   </Box>
+                  <Box sx={{width: "30%", margin: "10px auto"}}>
+                    {serverError &&
+                    <Alert severity="error" >
+                        <AlertTitle>Server Error</AlertTitle>
+                            Internal Server Error. Please Try Again Later.
+                    </Alert>}
+
+                    {noInput &&
+                    <Alert severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                            Please Fill Out All Fields
+                    </Alert>}
+                </Box>
                   <Box
                     backgroundColor={colors.buttonBase}
                     display="grid"

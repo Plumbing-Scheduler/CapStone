@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, AlertTitle, Box, Typography, TextField } from "@mui/material";
+import { Alert, AlertTitle, Box, Typography, TextField, Button, useTheme } from "@mui/material";
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
+import { tokens } from "../../theme.js";
+
 const EditQuote = () => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
-    
+    const [serverError, setServerError] = useState(false);
+    const [noInput, setNoInput] = useState(false);
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
@@ -56,8 +60,9 @@ const EditQuote = () => {
     const handleSave = () => {
         axiosInstance
             .put(`/quote/${id}`, data)
-            .then(
+            .then(() =>{
                 navigate('/quotes')
+            }
             )
             .catch((error) => {
                 setServerError(false);
@@ -66,7 +71,7 @@ const EditQuote = () => {
                 if (error.response.status === 500) {
                     setServerError(true);
                 }
-                else if (error.response.status === 404) {
+                else if (error.response.status === 400) {
                     setNoInput(true);
                 }
             })
@@ -80,7 +85,7 @@ const EditQuote = () => {
                     <Spinner />
                 </div>
             ) : (
-                <Box>
+                <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
                     <Typography
                         variant="h4"
                         sx={{
@@ -99,17 +104,7 @@ const EditQuote = () => {
                             margin: "auto",
                             width: '75%'
                         }} >
-                            {serverError &&
-                            <Alert severity="error">
-                                <AlertTitle>Server Error</AlertTitle>
-                                    Internal Server Error. Please Try Again Later.
-                            </Alert>}
 
-                            {noInput &&
-                            <Alert severity="warning">
-                                <AlertTitle>Warning</AlertTitle>
-                                    Please Fill Out All Fields
-                            </Alert>}
                         <TextField
                             fullWidth
                             type="text"
@@ -202,9 +197,32 @@ const EditQuote = () => {
                             onChange={(e) => setDescription(e.target.value)}
                             sx={{ gridColumn: "span 2" }}
                         />
-                        <button onClick={handleSave} className='bg-gray-500 w-1/2 h-12 rounded-sm'>
+                    </Box>
+                    <Box sx={{ width: "30%", margin: "10px auto" }}>
+                        {serverError &&
+                            <Alert severity="error" >
+                                <AlertTitle>Server Error</AlertTitle>
+                                Internal Server Error. Please Try Again Later.
+                            </Alert>}
+
+                        {noInput &&
+                            <Alert severity="warning">
+                                <AlertTitle>Warning</AlertTitle>
+                                Please Fill Out All Fields
+                            </Alert>}
+                    </Box>
+                    <Box
+                        backgroundColor={colors.buttonBase}
+                        display="grid"
+                        sx={{
+                            margin: "10px auto",
+                            width: '150px',
+                            borderRadius: "5px"
+                        }}
+                    >
+                        <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
                             Save and Add
-                        </button>
+                        </Button>
                     </Box>
                 </Box>
             )}

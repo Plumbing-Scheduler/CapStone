@@ -121,14 +121,25 @@ export const EditEmployee = () => {
                 setEmploymentType(responce.data.employmentType)
                 setStatus(responce.data.status)
                 setLoading(false)
+            }).catch((error) => {
+                setServerError(false);
+                setNoInput(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
+                else if (error.response.status === 404) {
+                    setNoInput(true);
+                }
             })
     }, [])
 
     const handleSave = () => {
         axiosInstance
             .put(`/employees/${id}`, newEmployee)
-            .then(
+            .then(() => {
                 navigate('/employee')
+            }
             )
             .catch((error) => {
                 setServerError(false);
@@ -137,7 +148,7 @@ export const EditEmployee = () => {
                 if (error.response.status === 500) {
                     setServerError(true);
                 }
-                else if (error.response.status === 404) {
+                else if (error.response.status === 400) {
                     setNoInput(true);
                 }
             })
@@ -169,17 +180,6 @@ export const EditEmployee = () => {
                             width: '75%',
                         }}
                     >
-                        {serverError &&
-                    <Alert severity="error">
-                        <AlertTitle>Server Error</AlertTitle>
-                        Internal Server Error. Please Try Again Later.
-                    </Alert>}
-
-                    {noInput &&
-                        <Alert severity="warning">
-                            <AlertTitle>Warning</AlertTitle>
-                            Please Fill Out All Fields
-                        </Alert>}
                         <TextField
                             fullWidth
                             required
@@ -401,11 +401,24 @@ export const EditEmployee = () => {
                             ))}
                         </TextField>
                     </Box>
+                    <Box sx={{width: "30%", margin: "10px auto"}}>
+                    {serverError &&
+                    <Alert severity="error" >
+                        <AlertTitle>Server Error</AlertTitle>
+                            Internal Server Error. Please Try Again Later.
+                    </Alert>}
+
+                    {noInput &&
+                    <Alert severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                            Please Fill Out All Fields
+                    </Alert>}
+                </Box>
                     <Box
                         backgroundColor={colors.buttonBase}
                         display="grid"
                         sx={{
-                            margin: "30px auto",
+                            margin: "10px auto",
                             width: '150px',
                             borderRadius: "5px"
                         }}

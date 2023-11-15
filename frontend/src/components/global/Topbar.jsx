@@ -28,7 +28,7 @@ const Topbar = () => {
         //alert(99);
         axiosInstance
             .get('/logout')
-            .then((response) => {
+            .then(() => {
                 //delete AccessToken in browser
                 axiosInstance.defaults.headers.common['Authorization'] = null;
                 localStorage.clear();

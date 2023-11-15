@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../axiosInstance';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Alert, AlertTitle, Box, TextField, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -9,8 +9,12 @@ import dayjs from 'dayjs';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
 import MenuItem from '@mui/material/MenuItem';
+import { tokens } from "../../theme.js";
 
 export const CreateWorkOrder = () => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const [ serverError, setServerError ] = useState(false);
     const [ noInput, setNoInput ] = useState(false);
     const [serviceStatus, setServiceStatus] = useState('');
@@ -66,13 +70,14 @@ export const CreateWorkOrder = () => {
                 setLoading(false);
                 console.log(error)
             });
-    }, [id])
+    }, [])
 
     const handleSave = () => {
         axiosInstance
             .put(`/workorders/${id}`, data)
-            .then(
+            .then(() => {
                 navigate('/workorder')
+            }
             )
             .catch((error) => {
                 setServerError(false);
@@ -81,7 +86,7 @@ export const CreateWorkOrder = () => {
                 if (error.response.status === 500) {
                     setServerError(true);
                 }
-                else if (error.response.status === 404) {
+                else if (error.response.status === 400) {
                     setNoInput(true);
                 }
             })
@@ -115,17 +120,7 @@ export const CreateWorkOrder = () => {
                             margin: "auto",
                             width: '75%'
                         }} >
-                        {serverError &&
-                        <Alert severity="error">
-                            <AlertTitle>Server Error</AlertTitle>
-                                Internal Server Error. Please Try Again Later.
-                        </Alert>}
-
-                        {noInput &&
-                        <Alert severity="warning">
-                            <AlertTitle>Warning</AlertTitle>
-                                Please Fill Out All Fields
-                        </Alert>}
+                        
                         <TextField
                             fullWidth
                             multiline
@@ -148,8 +143,8 @@ export const CreateWorkOrder = () => {
                             value={title}
                             required
                             onChange={e => setTitle(e.target.value)}
-                            name="startdate"
-                            id=""
+                            name="title"
+                            id="title"
                             sx={{ gridColumn: "span 2" }}
                         />
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -179,7 +174,7 @@ export const CreateWorkOrder = () => {
                             value={busName}
                             onChange={e => setBusName(e.target.value)}
                             name="businessname"
-                            id=""
+                            id="businessname"
                             sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
@@ -191,7 +186,7 @@ export const CreateWorkOrder = () => {
                             value={address}
                             onChange={e => setAddress(e.target.value)}
                             name="address"
-                            id=""
+                            id="address"
                             sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
@@ -202,7 +197,7 @@ export const CreateWorkOrder = () => {
                             value={assignedEmp}
                             onChange={(e) => setAssignedEmp(e.target.value)}
                             name="assignemployee"
-                            id=""
+                            id="assignemployee"
                             sx={{ gridColumn: "span 1" }}
                         >
                             {employees.map((emp) => (
@@ -223,9 +218,32 @@ export const CreateWorkOrder = () => {
                             inputProps={{ min: 0 }}
                             sx={{ gridColumn: "span 1" }}
                         />
-                        <button onClick={handleSave} className='bg-gray-500 w-1/2 '>
+                    </Box>
+                    <Box sx={{ width: "30%", margin: "10px auto" }}>
+                        {serverError &&
+                            <Alert severity="error" >
+                                <AlertTitle>Server Error</AlertTitle>
+                                Internal Server Error. Please Try Again Later.
+                            </Alert>}
+
+                        {noInput &&
+                            <Alert severity="warning">
+                                <AlertTitle>Warning</AlertTitle>
+                                Please Fill Out All Fields
+                            </Alert>}
+                    </Box>
+                    <Box
+                        backgroundColor={colors.buttonBase}
+                        display="grid"
+                        sx={{
+                            margin: "10px auto",
+                            width: '150px',
+                            borderRadius: "5px"
+                        }}
+                    >
+                        <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
                             Save and Add
-                        </button>
+                        </Button>
                     </Box>
                 </div>)}
         </Box>
