@@ -129,7 +129,15 @@ export const EditEmployee = () => {
                 navigate('/employee')
             )
             .catch((error) => {
-                console.log(error)
+                setServerError(false);
+                setNoInput(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
+                else if (error.response.status === 404) {
+                    setNoInput(true);
+                }
             })
     }
     return (
@@ -159,6 +167,17 @@ export const EditEmployee = () => {
                             width: '75%',
                         }}
                     >
+                        {serverError &&
+                    <Alert severity="error">
+                        <AlertTitle>Server Error</AlertTitle>
+                        Internal Server Error. Please Try Again Later.
+                    </Alert>}
+
+                    {noInput &&
+                        <Alert severity="warning">
+                            <AlertTitle>Warning</AlertTitle>
+                            Please Fill Out All Fields
+                        </Alert>}
                         <TextField
                             fullWidth
                             required

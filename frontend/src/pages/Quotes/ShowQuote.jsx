@@ -25,8 +25,11 @@ const ShowQuote = () => {
                 console.log(quote.firstName);
             })
             .catch((error) => {
-                console.log(error);
-                setLoading(false);
+                setServerError(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
             })
     }, [])
 
@@ -57,6 +60,11 @@ const ShowQuote = () => {
                                 width: '80%',
                             }}
                         >
+                            {serverError &&
+                            <Alert severity="error">
+                                <AlertTitle>Server Error</AlertTitle>
+                                    Internal Server Error. Please Try Again Later.
+                            </Alert>}
                             <Box
                                 sx={{ m: '0 auto', width: "70%" }}
                             >
