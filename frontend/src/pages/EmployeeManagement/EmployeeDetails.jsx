@@ -37,8 +37,8 @@ const EmployeeDetails = () => {
 
                 <div>
                     <div className='flex justify-end m-4 space-x-3'>
-                        <EditButton />
-                        <DeleteButton />
+                        <EditButton itemid={id} path='employee'/>
+                        <DeleteButton itemid={id} path='employee'/>
                     </div>
                     <Box
                         display="grid"

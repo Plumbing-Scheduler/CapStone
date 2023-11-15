@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { Alert, AlertTitle, Box, TextField, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -9,10 +9,14 @@ import Header from '../../components/Header';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import MenuItem from '@mui/material/MenuItem';
+import { tokens } from '../../theme';
 
 export const CreateWorkOrder = () => {
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false); 
+    const [serverError, setServerError] = useState(false);
+    const [noInput, setNoInput] = useState(false);
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const serviceStatus = "In Progress" //Newly created work orders will always be set to "1" for in progress. 
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
@@ -25,6 +29,7 @@ export const CreateWorkOrder = () => {
     const [address, setAddress] = useState('');
 
     const [employees, setEmployees] = useState([]);
+    const [customers, setCustomers] = useState([]);
     const navigate = useNavigate();
 
     dayjs.extend(localizedFormat);
@@ -51,7 +56,15 @@ export const CreateWorkOrder = () => {
             .catch((error) => {
                 console.log(error);
             })
-    })
+        axiosInstance
+            .get('/customer')
+            .then((responce) => {
+                setCustomers(responce.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, []);
 
     const handleSave = () => {
         axiosInstance
@@ -81,7 +94,7 @@ export const CreateWorkOrder = () => {
                 if (error.response.status === 500) {
                     setServerError(true);
                 }
-                else if (error.response.status === 404) {
+                else if (error.response.status === 400) {
                     setNoInput(true);
                 }
             });
@@ -112,17 +125,6 @@ export const CreateWorkOrder = () => {
                     margin: "auto",
                     width: '75%'
                 }} >
-                    {serverError &&
-                    <Alert severity="error">
-                        <AlertTitle>Server Error</AlertTitle>
-                            Internal Server Error. Please Try Again Later.
-                    </Alert>}
-
-                    {noInput &&
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                            Please Fill Out All Fields
-                        </Alert>}
                 <TextField
                     fullWidth
                     multiline
@@ -202,11 +204,13 @@ export const CreateWorkOrder = () => {
                     id=""
                     sx={{ gridColumn: "span 1" }}
                 >
-                    {employees.map((emp) => (
-                        <MenuItem key={emp._id} value={emp._id}>
-                            {emp.firstName + ' ' + emp.lastName}
-                        </MenuItem>
-                    ))}
+                    {employees.map((emp) => {
+                        if (emp.status == "Active") {
+                            return <MenuItem key={emp._id} value={emp._id}>
+                                {emp.firstName + ' ' + emp.lastName}
+                            </MenuItem>
+                        }
+                    })}
                 </TextField>
                 <TextField
                     fullWidth
@@ -221,6 +225,8 @@ export const CreateWorkOrder = () => {
                     sx={{ gridColumn: "span 1" }}
                 />
                 <TextField
+                    select
+                    required
                     fullWidth
                     type="number"
                     variant='filled'
@@ -230,10 +236,39 @@ export const CreateWorkOrder = () => {
                     name="cost"
                     id=""
                     sx={{ gridColumn: "span 1" }}
-                />
-                <button onClick={handleSave} className='bg-gray-500 w-1/2 '>
+                >
+                    {customers.map((cstmr) => (
+                        <MenuItem key={cstmr._id} value={cstmr._id}>
+                            {cstmr.firstName + ' ' + cstmr.lastName}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </Box>
+            <Box sx={{ width: "13%", margin: "10px auto" }}>
+                {serverError &&
+                    <Alert severity="error" >
+                        <AlertTitle>Server Error</AlertTitle>
+                        Internal Server Error. Please Try Again Later.
+                    </Alert>}
+
+                {noInput &&
+                    <Alert severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                        Please Fill Out All Fields
+                    </Alert>}
+            </Box>
+            <Box
+                backgroundColor={colors.buttonBase}
+                display="grid"
+                sx={{
+                    margin: "10px auto",
+                    width: '150px',
+                    borderRadius: "5px"
+                }}
+            >
+                <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
                     Save and Add
-                </button>
+                </Button>
             </Box>
 
         </Box>
