@@ -15,7 +15,10 @@ const Quotes = () => {
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     const [description, setDescription] = useState('');
-    const [address, setAddress] = useState('');
+    const [street, setStreet] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [city, setCity] = useState('');
+    const [province, setProvince] = useState('');
     const [cost, setCost] = useState('');
     const [busName, setBusName] = useState('');
     const [email, setEmail] = useState('');
@@ -26,7 +29,12 @@ const Quotes = () => {
         lastName,
         phone,
         description,
-        address,
+        address: {
+            street,
+            postalCode,
+            city,
+            province
+        },
         cost,
         busName,
         email,
@@ -134,16 +142,54 @@ const Quotes = () => {
                     sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
-                    fullWidth
-                    type="text"
-                    variant="filled"
-                    label="Address"
-                    name="address"
-                    id="address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    sx={{ gridColumn: "span 2" }}
-                />
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Address"
+                        name="address"
+                        id="address"
+                        value={street}
+                        onChange={(e) => setStreet(e.target.value)}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Postal Code"
+                        name="postalCode"
+                        id="postalCode"
+                        value={postalCode}
+                        onChange={(e) => setPostalCode(e.target.value)}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                    />
+
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="City"
+                        name="city"
+                        id="city"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Province"
+                        name="province"
+                        id="province"
+                        value={province}
+                        onChange={(e) => setProvince(e.target.value)}
+                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                    />
                 <TextField
                     fullWidth
                     type="number"

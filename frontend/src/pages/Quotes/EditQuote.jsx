@@ -18,7 +18,10 @@ const EditQuote = () => {
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     const [description, setDescription] = useState('');
-    const [address, setAddress] = useState('');
+    const [street, setStreet] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [city, setCity] = useState('');
+    const [province, setProvince] = useState('');
     const [cost, setCost] = useState('');
     const [busName, setBusName] = useState('');
     const [email, setEmail] = useState('');
@@ -29,7 +32,12 @@ const EditQuote = () => {
         lastName,
         phone,
         description,
-        address,
+        address: {
+            street,
+            postalCode,
+            city,
+            province
+        },
         cost,
         busName,
         email,
@@ -44,7 +52,10 @@ const EditQuote = () => {
                 setLastName(responce.data.lastName);
                 setPhone(responce.data.phone);
                 setDescription(responce.data.description);
-                setAddress(responce.data.address);
+                setPostalCode(responce.data.address.postalCode)
+                setStreet(responce.data.address.street)
+                setCity(responce.data.address.city)
+                setProvince(responce.data.address.province)
                 setCost(responce.data.cost);
                 setBusName(responce.data.busName);
                 setEmail(responce.data.email);
@@ -163,14 +174,51 @@ const EditQuote = () => {
                         />
                         <TextField
                             fullWidth
+                            required
                             type="text"
-                            variant="filled"
+                            variant='filled'
                             label="Address"
                             name="address"
                             id="address"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
+                            value={street}
+                            onChange={(e) => setStreet(e.target.value)}
+                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="Postal Code"
+                            name="postalCode"
+                            id="postalCode"
+                            value={postalCode}
+                            onChange={(e) => setPostalCode(e.target.value)}
+                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="City"
+                            name="city"
+                            id="city"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="Province"
+                            name="province"
+                            id="province"
+                            value={province}
+                            onChange={(e) => setProvince(e.target.value)}
+                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
                         />
                         <TextField
                             fullWidth

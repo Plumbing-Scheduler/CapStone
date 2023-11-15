@@ -26,7 +26,10 @@ export const CreateWorkOrder = () => {
     const [endDate, setEndDate] = useState(startDate);
     const [customerID, setCustomerID] = useState('');
     const [busName, setBusName] = useState('');
-    const [address, setAddress] = useState('');
+    const [street, setStreet] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [city, setCity] = useState('');
+    const [province, setProvince] = useState('');
 
     const [employees, setEmployees] = useState([]);
     const [customers, setCustomers] = useState([]);
@@ -44,7 +47,12 @@ export const CreateWorkOrder = () => {
         endDate,
         customerID,
         busName,
-        address,
+        address: {
+            street,
+            postalCode,
+            city,
+            province
+        }
     };
 
     useEffect(() => {
@@ -184,14 +192,50 @@ export const CreateWorkOrder = () => {
                 <TextField
                     fullWidth
                     required
-                    variant='filled'
                     type="text"
+                    variant='filled'
                     label="Address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
                     name="address"
-                    id=""
-                    sx={{ gridColumn: "span 2" }}
+                    id="address"
+                    value={street}
+                    onChange={(e) => setStreet(e.target.value)}
+                    sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                />
+                <TextField
+                    fullWidth
+                    required
+                    type="text"
+                    variant='filled'
+                    label="Postal Code"
+                    name="postalCode"
+                    id="postalCode"
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
+                    sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                />
+                <TextField
+                    fullWidth
+                    required
+                    type="text"
+                    variant='filled'
+                    label="City"
+                    name="city"
+                    id="city"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                />
+                <TextField
+                    fullWidth
+                    required
+                    type="text"
+                    variant='filled'
+                    label="Province"
+                    name="province"
+                    id="province"
+                    value={province}
+                    onChange={(e) => setProvince(e.target.value)}
+                    sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
                 />
                 <TextField
                     select

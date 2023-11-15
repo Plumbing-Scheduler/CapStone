@@ -26,7 +26,10 @@ export const CreateWorkOrder = () => {
     const [endDate, setEndDate] = useState(startDate);
     const [customerID, setCustomerID] = useState('');
     const [busName, setBusName] = useState('');
-    const [address, setAddress] = useState('');
+    const [street, setStreet] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [city, setCity] = useState('');
+    const [province, setProvince] = useState('');
     const navigate = useNavigate();
     const { id } = useParams('');
     const [loading, setLoading] = useState(true);
@@ -42,7 +45,12 @@ export const CreateWorkOrder = () => {
         endDate,
         customerID,
         busName,
-        address,
+        address: {
+            street,
+            postalCode,
+            city,
+            province
+        }
     };
 
     useEffect(() => {
@@ -59,7 +67,10 @@ export const CreateWorkOrder = () => {
                 setEndDate(response.data.endDate);
                 setCustomerID(response.data.customerID);
                 setBusName(response.data.busName);
-                setAddress(response.data.address);
+                setPostalCode(responce.data.address.postalCode)
+                setStreet(responce.data.address.street)
+                setCity(responce.data.address.city)
+                setProvince(responce.data.address.province)
                 axiosInstance.get('/employees')
                     .then((responce) => {
                         setEmployees(responce.data.data);
@@ -180,14 +191,50 @@ export const CreateWorkOrder = () => {
                         <TextField
                             fullWidth
                             required
-                            variant='filled'
                             type="text"
+                            variant='filled'
                             label="Address"
-                            value={address}
-                            onChange={e => setAddress(e.target.value)}
                             name="address"
                             id="address"
-                            sx={{ gridColumn: "span 2" }}
+                            value={street}
+                            onChange={(e) => setStreet(e.target.value)}
+                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="Postal Code"
+                            name="postalCode"
+                            id="postalCode"
+                            value={postalCode}
+                            onChange={(e) => setPostalCode(e.target.value)}
+                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="City"
+                            name="city"
+                            id="city"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="Province"
+                            name="province"
+                            id="province"
+                            value={province}
+                            onChange={(e) => setProvince(e.target.value)}
+                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
                         />
                         <TextField
                             select
