@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../axiosInstance';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, TextField, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, TextField, Typography } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -11,7 +11,8 @@ import Header from '../../components/Header';
 import MenuItem from '@mui/material/MenuItem';
 
 export const CreateWorkOrder = () => {
-
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
     const [serviceStatus, setServiceStatus] = useState('');
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')

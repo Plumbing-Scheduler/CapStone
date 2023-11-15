@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
-import { Box, Typography, Button, useTheme } from '@mui/material'
+import { Alert, AlertTitle, Box, Typography, Button, useTheme } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { tokens } from "../../theme.js";
 import { Link, useParams, useNavigate } from 'react-router-dom';
@@ -10,6 +10,8 @@ import Spinner from 'react-bootstrap/esm/Spinner';
 const DeleteCustomer = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
     const { id } = useParams();
     const [customer, setCustomer] = useState({});
     const [loading, setLoading] = useState(true);

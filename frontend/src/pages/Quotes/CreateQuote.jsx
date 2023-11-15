@@ -1,11 +1,16 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
-
+import { tokens } from "../../theme.js";
 
 const Quotes = () => {
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
@@ -30,8 +35,7 @@ const Quotes = () => {
     const handleSave = () => {
         axiosInstance
             .post('/quote', newQuote)
-            .then((response) => {
-                console.log(response.data)
+            .then(() => {
                 navigate('/quotes')
             }
             )
@@ -42,7 +46,7 @@ const Quotes = () => {
                 if (error.response.status === 500) {
                     setServerError(true);
                 }
-                else if (error.response.status === 404) {
+                else if (error.response.status === 400) {
                     setNoInput(true);
                 }
             })
@@ -73,17 +77,6 @@ const Quotes = () => {
                     margin: "auto",
                     width: '75%'
                 }} >
-                {serverError &&
-                    <Alert severity="error">
-                        <AlertTitle>Server Error</AlertTitle>
-                            Internal Server Error. Please Try Again Later.
-                    </Alert>}
-
-                    {noInput &&
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                            Please Fill Out All Fields
-                        </Alert>}
                 <TextField
                     fullWidth
                     type="text"
@@ -175,12 +168,34 @@ const Quotes = () => {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     sx={{ gridColumn: "span 2" }}
-                />
-                <button onClick={handleSave} className='bg-gray-500 w-1/2 h-12 rounded-sm'>
-                    Save and Add
-                </button>
+                />    
             </Box>
+            <Box sx={{width: "30%", margin: "10px auto"}}>
+                    {serverError &&
+                    <Alert severity="error" >
+                        <AlertTitle>Server Error</AlertTitle>
+                            Internal Server Error. Please Try Again Later.
+                    </Alert>}
 
+                    {noInput &&
+                    <Alert severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                            Please Fill Out All Fields
+                    </Alert>}
+                </Box>
+            <Box
+                    backgroundColor={colors.buttonBase}
+                    display="grid"
+                    sx={{
+                        margin: "10px auto",
+                        width: '150px',
+                        borderRadius: "5px"
+                    }}
+                >
+                    <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
+                        Save and Add
+                    </Button>
+                </Box>
         </Box>
     )
 }

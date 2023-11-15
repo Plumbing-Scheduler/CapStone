@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
-import { Box, Typography, Button, useTheme } from '@mui/material'
+import { Alert, AlertTitle, Box, Typography, Button, useTheme } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { tokens } from "../../theme.js";
 import { Link, useParams, useNavigate } from 'react-router-dom';
@@ -13,6 +13,8 @@ const DeleteEmployee = () => {
   const { id } = useParams();
   const [employee, setEmployee] = useState({});
   const [loading, setLoading] = useState(true);
+  const [ serverError, setServerError ] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {

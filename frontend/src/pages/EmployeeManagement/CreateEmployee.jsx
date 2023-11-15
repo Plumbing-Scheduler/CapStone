@@ -1,4 +1,4 @@
-import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
@@ -58,7 +58,8 @@ const statusOptions = [
 export const CreateEmployee = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
 
@@ -100,8 +101,9 @@ export const CreateEmployee = () => {
     const handleSave = () => {
         axiosInstance
             .post('/employees', newEmployee)
-            .then(
+            .then(() => {
                 navigate('/employee')
+            }
             )
             .catch((error) => {
                 setServerError(false);
@@ -110,7 +112,7 @@ export const CreateEmployee = () => {
                 if (error.response.status === 500) {
                     setServerError(true);
                 }
-                else if (error.response.status === 404) {
+                else if (error.response.status === 400) {
                     setNoInput(true);
                 }
             })
@@ -118,7 +120,7 @@ export const CreateEmployee = () => {
     return (
         <Box ml={'20px'}>
             <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
-            <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
+            <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} height={"100%"} >
 
                 <Typography
                     //display="flex"
@@ -141,17 +143,7 @@ export const CreateEmployee = () => {
                         width: '75%',
                     }}
                 >
-                    {serverError &&
-                    <Alert severity="error">
-                        <AlertTitle>Server Error</AlertTitle>
-                            Internal Server Error. Please Try Again Later.
-                    </Alert>}
-
-                    {noInput &&
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                            Please Fill Out All Fields
-                    </Alert>}
+                    
                     <TextField
                         fullWidth
                         required
@@ -373,15 +365,30 @@ export const CreateEmployee = () => {
                         ))}
                     </TextField>
                 </Box>
+                <Box sx={{width: "30%", margin: "10px auto"}}>
+                    {serverError &&
+                    <Alert severity="error" >
+                        <AlertTitle>Server Error</AlertTitle>
+                            Internal Server Error. Please Try Again Later.
+                    </Alert>}
+
+                    {noInput &&
+                    <Alert severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                            Please Fill Out All Fields
+                    </Alert>}
+                </Box>
+                
                 <Box
                     backgroundColor={colors.buttonBase}
                     display="grid"
                     sx={{
-                        margin: "30px auto",
+                        margin: "10px auto",
                         width: '150px',
                         borderRadius: "5px"
                     }}
                 >
+                    
                     <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
                         Save and Add
                     </Button>

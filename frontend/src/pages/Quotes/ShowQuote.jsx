@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosInstance';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import { Box, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, Typography } from '@mui/material';
 import Header from '../../components/Header';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { DeleteButton } from '../../components/global/DeleteButton';
@@ -12,7 +12,8 @@ const ShowQuote = () => {
     const { id } = useParams();
     const [quote, setQuote] = useState({});
     const [loading, setLoading] = useState(true);
-
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
     const minwidth2 = useMediaQuery('(min-width:500px)');
 
     useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, TextField } from "@mui/material";
+import { Alert, AlertTitle, Box, Typography, TextField } from "@mui/material";
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
 import Spinner from 'react-bootstrap/esm/Spinner';
@@ -7,7 +7,9 @@ import Header from '../../components/Header';
 const EditQuote = () => {
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
-
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
+    
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');

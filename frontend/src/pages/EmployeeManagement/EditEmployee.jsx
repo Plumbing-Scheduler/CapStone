@@ -1,4 +1,4 @@
-import { Box, TextField, Typography, Button, useTheme, NativeSelect } from "@mui/material";
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, NativeSelect } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useEffect, useState } from "react";
@@ -63,7 +63,9 @@ export const EditEmployee = () => {
     const { id } = useParams({});
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
-
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
+    
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');

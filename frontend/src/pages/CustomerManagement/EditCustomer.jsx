@@ -1,4 +1,4 @@
-import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
@@ -14,7 +14,9 @@ export const EditCustomer = () => {
     const { id } = useParams({});
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
-
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
+    
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
