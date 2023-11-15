@@ -58,16 +58,16 @@ export const CreateWorkOrder = () => {
     useEffect(() => {
         axiosInstance
             .get('/employees')
-            .then((responce) => {
-                setEmployees(responce.data.data);
+            .then((response) => {
+                setEmployees(response.data.data);
             })
             .catch((error) => {
                 console.log(error);
             })
         axiosInstance
             .get('/customer')
-            .then((responce) => {
-                setCustomers(responce.data.data);
+            .then((response) => {
+                setCustomers(response.data.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -199,7 +199,7 @@ export const CreateWorkOrder = () => {
                     id="address"
                     value={street}
                     onChange={(e) => setStreet(e.target.value)}
-                    sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                    sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
                     fullWidth
@@ -211,7 +211,7 @@ export const CreateWorkOrder = () => {
                     id="postalCode"
                     value={postalCode}
                     onChange={(e) => setPostalCode(e.target.value)}
-                    sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                    sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
                     fullWidth
@@ -223,7 +223,7 @@ export const CreateWorkOrder = () => {
                     id="city"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                    sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
                     fullWidth
@@ -235,7 +235,7 @@ export const CreateWorkOrder = () => {
                     id="province"
                     value={province}
                     onChange={(e) => setProvince(e.target.value)}
-                    sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                    sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
                     select

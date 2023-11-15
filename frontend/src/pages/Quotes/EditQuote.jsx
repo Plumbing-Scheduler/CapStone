@@ -47,18 +47,18 @@ const EditQuote = () => {
         setLoading(true);
         axiosInstance
             .get(`/quote/${id}`)
-            .then((responce) => {
-                setFirstName(responce.data.firstName);
-                setLastName(responce.data.lastName);
-                setPhone(responce.data.phone);
-                setDescription(responce.data.description);
-                setPostalCode(responce.data.address.postalCode)
-                setStreet(responce.data.address.street)
-                setCity(responce.data.address.city)
-                setProvince(responce.data.address.province)
-                setCost(responce.data.cost);
-                setBusName(responce.data.busName);
-                setEmail(responce.data.email);
+            .then((response) => {
+                setFirstName(response.data.firstName);
+                setLastName(response.data.lastName);
+                setPhone(response.data.phone);
+                setDescription(response.data.description);
+                setPostalCode(response.data.address.postalCode)
+                setStreet(response.data.address.street)
+                setCity(response.data.address.city)
+                setProvince(response.data.address.province)
+                setCost(response.data.cost);
+                setBusName(response.data.busName);
+                setEmail(response.data.email);
                 setLoading(false);
             })
             .catch((error) => {
@@ -182,7 +182,7 @@ const EditQuote = () => {
                             id="address"
                             value={street}
                             onChange={(e) => setStreet(e.target.value)}
-                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
                             fullWidth
@@ -194,7 +194,7 @@ const EditQuote = () => {
                             id="postalCode"
                             value={postalCode}
                             onChange={(e) => setPostalCode(e.target.value)}
-                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
                             fullWidth
@@ -206,7 +206,7 @@ const EditQuote = () => {
                             id="city"
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
-                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
                             fullWidth
@@ -218,7 +218,7 @@ const EditQuote = () => {
                             id="province"
                             value={province}
                             onChange={(e) => setProvince(e.target.value)}
-                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
                             fullWidth

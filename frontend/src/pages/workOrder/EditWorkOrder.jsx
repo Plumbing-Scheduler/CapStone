@@ -67,13 +67,13 @@ export const CreateWorkOrder = () => {
                 setEndDate(response.data.endDate);
                 setCustomerID(response.data.customerID);
                 setBusName(response.data.busName);
-                setPostalCode(responce.data.address.postalCode)
-                setStreet(responce.data.address.street)
-                setCity(responce.data.address.city)
-                setProvince(responce.data.address.province)
+                setPostalCode(response.data.address.postalCode)
+                setStreet(response.data.address.street)
+                setCity(response.data.address.city)
+                setProvince(response.data.address.province)
                 axiosInstance.get('/employees')
-                    .then((responce) => {
-                        setEmployees(responce.data.data);
+                    .then((response) => {
+                        setEmployees(response.data.data);
                     })
                 setLoading(false);
             })
@@ -198,7 +198,7 @@ export const CreateWorkOrder = () => {
                             id="address"
                             value={street}
                             onChange={(e) => setStreet(e.target.value)}
-                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
                             fullWidth
@@ -210,7 +210,7 @@ export const CreateWorkOrder = () => {
                             id="postalCode"
                             value={postalCode}
                             onChange={(e) => setPostalCode(e.target.value)}
-                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
                             fullWidth
@@ -222,7 +222,7 @@ export const CreateWorkOrder = () => {
                             id="city"
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
-                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
                             fullWidth
@@ -234,7 +234,7 @@ export const CreateWorkOrder = () => {
                             id="province"
                             value={province}
                             onChange={(e) => setProvince(e.target.value)}
-                            sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
                             select
