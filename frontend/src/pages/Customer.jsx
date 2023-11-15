@@ -10,18 +10,18 @@ const Customer = () => {
   const [loading, setLoading] = useState(true);
   const [customers, setCustomers] = useState([]);
 
-  useEffect(() => {
+   useEffect( () => {
     setLoading(true);
     axiosInstance
       .get('/customer')
       .then((responce) => {
         setCustomers(responce.data.data);
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
+        
       });
+      setLoading(false);
   }, []);
 
   const columns = [

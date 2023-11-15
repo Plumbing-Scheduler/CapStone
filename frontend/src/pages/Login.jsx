@@ -33,12 +33,12 @@ const Login = () => {
                 setUnauth(false);
                 setNoInput(false);
                 console.log(error)
-                // if (error.response.status === 401 || error.response.status == 403 ) {
-                //     setUnauth(true);
-                // }
-                // else if (error.response.status === 404) {
-                //     setNoInput(true);
-                // }
+                if (error.response.status === 401 || error.response.status === 403 ) {
+                    setUnauth(true);
+                }
+                else if (error.response.status === 404) {
+                    setNoInput(true);
+                }
             })  
     }
 

@@ -27,28 +27,33 @@ import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
 import Login from "./pages/Login";
-import { useEffect, useState } from 'react';
 import axiosInstance from './axiosInstance';
-
+import { useEffect } from 'react';
 // import WorkOrderform from "./scenes/form";
 
 function App() {
   const [theme, colorMode] = useMode();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const loggedInUser = localStorage.getItem("user");
-
-  useEffect(() => {
-    axiosInstance
+  
+  const getRefresh = () => {
+     axiosInstance
       .get('/refresh')
       .then((response) => {
         axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
+        console.log(response.data.accessToken);
     })
       .catch((error) => {
         console.log(error);
+        localStorage.clear();
       })
-      navigate('/');
-  }, [])
+  }
+setInterval(getRefresh, 60 * 60 * 1000);
 
+useEffect(() => {
+  getRefresh();
+  navigate('/');
+}, [])
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -59,6 +64,7 @@ function App() {
         <div className="app">
           <Sidebar />
           <main className="content">
+            
             <Topbar />
             <Routes>
               <Route path="/" element={<Home />} />

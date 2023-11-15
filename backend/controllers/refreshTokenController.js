@@ -3,7 +3,7 @@ import {Employee} from '../models/employee.js';
 
 const handleRefresh = async (req, res) => {
     const cookies = req.cookies;
-    console.log(cookies)
+    
     if(!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
 
@@ -21,8 +21,9 @@ const handleRefresh = async (req, res) => {
                         "email": decoded.email,
                     },
                     process.env.ACCESS_TOKEN,
-                    { expiresIn: '2h' }
+                    { expiresIn: '1h' }
             );
+            console.log("Refreshed Access Token")
             res.json({accessToken})
         }
     );
