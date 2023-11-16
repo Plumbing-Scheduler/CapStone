@@ -8,9 +8,10 @@ const handleLogin = async (req, res) => {
     const found = await Employee.findOne({ email: email });
     if (!found) {
         return res.status(401).json({ "message": "Unauthorized" })
-    }
-    const match = await found.password.localeCompare(password);
-    if (match === 0) {
+    };
+
+    await found.comparePassword(password, function(err, isMatch){
+    if (isMatch == true) {
         const accessToken = jwt.sign(
             {
                 "email": found.email,
@@ -23,24 +24,24 @@ const handleLogin = async (req, res) => {
             {email: found.email},
             process.env.REFRESH_TOKEN,
             {expiresIn: '10d'}
-        )
+        );
 
         found.refreshToken = refreshToken;
-        const result = await found.save();
+        found.save();
         const user = {
             firstName: found.firstName,
             email: found.email
-        }
+        };
         res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'strict', maxAge: 24 * 60 * 60 * 1000})
         res.json({
             accessToken, 
             user
-            });
+        });
     }
     else {
         return res.status(401).json({ "message": "Unauthorized" })
-    }
-
-}
+    };
+});
+};
 
 export default { handleLogin };
