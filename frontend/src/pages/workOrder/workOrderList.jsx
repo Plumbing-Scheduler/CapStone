@@ -20,8 +20,8 @@ export const WorkOrders = () => {
             .then((response) => {
                 setWorkOrders(response.data.data);
                 axiosInstance.get('/employees')
-                    .then((responce) => {
-                        setEmployees(responce.data.data);
+                    .then((response) => {
+                        setEmployees(response.data.data);
                     })
                 setLoading(false);
             }).catch((error) => {

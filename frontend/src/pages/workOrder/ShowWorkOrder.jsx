@@ -21,8 +21,8 @@ const ShowWorkOrder = () => {
     setLoading(true);
     axiosInstance
       .get(`http://localhost:3500/workorders/${id}`)
-      .then((responce) => {
-        setWorkOrder(responce.data);
+      .then((response) => {
+        setWorkOrder(response.data);
         setLoading(false);
       })
       .catch((error) => {

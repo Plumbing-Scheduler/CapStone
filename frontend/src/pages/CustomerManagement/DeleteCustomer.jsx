@@ -21,8 +21,8 @@ const DeleteCustomer = () => {
         setLoading(true);
         axiosInstance
             .get(`/customer/${id}`)
-            .then((responce) => {
-                setCustomer(responce.data);
+            .then((response) => {
+                setCustomer(response.data);
                 setLoading(false);
             })
             .catch((error) => {

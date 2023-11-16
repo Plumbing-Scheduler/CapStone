@@ -50,16 +50,16 @@ export const EditCustomer = () => {
 
         axiosInstance
             .get(`/customer/${id}`)
-            .then((responce) => {
-                setFirstName(responce.data.firstName)
-                setLastName(responce.data.lastName)
-                setPhone(responce.data.phone)
-                setEmail(responce.data.email)
-                setBusName(responce.data.busName)
-                setPostalCode(responce.data.address.postalCode)
-                setStreet(responce.data.address.street)
-                setCity(responce.data.address.city)
-                setProvince(responce.data.address.province)
+            .then((response) => {
+                setFirstName(response.data.firstName)
+                setLastName(response.data.lastName)
+                setPhone(response.data.phone)
+                setEmail(response.data.email)
+                setBusName(response.data.busName)
+                setPostalCode(response.data.address.postalCode)
+                setStreet(response.data.address.street)
+                setCity(response.data.address.city)
+                setProvince(response.data.address.province)
                 setLoading(false)
             })
             .catch((error) => {

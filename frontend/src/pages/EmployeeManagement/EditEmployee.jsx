@@ -106,20 +106,20 @@ export const EditEmployee = () => {
 
         axiosInstance
             .get(`/employees/${id}`)
-            .then((responce) => {
-                setFirstName(responce.data.firstName)
-                setLastName(responce.data.lastName)
-                setEmail(responce.data.email)
-                setPhone(responce.data.phone)
-                setPostalCode(responce.data.address.postalCode)
-                setStreet(responce.data.address.street)
-                setCity(responce.data.address.city)
-                setProvince(responce.data.address.province)
-                setStartDate(responce.data.startDate)
-                setRole(responce.data.role)
-                setExperience(responce.data.experience)
-                setEmploymentType(responce.data.employmentType)
-                setStatus(responce.data.status)
+            .then((response) => {
+                setFirstName(response.data.firstName)
+                setLastName(response.data.lastName)
+                setEmail(response.data.email)
+                setPhone(response.data.phone)
+                setPostalCode(response.data.address.postalCode)
+                setStreet(response.data.address.street)
+                setCity(response.data.address.city)
+                setProvince(response.data.address.province)
+                setStartDate(response.data.startDate)
+                setRole(response.data.role)
+                setExperience(response.data.experience)
+                setEmploymentType(response.data.employmentType)
+                setStatus(response.data.status)
                 setLoading(false)
             }).catch((error) => {
                 setServerError(false);

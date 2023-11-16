@@ -21,8 +21,8 @@ const DeleteEmployee = () => {
     setLoading(true);
     axiosInstance
       .get(`/employees/${id}`)
-      .then((responce) => {
-        setEmployee(responce.data);
+      .then((response) => {
+        setEmployee(response.data);
         setLoading(false);
       })
       .catch((error) => {

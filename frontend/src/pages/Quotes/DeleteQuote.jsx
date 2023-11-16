@@ -32,13 +32,13 @@ const DeleteQuote = () => {
     }, [])
 
     const handleDelete = () => {
+        setServerError(false);
         axiosInstance
             .delete(`/quote/${id}`)
             .then(
                 navigate('/quotes')
             )
             .catch((error) => {
-                setServerError(false);
                 console.log(error.response.status)
                 if (error.response.status === 500) {
                     setServerError(true);

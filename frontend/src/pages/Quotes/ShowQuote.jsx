@@ -20,8 +20,8 @@ const ShowQuote = () => {
         setLoading(true);
         axiosInstance
             .get(`/quote/${id}`)
-            .then((responce) => {
-                setQuote(responce.data);
+            .then((response) => {
+                setQuote(response.data);
                 setLoading(false);
                 console.log(quote.firstName);
             })
