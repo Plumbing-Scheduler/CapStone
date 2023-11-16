@@ -61,7 +61,6 @@ const CustomerDetails = () => {
               <Typography variant="body1">
                 <strong>Business Name:</strong> {customer.busName}
               </Typography>
-              {/* Add more fields as needed */}
             </Box>
           </Paper>
         </Box>
