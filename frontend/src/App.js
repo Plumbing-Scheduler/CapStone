@@ -26,11 +26,7 @@ import EditCustomer from './pages/CustomerManagement/EditCustomer';
 import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
-import CustomerReports from './pages/Reports/CustomerReports';
 import ServiceReports from './pages/Reports/ServiceReports';
-import EmployeeReports from './pages/Reports/EmployeeReports';
-// import QuoteHistoryReports from './pages/Reports/QuoteHistoryReports';
-import TransactionReports from './pages/Reports/TransactionReports';
 
 // import WorkOrderform from "./scenes/form";
 
@@ -82,13 +78,9 @@ function App() {
               <Route path="details/:id" element={<CustomerDetails />} />
             </Route>
 
-            <Route path="/reports" element={<Reports />}>
-              <Route path="" element={<ServiceReports />} />
-              <Route path="customerreports" element={<CustomerReports />} />
-              <Route path="employeereports" element={<EmployeeReports />} />
-              <Route path="transactionreports" element={<TransactionReports />} /> 
-              {/* <Route path="quotehistoryreports" element={<QuoteHistoryReports />} />  */}
-              
+            <Route path="/reports">
+              <Route index element={<Reports />} />
+              <Route path="history" element={<ServiceReports />} />
             </Route>
 
           </Routes>

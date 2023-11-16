@@ -189,7 +189,7 @@ export const CreateWorkOrder = () => {
                                 {emp.firstName + ' ' + emp.lastName}
                             </MenuItem>
                         ))}
-                    </TextField>
+                    </TextField>    
                     <TextField
                         fullWidth
                         type="number"

@@ -1,1 +1,0 @@
-// History of customer payments.
