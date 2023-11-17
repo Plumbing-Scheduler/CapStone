@@ -27,6 +27,7 @@ import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
 import Login from "./pages/Login";
+import Profile from './pages/Profile';
 import axiosInstance from './axiosInstance';
 import { useEffect } from 'react';
 // import WorkOrderform from "./scenes/form";
@@ -68,7 +69,7 @@ useEffect(() => {
             <Topbar />
             <Routes>
               <Route path="/" element={<Home />} />
-
+              <Route path="/profile" element={<Profile />} />
               <Route path="/quotes" >
                 <Route index element={<Quotes />} />
                 <Route path='create' element={<CreateQuote />} />

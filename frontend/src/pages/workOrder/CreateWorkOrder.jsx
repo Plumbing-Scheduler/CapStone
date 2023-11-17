@@ -310,7 +310,7 @@ export const CreateWorkOrder = () => {
                     borderRadius: "5px"
                 }}
             >
-                <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
+                <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
                     Save and Add
                 </Button>
             </Box>

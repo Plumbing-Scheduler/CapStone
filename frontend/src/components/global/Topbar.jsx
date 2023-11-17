@@ -1,4 +1,4 @@
-import { Menu, MenuItem, IconButton, useTheme, Button } from "@mui/material";
+import { Menu, MenuItem, IconButton, useTheme, Button, Box } from "@mui/material";
 import { useContext, useState } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -10,7 +10,7 @@ import axiosInstance from "../../axiosInstance";
 import { useCookies } from 'react-cookie';
 
 const Topbar = () => {
-    const [cookies, removeCookie ] = useCookies(['loggedIn']);
+    const [cookies, removeCookie] = useCookies(['loggedIn']);
     const navigate = useNavigate();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -38,16 +38,6 @@ const Topbar = () => {
                 console.log(err)
             });
     };
-    // return(<Box display = "flex" justifyContent="space-between" p={2}>
-    //     {/* {Search Bar} */}
-    //     <Box display= "flex" backgroundColor={colors.primary[400]} borderRadius="3px">
-    //         <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search"/>
-    //         <IconButton type="button" sx={{ p:1 }}>
-    //         <SearchIcon />
-    //         </IconButton>
-    //     </Box>
-
-
 
     return (<div className="flex justify-between p-3" >
         <Link to='..' relative="path" className="link">
@@ -80,6 +70,7 @@ const Topbar = () => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
+                color={colors.primary[100]}
                 
                 MenuListProps={{
                     'aria-labelledby': 'fade-button',
@@ -91,10 +82,12 @@ const Topbar = () => {
                 <MenuItem onClick={handleLogout}>
                     Log Out
                 </MenuItem>
+                <MenuItem >
+                    <Link className="link" to={'/profile'}>
+                        Profile
+                    </Link>
+                </MenuItem>
             </Menu>
-
-
-
             <IconButton>
 
             </IconButton>

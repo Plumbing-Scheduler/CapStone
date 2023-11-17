@@ -65,7 +65,7 @@ const EmployeeDetails = () => {
                                 <Typography variant='body1'>{employee.email}</Typography>
                                 <Typography variant='body1'>{employee.address.street}, {employee.address.city}, {employee.address.province}</Typography>
                                 <Typography variant='body1'>{employee.address.postalCode}</Typography>
-                                <Typography variant='body1'>Start Date: {dayjs(employee.address.startDate).toISOString().substring(0, 10)}</Typography>
+                                <Typography variant='body1'>Start Date: {dayjs(employee.startDate).toISOString().substring(0, 10)}</Typography>
                             </Box>
                         </Box>
 

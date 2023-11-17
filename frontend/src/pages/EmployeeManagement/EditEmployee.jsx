@@ -78,6 +78,7 @@ export const EditEmployee = () => {
     const [experience, setExperience] = useState('');
     const [employmentType, setEmploymentType] = useState('');
     const [status, setStatus] = useState('');
+    const [password, setPassword] = useState('');
     const [startDate, setStartDate] = useState(Date.now());
 
     dayjs.extend(localizedFormat);
@@ -98,7 +99,8 @@ export const EditEmployee = () => {
         experience,
         startDate,
         employmentType,
-        status
+        status,
+        password
     }
 
     useEffect(() => {
@@ -120,6 +122,7 @@ export const EditEmployee = () => {
                 setExperience(response.data.experience)
                 setEmploymentType(response.data.employmentType)
                 setStatus(response.data.status)
+                setPassword(response.data.password);
                 setLoading(false)
             }).catch((error) => {
                 setServerError(false);
@@ -215,7 +218,7 @@ export const EditEmployee = () => {
                             name="email"
                             id="email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => setEmail(e.target.value.toLowerCase())}
                             sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
@@ -423,7 +426,7 @@ export const EditEmployee = () => {
                             borderRadius: "5px"
                         }}
                     >
-                        <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
+                        <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
                             Save and Add
                         </Button>
                     </Box>
