@@ -23,7 +23,6 @@ const handleRefresh = async (req, res) => {
                     process.env.ACCESS_TOKEN,
                     { expiresIn: '1h' }
             );
-            console.log("Refreshed Access Token")
             res.json({accessToken})
         }
     );

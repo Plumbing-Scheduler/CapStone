@@ -61,8 +61,8 @@ export const tokens = (mode) => ({
                 900: "#151632"
             },
             buttonBase: "#434957",
-            redButton: '#ff0000',
-            greenButton: '#38ba36'
+            redButton: "#ff0000",
+            greenButton: "#1bb57d"
         } : {
             grey: {
                 100: "#141414",
@@ -120,8 +120,8 @@ export const tokens = (mode) => ({
                 900: "#e1e2fe",
             },
             buttonBase: "#6b7385",
-            redButton: '#ff0000',
-            greenButton: '#38ba36'
+            redButton: "#ff0000",
+            greenButton: "#1bb57d"
         }),
 });
 

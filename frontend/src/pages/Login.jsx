@@ -103,7 +103,7 @@ const Login = () => {
             </Box>
             <Box m="30px" p="60px">
                 <Box
-                    backgroundcolor={colors.redAccent[500]}
+                    backgroundColor={colors.redAccent[500]}
                     display="grid"
                     gap="30px"
                     sx={{ p: '4px', m: 'auto', width: '90%', borderRadius: '4px' }}

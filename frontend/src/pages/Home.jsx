@@ -7,10 +7,10 @@ const Home = () => {
     return (
     <Box >
         <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Header title="HOME" subtitle="" /> 
-            
+            <Header title="HOME" subtitle={"Welcome " + loggedInUser.firstName + "!"} /> 
+            <div className="m-auto w-auto text-3xl"></div>
         </Box>
-        <div className="m-auto w-1/12 text-3xl">Welcome {loggedInUser.firstName}!!</div>
+        
     </Box>
     );
 };

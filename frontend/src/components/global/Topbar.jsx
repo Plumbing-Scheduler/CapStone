@@ -1,17 +1,14 @@
-import { Menu, MenuItem, IconButton, useTheme, Button, Box } from "@mui/material";
+import { Menu, MenuItem, IconButton, useTheme, Button } from "@mui/material";
 import { useContext, useState } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axiosInstance from "../../axiosInstance";
-import { useCookies } from 'react-cookie';
 
 const Topbar = () => {
-    const [cookies, removeCookie] = useCookies(['loggedIn']);
-    const navigate = useNavigate();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const colorMode = useContext(ColorModeContext);
@@ -77,12 +74,15 @@ const Topbar = () => {
                 }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                sx={{".MuiMenu-paper":{
+                    backgroundColor: colors.buttonBase
+                }, color: 'white'}}
 
             >
-                <MenuItem onClick={handleLogout}>
+                <MenuItem onClick={handleLogout} sx={{color: 'white'}}>
                     Log Out
                 </MenuItem>
-                <MenuItem >
+                <MenuItem onClick={handleClose}>
                     <Link className="link" to={'/profile'}>
                         Profile
                     </Link>
