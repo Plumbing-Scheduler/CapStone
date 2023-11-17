@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, useTheme, Button } from "@mui/material";
+import { Box, useTheme, IconButton } from "@mui/material";
 import { tokens } from "../../theme";
+import EditIcon from '@mui/icons-material/Edit';
 
 export const EditButton = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
     return (
-        <Box >
+        <Box>
             <Link to='..' relative='path' className='link'>
-                <Box backgroundColor={colors.primary[400]} borderRadius="3px">
-                    <Button variant="Text">Edit</Button>
-                </Box>
+                <IconButton aria-label="edit" color="primary" edge="start" sx={{ borderRadius: '50%' }}>
+                    <EditIcon />
+                </IconButton>
             </Link>
         </Box>
     )

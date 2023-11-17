@@ -1,9 +1,8 @@
-import { Box, Typography, Button, Paper, Divider } from '@mui/material';
+import { Box, Typography, Paper, Divider } from '@mui/material';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
-import dayjs from 'dayjs';
 import Header from '../../components/Header';
 import { DeleteButton } from '../../components/global/DeleteButton';
 import { EditButton } from '../../components/global/EditButton';
@@ -41,26 +40,41 @@ const CustomerDetails = () => {
             <DeleteButton />
           </div>
           <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
-            <Typography variant="h4" sx={{ paddingBottom: '1rem' }}>
+            <Typography variant="h4" sx={{ paddingBottom: '1rem', fontSize: '2.5rem' }}>
               Customer Information
             </Typography>
             <Divider />
             <Box mt={2}>
-              <Typography variant="body1">
-                <strong>Name:</strong> {customer.firstName} {customer.lastName}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Phone:</strong> {customer.phone}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Email:</strong> {customer.email}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Address:</strong> {`${customer.address.street}, ${customer.address.postalCode} ${customer.address.city}, ${customer.address.province}`}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Business Name:</strong> {customer.busName}
-              </Typography>
+              {customer.firstName && (
+                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                  <strong>Name:</strong> {customer.firstName} {customer.lastName}
+                </Typography>
+              )}
+              {customer.phone && (
+                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                  <strong>Phone:</strong> {customer.phone}
+                </Typography>
+              )}
+              {customer.email && (
+                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                  <strong>Email:</strong> {customer.email}
+                </Typography>
+              )}
+              {customer.address && (
+                <>
+                  {customer.address.street && (
+                    <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                      <strong>Address:</strong> {`${customer.address.street}, ${customer.address.postalCode} ${customer.address.city}, ${customer.address.province}`}
+                    </Typography>
+                  )}
+                </>
+              )}
+              {customer.busName && (
+                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                  <strong>Business Name:</strong> {customer.busName}
+                </Typography>
+              )}
+
             </Box>
           </Paper>
         </Box>

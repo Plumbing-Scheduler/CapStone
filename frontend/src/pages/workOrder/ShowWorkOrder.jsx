@@ -1,12 +1,13 @@
-import { Box, Typography } from '@mui/material'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
+import { Box, Typography, Paper, Divider, IconButton, Grid } from '@mui/material';
 import Header from '../../components/Header';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { DeleteButton } from '../../components/global/DeleteButton';
 import { EditButton } from '../../components/global/EditButton';
 
@@ -14,99 +15,93 @@ const ShowWorkOrder = () => {
   const { id } = useParams();
   const [workOrder, setWorkOrder] = useState({});
   const [loading, setLoading] = useState(true);
-  const minwidth2 = useMediaQuery('(min-width:500px)');
-  dayjs.extend(localizedFormat)
+  dayjs.extend(localizedFormat);
 
   useEffect(() => {
     setLoading(true);
     axios
       .get(`http://localhost:3500/workorders/${id}`)
-      .then((responce) => {
-        setWorkOrder(responce.data);
+      .then((response) => {
+        setWorkOrder(response.data);
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
-      })
-  }, [])
-
+      });
+  }, [id]);
 
   return (
     <Box>
-      <div className='flex justify-between w-full'>
-        <Header title={"WORK ORDER"} subtitle={"DETAILS"} />
-      </div>
+      <Header title={"WORK ORDER"} subtitle={"DETAILS"} />
+
+      <Box display="flex" justifyContent="flex-end" mt={3} spaceX={3}>
+        <EditButton />
+        <DeleteButton />
+      </Box>
+
       {loading ? (
-        <div className='w-5 m-auto h-5 pt-11 text-center'>
+        <div className="w-5 m-auto h-5 pt-11 text-center">
           <Spinner />
         </div>
       ) : (
-        <div>
-          <div className='flex justify-end m-4 space-x-3'>
-            <EditButton />
-            <DeleteButton />
-          </div>
-          <Box>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
-              sx={{
-                gridColumn: "span 2",
-                margin: "auto",
-                width: '80%',
-              }}
-            >
-              <Box>
-                <Typography
-                  variant="h2"
-                  sx={{
-                    width: '75%',
-                    paddingBottom: '10px'
-                  }}
-                >
-                  Work Order Info.
+        <Box m={4}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={12}>
+              <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
+                <Typography variant="h2" sx={{ fontSize: '2.5rem', paddingBottom: '10px' }}>
+                  Work Order Information
                 </Typography>
-                <Typography variant='body1'>{workOrder.title}</Typography>
-                <Typography variant='body1'>Description: <b>{workOrder.description}</b></Typography>
-                <Typography variant='body1'>Location: <b>{workOrder.address}</b></Typography>
-                <Typography variant='body1'>Cost: <b>${workOrder.cost}</b></Typography>
-                <Typography variant='body1'>Start Date/Time: <b>{dayjs(workOrder.startDate).format('LLL')}</b></Typography>
-                <Typography variant='body1'>End Date/Time: <b>{dayjs(workOrder.endDate).format('LLL')}</b></Typography>
-              </Box>
-              <Box>
-                <Typography
-                  variant="h2"
-                  sx={{
-                    width: '75%',
-                    paddingBottom: '10px'
-                  }}
-                >
-                  Assigned Employee Info.
+                <Divider sx={{ marginBottom: '10px' }} />
+                <Typography variant="body1" sx={{ fontSize: '1.8rem' }}>
+                  {workOrder.title}
                 </Typography>
-                <Typography variant='body1'>{workOrder.assignedEmp}</Typography>
-                {/* Need to get assigned emp info and Display it here */}
-              </Box>
-              <Box>
-                <Typography
-                  variant="h2"
-                  sx={{
-                    width: '75%',
-                    paddingBottom: '10px'
-                  }}
-                >
-                  Customer Info.
+                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                  <b>Description:</b> {workOrder.description}
                 </Typography>
-                <Typography variant='body1'>{workOrder.customerID}</Typography>
-                {/* Need to get Customer info and Display it here */}
-              </Box>
-            </Box>
-          </Box>
-        </div>
+                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                  <b>Location:</b> {workOrder.address}
+                </Typography>
+                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                  <b>Cost:</b> ${workOrder.cost}
+                </Typography>
+                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                  <b>Start Date/Time:</b> {dayjs(workOrder.startDate).format('LLL')}
+                </Typography>
+                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                  <b>End Date/Time:</b> {dayjs(workOrder.endDate).format('LLL')}
+                </Typography>
+              </Paper>
+            </Grid>
+
+            <Grid item xs={12} sm={12}>
+              <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
+                <Typography variant="h2" sx={{ fontSize: '2.5rem', paddingBottom: '10px' }}>
+                  Assigned Employee Information
+                </Typography>
+                <Divider sx={{ marginBottom: '10px' }} />
+                <Typography variant="body1" sx={{ fontSize: '1.8rem' }}>
+                  {workOrder.assignedEmp}
+                </Typography>
+              </Paper>
+            </Grid>
+
+            <Grid item xs={12} sm={12}>
+              <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
+                <Typography variant="h2" sx={{ fontSize: '2.5rem', paddingBottom: '10px' }}>
+                  Customer Information
+                </Typography>
+                <Divider sx={{ marginBottom: '10px' }} />
+                <Typography variant="body1" sx={{ fontSize: '1.8rem' }}>
+                  {workOrder.customerID}
+                </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Box>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default ShowWorkOrder
+export default ShowWorkOrder;
