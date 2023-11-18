@@ -1,13 +1,16 @@
 import { Box } from "@mui/material";
 import Header from "../components/Header";
-import DeleteButton from "../components/global/DeleteButton";
-import EditButton from "../components/global/EditButton";
+
 
 const Home = () => {
-    return (<Box>
+    const loggedInUser = JSON.parse(localStorage.getItem("user"));
+    return (
+    <Box >
         <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Header title="HOME" subtitle="" /> 
+            <Header title="HOME" subtitle={"Welcome " + loggedInUser.firstName + "!"} /> 
+            <div className="m-auto w-auto text-3xl"></div>
         </Box>
+        
     </Box>
     );
 };

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from 'react-bootstrap/Spinner';
@@ -24,11 +25,15 @@ import {
 import Header from "../components/Header";
 import { tokens } from "../theme";
 
+    import axiosInstance from "../axiosInstance";
+
+
 const Schedule = () => {
     const theme = useTheme();
     const currDate = Date.now();
     const [data, setData] = useState([{}]);
     const [loading, setLoading] = useState(true);
+
 
     // Editing State
     const [addedAppointment, setAddedAppointment] = useState({});
@@ -81,6 +86,7 @@ const Schedule = () => {
         if (deleted !== undefined) {
             axios
                 .delete(`http://localhost:3500/schedule/${deleted}`)
+
                 .then((response) => {
                     console.log(response);
                 })
