@@ -83,11 +83,18 @@ const Schedule = () => {
         }
 
         if (deleted !== undefined) {
+            const deletedObj = updatedData.find((app) => (
+                app.id === deleted
+            ))
+            updatedData = updatedData.filter((app) => (
+                app.id != deleted
+                ));
+
             axiosInstance
                 .delete(`/schedule/${deleted}`)
-
-                .then((response) => {
-                    console.log(response);
+                .then(() => {
+                    axiosInstance
+                        .delete(`/workorders/${deletedObj.serviceId}`)
                 })
                 .catch((err) => {
                     console.log(err);
