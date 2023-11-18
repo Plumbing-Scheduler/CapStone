@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { tokens } from "../../theme";
-
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Quotes = () => {
     const theme = useTheme();
@@ -18,7 +18,8 @@ const Quotes = () => {
     const [busName, setBusName] = useState('');
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
-
+    const minwidth1 = useMediaQuery('(min-width:800px)');
+    const minwidth2 = useMediaQuery('(min-width:500px)');
 
     const newQuote = {
         firstName,
@@ -43,11 +44,9 @@ const Quotes = () => {
             })
     }
 
-
     return (
         <Box >
             <Header title="QUOTE REQUESTS" subtitle="Add New Quote" />
-
             <Box>
                 <Typography
                     //display="flex"
@@ -62,7 +61,7 @@ const Quotes = () => {
                 <Box
                     display="grid"
                     gap="30px"
-                    gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                    gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                     sx={{
                         gridColumn: "span 4",
                         margin: "auto",
@@ -162,7 +161,7 @@ const Quotes = () => {
                         sx={{ gridColumn: "span 2" }}
 
                     />
-                </Box>
+                </Box >
                 <div className="flex justify-end mr-60">
                     <Button
                         onClick={handleSave}
@@ -170,7 +169,7 @@ const Quotes = () => {
                             backgroundColor: colors.redAccent[500],
                             fontWeight: 'bold',
                             fontSize: '13px',
-                            width: '15%',
+                            width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
                             borderRadius: '3px'
                         }}
                     >

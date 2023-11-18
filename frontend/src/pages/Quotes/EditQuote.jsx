@@ -4,10 +4,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 const EditQuote = () => {
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
-
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
@@ -17,6 +18,8 @@ const EditQuote = () => {
     const [busName, setBusName] = useState('');
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
+    const minwidth1 = useMediaQuery('(min-width:800px)');
+    const minwidth2 = useMediaQuery('(min-width:500px)');
 
     const data = {
         firstName,
@@ -83,7 +86,7 @@ const EditQuote = () => {
                     <Box
                         display="grid"
                         gap="30px"
-                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                        gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                         sx={{
                             gridColumn: "span 4",
                             margin: "auto",
