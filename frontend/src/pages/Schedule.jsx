@@ -24,8 +24,7 @@ import {
 } from '@devexpress/dx-react-scheduler-material-ui';
 import Header from "../components/Header";
 import { tokens } from "../theme";
-
-    import axiosInstance from "../axiosInstance";
+import axiosInstance from "../axiosInstance";
 
 
 const Schedule = () => {
@@ -41,7 +40,7 @@ const Schedule = () => {
     const [deletedAppointmentId, setDeletedAppointmentId] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:3500/schedule')
+        axiosInstance.get('/schedule')
             .then((response) => {
                 setData(response.data.data.map((app) => ({
                     title: app.title,
@@ -73,8 +72,8 @@ const Schedule = () => {
                 changed[app.id]
             ))
             console.log(edited);
-            axios
-                .put(`http://localhost:3500/schedule/${edited[0].id}`, edited[0])
+            axiosInstance
+                .put(`/schedule/${edited[0].id}`, edited[0])
                 .then((response) => {
                     console.log(response);
                 })
@@ -84,8 +83,8 @@ const Schedule = () => {
         }
 
         if (deleted !== undefined) {
-            axios
-                .delete(`http://localhost:3500/schedule/${deleted}`)
+            axiosInstance
+                .delete(`/schedule/${deleted}`)
 
                 .then((response) => {
                     console.log(response);

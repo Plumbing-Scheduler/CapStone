@@ -70,7 +70,7 @@ const ShowWorkOrder = () => {
                 </Typography>
                 <Typography variant='body1'>{workOrder.title}</Typography>
                 <Typography variant='body1'>Description: <b>{workOrder.description}</b></Typography>
-                <Typography variant='body1'>Location: <b>{workOrder.address}</b></Typography>
+                <Typography variant='body1'>Location: <b>{workOrder.address.street}, {workOrder.address.city}</b></Typography>
                 <Typography variant='body1'>Cost: <b>${workOrder.cost}</b></Typography>
                 <Typography variant='body1'>Start Date/Time: <b>{dayjs(workOrder.startDate).format('LLL')}</b></Typography>
                 <Typography variant='body1'>End Date/Time: <b>{dayjs(workOrder.endDate).format('LLL')}</b></Typography>

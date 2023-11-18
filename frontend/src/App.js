@@ -26,7 +26,6 @@ import EditCustomer from './pages/CustomerManagement/EditCustomer';
 import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
-
 import Login from "./pages/Login";
 import Profile from './pages/Profile';
 import axiosInstance from './axiosInstance';

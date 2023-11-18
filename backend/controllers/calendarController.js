@@ -74,9 +74,10 @@ const updateCalendar = async (request, response) => {
 const deleteCalendar = async (request, response) => {
     const { id } = request.params;
     try {
-        const result = await Calendar.findByIdAndDelete(id);
+        const result_id = await Calendar.findByIdAndDelete(id);
+        const result_woid = await Calendar.findOneAndDelete({serviceId: id});
 
-        if(!result){
+        if(!result_id && !result_woid){
             return response.status(204).send({message: "No Content Found"});
         }
 
