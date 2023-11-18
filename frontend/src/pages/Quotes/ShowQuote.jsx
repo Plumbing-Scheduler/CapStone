@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
-import { Box, Typography, Paper, Divider, IconButton } from '@mui/material';
+import { Box, Typography, Paper, Divider, IconButton, useTheme } from '@mui/material';
+import { tokens } from "../../theme";
 import Header from '../../components/Header';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 const ShowQuote = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const { id } = useParams();
   const [quote, setQuote] = useState({});
   const [loading, setLoading] = useState(true);
@@ -47,58 +50,58 @@ const ShowQuote = () => {
           <Spinner />
         </div>
       ) : (
-        <Box>
-          <Paper elevation={3} sx={{ p: 3, mt: 3, maxWidth: '100%' }}>
-          <Typography variant="h2" sx={{ fontSize: '2.5rem', paddingBottom: '10px' }}>
+        <Box m={4}>
+          <Paper elevation={3} sx={{ p: 3, mt: 3, maxWidth: '100%', backgroundColor: colors.primary[400]}}>
+          <Typography variant="h3" sx={{ paddingBottom: '10px' }}>
               Customer Information
             </Typography>
             <Divider />
             <Box mt={2}>
               {quote.firstName && (
-                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                <Typography variant="h5">
                   <strong>Name:</strong> {quote.firstName} {quote.lastName}
                 </Typography>
               )}
               {quote.phone && (
-                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                <Typography variant="h5">
                   <strong>Phone:</strong> {quote.phone}
                 </Typography>
               )}
               {quote.email && (
-                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                <Typography variant="h5">
                   <strong>Email:</strong> {quote.email}
                 </Typography>
               )}
               {quote.address && (
                 <>
                   {quote.address.street && (
-                    <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                    <Typography variant="h5">
                       <strong>Address:</strong> {`${quote.address.street}, ${quote.address.postalCode} ${quote.address.city}, ${quote.address.province}`}
                     </Typography>
                   )}
                 </>
               )}
               {quote.busName && (
-                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                <Typography variant="h5">
                   <strong>Business Name:</strong> {quote.busName}
                 </Typography>
               )}
             </Box>
           </Paper>
 
-          <Paper elevation={3} sx={{ p: 3, mt: 3, maxWidth: '100%' }}>
-          <Typography variant="h2" sx={{ fontSize: '2.5rem', paddingBottom: '10px' }}>
+          <Paper elevation={3} sx={{ p: 3, mt: 3, maxWidth: '100%', backgroundColor: colors.primary[400]}}>
+          <Typography variant="h3" sx={{ paddingBottom: '10px' }}>
               Quote Information
             </Typography>
             <Divider />
             <Box mt={2}>
               {quote.description && (
-                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                <Typography variant="h5">
                   <strong>Quote Description:</strong> {quote.description}
                 </Typography>
               )}
               {quote.cost && (
-                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                <Typography variant="h5">
                   <strong>Estimate Cost:</strong> ${quote.cost}
                 </Typography>
               )}

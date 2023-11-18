@@ -1,4 +1,5 @@
-import { Box, Typography, Paper, Divider } from '@mui/material';
+import { Box, Typography, Paper, Divider, useTheme } from '@mui/material';
+import { tokens } from "../../theme";
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -8,6 +9,8 @@ import { DeleteButton } from '../../components/global/DeleteButton';
 import { EditButton } from '../../components/global/EditButton';
 
 const CustomerDetails = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const { id } = useParams();
   const [customer, setCustomer] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,38 +42,38 @@ const CustomerDetails = () => {
             <EditButton />
             <DeleteButton />
           </div>
-          <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
-            <Typography variant="h4" sx={{ paddingBottom: '1rem', fontSize: '2.5rem' }}>
+          <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400] }} >
+            <Typography variant="h3" sx={{ paddingBottom: '1rem' }}>
               Customer Information
             </Typography>
             <Divider />
             <Box mt={2}>
               {customer.firstName && (
-                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                <Typography variant="h5" >
                   <strong>Name:</strong> {customer.firstName} {customer.lastName}
                 </Typography>
               )}
               {customer.phone && (
-                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                <Typography variant="h5" >
                   <strong>Phone:</strong> {customer.phone}
                 </Typography>
               )}
               {customer.email && (
-                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                <Typography variant="h5" >
                   <strong>Email:</strong> {customer.email}
                 </Typography>
               )}
               {customer.address && (
                 <>
                   {customer.address.street && (
-                    <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                    <Typography variant="h5" >
                       <strong>Address:</strong> {`${customer.address.street}, ${customer.address.postalCode} ${customer.address.city}, ${customer.address.province}`}
                     </Typography>
                   )}
                 </>
               )}
               {customer.busName && (
-                <Typography variant="body1" sx={{ fontSize: '1.5rem' }}>
+                <Typography variant="h5" >
                   <strong>Business Name:</strong> {customer.busName}
                 </Typography>
               )}
