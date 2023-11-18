@@ -83,20 +83,20 @@ export const ReportFilter = () => {
     return (
         <Box>
             <Box m="30px">
-                <Box sx={{ width: "70%", m: "auto", boxShadow: '4', border: 'solid', borderWidth: "2px", borderRadius: '5px' }}>
+                <Box sx={{ width: "70%", m: "auto", boxShadow: '4', borderRadius: '5px', backgroundColor: colors.primary[400] }}>
                     <Typography
-                        variant='h2'
-                        textAlign={'center'}
-                        m="10px"
-                        p="10px"
+                        variant='h3'
+                        textAlign={'left'}
+                        mt={2}
+                        p={2}
                     >
-                        Report Search
+                        Search Reports
                     </Typography>
 
                     <Box
                         display="grid"
-                        gap="30px"
-                        p="50px"
+                        gap="20px"
+                        p="20px"
                         gridTemplateColumns="repeat(2, minmax(0, 1fr))"
                         sx={{
                             "& > div:": { gridColumn: isNonMobile ? undefined : "span 2" },
