@@ -26,10 +26,12 @@ import EditCustomer from './pages/CustomerManagement/EditCustomer';
 import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
+
 import Login from "./pages/Login";
 import Profile from './pages/Profile';
 import axiosInstance from './axiosInstance';
 import { useEffect } from 'react';
+
 // import WorkOrderform from "./scenes/form";
 
 function App() {
@@ -105,8 +107,10 @@ useEffect(() => {
                 <Route path="details/:id" element={<CustomerDetails />} />
               </Route>
 
-              <Route path="/reports" element={<Reports />} >
-              </Route>
+            <Route path="/reports">
+              <Route index element={<Reports />} />
+            </Route>
+
 
             </Routes>
           </main>
