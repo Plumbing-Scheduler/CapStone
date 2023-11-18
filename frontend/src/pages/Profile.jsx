@@ -296,27 +296,27 @@ const Profile = () => {
                     sx={{ margin: "10px auto", width: "100%" }} />
 
                 {(newPassword != conPassword) &&
-                    <Alert severity="error">
+                    <Alert severity="error" variant="filled">
                         <AlertTitle>Passwords Do Not Match</AlertTitle>
                     </Alert>}
 
                 {(newPassword.length < 8 && newPassword.length != 0) &&
-                    <Alert severity="warning">
+                    <Alert severity="warning" variant="filled">
                         <AlertTitle>Password should be more than 8 Characters</AlertTitle>
                     </Alert>}
 
                 {pcSuccess &&
-                    <Alert severity="success">
+                    <Alert severity="success" variant="filled">
                         <AlertTitle>Password Has Been Changed</AlertTitle>
                     </Alert>}
 
                 {pcFail && 
-                    <Alert severity="error">
+                    <Alert severity="error" variant="filled">
                         <AlertTitle>Incorrect Old Password</AlertTitle>
                     </Alert>}
 
                 {serverError &&
-                    <Alert severity="error" >
+                    <Alert severity="error" variant="filled">
                         <AlertTitle>Server Error</AlertTitle>
                         Internal Server Error. Please Try Again Later.
                     </Alert>}
