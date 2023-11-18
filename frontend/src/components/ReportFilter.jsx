@@ -15,31 +15,30 @@ export const ReportFilter = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const isNonMobile = useMediaQuery("(min-diwth:600px)");
-    const serviceStatus = "In Progress" //Newly created work orders will always be set to "1" for in progress. 
+    const [serviceStatus, setServiceStatus] = useState('');
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
-    const [startDate, setStartDate] = useState(Date.now());
+    const [startDate, setStartDate] = useState(Date.now() - (30 * 24 * 60 * 60 * 1000));
     const [assignedEmp, setAssignedEmp] = useState('');
-    const [endDate, setEndDate] = useState(startDate);
-    const [customerID, setCustomerID] = useState('');
-    const [customerName, setCustomerName] = useState('');
+    const [endDate, setEndDate] = useState(Date.now());
+    const [customer, setCustomer] = useState('');
     const [busName, setBusName] = useState('');
     const [address, setAddress] = useState('');
 
     const [employees, setEmployees] = useState([]);
+    const [customers, setCustomers] = useState([]);
     const navigate = useNavigate();
 
     dayjs.extend(localizedFormat);
 
     const generateReport = {
-        customerName,
         serviceStatus,
         description,
         title,
         startDate,
         assignedEmp,
         endDate,
-        customerID,
+        customer,
         busName,
         address,
     };
@@ -51,34 +50,20 @@ export const ReportFilter = () => {
             })
             .catch((error) => {
                 console.log(error);
-            })
-    })
+            });
 
-    // const handleSave = () => {
-    //     axios
-    //         .post('http://localhost:3500/workorders', generateReport)
-    //         .then((response) => {
-    //             const newCal = {
-    //                 title: response.data.title,
-    //                 startDate: response.data.startDate,
-    //                 endDate: response.data.endDate,
-    //                 serviceId: response.data._id,
-    //                 empId: response.data.assignedEmp,
-    //             }
-    //             axios
-    //                 .post('http://localhost:3500/schedule', newCal)
-    //                 .then((response) => {
-    //                     console.log(response.data)
-    //                     navigate('/history')
-    //                 })
-    //                 .catch((error) => {
-    //                     console.log(error);
-    //                 });
-    //         })
-    //         .catch((error) => {
-    //             console.log(error)
-    //         });
-    // };
+            axios.get('http://localhost:3500/customer')
+            .then((responce) => {
+                setCustomers(responce.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    const generate = () => {
+        navigate(`history/${JSON.stringify(generateReport)}`)
+    };
 
     return (
         <Box>
@@ -132,28 +117,21 @@ export const ReportFilter = () => {
                             id=""
                             sx={{ gridColumn: "span 4" }}
                         />
-                        <TextField
-                            fullWidth
-                            type="text"
+                         <TextField
+                            select
                             variant='filled'
-                            label="Customer Name"
-                            value={customerName}
-                            onChange={(e) => setCustomerID(e.target.value)}
-                            name="customername"
+                            label="Customer"
+                            value={assignedEmp}
+                            onChange={(e) => setAssignedEmp(e.target.value)}
+                            name="assignemployee"
                             id=""
                             sx={{ gridColumn: "span 4" }}
-                        />
-                        <TextField
-                            fullWidth
-                            type="number"
-                            variant='filled'
-                            label="Customer ID"
-                            value={customerID}
-                            onChange={(e) => setCustomerID(e.target.value)}
-                            name="customerid"
-                            id=""
-                            sx={{ gridColumn: "span 4" }}
-                        />
+                        >
+                            {customers.map((cus) => (
+                                <MenuItem key={cus._id} value={cus._id}>
+                                    {cus.firstName + ' ' + cus.lastName}
+                                </MenuItem>
+                            ))}</TextField>
                         <TextField
                             fullWidth
                             variant='filled'
@@ -205,9 +183,9 @@ export const ReportFilter = () => {
                             ))}
                         </TextField>
                         <Box ml="100%" width="50%">
-                            <Link to={`history`}>
+                            {/* <Link to={`history`}> */}
                                 <Button
-                                    // onClick={handleSave}
+                                    onClick={generate}
                                     sx={{
                                         backgroundColor: colors.redAccent[500],
                                         fontWeight: 'bold',
@@ -217,7 +195,7 @@ export const ReportFilter = () => {
                                 >
                                     Run Report
                                 </Button>
-                            </Link>
+                            {/* </Link> */}
                         </Box>
                     </Box>
                 </Box>

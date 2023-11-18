@@ -9,12 +9,47 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 
 const ServiceReports = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const { filter } = useParams();
+    const filterObj = JSON.parse(filter);
+    
 
+    const [employees, setEmployees] = useState([]);
+    const [customers, setCustomers] = useState([]);
+    const [workOrders, setWorkOrders] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3500/employees')
+            .then((responce) => {
+                setEmployees(responce.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+            axios.get('http://localhost:3500/customer')
+            .then((responce) => {
+                setCustomers(responce.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+            axios.get('http://localhost:3500/workorders')
+            .then((responce) => {
+                setWorkOrders(responce.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+            console.log(filterObj);
+    }, []);
     return (
         <Box>
             <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -22,7 +57,7 @@ const ServiceReports = () => {
             </Box>
             <Box m={3}>
                 <Box mb={2}>
-                    <Paper elevation={3} sx={{ backgroundColor: colors.primary[300], p: 2 }}>
+                    <Paper elevation={3} sx={{ backgroundColor: colors.primary[400], p: 2 }}>
                         <Typography variant="h6" ><b>Customer ID: </b></Typography>
                         <Typography variant="h6" ><b>CustomerName: </b></Typography>
                         <Typography variant="h6" ><b>Phone Number: </b></Typography>

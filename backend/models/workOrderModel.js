@@ -30,7 +30,9 @@ const workOrderSchema = mongoose.Schema(
         address: {
             type: String,
             required: true
-        }
+        },
+        serviceType: String,
+        paymentType: String
     }
 );
 

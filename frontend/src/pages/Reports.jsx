@@ -8,22 +8,22 @@ import ReportFilter from "../components/ReportFilter";
 
 
 export const Reports = () => {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [reports, setReports] = useState([]);
 
-    useEffect(() => {
-        setLoading(true);
-        axios
-            .get('http://localhost:3500/reports')
-            .then((responce) => {
-                setReports(responce.data.data)
-                setLoading(false)
-            })
-            .catch((error) => {
-                console.log(error);
-                setLoading(false)
-            })
-    }, [])
+    // useEffect(() => {
+    //     setLoading(true);
+    //     axios
+    //         .get('http://localhost:3500/reports')
+    //         .then((responce) => {
+    //             setReports(responce.data.data)
+    //             setLoading(false)
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             setLoading(false)
+    //         })
+    // }, [])
 
     return (
         <Box>

@@ -80,7 +80,7 @@ function App() {
 
             <Route path="/reports">
               <Route index element={<Reports />} />
-              <Route path="history" element={<ServiceReports />} />
+              <Route path="history/:filter" element={<ServiceReports />} />
             </Route>
 
           </Routes>
