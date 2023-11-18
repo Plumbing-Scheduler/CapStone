@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, Typography } from "@mui/material";
 import { tokens } from "../../theme.js";
 import Header from '../../components/Header';
 import Table from '@mui/material/Table';
@@ -21,37 +21,47 @@ const ServiceReports = () => {
                 <Header title="Reports" subtitle="" />
             </Box>
             <Box m={3}>
-                <Paper >
-                    <TableContainer component={Paper} sx={{ background: colors.primary[400] }} >
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Customer Name</TableCell>
-                                    <TableCell>Phone</TableCell>
-                                    <TableCell>Address</TableCell>
-                                    <TableCell>Email</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {/* {rows.map((row) => ())} */}
-                                    <TableRow 
-                                        // key={row.name}
-                                        // sx = {{ '&: last-child td, &: last-child th' : {border:0}}}
-                                    >
-                                        {/* <TableCell component="th" scope="row"></TableCell> */}
-                                        <TableCell >
-                                           {/* {row.name} */}
-                                        </TableCell>
-                                        <TableCell align="right">{}</TableCell>
-                                        <TableCell align="right">{}</TableCell>
-                                        <TableCell align="right">{}</TableCell>
-                                        <TableCell align="right">{}</TableCell>
-                                    </TableRow>
-                                
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Paper>
+                <Box mb={2}>
+                    <Paper elevation={3} sx={{ backgroundColor: colors.primary[300], p: 2 }}>
+                        <Typography variant="h6" ><b>Customer ID: </b></Typography>
+                        <Typography variant="h6" ><b>CustomerName: </b></Typography>
+                        <Typography variant="h6" ><b>Phone Number: </b></Typography>
+                        <Typography variant="h6" ><b>Address: </b></Typography>
+                        <Typography variant="h6" ><b>Email: </b></Typography>
+                    </Paper>
+                </Box>
+                <TableContainer component={Paper} sx={{ background: colors.primary[400] }} >
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Service Type</TableCell>
+                                <TableCell>Commercial/Residential</TableCell>
+                                <TableCell>Employee</TableCell>
+                                <TableCell>Completion Date</TableCell>
+                                <TableCell>Payment Type</TableCell>
+                                <TableCell>Cost</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {/* {rows.map((row) => ())} */}
+                            <TableRow
+                            // key={row.name}
+                            // sx = {{ '&: last-child td, &: last-child th' : {border:0}}}
+                            >
+                                {/* <TableCell component="th" scope="row"></TableCell> */}
+                                <TableCell >
+                                    {/* {row.name} */}
+                                </TableCell>
+                                <TableCell align="right">{ }</TableCell>
+                                <TableCell align="right">{ }</TableCell>
+                                <TableCell align="right">{ }</TableCell>
+                                <TableCell align="right">{ }</TableCell>
+                            </TableRow>
+
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+
             </Box>
         </Box>
     )
