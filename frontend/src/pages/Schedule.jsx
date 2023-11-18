@@ -18,7 +18,8 @@ import {
     AppointmentTooltip,
     ConfirmationDialog,
     AppointmentForm,
-    ViewSwitcher
+    ViewSwitcher,
+    DragDropProvider
 } from '@devexpress/dx-react-scheduler-material-ui';
 import Header from "../components/Header";
 import { tokens } from "../theme";
@@ -37,7 +38,15 @@ const Schedule = () => {
     useEffect(() => {
         axios.get('http://localhost:3500/schedule')
             .then((response) => {
-                setData(response.data.data);
+                setData(response.data.data.map((app) => ({
+                    title: app.title,
+                    startDate: app.startDate,
+                    endDate: app.endDate,
+                    serviceId: app.serviceId,
+                    empId: app.empId,
+                    id: app._id,
+                    notes: app.notes
+                })));
                 setLoading(false);
             })
             .catch((error) => {
@@ -46,24 +55,40 @@ const Schedule = () => {
             });
     }, []);
 
+
+
     // Create a new appointment
     const onCommitChanges = ({ changed, deleted }) => {
-        let updatedData = [...data];
-    
+        let updatedData = data;
         if (changed) {
-            // Handle editing existing appointments
-            const appointmentIndex = updatedData.findIndex(appointment => appointment.id === changed.id);
-            updatedData[appointmentIndex] = { ...updatedData[appointmentIndex], ...changed.changes };
+            updatedData = updatedData.map((app) => (
+                changed[app.id] ? { ...app, ...changed[app.id] } : app
+            ));
+            const edited = updatedData.filter((app) => (
+                changed[app.id]
+            ))
+            console.log(edited);
+            axios
+                .put(`http://localhost:3500/schedule/${edited[0].id}`, edited[0])
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         }
-    
+
         if (deleted !== undefined) {
-            // Handle deleting appointments
-            const deletedAppointmentIndex = updatedData.findIndex(appointment => appointment.id === deleted);
-            if (deletedAppointmentIndex > -1) {
-                updatedData.splice(deletedAppointmentIndex, 1);
-            }
+            axios
+                .delete(`http://localhost:3500/schedule/${deleted}`)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         }
-    
+
         setData(updatedData);
     };
 
@@ -83,21 +108,22 @@ const Schedule = () => {
                                 <ViewState defaultCurrentDate={currDate} defaultCurrentViewName={isMobile ? "Day" : "Week"} />
                                 <EditingState
                                     onCommitChanges={onCommitChanges}
-                                    addedAppointment={addedAppointment}
-                                    changedAppointment={editingAppointment}
-                                    deletedAppointmentId={deletedAppointmentId}
+                                // addedAppointment={addedAppointment}
+                                // editingAppointment={editingAppointment}
+                                // deletedAppointmentId={deletedAppointmentId}
                                 />
-                                <IntegratedEditing/>
+                                <IntegratedEditing />
                                 <DayView startDayHour={6} endDayHour={18} />
                                 <WeekView startDayHour={6} endDayHour={18} />
                                 <MonthView />
                                 <Appointments />
                                 <AppointmentTooltip
-                                showOpenButton
-                                showDeleteButton
+                                    showOpenButton
+                                    showDeleteButton
+                                    showCloseButton
                                 />
-                                <ConfirmationDialog/>
-                                <AppointmentForm/>
+                                <ConfirmationDialog />
+                                <AppointmentForm />
                                 <Toolbar />
                                 <DateNavigator />
                                 <ViewSwitcher />

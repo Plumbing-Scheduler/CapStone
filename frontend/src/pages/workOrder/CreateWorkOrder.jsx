@@ -60,6 +60,7 @@ export const CreateWorkOrder = () => {
                     endDate: response.data.endDate,
                     serviceId: response.data._id,
                     empId: response.data.assignedEmp,
+                    notes: response.data.description
                 }
                 axios
                     .post('http://localhost:3500/schedule', newCal)
