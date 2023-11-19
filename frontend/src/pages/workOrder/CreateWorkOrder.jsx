@@ -44,7 +44,12 @@ export const CreateWorkOrder = () => {
         endDate,
         customerID,
         busName,
-        address,
+        address: {
+            street,
+            postalCode,
+            city,
+            province
+        },
     };
 
     useEffect(() => {
