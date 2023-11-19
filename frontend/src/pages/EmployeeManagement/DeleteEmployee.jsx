@@ -6,10 +6,13 @@ import { tokens } from "../../theme.js";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/esm/Spinner';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const DeleteEmployee = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const minwidth1 = useMediaQuery('(min-width:800px)');
+  const minwidth2 = useMediaQuery('(min-width:500px)');
   const { id } = useParams();
   const [employee, setEmployee] = useState({});
   const [loading, setLoading] = useState(true);
@@ -47,7 +50,7 @@ const DeleteEmployee = () => {
         <Spinner />
       </div>
       ) : (
-        <Box m="100px">
+        <Box m="100px" sx={{ width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%' }}>
           <Box sx={{ margin: 'auto', width: '60%', boxShadow: '4', border: 'solid', borderWidth: "2px", borderRadius: '5px' }}>
             <Typography
               variant='h2'
@@ -71,15 +74,15 @@ const DeleteEmployee = () => {
               Are You sure you want to Delete?
             </Typography>
           </Box>
-          <Box display="flex" justifyContent="space-between" sx={{ width: '20%', margin: 'auto', pt: '2%' }}>
+          <Box display="flex" justifyContent="space-between" sx={{ margin: 'auto', pt: '2%', width: minwidth1 ? '15%' : minwidth2 ? '40%' : '40%',}}>
             <Link to={'/employee'}>
               <Button sx={{
-                backgroundColor: colors.greenButton,
+                backgroundColor: colors.grey[500],
                 fontWeight: 'bold',
                 fontSize: '13px',
               }}
               >
-                No, Go Back
+                BACK
               </Button>
             </Link>
             <Button sx={{
@@ -89,7 +92,7 @@ const DeleteEmployee = () => {
             }}
               onClick={handleDelete}
             >
-              Yes, Im Sure!
+              DELETE
             </Button>
           </Box>
         </Box>

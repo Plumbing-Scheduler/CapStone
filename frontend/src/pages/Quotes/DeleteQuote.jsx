@@ -51,7 +51,7 @@ const DeleteQuote = () => {
                     <Spinner />
                 </div>
             ) : (
-                <Box m="100px"sx={{ width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%' }}>
+                <Box m="100px" sx={{ width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%' }}>
                     <Box sx={{margin: 'auto', width: '60%', boxShadow: '4', border: 'solid', borderWidth: "2px", borderRadius: '5px' }}>
                         <Typography
                             variant='h2'
@@ -78,15 +78,15 @@ const DeleteQuote = () => {
                             Are You sure you want to Delete?
                         </Typography>
                     </Box>
-                    <Box display="flex" justifyContent="space-between" sx={{ width: '20%', margin: 'auto', pt: '2%' }}>
+                    <Box display="flex" justifyContent="space-between" sx={{ margin: 'auto', pt: '2%', width: minwidth1 ? '15%' : minwidth2 ? '40%' : '40%',}}>
                         <Link to={'/quotes'}>
                             <Button sx={{
-                                backgroundColor: colors.greenButton,
+                                backgroundColor: colors.grey[500],
                                 fontWeight: 'bold',
                                 fontSize: '13px',
                             }}
                             >
-                                No, Go Back
+                                BACK
                             </Button>
                         </Link>
                         <Button sx={{
@@ -96,7 +96,7 @@ const DeleteQuote = () => {
                         }}
                             onClick={handleDelete}
                         >
-                            Yes, Im Sure!
+                            DELETE
                         </Button>
                     </Box>
                 </Box>
@@ -107,3 +107,4 @@ const DeleteQuote = () => {
 }
 
 export default DeleteQuote
+
