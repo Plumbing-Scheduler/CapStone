@@ -1,7 +1,8 @@
 import { WorkOrder } from "../models/workOrderModel.js";
 const createWorkOrder = async (request, response) => { 
     try {
-        if(!request.body.description || !request.body.startDate || !request.body.cost || !request.body.customerID || !request.body.address || !request.body.serviceStatus){
+        if(!request.body.description || !request.body.startDate || !request.body.cost || !request.body.customerID || !request.body.address.street || !request.body.address.postalCode 
+            || !request.body.address.city || !request.body.address.province || !request.body.serviceStatus){
             return response.status(400).send({message: 'All required fields must be filled'});
         };
         const newWorkOrder = {
@@ -14,7 +15,12 @@ const createWorkOrder = async (request, response) => {
             endDate: request.body.endDate,
             customerID: request.body.customerID,
             busName: request.body.busName,
-            address: request.body.address
+            address: {
+                street: request.body.address.street,
+                postalCode: request.body.address.postalCode,
+                city: request.body.address.city,
+                province: request.body.address.province,
+            }
         };
         const result = await WorkOrder.create(newWorkOrder);
     
@@ -44,7 +50,7 @@ const getWorkOrder = async (request, response) => {
 
         const result = await WorkOrder.findById(id);
         if(!result){
-            return response.status(404).send({message: 'Work Order Not Found'});
+            return response.status(204).send({message: 'Work Order Not Found'});
         };
         return response.status(200).send(result);
     } catch (error) {
@@ -55,7 +61,8 @@ const getWorkOrder = async (request, response) => {
 
 const updateWorkOrder = async (request, response) => { 
     try {
-        if(!request.body.description || !request.body.startDate || !request.body.cost || !request.body.customerID || !request.body.address || !request.body.serviceStatus){
+        if(!request.body.description || !request.body.startDate || !request.body.cost || !request.body.customerID || !request.body.address.street || !request.body.address.postalCode 
+            || !request.body.address.city || !request.body.address.province || !request.body.serviceStatus){
             return response.status(400).send({message: 'All required fields must be filled'});
         };
 
@@ -63,7 +70,7 @@ const updateWorkOrder = async (request, response) => {
 
         const result = await WorkOrder.findByIdAndUpdate(id, request.body);
         if(!result){
-            return response.status(404).send({message: 'Work Order Not Found'});
+            return response.status(204).send({message: 'Work Order Not Found'});
         };
         return response.status(200).send({message: 'Work Order Updated!'})
     } catch (error) {
@@ -78,7 +85,7 @@ const deleteWorkOrder = async (request, response) => {
         const result = await WorkOrder.findByIdAndDelete(id);
 
         if (!result) {
-            return response.status(404).send({message: 'Work Order Not Found'});
+            return response.status(204).send({message: 'Work Order Not Found'});
         };
         return response.status(200).send({message: "Work Order Deleted!"});
     } catch (error) {

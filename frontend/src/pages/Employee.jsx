@@ -2,9 +2,9 @@ import { Box } from "@mui/material";
 import Header from "../components/Header";
 import AddNewButton from "../components/AddNewButton";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Spinner from 'react-bootstrap/Spinner';
 import DataList from '../components/DataList';
+import axiosInstance from "../axiosInstance";
 
 export const Employee = () => {
     const [loading, setLoading] = useState(true);
@@ -12,7 +12,7 @@ export const Employee = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
+        axiosInstance
             .get('http://localhost:3500/employees')
             .then((responce) => {
                 setEmployees(responce.data.data)
@@ -51,8 +51,6 @@ export const Employee = () => {
             <div className='flex justify-end' >
                 <AddNewButton destination="create" item="Employee" />
             </div>
-            
-            
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <DataList columnData={columns} rowData={rows} />
             )}

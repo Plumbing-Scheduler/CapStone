@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
-import { Box, Typography, Button, useTheme } from '@mui/material'
+import { Alert, AlertTitle, Box, Typography, Button, useTheme } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { tokens } from "../../theme.js";
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance.js';
 import Spinner from 'react-bootstrap/esm/Spinner';
 
 const DeleteCustomer = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
     const { id } = useParams();
     const [customer, setCustomer] = useState({});
     const [loading, setLoading] = useState(true);
@@ -17,10 +19,10 @@ const DeleteCustomer = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get(`http://localhost:3500/customer/${id}`)
-            .then((responce) => {
-                setCustomer(responce.data);
+        axiosInstance
+            .get(`/customer/${id}`)
+            .then((response) => {
+                setCustomer(response.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -30,13 +32,21 @@ const DeleteCustomer = () => {
     }, [])
 
     const handleDelete = () => {
-        axios
-            .delete(`http://localhost:3500/customer/${id}`)
+        axiosInstance
+            .delete(`/customer/${id}`)
             .then(
                 navigate('/customers')
             )
             .catch((error) => {
-                console.log(error);
+                setServerError(false);
+                setNoInput(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
+                else if (error.response.status === 404) {
+                    setNoInput(true);
+                }
             })
     }
 

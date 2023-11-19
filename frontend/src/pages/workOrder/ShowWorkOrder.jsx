@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import axios from 'axios';
+import axiosInstance from "../../axiosInstance";
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Header from '../../components/Header';
@@ -19,10 +19,10 @@ const ShowWorkOrder = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
+    axiosInstance
       .get(`http://localhost:3500/workorders/${id}`)
-      .then((responce) => {
-        setWorkOrder(responce.data);
+      .then((response) => {
+        setWorkOrder(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -70,7 +70,7 @@ const ShowWorkOrder = () => {
                 </Typography>
                 <Typography variant='body1'>{workOrder.title}</Typography>
                 <Typography variant='body1'>Description: <b>{workOrder.description}</b></Typography>
-                <Typography variant='body1'>Location: <b>{workOrder.address}</b></Typography>
+                <Typography variant='body1'>Location: <b>{workOrder.address.street}, {workOrder.address.city}</b></Typography>
                 <Typography variant='body1'>Cost: <b>${workOrder.cost}</b></Typography>
                 <Typography variant='body1'>Start Date/Time: <b>{dayjs(workOrder.startDate).format('LLL')}</b></Typography>
                 <Typography variant='body1'>End Date/Time: <b>{dayjs(workOrder.endDate).format('LLL')}</b></Typography>

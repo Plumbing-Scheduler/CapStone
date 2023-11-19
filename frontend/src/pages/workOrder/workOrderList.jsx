@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import AddNewButton from '../../components/AddNewButton';
-import axios from 'axios';
 import Header from '../../components/Header';
 import Spinner from 'react-bootstrap/Spinner';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import DataList from '../../components/DataList';
+import axiosInstance from "../../axiosInstance";
 
 export const WorkOrders = () => {
     const [workOrders, setWorkOrders] = useState([]);
     const [employees, setEmployees] = useState([]);
+    const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
     dayjs(localizedFormat);
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get('http://localhost:3500/workorders')
+        axiosInstance
+            .get('/workorders')
             .then((response) => {
                 setWorkOrders(response.data.data);
-                axios.get('http://localhost:3500/employees')
-                    .then((responce) => {
-                        setEmployees(responce.data.data);
+                axiosInstance.get('/employees')
+                    .then((response) => {
+                        setEmployees(response.data.data);
+                    })
+                axiosInstance
+                .get('/customer')
+                    .then((response) => {
+                        setCustomers(response.data.data);
                     })
                 setLoading(false);
             }).catch((error) => {
@@ -48,13 +54,21 @@ export const WorkOrders = () => {
         }
     }
 
+    const getCustomer = (custId) => {
+        for (let i = 0; customers.length > i; i++) {
+            if (customers[i]._id === custId) {
+                return customers[i].firstName + ' ' + customers[i].lastName
+            }
+        }
+    }
+
     const rows = workOrders.map((wo, index) => ({
         id: wo._id,
         no: index + 1,
         title: wo.title,
         cost: "$" + wo.cost,
         startDate: dayjs(wo.startDate).format('LLL'),
-        customer: wo.customerID,
+        customer: getCustomer(wo.customerID),
         employee: getEmployee(wo.assignedEmp),
         address: wo.address
     }))

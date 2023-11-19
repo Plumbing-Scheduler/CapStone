@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, TextField, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -9,19 +9,27 @@ import dayjs from 'dayjs';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
 import MenuItem from '@mui/material/MenuItem';
+import { tokens } from "../../theme.js";
 
 export const CreateWorkOrder = () => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
 
+    const [serverError, setServerError] = useState(false);
+    const [noInput, setNoInput] = useState(false);
     const [serviceStatus, setServiceStatus] = useState('');
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
     const [startDate, setStartDate] = useState(Date.now());
     const [cost, setCost] = useState('');
-    const [assignedEmp, setAssignedEmp] = useState('');
+    const [assignedEmp, setAssignedEmp] = useState("");
     const [endDate, setEndDate] = useState(startDate);
     const [customerID, setCustomerID] = useState('');
     const [busName, setBusName] = useState('');
-    const [address, setAddress] = useState('');
+    const [street, setStreet] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [city, setCity] = useState('');
+    const [province, setProvince] = useState('');
     const navigate = useNavigate();
     const { id } = useParams('');
     const [loading, setLoading] = useState(true);
@@ -37,13 +45,18 @@ export const CreateWorkOrder = () => {
         endDate,
         customerID,
         busName,
-        address,
+        address: {
+            street,
+            postalCode,
+            city,
+            province
+        }
     };
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get(`http://localhost:3500/workorders/${id}`)
+        axiosInstance
+            .get(`/workorders/${id}`)
             .then((response) => {
                 setServiceStatus(response.data.serviceStatus);
                 setDescription(response.data.description);
@@ -54,10 +67,13 @@ export const CreateWorkOrder = () => {
                 setEndDate(response.data.endDate);
                 setCustomerID(response.data.customerID);
                 setBusName(response.data.busName);
-                setAddress(response.data.address);
-                axios.get('http://localhost:3500/employees')
-                    .then((responce) => {
-                        setEmployees(responce.data.data);
+                setPostalCode(response.data.address.postalCode)
+                setStreet(response.data.address.street)
+                setCity(response.data.address.city)
+                setProvince(response.data.address.province)
+                axiosInstance.get('/employees')
+                    .then((response) => {
+                        setEmployees(response.data.data);
                     })
                 setLoading(false);
             })
@@ -65,16 +81,36 @@ export const CreateWorkOrder = () => {
                 setLoading(false);
                 console.log(error)
             });
-    }, [id])
+    }, [])
 
     const handleSave = () => {
-        axios
-            .put(`http://localhost:3500/workorders/${id}`, data)
-            .then(
-                navigate('/workorder')
-            )
+        axiosInstance
+            .put(`/workorders/${id}`, data)
+            .then(() => {
+                const editedCalendar = {
+                    title: data.title,
+                    startDate: data.startDate,
+                    endDate: data.endDate,
+                    serviceId: id,
+                    empId: data.assignedEmp,
+                    notes: data.description
+                }
+                axiosInstance
+                    .put(`/schedule/${id}`, editedCalendar)
+                    .then(() => {
+                        navigate('/workorder')
+                    })
+            })
             .catch((error) => {
-                console.log(error)
+                setServerError(false);
+                setNoInput(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
+                else if (error.response.status === 400) {
+                    setNoInput(true);
+                }
             })
     };
 
@@ -106,6 +142,7 @@ export const CreateWorkOrder = () => {
                             margin: "auto",
                             width: '75%'
                         }} >
+
                         <TextField
                             fullWidth
                             multiline
@@ -128,8 +165,8 @@ export const CreateWorkOrder = () => {
                             value={title}
                             required
                             onChange={e => setTitle(e.target.value)}
-                            name="startdate"
-                            id=""
+                            name="title"
+                            id="title"
                             sx={{ gridColumn: "span 2" }}
                         />
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -159,19 +196,55 @@ export const CreateWorkOrder = () => {
                             value={busName}
                             onChange={e => setBusName(e.target.value)}
                             name="businessname"
-                            id=""
+                            id="businessname"
                             sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
                             fullWidth
                             required
-                            variant='filled'
                             type="text"
+                            variant='filled'
                             label="Address"
-                            value={address}
-                            onChange={e => setAddress(e.target.value)}
                             name="address"
-                            id=""
+                            id="address"
+                            value={street}
+                            onChange={(e) => setStreet(e.target.value)}
+                            sx={{ gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="Postal Code"
+                            name="postalCode"
+                            id="postalCode"
+                            value={postalCode}
+                            onChange={(e) => setPostalCode(e.target.value)}
+                            sx={{ gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="City"
+                            name="city"
+                            id="city"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            sx={{ gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="Province"
+                            name="province"
+                            id="province"
+                            value={province}
+                            onChange={(e) => setProvince(e.target.value)}
                             sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
@@ -182,7 +255,7 @@ export const CreateWorkOrder = () => {
                             value={assignedEmp}
                             onChange={(e) => setAssignedEmp(e.target.value)}
                             name="assignemployee"
-                            id=""
+                            id="assignemployee"
                             sx={{ gridColumn: "span 1" }}
                         >
                             {employees.map((emp) => (
@@ -203,9 +276,32 @@ export const CreateWorkOrder = () => {
                             inputProps={{ min: 0 }}
                             sx={{ gridColumn: "span 1" }}
                         />
-                        <button onClick={handleSave} className='bg-gray-500 w-1/2 '>
+                    </Box>
+                    <Box sx={{ width: "30%", margin: "10px auto" }}>
+                        {serverError &&
+                            <Alert severity="error" >
+                                <AlertTitle>Server Error</AlertTitle>
+                                Internal Server Error. Please Try Again Later.
+                            </Alert>}
+
+                        {noInput &&
+                            <Alert severity="warning">
+                                <AlertTitle>Warning</AlertTitle>
+                                Please Fill Out All Fields
+                            </Alert>}
+                    </Box>
+                    <Box
+                        backgroundColor={colors.buttonBase}
+                        display="grid"
+                        sx={{
+                            margin: "10px auto",
+                            width: '150px',
+                            borderRadius: "5px"
+                        }}
+                    >
+                        <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
                             Save and Add
-                        </button>
+                        </Button>
                     </Box>
                 </div>)}
         </Box>

@@ -11,7 +11,8 @@ const createManagement = async (request, response) => {
             lastName: request.body.lastName,
             phone: request.body.phone,
             email: request.body.email,
-            role: request.body.role
+            role: request.body.role,
+            password: request.body.password
         }
         const result = await Management.create(newManagement);
         return response.status(201).send(result)

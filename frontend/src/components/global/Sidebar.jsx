@@ -56,127 +56,127 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <Box sx={!isCollapsed? {width: '320px', transition:'.3s'}: {width: '80px', transition:'.3s'}} >
-    <Box
-      sx={{
-        '& .pro-sidebar-inner': {
-          background: `${colors.primary[400]} !important`,
-        },
-        '& .pro-icon-wrapper': {
-          backgroundColor: 'transparent !important',
-        },
-        '& .pro-inner-item': {
-          padding: '5px 35px 5px 20px !important',
-        },
-        '& .pro-menu-item:hover': {
-          color: '#868dfb !important',
-        },
-        '& .pro-menu-item.active': {
-          color: '#6870fa !important',
-        },
-        height: '200%',
-      }}
-    >
-      <ProSidebar collapsed={isCollapsed} style={{position: 'fixed', top: 0}}>
-        <Menu iconShape="square"  >
-          <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-            style={{
-              margin: '4px 0 20px 0',
-              color: colors.grey[100],
-            }}
-          >
-            {!isCollapsed && (
-              <div className="sm:max-2xl:flex justify-between box-border ml-15">
-                <Typography variant="h6" color={colors.grey[100]}>
-                  Welcome
-                </Typography>
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}></IconButton>
-                <MenuOutlinedIcon />
-              </div>
+    <Box sx={!isCollapsed ? { width: '320px', transition: '.3s' } : { width: '80px', transition: '.3s' }} >
+      <Box
+        sx={{
+          '& .pro-sidebar-inner': {
+            background: `${colors.primary[400]} !important`,
+          },
+          '& .pro-icon-wrapper': {
+            backgroundColor: 'transparent !important',
+          },
+          '& .pro-inner-item': {
+            padding: '5px 35px 5px 20px !important',
+          },
+          '& .pro-menu-item:hover': {
+            color: '#868dfb !important',
+          },
+          '& .pro-menu-item.active': {
+            color: '#6870fa !important',
+          },
+          height: '200%',
+        }}
+      >
+        <ProSidebar collapsed={isCollapsed} style={{ position: 'fixed', top: 0 }}>
+          <Menu iconShape="square"  >
+            <MenuItem
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
+              style={{
+                margin: '4px 0 20px 0',
+                color: colors.grey[100],
+              }}
+            >
+              {!isCollapsed && (
+                <div className="sm:max-2xl:flex justify-between box-border ml-15">
+                  <Typography variant="h6" color={colors.grey[100]}>
+                    Welcome
+                  </Typography>
+                  <IconButton onClick={() => setIsCollapsed(!isCollapsed)}></IconButton>
+                  <MenuOutlinedIcon />
+                </div>
+              )}
+            </MenuItem>
+
+            {isCollapsed ? null : (
+              <Box mb="25px">
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <img
+                    alt="company-logo"
+                    width="100px"
+                    height="100px"
+                    src={`../../assets/companylogo.png`}
+                    style={{ cursor: 'pointer', borderRadius: '50%' }}
+                  />
+                </Box>
+
+                <Box textAlign="center">
+                  <Typography
+                    variant="h1"
+                    color={colors.grey[100]}
+                    fontWeight="bold"
+                    sx={{ m: '10px 0 50px 0' }}
+                  >
+                    SEWER & DRAIN PLUMBING
+                  </Typography>
+                </Box>
+
+                <Box paddingLeft={isCollapsed ? undefined : '10%'}>
+                  <Item
+                    title="Home"
+                    to="/"
+                    icon={<HomeOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                  <Item
+                    title="Quote Requests"
+                    to="/quotes"
+                    icon={<ContactsOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                  <Item
+                    title="Work Orders"
+                    to="/workorder"
+                    icon={<ReceiptOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                  <Item
+                    title="Schedule"
+                    to="/schedule"
+                    icon={<CalendarTodayOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                  <Item
+                    title="Employee"
+                    to="/employee"
+                    icon={<PeopleOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                  <Item
+                    title="Customers"
+                    to="/customers"
+                    icon={<PersonIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                  <Item
+                    title="Reports"
+                    to="/reports"
+                    icon={<BarChartOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                </Box>
+              </Box>
             )}
-          </MenuItem>
-
-          {isCollapsed ? null : (
-            <Box mb="25px">
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <img
-                  alt="company-logo"
-                  width="100px"
-                  height="100px"
-                  src={`../../assets/companylogo.png`}
-                  style={{ cursor: 'pointer', borderRadius: '50%' }}
-                />
-              </Box>
-
-              <Box textAlign="center">
-                <Typography
-                  variant="h1"
-                  color={colors.grey[100]}
-                  fontWeight="bold"
-                  sx={{ m: '10px 0 50px 0' }}
-                >
-                  SEWER & DRAIN PLUMBING
-                </Typography>
-              </Box>
-
-              <Box paddingLeft={isCollapsed ? undefined : '10%'}>
-                <Item
-                  title="Home"
-                  to="/"
-                  icon={<HomeOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  title="Quote Requests"
-                  to="/quotes"
-                  icon={<ContactsOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  title="Work Orders"
-                  to="/workorder"
-                  icon={<ReceiptOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  title="Schedule"
-                  to="/schedule"
-                  icon={<CalendarTodayOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  title="Employee"
-                  to="/employee"
-                  icon={<PeopleOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  title="Customers"
-                  to="/customers"
-                  icon={<PersonIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  title="Reports"
-                  to="/reports"
-                  icon={<BarChartOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-              </Box>
-            </Box>
-          )}
-        </Menu>
-      </ProSidebar>
-    </Box>
+          </Menu>
+        </ProSidebar>
+      </Box>
     </Box>
   );
 };
