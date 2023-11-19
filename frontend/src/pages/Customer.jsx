@@ -4,24 +4,24 @@ import Header from "../components/Header";
 import AddNewButton from "../components/AddNewButton";
 import DataList from '../components/DataList';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import axiosInstance from "../axiosInstance";
+import axios from 'axios';
 
 const Customer = () => {
   const [loading, setLoading] = useState(true);
   const [customers, setCustomers] = useState([]);
 
-   useEffect( () => {
+  useEffect(() => {
     setLoading(true);
-    axiosInstance
-      .get('/customer')
+    axios
+      .get('http://localhost:3500/customer')
       .then((responce) => {
         setCustomers(responce.data.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        
+        setLoading(false);
       });
-      setLoading(false);
   }, []);
 
   const columns = [

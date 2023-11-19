@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, useTheme, Typography} from '@mui/material';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { tokens } from "../../theme";
-import axiosInstance from '../../axiosInstance';
+import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
 import Header from '../../components/Header';
 
@@ -16,8 +16,8 @@ export const DeleteWorkOrder = () => {
 
   useEffect(() => {
     setLoading(true);
-    axiosInstance
-      .get(`/workorders/${id}`)
+    axios
+      .get(`http://localhost:3500/workorders/${id}`)
       .then((response) => {
         setWorkOrder(response.data)
         setLoading(false);
@@ -31,8 +31,8 @@ export const DeleteWorkOrder = () => {
   }, [id]);
 
   const handleDeleteWorkOrder = () => {
-    axiosInstance
-      .delete(`/workorders/${id}`)
+    axios
+      .delete(`http://localhost:3500/workorders/${id}`)
       .then(
         navigate('/workorder')
       )

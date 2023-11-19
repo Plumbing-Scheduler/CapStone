@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import AddNewButton from '../../components/AddNewButton';
+import axios from 'axios';
 import Header from '../../components/Header';
 import Spinner from 'react-bootstrap/Spinner';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import DataList from '../../components/DataList';
-import axiosInstance from "../../axiosInstance";
 
 export const WorkOrders = () => {
     const [workOrders, setWorkOrders] = useState([]);
@@ -15,13 +15,13 @@ export const WorkOrders = () => {
 
     useEffect(() => {
         setLoading(true);
-        axiosInstance
-            .get('/workorders')
+        axios
+            .get('http://localhost:3500/workorders')
             .then((response) => {
                 setWorkOrders(response.data.data);
-                axiosInstance.get('/employees')
-                    .then((response) => {
-                        setEmployees(response.data.data);
+                axios.get('http://localhost:3500/employees')
+                    .then((responce) => {
+                        setEmployees(responce.data.data);
                     })
                 setLoading(false);
             }).catch((error) => {

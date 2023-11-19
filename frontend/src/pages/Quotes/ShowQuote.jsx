@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axiosInstance from '../../axiosInstance';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import { Alert, AlertTitle, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Header from '../../components/Header';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { DeleteButton } from '../../components/global/DeleteButton';
@@ -12,25 +12,21 @@ const ShowQuote = () => {
     const { id } = useParams();
     const [quote, setQuote] = useState({});
     const [loading, setLoading] = useState(true);
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
+
     const minwidth2 = useMediaQuery('(min-width:500px)');
 
     useEffect(() => {
         setLoading(true);
-        axiosInstance
-            .get(`/quote/${id}`)
-            .then((response) => {
-                setQuote(response.data);
+        axios
+            .get(`http://localhost:3500/quote/${id}`)
+            .then((responce) => {
+                setQuote(responce.data);
                 setLoading(false);
                 console.log(quote.firstName);
             })
             .catch((error) => {
-                setServerError(false);
-                console.log(error.response.status)
-                if (error.response.status === 500) {
-                    setServerError(true);
-                }
+                console.log(error);
+                setLoading(false);
             })
     }, [])
 
@@ -61,11 +57,6 @@ const ShowQuote = () => {
                                 width: '80%',
                             }}
                         >
-                            {serverError &&
-                            <Alert severity="error">
-                                <AlertTitle>Server Error</AlertTitle>
-                                    Internal Server Error. Please Try Again Later.
-                            </Alert>}
                             <Box
                                 sx={{ m: '0 auto', width: "70%" }}
                             >

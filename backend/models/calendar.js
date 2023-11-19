@@ -21,7 +21,6 @@ const calendarSchema = mongoose.Schema(
             required: true
         },
         empId: String,
-        notes: String,
     }
 );
 

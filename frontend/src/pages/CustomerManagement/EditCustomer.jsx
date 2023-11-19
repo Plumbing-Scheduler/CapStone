@@ -1,8 +1,8 @@
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
+import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
-import axiosInstance from "../../axiosInstance.js";
+import axios from "axios";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { tokens } from "../../theme.js";
 import Spinner from 'react-bootstrap/esm/Spinner';
@@ -14,9 +14,7 @@ export const EditCustomer = () => {
     const { id } = useParams({});
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
-    
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
@@ -45,49 +43,35 @@ export const EditCustomer = () => {
     useEffect(() => {
         setLoading(true);
 
+        axios
+            .get(`http://localhost:3500/customer/${id}`)
+            .then((responce) => {
+                setFirstName(responce.data.firstName)
+                setLastName(responce.data.lastName)
+                setPhone(responce.data.phone)
+                setEmail(responce.data.email)
+                setBusName(responce.data.busName)
+                setPostalCode(responce.data.address.postalCode)
+                setStreet(responce.data.address.street)
+                setCity(responce.data.address.city)
+                setProvince(responce.data.address.province)
 
-        axiosInstance
-            .get(`/customer/${id}`)
-            .then((response) => {
-                setFirstName(response.data.firstName)
-                setLastName(response.data.lastName)
-                setPhone(response.data.phone)
-                setEmail(response.data.email)
-                setBusName(response.data.busName)
-                setPostalCode(response.data.address.postalCode)
-                setStreet(response.data.address.street)
-                setCity(response.data.address.city)
-                setProvince(response.data.address.province)
                 setLoading(false)
             })
             .catch((error) => {
-                setServerError(false);
-                setNoInput(false);
-                console.log(error.response.status)
-                if (error.response.status === 500) {
-                    setServerError(true);
-                }
-                else if (error.response.status === 404) {
-                    setNoInput(true);
-                }
+                console.log(error)
+                setLoading(false)
             })
     }, [])
 
     const handleSave = () => {
-        axiosInstance
-            .put(`/customer/${id}`, updateCustomer)
-            .then(() => {
+        axios
+            .put(`http://localhost:3500/customer/${id}`, updateCustomer)
+            .then(
                 navigate('/customers')
-            }
             )
             .catch((error) => {
                 console.log(error)
-                if (error.response.status === 500) {
-                    setServerError(true);
-                }
-                else if (error.response.status === 400) {
-                    setNoInput(true);
-                }
             })
     }
 
@@ -193,69 +177,55 @@ export const EditCustomer = () => {
                             sx={minwidth2 ? { gridColumn: "span 1" } : { gridColumn: "span 2" }}
                         />
 
-
-                    <TextField
-                        fullWidth
-                        required
-                        type="text"
-                        variant='filled'
-                        label="City"
-                        name="city"
-                        id="city"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
-                    />
-                    <TextField
-                        fullWidth
-                        required
-                        type="text"
-                        variant='filled'
-                        label="Province"
-                        name="province"
-                        id="province"
-                        value={province}
-                        onChange={(e) => setProvince(e.target.value)}
-                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
-                    />
-                    <TextField
-                        fullWidth
-                        type="text"
-                        variant='filled'
-                        label="Buisness Name"
-                        name="busName"
-                        id="busName"
-                        value={busName}
-                        onChange={(e) => setBusName(e.target.value)}
-                        sx={{ gridColumn: "span 2" }}
-                    />
-                  </Box>
-                  <Box sx={{width: "30%", margin: "10px auto"}}>
-                    {serverError &&
-                    <Alert severity="error" >
-                        <AlertTitle>Server Error</AlertTitle>
-                            Internal Server Error. Please Try Again Later.
-                    </Alert>}
-
-                    {noInput &&
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                            Please Fill Out All Fields
-                    </Alert>}
-                </Box>
-                  <Box
-                    backgroundColor={colors.buttonBase}
-                    display="grid"
-                    sx={{
-                        margin: "30px auto",
-                        width: '150px',
-                        borderRadius: "5px"
-                    }}
-                >
-                    <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
-                        Save and Add
-                    </Button>
-
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="City"
+                            name="city"
+                            id="city"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            sx={minwidth2 ? { gridColumn: "span 1" } : { gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="Province"
+                            name="province"
+                            id="province"
+                            value={province}
+                            onChange={(e) => setProvince(e.target.value)}
+                            sx={minwidth2 ? { gridColumn: "span 1" } : { gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            fullWidth
+                            type="text"
+                            variant='filled'
+                            label="Buisness Name"
+                            name="busName"
+                            id="busName"
+                            value={busName}
+                            onChange={(e) => setBusName(e.target.value)}
+                            sx={{ gridColumn: "span 2" }}
+                        />
+                    </Box>
+                    <Box
+                        backgroundColor={colors.buttonBase}
+                        display="grid"
+                        sx={{
+                            margin: "30px auto",
+                            width: '150px',
+                            borderRadius: "5px"
+                        }}
+                    >
+                        <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
+                            Save and Add
+                        </Button>
+                    </Box>
                 </Box>
             )}
         </Box>
