@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 import dayjs from 'dayjs';
@@ -8,8 +8,7 @@ import Header from '../../components/Header';
 import { tokens } from "../../theme";
 import { DeleteButton } from '../../components/global/DeleteButton';
 import { EditButton } from '../../components/global/EditButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+
 
 const EmployeeDetails = () => {
   const theme = useTheme();
@@ -20,17 +19,18 @@ const EmployeeDetails = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:3500/employees/${id}`)
-      .then((response) => {
-        setEmployee(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  }, [id]);
+    axiosInstance
+        .get(`/employees/${id}`)
+        .then((response) => {
+            setEmployee(response.data);
+            setLoading(false);
+            console.log(employee.startDate);
+        })
+        .catch((error) => {
+            console.log(error);
+            setLoading(false);
+        })
+}, [])
 
   return (
     <Box>

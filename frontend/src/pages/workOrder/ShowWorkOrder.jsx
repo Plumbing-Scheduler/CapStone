@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from "../../axiosInstance";
 import { useParams } from 'react-router-dom';
 import { Box, Typography, Paper, Divider, IconButton, Grid, useTheme } from '@mui/material';
 import Header from '../../components/Header';
@@ -22,7 +22,7 @@ const ShowWorkOrder = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
+    axiosInstance
       .get(`http://localhost:3500/workorders/${id}`)
       .then((response) => {
         setWorkOrder(response.data);
@@ -31,9 +31,8 @@ const ShowWorkOrder = () => {
       .catch((error) => {
         console.log(error);
         setLoading(false);
-      });
-  }, [id]);
-
+      })
+  }, [])
   return (
     <Box>
       <Header title={"WORK ORDER"} subtitle={"DETAILS"} />
@@ -63,7 +62,7 @@ const ShowWorkOrder = () => {
                   <b>Description:</b> {workOrder.description}
                 </Typography>
                 <Typography variant="h5" >
-                  <b>Location:</b> {workOrder.address}
+                  <b>Location:</b> {workOrder.address.street}
                 </Typography>
                 <Typography variant="h5" >
                   <b>Cost:</b> ${workOrder.cost}

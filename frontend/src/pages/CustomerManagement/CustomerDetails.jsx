@@ -1,6 +1,6 @@
 import { Box, Typography, Paper, Divider, useTheme } from '@mui/material';
 import { tokens } from "../../theme";
-import axios from 'axios';
+import axiosInstance from "../../axiosInstance.js";
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
@@ -17,8 +17,8 @@ const CustomerDetails = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:3500/customer/${id}`)
+    axiosInstance
+      .get(`/customer/${id}`)
       .then((response) => {
         setCustomer(response.data);
         setLoading(false);

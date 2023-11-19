@@ -1,9 +1,9 @@
-import { Box, TextField, Typography, Button, useTheme, NativeSelect } from "@mui/material";
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, NativeSelect } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from "axios";
+import axiosInstance from "../../axiosInstance.js";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -63,6 +63,8 @@ export const EditEmployee = () => {
     const { id } = useParams({});
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -76,6 +78,7 @@ export const EditEmployee = () => {
     const [experience, setExperience] = useState('');
     const [employmentType, setEmploymentType] = useState('');
     const [status, setStatus] = useState('');
+    const [password, setPassword] = useState('');
     const [startDate, setStartDate] = useState(Date.now());
 
     dayjs.extend(localizedFormat);
@@ -96,42 +99,61 @@ export const EditEmployee = () => {
         experience,
         startDate,
         employmentType,
-        status
+        status,
+        password
     }
 
     useEffect(() => {
         setLoading(true);
 
-        axios
-            .get(`http://localhost:3500/employees/${id}`)
-            .then((responce) => {
-                setFirstName(responce.data.firstName)
-                setLastName(responce.data.lastName)
-                setEmail(responce.data.email)
-                setPhone(responce.data.phone)
-                setPostalCode(responce.data.address.postalCode)
-                setStreet(responce.data.address.street)
-                setCity(responce.data.address.city)
-                setProvince(responce.data.address.province)
-                setStartDate(responce.data.startDate)
-                setRole(responce.data.role)
-                setExperience(responce.data.experience)
-                setEmploymentType(responce.data.employmentType)
-                setStatus(responce.data.status)
+        axiosInstance
+            .get(`/employees/${id}`)
+            .then((response) => {
+                setFirstName(response.data.firstName)
+                setLastName(response.data.lastName)
+                setEmail(response.data.email)
+                setPhone(response.data.phone)
+                setPostalCode(response.data.address.postalCode)
+                setStreet(response.data.address.street)
+                setCity(response.data.address.city)
+                setProvince(response.data.address.province)
+                setStartDate(response.data.startDate)
+                setRole(response.data.role)
+                setExperience(response.data.experience)
+                setEmploymentType(response.data.employmentType)
+                setStatus(response.data.status)
+                setPassword(response.data.password);
                 setLoading(false)
+            }).catch((error) => {
+                setServerError(false);
+                setNoInput(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
+                else if (error.response.status === 404) {
+                    setNoInput(true);
+                }
             })
     }, [])
 
     const handleSave = () => {
-
-        axios
-            .put(`http://localhost:3500/employees/${id}`, saveEmployee)
-            .then(
-
+        axiosInstance
+            .put(`/employees/${id}`, saveEmployee)
+            .then(() => {
                 navigate('/employee')
+            }
             )
             .catch((error) => {
-                console.log(error)
+                setServerError(false);
+                setNoInput(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
+                else if (error.response.status === 400) {
+                    setNoInput(true);
+                }
             })
     }
     return (
@@ -379,6 +401,19 @@ export const EditEmployee = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
+                    </Box>
+                    <Box sx={{ width: "30%", margin: "10px auto" }}>
+                        {serverError &&
+                            <Alert severity="error" >
+                                <AlertTitle>Server Error</AlertTitle>
+                                Internal Server Error. Please Try Again Later.
+                            </Alert>}
+
+                        {noInput &&
+                            <Alert severity="warning">
+                                <AlertTitle>Warning</AlertTitle>
+                                Please Fill Out All Fields
+                            </Alert>}
                     </Box>
                     <div className="flex justify-end mr-36 pt-4">
                         <Button

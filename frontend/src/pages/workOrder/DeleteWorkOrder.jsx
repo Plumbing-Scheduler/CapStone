@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, useTheme, Typography } from '@mui/material';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { tokens } from '../../theme';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import Spinner from 'react-bootstrap/Spinner';
 import Header from '../../components/Header';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -19,24 +19,33 @@ export const DeleteWorkOrder = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:3500/workorders/${id}`)
+    axiosInstance
+      .get(`/workorders/${id}`)
       .then((response) => {
-        setWorkOrder(response.data);
+        setWorkOrder(response.data)
         setLoading(false);
         console.log(workOrder);
-      })
+      }
+      )
       .catch((error) => {
         setLoading(false);
-        console.log(error);
+        console.log(error)
       });
   }, [id]);
 
   const handleDeleteWorkOrder = () => {
-    axios
-      .delete(`http://localhost:3500/workorders/${id}`)
-      .then(navigate('/workorder'))
-      .catch((error) => console.log(error));
+    axiosInstance
+      .delete(`/workorders/${id}`)
+      .then(() => {
+        axiosInstance
+          .delete(`/schedule/${id}`)
+          .then(() => {
+            navigate('/workorder')
+          })
+      })
+      .catch((error) =>
+        console.log(error)
+      );
   };
 
 
@@ -53,11 +62,11 @@ export const DeleteWorkOrder = () => {
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>Description: </span>
-              <span className='font-bold'>{workOrder.s_description}</span>
+              <span className='font-bold'>{workOrder.description}</span>
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>Start Date: </span>
-              <span className='font-bold'>{workOrder.s_startDate}</span>
+              <span className='font-bold'>{workOrder.startDate}</span>
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>End Date: </span>
@@ -65,11 +74,11 @@ export const DeleteWorkOrder = () => {
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>Cost: </span>
-              <span className='font-bold'>${workOrder.s_cost}</span>
+              <span className='font-bold'>${workOrder.cost}</span>
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>Address: </span>
-              <span className='font-bold'>{workOrder.address}</span>
+              <span className='font-bold'>{workOrder.address.street}</span>
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>Business name: </span>

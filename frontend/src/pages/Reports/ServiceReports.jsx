@@ -10,7 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 
 
 const ServiceReports = () => {
@@ -25,7 +25,7 @@ const ServiceReports = () => {
     const [workOrders, setWorkOrders] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3500/employees')
+        axiosInstance.get('/employees')
             .then((responce) => {
                 setEmployees(responce.data.data);
             })
@@ -33,7 +33,7 @@ const ServiceReports = () => {
                 console.log(error);
             });
 
-            axios.get('http://localhost:3500/customer')
+            axiosInstance.get('/customer')
             .then((responce) => {
                 setCustomers(responce.data.data);
             })
@@ -41,7 +41,7 @@ const ServiceReports = () => {
                 console.log(error);
             });
 
-            axios.get('http://localhost:3500/workorders')
+            axiosInstance.get('/workorders')
             .then((responce) => {
                 setWorkOrders(responce.data.data);
             })

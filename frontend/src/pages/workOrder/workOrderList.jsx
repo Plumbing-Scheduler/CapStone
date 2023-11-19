@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AddNewButton from '../../components/AddNewButton';
-import axios from 'axios';
+import axiosInstance from "../../axiosInstance";
 import Header from '../../components/Header';
 import Spinner from 'react-bootstrap/Spinner';
 import dayjs from 'dayjs';
@@ -16,16 +16,16 @@ export const WorkOrders = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get('http://localhost:3500/workorders')
+        axiosInstance
+            .get('/workorders')
             .then((response) => {
                 setWorkOrders(response.data.data);
-                axios.get('http://localhost:3500/employees')
-                    .then((responce) => {
-                        setEmployees(responce.data.data);
+                axiosInstance.get('/employees')
+                    .then((response) => {
+                        setEmployees(response.data.data);
                     })
-                axios
-                .get('http://localhost:3500/customer')
+                axiosInstance
+                .get('/customer')
                     .then((response) => {
                         setCustomers(response.data.data);
                     })
@@ -70,7 +70,7 @@ export const WorkOrders = () => {
         startDate: dayjs(wo.startDate).format('LLL'),
         customer: getCustomer(wo.customerID),
         employee: getEmployee(wo.assignedEmp),
-        address: wo.address
+        address: wo.address.street
     }))
 
     return (

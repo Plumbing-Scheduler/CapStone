@@ -1,19 +1,25 @@
-import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+import axiosInstance from '../../axiosInstance';
 import { tokens } from "../../theme";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Quotes = () => {
+    const [serverError, setServerError] = useState(false);
+    const [noInput, setNoInput] = useState(false);
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     const [description, setDescription] = useState('');
-    const [address, setAddress] = useState('');
+    const [street, setStreet] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [city, setCity] = useState('');
+    const [province, setProvince] = useState('');
     const [cost, setCost] = useState('');
     const [busName, setBusName] = useState('');
     const [email, setEmail] = useState('');
@@ -26,21 +32,34 @@ const Quotes = () => {
         lastName,
         phone,
         description,
-        address,
+        address: {
+            street,
+            postalCode,
+            city,
+            province
+        },
         cost,
         busName,
         email,
     }
 
     const handleSave = () => {
-        axios
-            .post('http://localhost:3500/quote', newQuote)
-            .then((response) => {
-                console.log(response.data)
+        axiosInstance
+            .post('/quote', newQuote)
+            .then(() => {
                 navigate('/quotes')
             }
-            ).catch((error) => {
-                console.log(error);
+            )
+            .catch((error) => {
+                setServerError(false);
+                setNoInput(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
+                else if (error.response.status === 400) {
+                    setNoInput(true);
+                }
             })
     }
 
@@ -123,13 +142,50 @@ const Quotes = () => {
                     />
                     <TextField
                         fullWidth
+                        required
                         type="text"
-                        variant="filled"
+                        variant='filled'
                         label="Address"
                         name="address"
                         id="address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
+                        value={street}
+                        onChange={(e) => setStreet(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Postal Code"
+                        name="postalCode"
+                        id="postalCode"
+                        value={postalCode}
+                        onChange={(e) => setPostalCode(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="City"
+                        name="city"
+                        id="city"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Province"
+                        name="province"
+                        id="province"
+                        value={province}
+                        onChange={(e) => setProvince(e.target.value)}
                         sx={{ gridColumn: "span 1" }}
                     />
                     <TextField
@@ -158,6 +214,19 @@ const Quotes = () => {
                         sx={{ gridColumn: "2/3" }}
                     />
                 </Box >
+                <Box sx={{ width: "30%", margin: "10px auto" }}>
+                {serverError &&
+                    <Alert severity="error" >
+                        <AlertTitle>Server Error</AlertTitle>
+                        Internal Server Error. Please Try Again Later.
+                    </Alert>}
+
+                {noInput &&
+                    <Alert severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                        Please Fill Out All Fields
+                    </Alert>}
+            </Box>
                 <div className="flex justify-end mr-40 pt-4">
                     <Button
                         onClick={handleSave}

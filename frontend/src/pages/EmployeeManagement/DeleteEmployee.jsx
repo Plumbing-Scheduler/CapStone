@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
-import { Box, Typography, Button, useTheme } from '@mui/material'
+import { Alert, AlertTitle, Box, Typography, Button, useTheme, useMediaQuery } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { tokens } from "../../theme.js";
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance.js';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 const DeleteEmployee = () => {
   const theme = useTheme();
@@ -16,14 +15,15 @@ const DeleteEmployee = () => {
   const { id } = useParams();
   const [employee, setEmployee] = useState({});
   const [loading, setLoading] = useState(true);
+  const [ serverError, setServerError ] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:3500/employees/${id}`)
-      .then((responce) => {
-        setEmployee(responce.data);
+    axiosInstance
+      .get(`/employees/${id}`)
+      .then((response) => {
+        setEmployee(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -33,14 +33,18 @@ const DeleteEmployee = () => {
   }, [])
 
   const handleDelete = () => {
-    axios
-      .delete(`http://localhost:3500/employees/${id}`)
+    axiosInstance
+      .delete(`/employees/${id}`)
       .then(
         navigate('/employee')
       )
       .catch((error) => {
-        console.log(error);
-      })
+        setServerError(false);
+        console.log(error.response.status)
+        if (error.response.status === 500) {
+            setServerError(true);
+        }
+    })
   }
 
   return (
@@ -52,6 +56,11 @@ const DeleteEmployee = () => {
       ) : (
         <Box m="100px" sx={{ width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%' }}>
           <Box sx={{ margin: 'auto', width: '60%', boxShadow: '4', border: 'solid', borderWidth: "2px", borderRadius: '5px' }}>
+          {serverError &&
+                    <Alert severity="error">
+                        <AlertTitle>Server Error</AlertTitle>
+                        Internal Server Error. Please Try Again Later.
+                    </Alert>}
             <Typography
               variant='h2'
               textAlign={'center'}

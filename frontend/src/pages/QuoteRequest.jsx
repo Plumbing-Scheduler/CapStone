@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Spinner from "react-bootstrap/esm/Spinner";
 import AddNewButton from "../components/AddNewButton";
 import { useEffect, useState } from "react";
-import axios from 'axios';
+import axiosInstance from "../axiosInstance";
 import DataList from '../components/DataList';
 
 const Quotes = () => {
@@ -13,14 +13,14 @@ const Quotes = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get('http://localhost:3500/quote')
+        axiosInstance
+            .get('/quote')
             .then((response) => {
                 setQuotes(response.data.data)
                 setLoading(false);
-                console.log(response.data.data);
             })
             .catch((error) => {
+                setLoading(false);
                 console.log(error)
             })
     }, []);

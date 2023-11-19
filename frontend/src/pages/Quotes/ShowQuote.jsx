@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
-import { Box, Typography, Paper, Divider, IconButton, useTheme } from '@mui/material';
+import { Alert, AlertTitle, Box, Typography, Paper, Divider, IconButton, useTheme } from '@mui/material';
 import { tokens } from "../../theme";
 import Header from '../../components/Header';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -15,22 +15,27 @@ const ShowQuote = () => {
   const { id } = useParams();
   const [quote, setQuote] = useState({});
   const [loading, setLoading] = useState(true);
-
+  const [ serverError, setServerError ] = useState(false);
+  const [ noInput, setNoInput ] = useState(false);
   const minwidth2 = useMediaQuery('(min-width:500px)');
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:3500/quote/${id}`)
-      .then((response) => {
-        setQuote(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  }, [id]);
+    axiosInstance
+        .get(`/quote/${id}`)
+        .then((response) => {
+            setQuote(response.data);
+            setLoading(false);
+            console.log(quote.firstName);
+        })
+        .catch((error) => {
+            setServerError(false);
+            console.log(error.response.status)
+            if (error.response.status === 500) {
+                setServerError(true);
+            }
+        })
+}, [])
 
   return (
     <Box>
@@ -57,6 +62,11 @@ const ShowQuote = () => {
             </Typography>
             <Divider />
             <Box mt={2}>
+            {serverError &&
+                            <Alert severity="error">
+                                <AlertTitle>Server Error</AlertTitle>
+                                    Internal Server Error. Please Try Again Later.
+                            </Alert>}
               {quote.firstName && (
                 <Typography variant="h5">
                   <strong>Name:</strong> {quote.firstName} {quote.lastName}

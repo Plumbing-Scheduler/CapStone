@@ -1,6 +1,6 @@
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Topbar from "./components/global/Topbar";
 import Home from "./pages/Home";
 import Sidebar from "./components/global/Sidebar";
@@ -27,22 +27,49 @@ import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
 import ServiceReports from './pages/Reports/ServiceReports';
+import Login from "./pages/Login";
+import Profile from './pages/Profile';
+import axiosInstance from './axiosInstance';
+import { useEffect } from 'react';
 
 // import WorkOrderform from "./scenes/form";
 
 function App() {
-
   const [theme, colorMode] = useMode();
+  const navigate = useNavigate();
+  const loggedInUser = localStorage.getItem("user");
+  
+  const getRefresh = () => {
+     axiosInstance
+      .get('/refresh')
+      .then((response) => {
+        axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
+        console.log(response.data.accessToken);
+    })
+      .catch((error) => {
+        console.log(error);
+        localStorage.clear();
+      })
+  }
+setInterval(getRefresh, 60 * 60 * 1000);
+
+useEffect(() => {
+  getRefresh();
+  navigate('/');
+}, [])
   return (<ColorModeContext.Provider value={colorMode}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      {!loggedInUser  ? (
+          <Login />
+        ):(
       <div className="app">
         <Sidebar />
         <main className="content">
           <Topbar />
           <Routes>
             <Route path="/" element={<Home />} />
-
+            <Route path="/profile" element={<Profile />} />
             <Route path="/quotes" >
               <Route index element={<Quotes />} />
               <Route path='create' element={<CreateQuote />} />
@@ -86,6 +113,7 @@ function App() {
           </Routes>
         </main>
       </div>
+      )}
     </ThemeProvider>
   </ColorModeContext.Provider>
   );

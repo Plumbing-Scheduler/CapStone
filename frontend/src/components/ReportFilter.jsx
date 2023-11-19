@@ -183,7 +183,6 @@ export const ReportFilter = () => {
                             ))}
                         </TextField>
                         <Box ml="100%" width="50%">
-                            {/* <Link to={`history`}> */}
                                 <Button
                                     onClick={generate}
                                     sx={{
@@ -195,7 +194,6 @@ export const ReportFilter = () => {
                                 >
                                     Run Report
                                 </Button>
-                            {/* </Link> */}
                         </Box>
                     </Box>
                 </Box>

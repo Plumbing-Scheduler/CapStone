@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { Box, TextField, Typography, Button, useTheme } from '@mui/material';
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -14,6 +14,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 export const CreateWorkOrder = () => {
+    const [serverError, setServerError] = useState(false);
+    const [noInput, setNoInput] = useState(false);
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const minwidth1 = useMediaQuery('(min-width:800px)');
@@ -27,9 +29,13 @@ export const CreateWorkOrder = () => {
     const [endDate, setEndDate] = useState(startDate);
     const [customerID, setCustomerID] = useState('');
     const [busName, setBusName] = useState('');
-    const [address, setAddress] = useState('');
+    const [street, setStreet] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [city, setCity] = useState('');
+    const [province, setProvince] = useState('');
 
     const [employees, setEmployees] = useState([]);
+    const [customers, setCustomers] = useState([]);
     const navigate = useNavigate();
 
     dayjs.extend(localizedFormat);
@@ -44,22 +50,36 @@ export const CreateWorkOrder = () => {
         endDate,
         customerID,
         busName,
-        address,
+        address: {
+            street,
+            postalCode,
+            city,
+            province
+        }
     };
 
     useEffect(() => {
-        axios.get('http://localhost:3500/employees')
-            .then((responce) => {
-                setEmployees(responce.data.data);
+        axiosInstance
+            .get('/employees')
+            .then((response) => {
+                setEmployees(response.data.data);
             })
             .catch((error) => {
                 console.log(error);
             })
-    })
+        axiosInstance
+            .get('/customer')
+            .then((response) => {
+                setCustomers(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, []);
 
     const handleSave = () => {
-        axios
-            .post('http://localhost:3500/workorders', newWorkOrder)
+        axiosInstance
+            .post('/workorders', newWorkOrder)
             .then((response) => {
                 const newCal = {
                     title: response.data.title,
@@ -67,9 +87,10 @@ export const CreateWorkOrder = () => {
                     endDate: response.data.endDate,
                     serviceId: response.data._id,
                     empId: response.data.assignedEmp,
+                    notes: response.data.description
                 }
-                axios
-                    .post('http://localhost:3500/schedule', newCal)
+                axiosInstance
+                    .post('/schedule', newCal)
                     .then((response) => {
                         console.log(response.data)
                         navigate('/workorder')
@@ -79,7 +100,15 @@ export const CreateWorkOrder = () => {
                     });
             })
             .catch((error) => {
-                console.log(error)
+                setServerError(false);
+                setNoInput(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
+                else if (error.response.status === 400) {
+                    setNoInput(true);
+                }
             });
     };
 
@@ -120,6 +149,8 @@ export const CreateWorkOrder = () => {
                         sx={{ gridColumn: "span 1" }}
                     />
                     <TextField
+                        select
+                        required
                         fullWidth
                         type="number"
                         variant='filled'
@@ -129,7 +160,13 @@ export const CreateWorkOrder = () => {
                         name="cost"
                         id=""
                         sx={{ gridColumn: "span 1" }}
-                    />
+                    >
+                        {customers.map((cstmr) => (
+                            <MenuItem key={cstmr._id} value={cstmr._id}>
+                                {cstmr.firstName + ' ' + cstmr.lastName}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateTimePicker
                             label='Start Date'
@@ -163,13 +200,49 @@ export const CreateWorkOrder = () => {
                     <TextField
                         fullWidth
                         required
-                        variant='filled'
                         type="text"
+                        variant='filled'
                         label="Address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
                         name="address"
-                        id=""
+                        id="address"
+                        value={street}
+                        onChange={(e) => setStreet(e.target.value)}
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Postal Code"
+                        name="postalCode"
+                        id="postalCode"
+                        value={postalCode}
+                        onChange={(e) => setPostalCode(e.target.value)}
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="City"
+                        name="city"
+                        id="city"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Province"
+                        name="province"
+                        id="province"
+                        value={province}
+                        onChange={(e) => setProvince(e.target.value)}
                         sx={{ gridColumn: "span 2" }}
                     />
                     <TextField
@@ -215,6 +288,19 @@ export const CreateWorkOrder = () => {
                         inputProps={{ min: 0 }}
                         sx={{ gridColumn: "2/3" }}
                     />
+                </Box>
+                <Box sx={{ width: "13%", margin: "10px auto" }}>
+                    {serverError &&
+                        <Alert severity="error" >
+                            <AlertTitle>Server Error</AlertTitle>
+                            Internal Server Error. Please Try Again Later.
+                        </Alert>}
+
+                    {noInput &&
+                        <Alert severity="warning">
+                            <AlertTitle>Warning</AlertTitle>
+                            Please Fill Out All Fields
+                        </Alert>}
                 </Box>
                 <div className="flex justify-end mr-40 pt-4">
                     <Button

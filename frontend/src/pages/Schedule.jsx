@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../axiosInstance";
 import Spinner from 'react-bootstrap/Spinner';
 import {
     Box,
     Paper,
     useTheme,
 } from "@mui/material";
-import { ViewState } from '@devexpress/dx-react-scheduler';
+import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
 import {
     Scheduler,
     DayView,
@@ -15,6 +15,9 @@ import {
     Appointments,
     Toolbar,
     DateNavigator,
+    AppointmentTooltip,
+    ConfirmationDialog,
+    AppointmentForm,
     ViewSwitcher
 } from '@devexpress/dx-react-scheduler-material-ui';
 import Header from "../components/Header";
@@ -31,9 +34,17 @@ const Schedule = () => {
 
 
     useEffect(() => {
-        axios.get('http://localhost:3500/schedule')
+        axiosInstance.get('/schedule')
             .then((response) => {
-                setData(response.data.data);
+                setData(response.data.data.map((app) => ({
+                    title: app.title,
+                    startDate: app.startDate,
+                    endDate: app.endDate,
+                    serviceId: app.serviceId,
+                    empId: app.empId,
+                    id: app._id,
+                    notes: app.notes
+                })));
                 setLoading(false);
             })
             .catch((error) => {
@@ -41,6 +52,75 @@ const Schedule = () => {
                 console.log(error);
             });
     }, []);
+
+    const onCommitChanges = ({ changed, deleted }) => {
+        let updatedData = data;
+        if (changed) {
+            updatedData = updatedData.map((app) => (
+                changed[app.id] ? { ...app, ...changed[app.id] } : app
+            ));
+            const edited = updatedData.find((app) => (
+                changed[app.id]
+            ))
+            console.log(edited);
+            axiosInstance
+                .put(`/schedule/${edited.id}`, edited)
+                .then((response) => {
+                    console.log(response);
+                    axiosInstance
+                        .get(`/workorders/${edited.serviceId}`)
+                        .then((response) => {
+                            console.log(response);
+                            const editedWorkOrder = {
+                                serviceStatus: response.data.serviceStatus,
+                                description: edited.notes,
+                                title: edited.title,
+                                startDate: edited.startDate,
+                                cost: response.data.cost,
+                                assignedEmp: response.data.assignedEmp,
+                                endDate: edited.endDate,
+                                customerID: response.data.customerID,
+                                busName: response.data.busName,
+                                address: {
+                                    street: response.data.address.street,
+                                    postalCode: response.data.address.postalCode,
+                                    city: response.data.address.city,
+                                    province: response.data.address.province
+                                }
+                            };
+                            axiosInstance
+                                .put(`/workorders/${response.data._id}`, editedWorkOrder)
+                                .then((response => {
+                                    console.log(response);
+                                }));
+                        });
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+
+        if (deleted !== undefined) {
+            const deletedObj = updatedData.find((app) => (
+                app.id === deleted
+            ))
+            updatedData = updatedData.filter((app) => (
+                app.id != deleted
+            ));
+
+            axiosInstance
+                .delete(`/schedule/${deleted}`)
+                .then(() => {
+                    axiosInstance
+                        .delete(`/workorders/${deletedObj.serviceId}`)
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+
+        setData(updatedData);
+    };
 
     return (
         <div>
@@ -53,12 +133,23 @@ const Schedule = () => {
                         <Box flex="1 1 20%">
                             <Scheduler data={data} >
                                 <ViewState defaultCurrentDate={currDate} />
-                                {minwidth2 ? <WeekView startDayHour={6} endDayHour={18} /> : null}
-                                {minwidth1 ? <DayView startDayHour={6} endDayHour={18} /> : null}
-                                <DayView startDayHour={6} endDayHour={18} />
-                                <WeekView startDayHour={6} endDayHour={18} />
+                                <EditingState
+                                    onCommitChanges={onCommitChanges}
+                                />
+                                <IntegratedEditing />
+                                {minwidth2 ? <WeekView startDayHour={6} endDayHour={18} cellDuration={60} /> : null}
+                                {minwidth1 ? <DayView startDayHour={6} endDayHour={18} cellDuration={60} /> : null}
+                                <DayView startDayHour={6} endDayHour={18} cellDuration={60} />
+                                <WeekView startDayHour={6} endDayHour={18} cellDuration={60} />
                                 <MonthView />
                                 <Appointments />
+                                <AppointmentTooltip
+                                    showOpenButton
+                                    showDeleteButton
+                                    showCloseButton
+                                />
+                                <ConfirmationDialog />
+                                <AppointmentForm />
                                 <Toolbar />
                                 <DateNavigator />
                                 <ViewSwitcher />
