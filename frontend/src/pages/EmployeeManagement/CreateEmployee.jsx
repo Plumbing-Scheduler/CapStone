@@ -1,9 +1,9 @@
-import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+import axiosInstance from '../../axiosInstance';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -58,7 +58,8 @@ const statusOptions = [
 export const CreateEmployee = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
 
@@ -74,6 +75,7 @@ export const CreateEmployee = () => {
     const [experience, setExperience] = useState('');
     const [employmentType, setEmploymentType] = useState('');
     const [status, setStatus] = useState('');
+    const [password, setPassword] = useState(phone);
     const [startDate, setStartDate] = useState(Date.now());
 
     dayjs.extend(localizedFormat);
@@ -94,23 +96,33 @@ export const CreateEmployee = () => {
         experience,
         startDate,
         employmentType,
-        status
+        status,
+        password: phone
     }
 
     const handleSave = () => {
-        axios
-            .post('http://localhost:3500/employees', newEmployee)
-            .then(
+        axiosInstance
+            .post('/employees', newEmployee)
+            .then(() => {
                 navigate('/employee')
+            }
             )
             .catch((error) => {
-                console.log(error)
+                setServerError(false);
+                setNoInput(false);
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerError(true);
+                }
+                else if (error.response.status === 400) {
+                    setNoInput(true);
+                }
             })
     }
     return (
         <Box ml={'20px'}>
             <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
-            <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
+            <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} height={"100%"} >
 
                 <Typography
                     //display="flex"
@@ -133,6 +145,7 @@ export const CreateEmployee = () => {
                         width: '75%',
                     }}
                 >
+                    
                     <TextField
                         fullWidth
                         required
@@ -168,7 +181,7 @@ export const CreateEmployee = () => {
                         name="email"
                         id="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
                         sx={{ gridColumn: "span 1" }}
                     />
                     <TextField
@@ -354,16 +367,31 @@ export const CreateEmployee = () => {
                         ))}
                     </TextField>
                 </Box>
+                <Box sx={{width: "30%", margin: "10px auto"}}>
+                    {serverError &&
+                    <Alert severity="error" >
+                        <AlertTitle>Server Error</AlertTitle>
+                            Internal Server Error. Please Try Again Later.
+                    </Alert>}
+
+                    {noInput &&
+                    <Alert severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                            Please Fill Out All Fields
+                    </Alert>}
+                </Box>
+                
                 <Box
                     backgroundColor={colors.buttonBase}
                     display="grid"
                     sx={{
-                        margin: "30px auto",
+                        margin: "10px auto",
                         width: '150px',
                         borderRadius: "5px"
                     }}
                 >
-                    <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
+                    
+                    <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
                         Save and Add
                     </Button>
                 </Box>

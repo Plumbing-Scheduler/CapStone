@@ -22,7 +22,12 @@ const managementSchema = mongoose.Schema(
         role: {
             type: String,
             required: true
-        }
+        },
+        password: {
+            type: String,
+            required: true
+        },
+        refreshToken: String
     }
 );
 

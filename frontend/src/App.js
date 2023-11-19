@@ -1,6 +1,6 @@
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Topbar from "./components/global/Topbar";
 import Home from "./pages/Home";
 import Sidebar from "./components/global/Sidebar";
@@ -26,68 +26,103 @@ import EditCustomer from './pages/CustomerManagement/EditCustomer';
 import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
+
+
+import Login from "./pages/Login";
+import Profile from './pages/Profile';
+import axiosInstance from './axiosInstance';
+import { useEffect } from 'react';
+
 import ServiceReports from './pages/Reports/ServiceReports';
+
 
 // import WorkOrderform from "./scenes/form";
 
 function App() {
-
   const [theme, colorMode] = useMode();
-  return (<ColorModeContext.Provider value={colorMode}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div className="app">
-        <Sidebar />
-        <main className="content">
-          <Topbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
+  const navigate = useNavigate();
+  const loggedInUser = localStorage.getItem("user");
+  
+  const getRefresh = () => {
+     axiosInstance
+      .get('/refresh')
+      .then((response) => {
+        axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
+        console.log(response.data.accessToken);
+    })
+      .catch((error) => {
+        console.log(error);
+        localStorage.clear();
+      })
+  }
+setInterval(getRefresh, 60 * 60 * 1000);
 
-            <Route path="/quotes" >
-              <Route index element={<Quotes />} />
-              <Route path='create' element={<CreateQuote />} />
-              <Route path='edit/:id' element={<EditQuote />} />
-              <Route path="delete/:id" element={<DeleteQuote />} />
-              <Route path="details/:id" element={<ShowQuote />} />
-            </Route>
+useEffect(() => {
+  getRefresh();
+  navigate('/');
+}, [])
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {!loggedInUser  ? (
+          <Login />
+        ):(
+        <div className="app">
+          <Sidebar />
+          <main className="content">
+            
+            <Topbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/quotes" >
+                <Route index element={<Quotes />} />
+                <Route path='create' element={<CreateQuote />} />
+                <Route path='edit/:id' element={<EditQuote />} />
+                <Route path="delete/:id" element={<DeleteQuote />} />
+                <Route path="details/:id" element={<ShowQuote />} />
+              </Route>
 
-            <Route path='workorder'>
-              <Route index element={<WorkOrderList />} />
-              <Route path="form" element={<CreateWorkOrder />} />
-              <Route path="edit/:id" element={<EditWorkOrder />} />
-              <Route path="details/:id" element={<ShowWorkOrder />} />
-              <Route path="delete/:id" element={<DeleteWorkOrder />} />
-            </Route>
+              <Route path='workorder'>
+                <Route index element={<WorkOrderList />} />
+                <Route path="form" element={<CreateWorkOrder />} />
+                <Route path="edit/:id" element={<EditWorkOrder />} />
+                <Route path="details/:id" element={<ShowWorkOrder />} />
+                <Route path="delete/:id" element={<DeleteWorkOrder />} />
+              </Route>
 
-            <Route path="/schedule" element={<Schedule />} >
-            </Route>
+              <Route path="/schedule" element={<Schedule />} >
+              </Route>
 
-            <Route path="employee">
-              <Route index element={<Employee />} />
-              <Route path='details/:id' element={<EmployeeDetails />} />
-              <Route path="create" element={<CreateEmployee />} />
-              <Route path="edit/:id" element={<EditEmployee />} />
-              <Route path="delete/:id" element={<DeleteEmployee />} />
-            </Route>
+              <Route path="employee">
+                <Route index element={<Employee />} />
+                <Route path='details/:id' element={<EmployeeDetails />} />
+                <Route path="create" element={<CreateEmployee />} />
+                <Route path="edit/:id" element={<EditEmployee />} />
+                <Route path="delete/:id" element={<DeleteEmployee />} />
+              </Route>
 
-            <Route path="/customers">
-              <Route index element={<Customer />} />
-              <Route path="create" element={<CreateCustomer />} />
-              <Route path="edit/:id" element={<EditCustomer />} />
-              <Route path="delete/:id" element={<DeleteCustomer />} />
-              <Route path="details/:id" element={<CustomerDetails />} />
-            </Route>
+              <Route path="/customers">
+                <Route index element={<Customer />} />
+                <Route path="create" element={<CreateCustomer />} />
+                <Route path="edit/:id" element={<EditCustomer />} />
+                <Route path="delete/:id" element={<DeleteCustomer />} />
+                <Route path="details/:id" element={<CustomerDetails />} />
+              </Route>
 
             <Route path="/reports">
               <Route index element={<Reports />} />
               <Route path="history/:filter" element={<ServiceReports />} />
             </Route>
 
-          </Routes>
-        </main>
-      </div>
-    </ThemeProvider>
-  </ColorModeContext.Provider>
+
+            </Routes>
+          </main>
+        </div>
+         )} 
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 
