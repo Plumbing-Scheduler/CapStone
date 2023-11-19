@@ -15,8 +15,11 @@ import { tokens } from '../../theme';
 export const CreateWorkOrder = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const [serverError, setServerError] = useState(false);
+    const [noInput, setNoInput] = useState(false);
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
+
     const [serviceStatus, setServiceStatus] = useState('');
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
@@ -73,20 +76,29 @@ export const CreateWorkOrder = () => {
     }, [id])
 
     const handleSave = () => {
-        axios
-            .put(`http://localhost:3500/workorders/${id}`, data)
-            .then(
-                navigate('/workorder')
-            )
+        axiosInstance
+            .put(`/workorders/${id}`, data)
+            .then(() => {
+                const editedCalendar = {
+                    title: data.title,
+                    startDate: data.startDate,
+                    endDate: data.endDate,
+                    serviceId: id,
+                    empId: data.assignedEmp,
+                    notes: data.description
+                }
+                axiosInstance
+                    .put(`/schedule/${id}`, editedCalendar)
+                    .then(() => {
+                        navigate('/workorder')
+                    })
+            })
             .catch((error) => {
                 console.log(error)
             })
     };
 
-
     return (
-
-
         <Box>
             <Header title="WORK ORDER" subtitle="Update" />
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
@@ -111,7 +123,6 @@ export const CreateWorkOrder = () => {
                             margin: "auto",
                             width: '75%'
                         }} >
-
                         <TextField
                             fullWidth
                             type="text"
