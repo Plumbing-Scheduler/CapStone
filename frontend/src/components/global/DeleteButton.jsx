@@ -1,21 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, useTheme, Button } from "@mui/material";
+import { Box, useTheme, IconButton } from "@mui/material";
 import { tokens } from "../../theme";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const DeleteButton = () => {
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
-    return (
-        <Box>
-            <Link to='..' relative='path' className='link'>
-                <Box backgroundColor={colors.primary[400]} borderRadius="3px">
-                    <Button variant="Text">Delete</Button>
-                </Box>
-            </Link>
-        </Box>
-    )
+  return (
+    <Box>
+      <Link to='..' relative='path' className='link'>
+        <IconButton aria-label="delete" color="error" edge="start" sx={{ borderRadius: '50%' }}>
+          <DeleteIcon />
+        </IconButton>
+      </Link>
+    </Box>
+  );
 }
 
 export default DeleteButton;

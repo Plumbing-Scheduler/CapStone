@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, useTheme, Typography } from '@mui/material';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { tokens } from "../../theme";
+import { tokens } from '../../theme';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
 import Header from '../../components/Header';
@@ -22,27 +22,23 @@ export const DeleteWorkOrder = () => {
     axios
       .get(`http://localhost:3500/workorders/${id}`)
       .then((response) => {
-        setWorkOrder(response.data)
+        setWorkOrder(response.data);
         setLoading(false);
         console.log(workOrder);
-      }
-      )
+      })
       .catch((error) => {
         setLoading(false);
-        console.log(error)
+        console.log(error);
       });
   }, [id]);
 
   const handleDeleteWorkOrder = () => {
     axios
       .delete(`http://localhost:3500/workorders/${id}`)
-      .then(
-        navigate('/workorder')
-      )
-      .catch((error) =>
-        console.log(error)
-      );
+      .then(navigate('/workorder'))
+      .catch((error) => console.log(error));
   };
+
 
   return (<div>
     <Header title={"WORK ORDER"} subtitle={"DELETE WORK ORDER"} />
@@ -96,10 +92,9 @@ export const DeleteWorkOrder = () => {
             fontSize: '13px',
           }} onClick={handleDeleteWorkOrder} >DELETE</Button>
         </Box>
-      </Box>
-    )}
-  </div >
-  )
-}
+      )}
+    </div>
+  );
+};
 
-export default DeleteWorkOrder
+export default DeleteWorkOrder;

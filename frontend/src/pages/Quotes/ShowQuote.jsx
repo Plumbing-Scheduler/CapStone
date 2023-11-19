@@ -1,102 +1,116 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import Spinner from 'react-bootstrap/esm/Spinner';
-import { Box, Typography } from '@mui/material';
+import Spinner from 'react-bootstrap/Spinner';
+import { Box, Typography, Paper, Divider, IconButton, useTheme } from '@mui/material';
+import { tokens } from "../../theme";
 import Header from '../../components/Header';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { DeleteButton } from '../../components/global/DeleteButton';
-import { EditButton } from '../../components/global/EditButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const ShowQuote = () => {
-    const { id } = useParams();
-    const [quote, setQuote] = useState({});
-    const [loading, setLoading] = useState(true);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const { id } = useParams();
+  const [quote, setQuote] = useState({});
+  const [loading, setLoading] = useState(true);
 
-    const minwidth2 = useMediaQuery('(min-width:500px)');
+  const minwidth2 = useMediaQuery('(min-width:500px)');
 
-    useEffect(() => {
-        setLoading(true);
-        axios
-            .get(`http://localhost:3500/quote/${id}`)
-            .then((responce) => {
-                setQuote(responce.data);
-                setLoading(false);
-                console.log(quote.firstName);
-            })
-            .catch((error) => {
-                console.log(error);
-                setLoading(false);
-            })
-    }, [])
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`http://localhost:3500/quote/${id}`)
+      .then((response) => {
+        setQuote(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, [id]);
 
-    return (
-        <Box>
-            <div className='flex justify-between w-full'>
-                <Header title="QUOTE REQUEST" subtitle="DETAILS" />
-            </div>
-            {loading ? (
-                <div className='w-5 m-auto h-5 pt-11 text-center'>
-                    <Spinner />
-                </div>
-            ) : (
+  return (
+    <Box>
+      <Header title="QUOTE REQUEST" subtitle="DETAILS" />
 
-                <div>
-                    <div className='flex justify-end m-4 space-x-3'>
-                        <EditButton />
-                        <DeleteButton />
-                    </div>
-                    <Box>
-                        <Box
-                            display="grid"
-                            gap="30px"
-                            gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
-                            sx={{
-                                gridColumn: "span 2",
-                                margin: "auto",
-                                width: '80%',
-                            }}
-                        >
-                            <Box
-                                sx={{ m: '0 auto', width: "70%" }}
-                            >
-                                <Typography
-                                    variant="h2"
-                                    sx={{
-                                        width: '75%',
-                                        paddingBottom: '10px'
-                                    }}
-                                >
-                                    Customer Info
-                                </Typography>
-                                <Typography variant='body1'>{quote.firstName + " " + quote.lastName}</Typography>
-                                <Typography variant='body1'>{quote.phone}</Typography>
-                                <Typography variant='body1'>{quote.email}</Typography>
-                                <Typography variant='body1'>{quote.address}</Typography>
-                                <Typography variant='body1'>{quote.busName}</Typography>
-                            </Box>
-                            <Box
-                                sx={{ m: ' 0 auto', width: "70%" }}
-                            >
-                                <Typography
-                                    variant="h2"
-                                    sx={{
-                                        width: '75%',
-                                        paddingBottom: '10px'
-                                    }}
-                                >
-                                    Quote Info
-                                </Typography>
-                                <Typography variant='body1'>{quote.description}</Typography>
-                                <Typography variant='body1'>Estimate Cost: ${quote.cost}</Typography>
-                            </Box>
-                        </Box>
+      <Box display="flex" justifyContent="flex-end" m={4} spaceX={3}>
+        <IconButton aria-label="edit" color="primary">
+          <EditIcon />
+        </IconButton>
+        <IconButton aria-label="delete" color="error">
+          <DeleteIcon />
+        </IconButton>
+      </Box>
 
-                    </Box>
-                </div>
-            )}
+      {loading ? (
+        <div className="w-5 m-auto h-5 pt-11 text-center">
+          <Spinner />
+        </div>
+      ) : (
+        <Box m={4}>
+          <Paper elevation={3} sx={{ p: 3, mt: 3, maxWidth: '100%', backgroundColor: colors.primary[400]}}>
+          <Typography variant="h3" sx={{ paddingBottom: '10px' }}>
+              Customer Information
+            </Typography>
+            <Divider />
+            <Box mt={2}>
+              {quote.firstName && (
+                <Typography variant="h5">
+                  <strong>Name:</strong> {quote.firstName} {quote.lastName}
+                </Typography>
+              )}
+              {quote.phone && (
+                <Typography variant="h5">
+                  <strong>Phone:</strong> {quote.phone}
+                </Typography>
+              )}
+              {quote.email && (
+                <Typography variant="h5">
+                  <strong>Email:</strong> {quote.email}
+                </Typography>
+              )}
+              {quote.address && (
+                <>
+                  {quote.address.street && (
+                    <Typography variant="h5">
+                      <strong>Address:</strong> {`${quote.address.street}, ${quote.address.postalCode} ${quote.address.city}, ${quote.address.province}`}
+                    </Typography>
+                  )}
+                </>
+              )}
+              {quote.busName && (
+                <Typography variant="h5">
+                  <strong>Business Name:</strong> {quote.busName}
+                </Typography>
+              )}
+            </Box>
+          </Paper>
+
+          <Paper elevation={3} sx={{ p: 3, mt: 3, maxWidth: '100%', backgroundColor: colors.primary[400]}}>
+          <Typography variant="h3" sx={{ paddingBottom: '10px' }}>
+              Quote Information
+            </Typography>
+            <Divider />
+            <Box mt={2}>
+              {quote.description && (
+                <Typography variant="h5">
+                  <strong>Quote Description:</strong> {quote.description}
+                </Typography>
+              )}
+              {quote.cost && (
+                <Typography variant="h5">
+                  <strong>Estimate Cost:</strong> ${quote.cost}
+                </Typography>
+              )}
+            </Box>
+          </Paper>
         </Box>
-    )
-}
+      )}
+    </Box>
+  );
+};
 
-export default ShowQuote
+export default ShowQuote;
