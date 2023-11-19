@@ -24,8 +24,8 @@ export const WorkOrders = () => {
                     .then((responce) => {
                         setEmployees(responce.data.data);
                     })
-                axiosInstance
-                .get('/customer')
+                axios
+                .get('http://localhost:3500/customer')
                     .then((response) => {
                         setCustomers(response.data.data);
                     })
