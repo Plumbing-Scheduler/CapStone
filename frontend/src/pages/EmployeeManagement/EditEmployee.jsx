@@ -84,7 +84,7 @@ export const EditEmployee = () => {
     dayjs.extend(localizedFormat);
     const navigate = useNavigate();
 
-    const newEmployee = {
+    const saveEmployee = {
         firstName,
         lastName,
         email,
@@ -139,7 +139,7 @@ export const EditEmployee = () => {
 
     const handleSave = () => {
         axiosInstance
-            .put(`/employees/${id}`, newEmployee)
+            .put(`/employees/${id}`, saveEmployee)
             .then(() => {
                 navigate('/employee')
             }
