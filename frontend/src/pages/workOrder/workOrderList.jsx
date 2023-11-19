@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import AddNewButton from '../../components/AddNewButton';
+import axiosInstance from "../../axiosInstance";
 import Header from '../../components/Header';
 import Spinner from 'react-bootstrap/Spinner';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import DataList from '../../components/DataList';
-import axiosInstance from "../../axiosInstance";
 
 export const WorkOrders = () => {
     const [workOrders, setWorkOrders] = useState([]);
@@ -70,7 +70,7 @@ export const WorkOrders = () => {
         startDate: dayjs(wo.startDate).format('LLL'),
         customer: getCustomer(wo.customerID),
         employee: getEmployee(wo.assignedEmp),
-        address: wo.address
+        address: wo.address.street
     }))
 
     return (

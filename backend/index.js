@@ -12,8 +12,8 @@ import refresh from './routes/refresh.js'
 import verifyJWT from './middleware/verifyJWT.js';
 import logout from './routes/logout.js'
 import cookieParser from 'cookie-parser';
-
 import 'dotenv/config'
+
 const PORT = process.env.port || 3500;
 const corsOptions ={
     origin: ['http://localhost:3000', 'http://localhost:3500'],

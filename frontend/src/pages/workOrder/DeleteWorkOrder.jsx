@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, useTheme, Typography} from '@mui/material';
+import { Box, Button, useTheme, Typography } from '@mui/material';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { tokens } from "../../theme";
+import { tokens } from '../../theme';
 import axiosInstance from '../../axiosInstance';
 import Spinner from 'react-bootstrap/Spinner';
 import Header from '../../components/Header';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export const DeleteWorkOrder = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const minwidth1 = useMediaQuery('(min-width:800px)');
+  const minwidth2 = useMediaQuery('(min-width:500px)');
   const { id } = useParams('');
   const navigate = useNavigate();
   const [workOrder, setWorkOrder] = useState('');
@@ -45,10 +48,11 @@ export const DeleteWorkOrder = () => {
       );
   };
 
+
   return (<div>
     <Header title={"WORK ORDER"} subtitle={"DELETE WORK ORDER"} />
     {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-      <Box m="30px">
+      <Box m="30px" >
         <Box sx={{ width: "90%", margin: "auto", boxShadow: '4', border: 'solid', borderWidth: "2px", borderRadius: '5px' }}>
           <Typography variant="h2" fontWeight="bold" sx={{ mb: "5%", mt: '2%', textAlign: "center" }}>Delete Work Order?</Typography>
           <div className='m-10'>
@@ -82,25 +86,25 @@ export const DeleteWorkOrder = () => {
             </div>
           </div>
         </Box>
-        <Box display="flex" justifyContent="space-between" sx={{ width: '20%', margin: 'auto', pt: '2%' }}>
+        <Box display="flex" justifyContent="space-between" sx={{ margin: 'auto', pt:'2%', width: minwidth1 ? '15%' : minwidth2 ? '40%' : '40%', }}>
           <Link to={'/workorder'}>
             <Button sx={{
-              backgroundColor: colors.greenButton,
+              backgroundColor: colors.grey[500],
               fontWeight: 'bold',
               fontSize: '13px',
             }}
-            >No, Go Back</Button>
+            >BACK</Button>
           </Link>
           <Button sx={{
             backgroundColor: colors.redButton,
             fontWeight: 'bold',
             fontSize: '13px',
-          }} onClick={handleDeleteWorkOrder} >Yes, Im Sure</Button>
+          }} onClick={handleDeleteWorkOrder} >DELETE</Button>
         </Box>
-      </Box>
-    )}
-  </div >
-  )
-}
+        </Box>
+      )}
+    </div>
+  );
+};
 
-export default DeleteWorkOrder
+export default DeleteWorkOrder;

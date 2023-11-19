@@ -2,9 +2,9 @@ import { Box } from "@mui/material";
 import Header from "../components/Header";
 import AddNewButton from "../components/AddNewButton";
 import { useState, useEffect } from "react";
+import axiosInstance from "../axiosInstance";
 import Spinner from 'react-bootstrap/Spinner';
 import DataList from '../components/DataList';
-import axiosInstance from "../axiosInstance";
 
 export const Employee = () => {
     const [loading, setLoading] = useState(true);
@@ -28,7 +28,10 @@ export const Employee = () => {
     const columns = [
         {field: 'no', headerName: "No.", width: 70},
         {field: 'name', headerName: "Name", flex: 1},
-        {field: 'phone', headerName: "Phone", flex: 1},
+        { field: 'phone', headerName: "Phone", flex: 1, 
+        renderCell: (params) => {
+            return params.value.replace(/^(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
+        }},
         {field: 'email', headerName: "Email", flex: 1},
         {field: 'type', headerName: "Employement Type", flex: 1},
         {field: 'status', headerName: "Status", flex: 1},

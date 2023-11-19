@@ -3,8 +3,8 @@ import Header from "../components/Header";
 import Spinner from "react-bootstrap/esm/Spinner";
 import AddNewButton from "../components/AddNewButton";
 import { useEffect, useState } from "react";
-import DataList from '../components/DataList';
 import axiosInstance from "../axiosInstance";
+import DataList from '../components/DataList';
 
 const Quotes = () => {
     // Declaring Constants

@@ -10,7 +10,7 @@ const Customer = () => {
   const [loading, setLoading] = useState(true);
   const [customers, setCustomers] = useState([]);
 
-   useEffect( () => {
+  useEffect( () => {
     setLoading(true);
     axiosInstance
       .get('/customer')

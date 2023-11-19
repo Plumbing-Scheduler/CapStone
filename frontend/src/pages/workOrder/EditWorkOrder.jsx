@@ -9,7 +9,8 @@ import dayjs from 'dayjs';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
 import MenuItem from '@mui/material/MenuItem';
-import { tokens } from "../../theme.js";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { tokens } from '../../theme';
 
 export const CreateWorkOrder = () => {
     const theme = useTheme();
@@ -17,12 +18,14 @@ export const CreateWorkOrder = () => {
 
     const [serverError, setServerError] = useState(false);
     const [noInput, setNoInput] = useState(false);
+    const minwidth1 = useMediaQuery('(min-width:800px)');
+    const minwidth2 = useMediaQuery('(min-width:500px)');
     const [serviceStatus, setServiceStatus] = useState('');
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
     const [startDate, setStartDate] = useState(Date.now());
     const [cost, setCost] = useState('');
-    const [assignedEmp, setAssignedEmp] = useState("");
+    const [assignedEmp, setAssignedEmp] = useState('');
     const [endDate, setEndDate] = useState(startDate);
     const [customerID, setCustomerID] = useState('');
     const [busName, setBusName] = useState('');
@@ -118,7 +121,7 @@ export const CreateWorkOrder = () => {
     return (
 
 
-        <Box m="20px">
+        <Box>
             <Header title="WORK ORDER" subtitle="Update" />
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <div>
@@ -135,28 +138,14 @@ export const CreateWorkOrder = () => {
                     </Typography>
                     <Box
                         display="grid"
-                        gap="30px"
-                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                        gap="20px"
+                        gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                         sx={{
-                            gridColumn: "span 4",
+                            gridColumn: "span 2",
                             margin: "auto",
                             width: '75%'
                         }} >
 
-                        <TextField
-                            fullWidth
-                            multiline
-                            variant="filled"
-                            label="Description"
-                            value={description}
-                            required
-                            cols="30"
-                            rows="4"
-                            onChange={description => setDescription(description.target.value)}
-                            name="description"
-                            id="description"
-                            sx={{ gridColumn: "span 2" }}
-                        />
                         <TextField
                             fullWidth
                             type="text"
@@ -165,14 +154,14 @@ export const CreateWorkOrder = () => {
                             value={title}
                             required
                             onChange={e => setTitle(e.target.value)}
-                            name="title"
-                            id="title"
+                            name="startdate"
+                            id=""
                             sx={{ gridColumn: "span 2" }}
                         />
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
                                 label='Start Date'
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField variant="filled" {...params} />}
                                 value={dayjs(startDate).toISOString()}
                                 onChange={(e) => { setStartDate(e) }}
                                 minutesStep={5}
@@ -181,7 +170,7 @@ export const CreateWorkOrder = () => {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
                                 label='End Date'
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField variant="filled" {...params} />}
                                 value={dayjs(endDate).toISOString()}
                                 onChange={(e) => { setEndDate(e) }}
                                 minDate={startDate}
@@ -196,8 +185,8 @@ export const CreateWorkOrder = () => {
                             value={busName}
                             onChange={e => setBusName(e.target.value)}
                             name="businessname"
-                            id="businessname"
-                            sx={{ gridColumn: "span 2" }}
+                            id=""
+                            sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
                             fullWidth
@@ -248,6 +237,20 @@ export const CreateWorkOrder = () => {
                             sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
+                            fullWidth
+                            multiline
+                            variant="filled"
+                            label="Description"
+                            value={description}
+                            required
+                            cols="30"
+                            rows="4"
+                            onChange={description => setDescription(description.target.value)}
+                            name="description"
+                            id="description"
+                            sx={{ gridColumn: "span 2" }}
+                        />
+                        <TextField
                             select
                             required
                             variant='filled'
@@ -255,7 +258,7 @@ export const CreateWorkOrder = () => {
                             value={assignedEmp}
                             onChange={(e) => setAssignedEmp(e.target.value)}
                             name="assignemployee"
-                            id="assignemployee"
+                            id=""
                             sx={{ gridColumn: "span 1" }}
                         >
                             {employees.map((emp) => (
@@ -290,19 +293,20 @@ export const CreateWorkOrder = () => {
                                 Please Fill Out All Fields
                             </Alert>}
                     </Box>
-                    <Box
-                        backgroundColor={colors.buttonBase}
-                        display="grid"
-                        sx={{
-                            margin: "10px auto",
-                            width: '150px',
-                            borderRadius: "5px"
-                        }}
-                    >
-                        <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
+                    <div className="flex justify-end mr-40 pt-4">
+                        <Button
+                            onClick={handleSave}
+                            sx={{
+                                backgroundColor: colors.redAccent[500],
+                                fontWeight: 'bold',
+                                fontSize: '13px',
+                                width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
+                                borderRadius: '3px'
+                            }}
+                        >
                             Save and Add
                         </Button>
-                    </Box>
+                    </div>
                 </div>)}
         </Box>
 
