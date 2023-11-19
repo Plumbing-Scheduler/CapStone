@@ -92,6 +92,7 @@ export const DeleteWorkOrder = () => {
             fontSize: '13px',
           }} onClick={handleDeleteWorkOrder} >DELETE</Button>
         </Box>
+        </Box>
       )}
     </div>
   );
