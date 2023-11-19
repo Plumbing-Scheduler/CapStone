@@ -98,4 +98,27 @@ const deleteEmployee = async (request, response) => {
     };
 };
 
-export default { createEmployee, getAllEmployee, getEmployee, updateEmployee, deleteEmployee };
+const changePassword = async (request, response) => {
+    try {
+        const { id } = request.params;
+        const { oldPassword, newPassword } = request.body;
+        const found = await Employee.findById(id);
+        if (!found) {
+            return response.status(404).send({ message: 'No Content Found' });
+        };
+        await found.comparePassword(oldPassword, function(err, isMatch){
+            if(isMatch){
+                found.password = newPassword;
+                found.save()
+                return response.sendStatus(200);
+            }else{
+                console.log(err);
+                return response.status(401).json({ "message": "Unauthorized" })
+            }
+        });
+    } catch (error) {
+        return response.status(500).send({ message: error.message });
+    };
+};
+
+export default { createEmployee, getAllEmployee, getEmployee, updateEmployee, deleteEmployee, changePassword };
