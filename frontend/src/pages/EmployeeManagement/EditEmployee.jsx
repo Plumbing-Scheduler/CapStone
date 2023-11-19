@@ -81,7 +81,7 @@ export const EditEmployee = () => {
     dayjs.extend(localizedFormat);
     const navigate = useNavigate();
 
-    const newEmployee = {
+    const saveEmployee = {
         firstName,
         lastName,
         email,
@@ -123,9 +123,11 @@ export const EditEmployee = () => {
     }, [])
 
     const handleSave = () => {
+
         axios
             .put(`http://localhost:3500/employees/${id}`, newEmployee)
             .then(
+
                 navigate('/employee')
             )
             .catch((error) => {
