@@ -15,8 +15,8 @@ export const CreateWorkOrder = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
+    const [serverError, setServerError] = useState(false);
+    const [noInput, setNoInput] = useState(false);
     const [serviceStatus, setServiceStatus] = useState('');
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
@@ -87,9 +87,20 @@ export const CreateWorkOrder = () => {
         axiosInstance
             .put(`/workorders/${id}`, data)
             .then(() => {
-                navigate('/workorder')
-            }
-            )
+                const editedCalendar = {
+                    title: data.title,
+                    startDate: data.startDate,
+                    endDate: data.endDate,
+                    serviceId: id,
+                    empId: data.assignedEmp,
+                    notes: data.description
+                }
+                axiosInstance
+                    .put(`/schedule/${id}`, editedCalendar)
+                    .then(() => {
+                        navigate('/workorder')
+                    })
+            })
             .catch((error) => {
                 setServerError(false);
                 setNoInput(false);
@@ -131,7 +142,7 @@ export const CreateWorkOrder = () => {
                             margin: "auto",
                             width: '75%'
                         }} >
-                        
+
                         <TextField
                             fullWidth
                             multiline

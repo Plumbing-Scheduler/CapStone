@@ -69,32 +69,32 @@ const Schedule = () => {
                 .then((response) => {
                     console.log(response);
                     axiosInstance
-                .get(`/workorders/${edited.serviceId}`)
-                .then((response) => {
-                    console.log(response);
-                    const editedWorkOrder = {
-                        serviceStatus: response.data.serviceStatus,
-                        description: edited.notes,
-                        title: edited.title,
-                        startDate: edited.startDate,
-                        cost: response.data.cost,
-                        assignedEmp: response.data.assignedEmp,
-                        endDate: edited.endDate,
-                        customerID: response.data.customerID,
-                        busName: response.data.busName,
-                        address: {
-                            street: response.data.address.street,
-                            postalCode: response.data.address.postalCode,
-                            city: response.data.address.city,
-                            province: response.data.address.province
-                        }
-                    };
-                    axiosInstance
-                        .put(`/workorders/${response.data._id}`, editedWorkOrder)
-                        .then((response => {
+                        .get(`/workorders/${edited.serviceId}`)
+                        .then((response) => {
                             console.log(response);
-                        }));
-                });
+                            const editedWorkOrder = {
+                                serviceStatus: response.data.serviceStatus,
+                                description: edited.notes,
+                                title: edited.title,
+                                startDate: edited.startDate,
+                                cost: response.data.cost,
+                                assignedEmp: response.data.assignedEmp,
+                                endDate: edited.endDate,
+                                customerID: response.data.customerID,
+                                busName: response.data.busName,
+                                address: {
+                                    street: response.data.address.street,
+                                    postalCode: response.data.address.postalCode,
+                                    city: response.data.address.city,
+                                    province: response.data.address.province
+                                }
+                            };
+                            axiosInstance
+                                .put(`/workorders/${response.data._id}`, editedWorkOrder)
+                                .then((response => {
+                                    console.log(response);
+                                }));
+                        });
                 })
                 .catch((err) => {
                     console.log(err);
@@ -107,7 +107,7 @@ const Schedule = () => {
             ))
             updatedData = updatedData.filter((app) => (
                 app.id != deleted
-                ));
+            ));
 
             axiosInstance
                 .delete(`/schedule/${deleted}`)
@@ -141,8 +141,8 @@ const Schedule = () => {
                                     onCommitChanges={onCommitChanges}
                                 />
                                 <IntegratedEditing />
-                                <DayView startDayHour={6} endDayHour={18} cellDuration={60}/>
-                                <WeekView startDayHour={6} endDayHour={18} cellDuration={60}/>
+                                <DayView startDayHour={6} endDayHour={18} cellDuration={60} />
+                                <WeekView startDayHour={6} endDayHour={18} cellDuration={60} />
                                 <MonthView />
                                 <Appointments />
                                 <AppointmentTooltip
