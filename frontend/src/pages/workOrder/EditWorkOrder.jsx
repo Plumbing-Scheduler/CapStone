@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography, Button, useTheme } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -9,9 +9,14 @@ import dayjs from 'dayjs';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
 import MenuItem from '@mui/material/MenuItem';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { tokens } from '../../theme';
 
 export const CreateWorkOrder = () => {
-
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const minwidth1 = useMediaQuery('(min-width:800px)');
+    const minwidth2 = useMediaQuery('(min-width:500px)');
     const [serviceStatus, setServiceStatus] = useState('');
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
@@ -82,7 +87,7 @@ export const CreateWorkOrder = () => {
     return (
 
 
-        <Box m="20px">
+        <Box>
             <Header title="WORK ORDER" subtitle="Update" />
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <div>
@@ -99,27 +104,14 @@ export const CreateWorkOrder = () => {
                     </Typography>
                     <Box
                         display="grid"
-                        gap="30px"
-                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                        gap="20px"
+                        gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                         sx={{
-                            gridColumn: "span 4",
+                            gridColumn: "span 2",
                             margin: "auto",
                             width: '75%'
                         }} >
-                        <TextField
-                            fullWidth
-                            multiline
-                            variant="filled"
-                            label="Description"
-                            value={description}
-                            required
-                            cols="30"
-                            rows="4"
-                            onChange={description => setDescription(description.target.value)}
-                            name="description"
-                            id="description"
-                            sx={{ gridColumn: "span 2" }}
-                        />
+
                         <TextField
                             fullWidth
                             type="text"
@@ -135,7 +127,7 @@ export const CreateWorkOrder = () => {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
                                 label='Start Date'
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField variant="filled" {...params} />}
                                 value={dayjs(startDate).toISOString()}
                                 onChange={(e) => { setStartDate(e) }}
                                 minutesStep={5}
@@ -144,7 +136,7 @@ export const CreateWorkOrder = () => {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
                                 label='End Date'
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField variant="filled" {...params} />}
                                 value={dayjs(endDate).toISOString()}
                                 onChange={(e) => { setEndDate(e) }}
                                 minDate={startDate}
@@ -160,7 +152,7 @@ export const CreateWorkOrder = () => {
                             onChange={e => setBusName(e.target.value)}
                             name="businessname"
                             id=""
-                            sx={{ gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
                             fullWidth
@@ -172,6 +164,20 @@ export const CreateWorkOrder = () => {
                             onChange={e => setAddress(e.target.value)}
                             name="address"
                             id=""
+                            sx={{ gridColumn: "span 1" }}
+                        />
+                        <TextField
+                            fullWidth
+                            multiline
+                            variant="filled"
+                            label="Description"
+                            value={description}
+                            required
+                            cols="30"
+                            rows="4"
+                            onChange={description => setDescription(description.target.value)}
+                            name="description"
+                            id="description"
                             sx={{ gridColumn: "span 2" }}
                         />
                         <TextField
@@ -203,10 +209,21 @@ export const CreateWorkOrder = () => {
                             inputProps={{ min: 0 }}
                             sx={{ gridColumn: "span 1" }}
                         />
-                        <button onClick={handleSave} className='bg-gray-500 w-1/2 '>
-                            Save and Add
-                        </button>
                     </Box>
+                    <div className="flex justify-end mr-40 pt-4">
+                        <Button
+                            onClick={handleSave}
+                            sx={{
+                                backgroundColor: colors.redAccent[500],
+                                fontWeight: 'bold',
+                                fontSize: '13px',
+                                width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
+                                borderRadius: '3px'
+                            }}
+                        >
+                            Save and Add
+                        </Button>
+                    </div>
                 </div>)}
         </Box>
 

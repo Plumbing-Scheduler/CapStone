@@ -1,72 +1,103 @@
 import React, { useEffect, useState } from 'react'
-import { Box } from "@mui/material";
-import ReportsDataList from '../../components/ReportsDataList';
-import Spinner from 'react-bootstrap/esm/Spinner';
+import { Box, useTheme, Typography } from "@mui/material";
+import { tokens } from "../../theme.js";
+import Header from '../../components/Header';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
+
 
 const ServiceReports = () => {
-    const [workOrders, setWorkOrders] = useState([]);
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const { filter } = useParams();
+    const filterObj = JSON.parse(filter);
+    
+
     const [employees, setEmployees] = useState([]);
-    const [loading, setLoading] = useState(true);
-    dayjs(localizedFormat);
+    const [customers, setCustomers] = useState([]);
+    const [workOrders, setWorkOrders] = useState([]);
 
     useEffect(() => {
-        setLoading(true);
-        axios
-            .get('http://localhost:3500/workorders')
-            .then((response) => {
-                setWorkOrders(response.data.data);
-                axios.get('http://localhost:3500/employees')
-                    .then((responce) => {
-                        setEmployees(responce.data.data);
-                    })
-                setLoading(false);
-            }).catch((error) => {
-                setLoading(false);
-                console.log(error);
+        axios.get('http://localhost:3500/employees')
+            .then((responce) => {
+                setEmployees(responce.data.data);
             })
+            .catch((error) => {
+                console.log(error);
+            });
+
+            axios.get('http://localhost:3500/customer')
+            .then((responce) => {
+                setCustomers(responce.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+            axios.get('http://localhost:3500/workorders')
+            .then((responce) => {
+                setWorkOrders(responce.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+            console.log(filterObj);
     }, []);
-
-    const getEmployee = (empId) => {
-        for (let i = 0; employees.length > i; i++) {
-            if (employees[i]._id === empId) {
-                return employees[i].firstName + ' ' + employees[i].lastName
-            }
-        }
-    }
-
-    const columns = [
-        { field: "no", headerName: "No.", width: 70, },
-        {field: 'name', headerName: "Name", flex: 1},
-        {field: 'phone', headerName: "Phone", flex: 1},
-        {field: 'email', headerName: "Email", flex: 1},
-        {field: 'address', headerName: "Address", flex: 1},
-        {field: 'customerid', headerName: "Customer ID", flex: 1},
-        { field: "title", headerName: "Title", width: 150, flex: 1 },
-        { field: "employee", headerName: "Employee", width: 200, flex: 1 },
-        { field: "startDate", headerName: "Date", width: 200, flex: 1 },
-    ]
-
-    const rows = workOrders.map((wo, index) => ({
-        id: wo._id,
-        no: index + 1,
-        name: wo.firstName + ' ' + wo.lastName,
-        customer: wo.customerID,
-        title: wo.title,
-        cost: "$" + wo.cost,
-        startDate: dayjs(wo.startDate).format('LLL'),
-        
-        employee: getEmployee(wo.assignedEmp),
-        address: wo.address
-    }))
-
     return (
         <Box>
-            {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                <ReportsDataList columnData={columns} rowData={rows} />
-            )}
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Header title="Reports" subtitle="" />
+            </Box>
+            <Box m={3}>
+                <Box mb={2}>
+                    <Paper elevation={3} sx={{ backgroundColor: colors.primary[400], p: 2 }}>
+                        <Typography variant="h6" ><b>Customer ID: </b></Typography>
+                        <Typography variant="h6" ><b>CustomerName: </b></Typography>
+                        <Typography variant="h6" ><b>Phone Number: </b></Typography>
+                        <Typography variant="h6" ><b>Address: </b></Typography>
+                        <Typography variant="h6" ><b>Email: </b></Typography>
+                    </Paper>
+                </Box>
+                <TableContainer component={Paper} sx={{ background: colors.primary[400] }} >
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Service Type</TableCell>
+                                <TableCell>Commercial/Residential</TableCell>
+                                <TableCell>Employee</TableCell>
+                                <TableCell>Completion Date</TableCell>
+                                <TableCell>Payment Type</TableCell>
+                                <TableCell>Cost</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {/* {rows.map((row) => ())} */}
+                            <TableRow
+                            // key={row.name}
+                            // sx = {{ '&: last-child td, &: last-child th' : {border:0}}}
+                            >
+                                {/* <TableCell component="th" scope="row"></TableCell> */}
+                                <TableCell >
+                                    {/* {row.name} */}
+                                </TableCell>
+                                <TableCell align="right">{ }</TableCell>
+                                <TableCell align="right">{ }</TableCell>
+                                <TableCell align="right">{ }</TableCell>
+                                <TableCell align="right">{ }</TableCell>
+                            </TableRow>
+
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+
+            </Box>
         </Box>
     )
 }

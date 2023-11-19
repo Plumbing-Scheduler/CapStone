@@ -6,10 +6,13 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Link } from 'react-router-dom';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const DataList = ({ columnData = [{}], rowData = [{}] }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const minwidth1 = useMediaQuery('(min-width:800px)');
+    const minwidth2 = useMediaQuery('(min-width:500px)');
     columnData = [...columnData, {
         field: "Operations", headerName: "Operations", width: 200,  renderCell: ({ row: id }) => {
             return (
@@ -44,12 +47,12 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                     },
                     "& .MuiDataGrid-cell": {
                         borderBottom: "solid 1px grey",
-                        fontSize: "14px",
+                        fontSize: minwidth1 ? '15px' : minwidth2 ? '12px' : '10 px'
                     },
                     "& .MuiDataGrid-columnHeaders": {
                         backgroundColor: colors.redAccent[400],
                         borderBottom: "none",
-                        fontSize: "20px",
+                        fontSize: minwidth1 ? '20px' : minwidth2 ? '15px' : '10 px',
                         color: "black"
                     },
                     "& .MuiDataGrid-VirtualScroller": {
@@ -59,7 +62,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                         borderTop: "none",
                         backgroundColor: colors.redAccent[400]
                     },
-                    width: "90%",
+                    width: '95%',
                     margin: "0 auto"
                 }}
             >
