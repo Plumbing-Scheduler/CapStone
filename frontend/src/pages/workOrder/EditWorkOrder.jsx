@@ -11,6 +11,7 @@ import Header from '../../components/Header';
 import MenuItem from '@mui/material/MenuItem';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { tokens } from '../../theme';
+import { titles, paymentTypes } from '../../data/types'
 
 export const CreateWorkOrder = () => {
     const theme = useTheme();
@@ -33,10 +34,12 @@ export const CreateWorkOrder = () => {
     const [postalCode, setPostalCode] = useState('');
     const [city, setCity] = useState('');
     const [province, setProvince] = useState('');
+    const [paymentType, setPaymentType] = useState('');
     const navigate = useNavigate();
     const { id } = useParams('');
     const [loading, setLoading] = useState(true);
     const [employees, setEmployees] = useState([]);
+    const [customers, setCustomers] = useState([]);
 
     const data = {
         serviceStatus,
@@ -53,7 +56,8 @@ export const CreateWorkOrder = () => {
             postalCode,
             city,
             province
-        }
+        },
+        paymentType
     };
 
     useEffect(() => {
@@ -74,9 +78,15 @@ export const CreateWorkOrder = () => {
                 setStreet(response.data.address.street)
                 setCity(response.data.address.city)
                 setProvince(response.data.address.province)
+                setPaymentType(response.data.paymentType)
                 axiosInstance.get('/employees')
                     .then((response) => {
                         setEmployees(response.data.data);
+                    })
+                axiosInstance
+                    .get('/customer')
+                    .then((response) => {
+                        setCustomers(response.data.data);
                     })
                 setLoading(false);
             })
@@ -147,17 +157,43 @@ export const CreateWorkOrder = () => {
                         }} >
 
                         <TextField
+                            select
                             fullWidth
                             type="text"
                             variant="filled"
                             label="Title"
                             value={title}
                             required
-                            onChange={e => setTitle(e.target.value)}
+                            onChange={(e) => setTitle(e.target.value)}
                             name="startdate"
                             id=""
-                            sx={{ gridColumn: "span 2" }}
-                        />
+                            sx={{ gridColumn: "span 1" }}
+                        >
+                            {titles.map((ttl) => (
+                                <MenuItem key={ttl.value} value={ttl.value}>
+                                    {ttl.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            select
+                            required
+                            fullWidth
+                            type="number"
+                            variant='filled'
+                            label="Cutomer ID"
+                            value={customerID}
+                            onChange={(e) => setCustomerID(e.target.value)}
+                            name="cost"
+                            id=""
+                            sx={{ gridColumn: "span 1" }}
+                        >
+                            {customers.map((cstmr) => (
+                                <MenuItem key={cstmr._id} value={cstmr._id}>
+                                    {cstmr.firstName + ' ' + cstmr.lastName}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
                                 label='Start Date'
@@ -279,6 +315,25 @@ export const CreateWorkOrder = () => {
                             inputProps={{ min: 0 }}
                             sx={{ gridColumn: "span 1" }}
                         />
+                        <TextField
+                            select
+                            fullWidth
+                            type="text"
+                            variant='filled'
+                            label="Payment Type"
+                            value={paymentType}
+                            onChange={e => setPaymentType(e.target.value)}
+                            name="paymentType"
+                            id="paymentType"
+                            inputProps={{ min: 0 }}
+                            sx={{ gridColumn: "span 1" }}
+                        >
+                             {paymentTypes.map((pmtType) => (
+                                <MenuItem key={pmtType.value} value={pmtType.value}>
+                                    {pmtType.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                     </Box>
                     <Box sx={{ width: "30%", margin: "10px auto" }}>
                         {serverError &&

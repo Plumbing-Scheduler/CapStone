@@ -11,7 +11,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 import MenuItem from '@mui/material/MenuItem';
 import { tokens } from "../../theme";
 import useMediaQuery from '@mui/material/useMediaQuery';
-
+import { titles } from '../../data/types'
 
 export const CreateWorkOrder = () => {
     const [serverError, setServerError] = useState(false);
@@ -39,6 +39,8 @@ export const CreateWorkOrder = () => {
     const navigate = useNavigate();
 
     dayjs.extend(localizedFormat);
+
+
 
     const newWorkOrder = {
         serviceStatus,
@@ -137,6 +139,7 @@ export const CreateWorkOrder = () => {
                     }} >
 
                     <TextField
+                        select
                         fullWidth
                         type="text"
                         variant="filled"
@@ -147,7 +150,13 @@ export const CreateWorkOrder = () => {
                         name="startdate"
                         id=""
                         sx={{ gridColumn: "span 1" }}
-                    />
+                    >
+                        {titles.map((ttl) => (
+                            <MenuItem key={ttl.value} value={ttl.value}>
+                                {ttl.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                     <TextField
                         select
                         required

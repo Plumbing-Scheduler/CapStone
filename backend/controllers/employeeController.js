@@ -23,7 +23,8 @@ const createEmployee = async (request, response) => {
             startDate: request.body.startDate,
             employmentType: request.body.employmentType,
             status: request.body.status,
-            serviceList: request.body.serviceList
+            serviceList: request.body.serviceList,
+            password: request.body.password
         };
         const result = await Employee.create(newEmployee);
 
