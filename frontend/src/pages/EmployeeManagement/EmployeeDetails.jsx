@@ -1,5 +1,5 @@
 import { Box, Typography, Button } from '@mui/material';
-import axiosInstance from '../../axiosInstance';
+import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner';
@@ -15,10 +15,10 @@ const EmployeeDetails = () => {
 
     useEffect(() => {
         setLoading(true);
-        axiosInstance
-            .get(`/employees/${id}`)
-            .then((response) => {
-                setEmployee(response.data);
+        axios
+            .get(`http://localhost:3500/employees/${id}`)
+            .then((responce) => {
+                setEmployee(responce.data);
                 setLoading(false);
                 console.log(employee.startDate);
             })
@@ -37,8 +37,8 @@ const EmployeeDetails = () => {
 
                 <div>
                     <div className='flex justify-end m-4 space-x-3'>
-                        <EditButton itemid={id} path='employee'/>
-                        <DeleteButton itemid={id} path='employee'/>
+                        <EditButton />
+                        <DeleteButton />
                     </div>
                     <Box
                         display="grid"
@@ -65,7 +65,7 @@ const EmployeeDetails = () => {
                                 <Typography variant='body1'>{employee.email}</Typography>
                                 <Typography variant='body1'>{employee.address.street}, {employee.address.city}, {employee.address.province}</Typography>
                                 <Typography variant='body1'>{employee.address.postalCode}</Typography>
-                                <Typography variant='body1'>Start Date: {dayjs(employee.startDate).toISOString().substring(0, 10)}</Typography>
+                                <Typography variant='body1'>Start Date: {dayjs(employee.address.startDate).toISOString().substring(0, 10)}</Typography>
                             </Box>
                         </Box>
 

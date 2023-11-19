@@ -1,16 +1,15 @@
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
+import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from "../../axiosInstance.js";
+import axios from "axios";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { tokens } from "../../theme.js";
 
 export const CreateCustomer = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
+
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
 
@@ -44,22 +43,13 @@ export const CreateCustomer = () => {
         
     }
     const handleSave = () => {
-        axiosInstance
-            .post('/customer', newCustomer)
-            .then(() => {
+        axios
+            .post('http://localhost:3500/customer', newCustomer)
+            .then(
                 navigate('/customers')
-            }
             )
             .catch((error) => {
-                setServerError(false);
-                setNoInput(false);
-                console.log(error.response.status)
-                if (error.response.status === 500) {
-                    setServerError(true);
-                }
-                else if (error.response.status === 400) {
-                    setNoInput(true);
-                }
+                console.log(error)
             })
     }
 
@@ -89,7 +79,6 @@ export const CreateCustomer = () => {
                         width: '75%',
                     }}
                 >
-                    
                     <TextField
                         fullWidth
                         required
@@ -201,24 +190,11 @@ export const CreateCustomer = () => {
                         sx={{ gridColumn: "span 2" }}
                     />
                   </Box>
-                  <Box sx={{width: "30%", margin: "10px auto"}}>
-                    {serverError &&
-                    <Alert severity="error" >
-                        <AlertTitle>Server Error</AlertTitle>
-                            Internal Server Error. Please Try Again Later.
-                    </Alert>}
-
-                    {noInput &&
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                            Please Fill Out All Fields
-                    </Alert>}
-                </Box>
                   <Box
                     backgroundColor={colors.buttonBase}
                     display="grid"
                     sx={{
-                        margin: "10px auto",
+                        margin: "30px auto",
                         width: '150px',
                         borderRadius: "5px"
                     }}

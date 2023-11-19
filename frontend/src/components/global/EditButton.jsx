@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { Box, useTheme, Button } from "@mui/material";
 import { tokens } from "../../theme";
 
-export const EditButton = ({itemid = "", path = '/'}) => {
+export const EditButton = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
     return (
         <Box >
-            <Link to={`/${path}/edit/${itemid}`} className='link'>
+            <Link to='..' relative='path' className='link'>
                 <Box backgroundColor={colors.primary[400]} borderRadius="3px">
                     <Button variant="Text">Edit</Button>
                 </Box>

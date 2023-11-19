@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
-import { Alert, AlertTitle, Box, Typography, Button, useTheme } from "@mui/material";
+import { Box, Typography, Button, useTheme } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { tokens } from "../../theme.js";
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import axiosInstance from '../../axiosInstance.js';
+import axios from 'axios';
 import Spinner from 'react-bootstrap/esm/Spinner';
 
 const DeleteCustomer = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
     const { id } = useParams();
     const [customer, setCustomer] = useState({});
     const [loading, setLoading] = useState(true);
@@ -19,10 +17,10 @@ const DeleteCustomer = () => {
 
     useEffect(() => {
         setLoading(true);
-        axiosInstance
-            .get(`/customer/${id}`)
-            .then((response) => {
-                setCustomer(response.data);
+        axios
+            .get(`http://localhost:3500/customer/${id}`)
+            .then((responce) => {
+                setCustomer(responce.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -32,21 +30,13 @@ const DeleteCustomer = () => {
     }, [])
 
     const handleDelete = () => {
-        axiosInstance
-            .delete(`/customer/${id}`)
+        axios
+            .delete(`http://localhost:3500/customer/${id}`)
             .then(
                 navigate('/customers')
             )
             .catch((error) => {
-                setServerError(false);
-                setNoInput(false);
-                console.log(error.response.status)
-                if (error.response.status === 500) {
-                    setServerError(true);
-                }
-                else if (error.response.status === 404) {
-                    setNoInput(true);
-                }
+                console.log(error);
             })
     }
 
