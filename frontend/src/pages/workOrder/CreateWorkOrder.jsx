@@ -85,13 +85,11 @@ export const CreateWorkOrder = () => {
 
 
     return (
-        <Box m="20px">
+        <Box >
             <Header title="WORK ORDER" subtitle="Create Invoice" />
             <Box>
                 <Typography
-                    //display="flex"
                     variant="h4"
-                    //justifyContent="space-between"
                     sx={{
                         m: "10px auto",
                         width: '100%',
@@ -101,27 +99,14 @@ export const CreateWorkOrder = () => {
                 </Typography>
                 <Box
                     display="grid"
-                    gap="30px"
-                    gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                    gap="20px"
+                    gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                     sx={{
-                        gridColumn: "span 4",
+                        gridColumn: "span 2",
                         margin: "auto",
                         width: '75%'
                     }} >
-                    <TextField
-                        fullWidth
-                        multiline
-                        variant="filled"
-                        label="Description"
-                        value={description}
-                        required
-                        cols="30"
-                        rows="4"
-                        onChange={(e) => setDescription(e.target.value)}
-                        name="description"
-                        id=""
-                        sx={{ gridColumn: "span 2" }}
-                    />
+
                     <TextField
                         fullWidth
                         type="text"
@@ -132,7 +117,18 @@ export const CreateWorkOrder = () => {
                         onChange={(e) => setTitle(e.target.value)}
                         name="startdate"
                         id=""
-                        sx={{ gridColumn: "span 2" }}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                    <TextField
+                        fullWidth
+                        type="number"
+                        variant='filled'
+                        label="Cutomer ID"
+                        value={customerID}
+                        onChange={(e) => setCustomerID(e.target.value)}
+                        name="cost"
+                        id=""
+                        sx={{ gridColumn: "span 1" }}
                     />
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateTimePicker
@@ -177,6 +173,20 @@ export const CreateWorkOrder = () => {
                         sx={{ gridColumn: "span 2" }}
                     />
                     <TextField
+                        fullWidth
+                        multiline
+                        variant="filled"
+                        label="Description"
+                        value={description}
+                        required
+                        cols="30"
+                        rows="4"
+                        onChange={(e) => setDescription(e.target.value)}
+                        name="description"
+                        id=""
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
                         select
                         required
                         variant='filled'
@@ -192,7 +202,7 @@ export const CreateWorkOrder = () => {
                                 {emp.firstName + ' ' + emp.lastName}
                             </MenuItem>
                         ))}
-                    </TextField>    
+                    </TextField>
                     <TextField
                         fullWidth
                         type="number"
@@ -203,30 +213,17 @@ export const CreateWorkOrder = () => {
                         name="cost"
                         id=""
                         inputProps={{ min: 0 }}
-                        sx={{ gridColumn: "span 1" }}
+                        sx={{ gridColumn: "2/3" }}
                     />
-                    <TextField
-                        fullWidth
-                        type="number"
-                        variant='filled'
-                        label="Cutomer ID"
-                        value={customerID}
-                        onChange={(e) => setCustomerID(e.target.value)}
-                        name="cost"
-                        id=""
-                        sx={{ gridColumn: "span 1" }}
-                    />
-
                 </Box>
-
-                <div className="flex justify-end mr-60">
+                <div className="flex justify-end mr-40 pt-4">
                     <Button
                         onClick={handleSave}
                         sx={{
                             backgroundColor: colors.redAccent[500],
                             fontWeight: 'bold',
                             fontSize: '13px',
-                            width: '15%',
+                            width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
                             borderRadius: '3px'
                         }}
                     >

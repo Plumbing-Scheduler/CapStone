@@ -133,14 +133,14 @@ export const EditEmployee = () => {
             })
     }
     return (
-        <Box ml={'20px'}>
+        <Box>
             <Header title="EMPLOYEE" subtitle="EDIT EMPLOYEE" />
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
 
                     <Typography
                         //display="flex"
-                        variant="h4"
+                        variant="h3"
                         //justifyContent="space-between"
                         sx={{
                             m: "30px auto 5px auto",
@@ -151,8 +151,8 @@ export const EditEmployee = () => {
 
                     <Box
                         display="grid"
-                        gap="30px"
-                        gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                        gap="20px"
+                        gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                         sx={{
                             gridColumn: "span 4",
                             margin: "auto",
@@ -184,19 +184,6 @@ export const EditEmployee = () => {
                             onChange={(e) => setLastName(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
-
-                        <TextField
-                            fullWidth
-                            required
-                            type="text"
-                            variant='filled'
-                            label="Email"
-                            name="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            sx={{ gridColumn: "span 1" }}
-                        />
                         <TextField
                             fullWidth
                             required
@@ -209,6 +196,19 @@ export const EditEmployee = () => {
                             onChange={(e) => setPhone(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="Email"
+                            name="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            sx={{ gridColumn: "span 1" }}
+                        />
+
                         <TextField
                             fullWidth
                             required
@@ -272,7 +272,7 @@ export const EditEmployee = () => {
 
                     <Typography
                         //display="flex"
-                        variant="h4"
+                        variant="h3"
                         //justifyContent="space-between"
                         sx={{
                             m: "30px auto 5px auto",
@@ -321,9 +321,7 @@ export const EditEmployee = () => {
                     </Box>
 
                     <Typography
-                        //display="flex"
-                        variant="h4"
-                        //justifyContent="space-between"
+                        variant="h3"
                         sx={{
                             m: "30px auto 5px auto",
                             width: '75%',
@@ -380,20 +378,20 @@ export const EditEmployee = () => {
                             ))}
                         </TextField>
                     </Box>
-                    <Box
-                        backgroundColor={colors.buttonBase}
-                        display="grid"
-                        sx={{
-                            margin: "30px auto",
-                            width: '150px',
-                            borderRadius: "5px"
-                        }}
-                    >
-                        <Button variant="Text" onClick={handleSave} backgroundColor={colors.buttonBase}>
+                    <div className="flex justify-end mr-36 pt-4">
+                        <Button
+                            onClick={handleSave}
+                            sx={{
+                                backgroundColor: colors.redAccent[500],
+                                fontWeight: 'bold',
+                                fontSize: '13px',
+                                width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
+                                borderRadius: '3px'
+                            }}
+                        >
                             Save and Add
                         </Button>
-                    </Box>
-
+                    </div>
                 </Box>
             )}
         </Box>

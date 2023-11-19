@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, TextField } from "@mui/material";
+import { Box, Typography, TextField, useTheme, Button } from "@mui/material";
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
+import { tokens } from "../../theme.js";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const EditQuote = () => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
     const [firstName, setFirstName] = useState('');
@@ -85,8 +88,8 @@ const EditQuote = () => {
                     </Typography>
                     <Box
                         display="grid"
-                        gap="30px"
-                        gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                        gap="20px"
+                        gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                         sx={{
                             gridColumn: "span 4",
                             margin: "auto",
@@ -101,7 +104,7 @@ const EditQuote = () => {
                             id="firstName"
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
                             fullWidth
@@ -112,7 +115,7 @@ const EditQuote = () => {
                             id="lastName"
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
                             fullWidth
@@ -123,7 +126,7 @@ const EditQuote = () => {
                             id="phone"
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
                             fullWidth
@@ -134,7 +137,7 @@ const EditQuote = () => {
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 1" }}
                         />
 
                         <TextField
@@ -146,7 +149,7 @@ const EditQuote = () => {
                             id="businessname"
                             value={busName}
                             onChange={(e) => setBusName(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
                             fullWidth
@@ -157,18 +160,7 @@ const EditQuote = () => {
                             id="address"
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
-                        />
-                        <TextField
-                            fullWidth
-                            type="number"
-                            variant='filled'
-                            label="Cost"
-                            name="cost"
-                            id="cost"
-                            value={cost}
-                            onChange={(e) => setCost(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
                             fullWidth
@@ -184,10 +176,32 @@ const EditQuote = () => {
                             onChange={(e) => setDescription(e.target.value)}
                             sx={{ gridColumn: "span 2" }}
                         />
-                        <button onClick={handleSave} className='bg-gray-500 w-1/2 h-12 rounded-sm'>
-                            Save and Add
-                        </button>
+                        <TextField
+                            fullWidth
+                            type="number"
+                            variant='filled'
+                            label="Cost"
+                            name="cost"
+                            id="cost"
+                            value={cost}
+                            onChange={(e) => setCost(e.target.value)}
+                            sx={{ gridColumn: "2/3" }}
+                        />
                     </Box>
+                    <div className="flex justify-end mr-40 pt-4">
+                        <Button
+                            onClick={handleSave}
+                            sx={{
+                                backgroundColor: colors.redAccent[500],
+                                fontWeight: 'bold',
+                                fontSize: '13px',
+                                width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
+                                borderRadius: '3px',
+                            }}
+                        >
+                            Save and Add
+                        </Button>
+                    </div>
                 </Box>
             )}
         </Box>
