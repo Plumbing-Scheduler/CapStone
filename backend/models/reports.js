@@ -1,22 +1,14 @@
 import mongoose from "mongoose";
 
-//Employee Database Model
-//This will be how the data is displayed in the database
-const employeeSchema = mongoose.Schema(
+//reprots database
+
+const reportsSchema = mongoose.Schema(
     {
-        firstName:{
+        firstName: {
             type: String,
             required: true
         },
         lastName: {
-            type: String,
-            required: true
-        },
-        phone: {
-            type: String,
-            required: true
-        },
-        email:{
             type: String,
             required: true
         },
@@ -36,27 +28,44 @@ const employeeSchema = mongoose.Schema(
             province:{
                 type: String,
                 required: true
-            }
+            },
+
+        busName: String,
+        phone: {
+            type: Number,
+            required: true
         },
-        role:{
+        email: String,
+
+        },
+        serviceStatus: {
             type: String,
             required: true
         },
-        experience: Number,
-        startDate:{
+        description: {
+            type: String,
+            required: true
+        },
+        title: {
+            type: String,
+        },
+        startDate: {
             type: Date,
             required: true
         },
-        employmentType:{
-            type: String,
+        cost:{
+            type: Number,
             required: true
         },
-        status:{
+        assignedEmp:String,
+        endDate: Date,
+        customerID: String,
+        busName: String,
+        address: {
             type: String,
             required: true
-        },
-        serviceList: String
+        }
     }
 );
 
-export const Employee = mongoose.model('Employee', employeeSchema);
+export const reports = mongoose.model('Reports', reportsSchema);

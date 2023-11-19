@@ -1,16 +1,15 @@
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
+import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from "../../axiosInstance.js";
+import axios from "axios";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { tokens } from "../../theme.js";
 
 export const CreateCustomer = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
+
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
 
@@ -26,8 +25,8 @@ export const CreateCustomer = () => {
 
     const navigate = useNavigate();
 
-    
-    
+
+
     const newCustomer = {
         firstName,
         lastName,
@@ -40,56 +39,42 @@ export const CreateCustomer = () => {
             city,
             province
         }
-        
-        
+
+
     }
     const handleSave = () => {
-        axiosInstance
-            .post('/customer', newCustomer)
-            .then(() => {
+        axios
+            .post('http://localhost:3500/customer', newCustomer)
+            .then(
                 navigate('/customers')
-            }
             )
             .catch((error) => {
-                setServerError(false);
-                setNoInput(false);
-                console.log(error.response.status)
-                if (error.response.status === 500) {
-                    setServerError(true);
-                }
-                else if (error.response.status === 400) {
-                    setNoInput(true);
-                }
+                console.log(error)
             })
     }
 
     return (
-        <Box ml={'20px'}>
+        <Box>
             <Header title="CUSTOMER" subtitle="NEW CUSTOMER" />
             <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
-
                 <Typography
-                    //display="flex"
                     variant="h4"
-                    //justifyContent="space-between"
                     sx={{
                         m: "30px auto 5px auto",
                         width: '75%',
                     }}>
                     Customer Information
                 </Typography>
-
                 <Box
                     display="grid"
-                    gap="30px"
-                    gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                    gap="20px"
+                    gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                     sx={{
                         gridColumn: "span 4",
                         margin: "auto",
                         width: '75%',
                     }}
                 >
-                    
                     <TextField
                         fullWidth
                         required
@@ -100,9 +85,8 @@ export const CreateCustomer = () => {
                         id="firstName"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
-                        sx={{ gridColumn: "span 2" }}
+                        sx={{ gridColumn: "span 1" }}
                     />
-
                     <TextField
                         fullWidth
                         required
@@ -113,20 +97,7 @@ export const CreateCustomer = () => {
                         id="lastName"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
-                        sx={{ gridColumn: "span 2" }}
-                    />
-
-                    <TextField
-                        fullWidth
-                        required
-                        type="text"
-                        variant='filled'
-                        label="Email"
-                        name="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        sx={{ gridColumn: "span 2" }}
+                        sx={{ gridColumn: "span 1" }}
                     />
                     <TextField
                         fullWidth
@@ -138,7 +109,19 @@ export const CreateCustomer = () => {
                         id="phone"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        sx={{ gridColumn: "span 2" }}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Email"
+                        name="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
                     />
                     <TextField
                         fullWidth
@@ -150,7 +133,7 @@ export const CreateCustomer = () => {
                         id="address"
                         value={street}
                         onChange={(e) => setStreet(e.target.value)}
-                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                        sx={minwidth2 ? { gridColumn: "span 1" } : { gridColumn: "span 2" }}
                     />
                     <TextField
                         fullWidth
@@ -162,7 +145,7 @@ export const CreateCustomer = () => {
                         id="postalCode"
                         value={postalCode}
                         onChange={(e) => setPostalCode(e.target.value)}
-                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                        sx={minwidth2 ? { gridColumn: "span 1" } : { gridColumn: "span 2" }}
                     />
 
                     <TextField
@@ -175,7 +158,7 @@ export const CreateCustomer = () => {
                         id="city"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
-                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                        sx={minwidth2 ? { gridColumn: "span 1" } : { gridColumn: "span 2" }}
                     />
                     <TextField
                         fullWidth
@@ -187,7 +170,7 @@ export const CreateCustomer = () => {
                         id="province"
                         value={province}
                         onChange={(e) => setProvince(e.target.value)}
-                        sx={minwidth2?{ gridColumn: "span 1" }: { gridColumn: "span 2" }}
+                        sx={minwidth2 ? { gridColumn: "span 1" } : { gridColumn: "span 2" }}
                     />
                     <TextField
                         fullWidth
@@ -200,33 +183,31 @@ export const CreateCustomer = () => {
                         onChange={(e) => setBusName(e.target.value)}
                         sx={{ gridColumn: "span 2" }}
                     />
-                  </Box>
-                  <Box sx={{width: "30%", margin: "10px auto"}}>
-                    {serverError &&
-                    <Alert severity="error" >
-                        <AlertTitle>Server Error</AlertTitle>
-                            Internal Server Error. Please Try Again Later.
-                    </Alert>}
-
-                    {noInput &&
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                            Please Fill Out All Fields
-                    </Alert>}
                 </Box>
-                  <Box
+                <Box
                     backgroundColor={colors.buttonBase}
                     display="grid"
                     sx={{
-                        margin: "10px auto",
+                        margin: "30px auto",
                         width: '150px',
                         borderRadius: "5px"
                     }}
                 >
-                    <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
-                        Save and Add
-                    </Button>
                 </Box>
+                <div className="flex justify-end mr-36">
+                        <Button
+                            onClick={handleSave}
+                            sx={{
+                                backgroundColor: colors.redAccent[500],
+                                fontWeight: 'bold',
+                                fontSize: '13px',
+                                width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
+                                borderRadius: '3px'
+                            }}
+                        >
+                            Save and Add
+                        </Button>
+                    </div>
             </Box>
         </Box>
     )

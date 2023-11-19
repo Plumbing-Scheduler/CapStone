@@ -1,25 +1,49 @@
-import React from "react";
-import { Box, Tab, Tabs } from "@mui/material";
+// import React from "react";
+// import { Box, Tab, useTheme } from "@mui/material";
+// import { tokens } from "../theme";
+// import { Link } from 'react-router-dom';
 
+// const ReportTabs = () => {
+//     const theme = useTheme();
+//     const colors = tokens(theme.palette.mode);
 
-const ReportTabs = () => {
+//     return (
+//         <Box sx={{ margin: 'auto', boxShadow: "4" }}>
+//             <Box
+//                 sx={{
+//                     "& .MuiButtonBase-root": {
+//                         color: `${colors.grey[100]} !important`,
+//                         border: "none",
+//                         fontSize: "13px",
+//                     },
+//                     "& .MuiTab-root:focus": {
+//                         outline: "none !important",
+//                         borderBottom: "solid 1px grey",
+//                         fontSize: "16px",
+//                     },
+//                     "& .MuiButtonBase-root:focus": {
+//                         color: `${colors.redAccent[400]} !important`,
+//                     },
+//                 }}
 
-    return (
-        <Box sx={{ margin: 'auto', width: '100%', boxShadow: "4" }}>
-            <Tabs
-                // value={value}
-                // onChange={handleChange}  
-                textColor="secondary"
-                indicatorColor="secondary"
-                aria-label="secondary tabs  example"
-            >
-                <Tab value="workorder" label="Work Order" />
-                <Tab value="client" label="Client History Report" />
-                <Tab value="employee" label="Employee Report" />
-                <Tab value="payment" label="Transaction Report" />
-                <Tab value="quote" label="Item Quote History Report" />
-            </Tabs>
-        </Box>
-    )
-}
-export default ReportTabs
+//             >
+//                 <Link to={``}>
+//                     <Tab value="service" label="Service History" />
+//                 </Link>
+//                 <Link to={`customerreports`}>
+//                     <Tab value="customer" label="Customer History" />
+//                 </Link>
+//                 <Link to={`employeereports`}>
+//                     <Tab value="employee" label="Employee Report" />
+//                 </Link>
+//                 <Link to={`transactionreports`}>
+//                     <Tab value="transaction" label="Transaction History" />
+//                 </Link>
+//                 {/* <Link to={`quotehistoryreports`}>
+//                     <Tab value="quotehistoryreports" label="Quote History Report" />
+//                 </Link> */}
+//             </Box>
+//         </Box >
+//     )
+// }
+// export default ReportTabs

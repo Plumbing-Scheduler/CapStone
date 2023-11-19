@@ -1,9 +1,9 @@
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
+import { Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../axiosInstance';
+import axios from "axios";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -58,8 +58,7 @@ const statusOptions = [
 export const CreateEmployee = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
+
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
 
@@ -75,7 +74,6 @@ export const CreateEmployee = () => {
     const [experience, setExperience] = useState('');
     const [employmentType, setEmploymentType] = useState('');
     const [status, setStatus] = useState('');
-    const [password, setPassword] = useState(phone);
     const [startDate, setStartDate] = useState(Date.now());
 
     dayjs.extend(localizedFormat);
@@ -96,56 +94,41 @@ export const CreateEmployee = () => {
         experience,
         startDate,
         employmentType,
-        status,
-        password: phone
+        status
     }
 
     const handleSave = () => {
-        axiosInstance
-            .post('/employees', newEmployee)
-            .then(() => {
+        axios
+            .post('http://localhost:3500/employees', newEmployee)
+            .then(
                 navigate('/employee')
-            }
             )
             .catch((error) => {
-                setServerError(false);
-                setNoInput(false);
-                console.log(error.response.status)
-                if (error.response.status === 500) {
-                    setServerError(true);
-                }
-                else if (error.response.status === 400) {
-                    setNoInput(true);
-                }
+                console.log(error)
             })
     }
     return (
         <Box ml={'20px'}>
             <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
-            <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} height={"100%"} >
-
+            <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
                 <Typography
-                    //display="flex"
-                    variant="h4"
-                    //justifyContent="space-between"
+                    variant="h3"
                     sx={{
                         m: "30px auto 5px auto",
                         width: '75%',
                     }}>
                     Employee Information
                 </Typography>
-
                 <Box
                     display="grid"
-                    gap="30px"
-                    gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                    gap="20px"
+                    gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                     sx={{
                         gridColumn: "span 4",
                         margin: "auto",
                         width: '75%',
                     }}
                 >
-                    
                     <TextField
                         fullWidth
                         required
@@ -171,19 +154,6 @@ export const CreateEmployee = () => {
                         onChange={(e) => setLastName(e.target.value)}
                         sx={{ gridColumn: "span 1" }}
                     />
-
-                    <TextField
-                        fullWidth
-                        required
-                        type="text"
-                        variant='filled'
-                        label="Email"
-                        name="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                        sx={{ gridColumn: "span 1" }}
-                    />
                     <TextField
                         fullWidth
                         required
@@ -194,6 +164,18 @@ export const CreateEmployee = () => {
                         id="phone"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
+                        sx={{ gridColumn: "span 1" }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
+                        type="text"
+                        variant='filled'
+                        label="Email"
+                        name="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         sx={{ gridColumn: "span 1" }}
                     />
                     <TextField
@@ -259,7 +241,7 @@ export const CreateEmployee = () => {
 
                 <Typography
                     //display="flex"
-                    variant="h4"
+                    variant="h3"
                     //justifyContent="space-between"
                     sx={{
                         m: "30px auto 5px auto",
@@ -309,7 +291,7 @@ export const CreateEmployee = () => {
 
                 <Typography
                     //display="flex"
-                    variant="h4"
+                    variant="h3"
                     //justifyContent="space-between"
                     sx={{
                         m: "30px auto 5px auto",
@@ -367,35 +349,20 @@ export const CreateEmployee = () => {
                         ))}
                     </TextField>
                 </Box>
-                <Box sx={{width: "30%", margin: "10px auto"}}>
-                    {serverError &&
-                    <Alert severity="error" >
-                        <AlertTitle>Server Error</AlertTitle>
-                            Internal Server Error. Please Try Again Later.
-                    </Alert>}
-
-                    {noInput &&
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                            Please Fill Out All Fields
-                    </Alert>}
-                </Box>
-                
-                <Box
-                    backgroundColor={colors.buttonBase}
-                    display="grid"
-                    sx={{
-                        margin: "10px auto",
-                        width: '150px',
-                        borderRadius: "5px"
-                    }}
-                >
-                    
-                    <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
+                <div className="flex justify-end mr-36 pt-4">
+                    <Button
+                        onClick={handleSave}
+                        sx={{
+                            backgroundColor: colors.redAccent[500],
+                            fontWeight: 'bold',
+                            fontSize: '13px',
+                            width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
+                            borderRadius: '3px'
+                        }}
+                    >
                         Save and Add
                     </Button>
-                </Box>
-
+                </div>
             </Box>
         </Box>
     )
