@@ -57,12 +57,12 @@ const updateCalendar = async (request, response) => {
     };
     const { id } = request.params;
     try {
-        const result = await Calendar.findByIdAndUpdate(id, request.body);
+        const result_id = await Calendar.findByIdAndUpdate(id, request.body);
+        const result_woid = await Calendar.findOneAndUpdate({serviceId: id}, request.body);
 
-        if(!result){
+        if(!result_id && !result_woid){
             return response.status(204).send({message: "No Content Found"});
         }
-
         return response.status(200).send({message: "Update Successful"});
     } catch (error) {
         console.log(error);
@@ -73,9 +73,10 @@ const updateCalendar = async (request, response) => {
 const deleteCalendar = async (request, response) => {
     const { id } = request.params;
     try {
-        const result = await Calendar.findByIdAndDelete(id);
+        const result_id = await Calendar.findByIdAndDelete(id);
+        const result_woid = await Calendar.findOneAndDelete({serviceId: id});
 
-        if(!result){
+        if(!result_id && !result_woid){
             return response.status(204).send({message: "No Content Found"});
         }
 

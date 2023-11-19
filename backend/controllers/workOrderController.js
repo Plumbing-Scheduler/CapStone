@@ -51,7 +51,7 @@ const getWorkOrder = async (request, response) => {
 
         const result = await WorkOrder.findById(id);
         if(!result){
-            return response.status(404).send({message: 'Work Order Not Found'});
+            return response.status(204).send({message: 'Work Order Not Found'});
         };
         return response.status(200).send(result);
     } catch (error) {
@@ -72,7 +72,7 @@ const updateWorkOrder = async (request, response) => {
 
         const result = await WorkOrder.findByIdAndUpdate(id, request.body);
         if(!result){
-            return response.status(404).send({message: 'Work Order Not Found'});
+            return response.status(204).send({message: 'Work Order Not Found'});
         };
         return response.status(200).send({message: 'Work Order Updated!'})
     } catch (error) {
@@ -87,7 +87,7 @@ const deleteWorkOrder = async (request, response) => {
         const result = await WorkOrder.findByIdAndDelete(id);
 
         if (!result) {
-            return response.status(404).send({message: 'Work Order Not Found'});
+            return response.status(204).send({message: 'Work Order Not Found'});
         };
         return response.status(200).send({message: "Work Order Deleted!"});
     } catch (error) {

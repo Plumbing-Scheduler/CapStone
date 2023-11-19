@@ -33,12 +33,19 @@ export const DeleteWorkOrder = () => {
   }, [id]);
 
   const handleDeleteWorkOrder = () => {
-    axios
-      .delete(`http://localhost:3500/workorders/${id}`)
-      .then(navigate('/workorder'))
-      .catch((error) => console.log(error));
+    axiosInstance
+      .delete(`/workorders/${id}`)
+      .then(() => {
+        axiosInstance
+          .delete(`/schedule/${id}`)
+          .then(() => {
+            navigate('/workorder')
+          })
+      })
+      .catch((error) =>
+        console.log(error)
+      );
   };
-
 
   return (<div>
     <Header title={"WORK ORDER"} subtitle={"DELETE WORK ORDER"} />
@@ -53,11 +60,11 @@ export const DeleteWorkOrder = () => {
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>Description: </span>
-              <span className='font-bold'>{workOrder.s_description}</span>
+              <span className='font-bold'>{workOrder.description}</span>
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>Start Date: </span>
-              <span className='font-bold'>{workOrder.s_startDate}</span>
+              <span className='font-bold'>{workOrder.startDate}</span>
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>End Date: </span>
@@ -65,11 +72,11 @@ export const DeleteWorkOrder = () => {
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>Cost: </span>
-              <span className='font-bold'>${workOrder.s_cost}</span>
+              <span className='font-bold'>${workOrder.cost}</span>
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>Address: </span>
-              <span className='font-bold'>{workOrder.address}</span>
+              <span className='font-bold'>{workOrder.address.street}</span>
             </div>
             <div className='text-xl pl-2 pb-4'>
               <span className='font-light'>Business name: </span>
