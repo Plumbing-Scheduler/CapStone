@@ -1,3 +1,4 @@
+
 import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { useState } from "react";
@@ -11,6 +12,7 @@ const Quotes = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
@@ -23,6 +25,8 @@ const Quotes = () => {
     const [busName, setBusName] = useState('');
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
+    const minwidth1 = useMediaQuery('(min-width:800px)');
+    const minwidth2 = useMediaQuery('(min-width:500px)');
 
     const newQuote = {
         firstName,
@@ -60,75 +64,122 @@ const Quotes = () => {
             })
     }
 
-
     return (
-        <Box m="20px">
-            <Header title="QUOTE REQUESTS" subtitle="Select Quote" />
+        <Box >
+            <Header title="QUOTE REQUESTS" subtitle="Add New Quote" />
+            <Box>
+                <Typography
+                    //display="flex"
+                    variant="h4"
+                    //justifyContent="space-between"
+                    sx={{
+                        m: "10px auto",
+                        width: '80%',
+                        textAlign: 'center'
+                    }}>
+                </Typography>
+                <Box
+                    display="grid"
+                    gap="30px"
+                    gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                    sx={{
+                        gridColumn: "span 4",
+                        margin: "auto",
+                        padding: "30px",
+                        width: '75%'
+                    }} >
+                    <TextField
+                        fullWidth
+                        type="text"
+                        variant='filled'
+                        label="First Name"
+                        name="firstName"
+                        id="firstName"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        type="text"
+                        variant='filled'
+                        label="Last Name"
+                        name="lastName"
+                        id="lastName"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        type="text"
+                        variant='filled'
+                        label="Phone #"
+                        name="phone"
+                        id="phone"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        type="text"
+                        variant='filled'
+                        label="Email"
+                        name="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        sx={{ gridColumn: "span 2" }}
+                    />
 
-            <Typography
-                //display="flex"
-                variant="h4"
-                //justifyContent="space-between"
-                sx={{
-                    m: "10px auto",
-                    width: '80%',
-                    textAlign: 'center'
-                }}>
-                Add New Quote
-            </Typography>
-            <Box
-                display="grid"
-                gap="30px"
-                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                sx={{
-                    gridColumn: "span 4",
-                    margin: "auto",
-                    width: '75%'
-                }} >
-                <TextField
-                    fullWidth
-                    type="text"
-                    variant='filled'
-                    label="First Name"
-                    name="firstName"
-                    id="firstName"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                    fullWidth
-                    type="text"
-                    variant='filled'
-                    label="Last Name"
-                    name="lastName"
-                    id="lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                    fullWidth
-                    type="text"
-                    variant='filled'
-                    label="Phone #"
-                    name="phone"
-                    id="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                    fullWidth
-                    type="text"
-                    variant='filled'
-                    label="Email"
-                    name="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    sx={{ gridColumn: "span 2" }}
-                />
+                    <TextField
+                        fullWidth
+                        type="text"
+                        variant="filled"
+                        label="Buisness Name"
+                        name="businessname"
+                        id="businessname"
+                        value={busName}
+                        onChange={(e) => setBusName(e.target.value)}
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        type="text"
+                        variant="filled"
+                        label="Address"
+                        name="address"
+                        id="address"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        type="number"
+                        variant='filled'
+                        label="Cost"
+                        name="cost"
+                        id="cost"
+                        value={cost}
+                        onChange={(e) => setCost(e.target.value)}
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
+                        fullWidth
+                        multiline
+                        variant="filled"
+                        label="Description"
+                        required
+                        cols="30"
+                        rows="4"
+                        name="description"
+                        id="description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        sx={{ gridColumn: "span 2" }}
+
 
                 <TextField
                     fullWidth
@@ -241,6 +292,7 @@ const Quotes = () => {
                         Save and Add
                     </Button>
                 </Box>
+
         </Box>
     )
 }

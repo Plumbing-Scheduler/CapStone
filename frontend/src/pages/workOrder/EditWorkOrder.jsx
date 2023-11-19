@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
 import MenuItem from '@mui/material/MenuItem';
+
 import { tokens } from "../../theme.js";
 
 export const CreateWorkOrder = () => {
@@ -17,6 +18,19 @@ export const CreateWorkOrder = () => {
 
     const [ serverError, setServerError ] = useState(false);
     const [ noInput, setNoInput ] = useState(false);
+
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { tokens } from "../../theme.js";
+
+export const CreateWorkOrder = () => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
+    const [ serverError, setServerError ] = useState(false);
+    const [ noInput, setNoInput ] = useState(false);
+    const minwidth1 = useMediaQuery('(min-width:800px)');
+    const minwidth2 = useMediaQuery('(min-width:500px)');
+
     const [serviceStatus, setServiceStatus] = useState('');
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
@@ -125,7 +139,7 @@ export const CreateWorkOrder = () => {
                     <Box
                         display="grid"
                         gap="30px"
-                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                        gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                         sx={{
                             gridColumn: "span 4",
                             margin: "auto",

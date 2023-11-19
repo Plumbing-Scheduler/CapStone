@@ -15,13 +15,13 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
             return (
                 <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                     <Link to={`edit/${id.id}`} className='link mr-auto'>
-                        <EditIcon />
+                        <EditIcon style={{color: colors.primary[100]}}/>
                     </Link>
                     <Link to={`details/${id.id}`} className='link m-auto'>
-                        <InfoOutlinedIcon />
+                        <InfoOutlinedIcon style={{color: colors.primary[100]}} />
                     </Link>
                     <Link to={`delete/${id.id}`} className='link m-auto'>
-                        <DeleteOutlineIcon />
+                        <DeleteOutlineIcon style={{color: colors.primary[100]}}/>
                     </Link>
                 </Box>
             )
