@@ -5,7 +5,7 @@ import {
     Paper,
     useTheme,
 } from "@mui/material";
-import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
+import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
     Scheduler,
     DayView,
@@ -22,27 +22,21 @@ import {
 import Header from "../components/Header";
 import { tokens } from "../theme";
 import axiosInstance from "../axiosInstance";
-
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Schedule = () => {
     const theme = useTheme();
     const currDate = Date.now();
     const [data, setData] = useState([{}]);
     const [loading, setLoading] = useState(true);
+    const minwidth1 = useMediaQuery('(min-width:800px)');
+    const minwidth2 = useMediaQuery('(min-width:500px)');
 
 
     useEffect(() => {
         axiosInstance.get('/schedule')
             .then((response) => {
-                setData(response.data.data.map((app) => ({
-                    title: app.title,
-                    startDate: app.startDate,
-                    endDate: app.endDate,
-                    serviceId: app.serviceId,
-                    empId: app.empId,
-                    id: app._id,
-                    notes: app.notes
-                })));
+                setData(response.data.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -50,9 +44,7 @@ const Schedule = () => {
                 console.log(error);
             });
     }, []);
-
-
-
+  
     // Create a new appointment
     const onCommitChanges = ({ changed, deleted }) => {
         let updatedData = data;
@@ -129,7 +121,7 @@ const Schedule = () => {
     return (
         <div>
             <Header title="SCHEDULE" subtitle="Calendar" />
-            <div className={`text-center sm:max-2xl:flex justify-between p-2 m-3 shadow-lg ${isMobile ? 'mobile-styles' : 'desktop-styles'}`}>
+            <div className={`text-center sm:max-2xl:flex justify-between p-2 m-3 shadow-lg `}>
                 {loading ? (
                     <div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>
                 ) : (
@@ -141,17 +133,12 @@ const Schedule = () => {
                                     onCommitChanges={onCommitChanges}
                                 />
                                 <IntegratedEditing />
+                                {minwidth2 ? <WeekView startDayHour={6} endDayHour={18} cellDuration={60} /> : null}
+                                {minwidth1 ? <DayView startDayHour={6} endDayHour={18} cellDuration={60} /> : null}
                                 <DayView startDayHour={6} endDayHour={18} cellDuration={60} />
                                 <WeekView startDayHour={6} endDayHour={18} cellDuration={60} />
                                 <MonthView />
                                 <Appointments />
-                                <AppointmentTooltip
-                                    showOpenButton
-                                    showDeleteButton
-                                    showCloseButton
-                                />
-                                <ConfirmationDialog />
-                                <AppointmentForm />
                                 <Toolbar />
                                 <DateNavigator />
                                 <ViewSwitcher />

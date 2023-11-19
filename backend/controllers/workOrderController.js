@@ -1,7 +1,8 @@
 import { WorkOrder } from "../models/workOrderModel.js";
 const createWorkOrder = async (request, response) => { 
     try {
-        if(!request.body.description || !request.body.startDate || !request.body.cost || !request.body.customerID || !request.body.address.street || !request.body.address.postalCode 
+        if(!request.body.description || !request.body.startDate || !request.body.cost 
+            || !request.body.customerID || !request.body.address.street || !request.body.address.postalCode 
             || !request.body.address.city || !request.body.address.province || !request.body.serviceStatus){
             return response.status(400).send({message: 'All required fields must be filled'});
         };
@@ -61,7 +62,8 @@ const getWorkOrder = async (request, response) => {
 
 const updateWorkOrder = async (request, response) => { 
     try {
-        if(!request.body.description || !request.body.startDate || !request.body.cost || !request.body.customerID || !request.body.address.street || !request.body.address.postalCode 
+        if(!request.body.description || !request.body.startDate || !request.body.cost 
+            || !request.body.customerID || !request.body.address.street || !request.body.address.postalCode 
             || !request.body.address.city || !request.body.address.province || !request.body.serviceStatus){
             return response.status(400).send({message: 'All required fields must be filled'});
         };

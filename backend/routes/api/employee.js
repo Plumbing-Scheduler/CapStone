@@ -11,7 +11,4 @@ router.route('/:id')
     .put(employeeController.updateEmployee)
     .delete(employeeController.deleteEmployee);
 
-router.route('/password/:id')
-    .put(employeeController.changePassword)
-
 export default router;

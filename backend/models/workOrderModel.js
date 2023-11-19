@@ -44,7 +44,8 @@ const workOrderSchema = mongoose.Schema(
                 type: String,
                 required: true
             }
-        }
+        },
+        paymentType: String
     }
 );
 

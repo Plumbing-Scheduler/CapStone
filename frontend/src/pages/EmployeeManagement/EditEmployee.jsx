@@ -1,9 +1,9 @@
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, NativeSelect } from "@mui/material";
+import { Box, TextField, Typography, Button, useTheme, NativeSelect } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
-import axiosInstance from "../../axiosInstance.js";
+import axios from "axios";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -63,9 +63,7 @@ export const EditEmployee = () => {
     const { id } = useParams({});
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
-    
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -78,7 +76,6 @@ export const EditEmployee = () => {
     const [experience, setExperience] = useState('');
     const [employmentType, setEmploymentType] = useState('');
     const [status, setStatus] = useState('');
-    const [password, setPassword] = useState('');
     const [startDate, setStartDate] = useState(Date.now());
 
     dayjs.extend(localizedFormat);
@@ -99,72 +96,51 @@ export const EditEmployee = () => {
         experience,
         startDate,
         employmentType,
-        status,
-        password
+        status
     }
 
     useEffect(() => {
         setLoading(true);
 
-        axiosInstance
-            .get(`/employees/${id}`)
-            .then((response) => {
-                setFirstName(response.data.firstName)
-                setLastName(response.data.lastName)
-                setEmail(response.data.email)
-                setPhone(response.data.phone)
-                setPostalCode(response.data.address.postalCode)
-                setStreet(response.data.address.street)
-                setCity(response.data.address.city)
-                setProvince(response.data.address.province)
-                setStartDate(response.data.startDate)
-                setRole(response.data.role)
-                setExperience(response.data.experience)
-                setEmploymentType(response.data.employmentType)
-                setStatus(response.data.status)
-                setPassword(response.data.password);
+        axios
+            .get(`http://localhost:3500/employees/${id}`)
+            .then((responce) => {
+                setFirstName(responce.data.firstName)
+                setLastName(responce.data.lastName)
+                setEmail(responce.data.email)
+                setPhone(responce.data.phone)
+                setPostalCode(responce.data.address.postalCode)
+                setStreet(responce.data.address.street)
+                setCity(responce.data.address.city)
+                setProvince(responce.data.address.province)
+                setStartDate(responce.data.startDate)
+                setRole(responce.data.role)
+                setExperience(responce.data.experience)
+                setEmploymentType(responce.data.employmentType)
+                setStatus(responce.data.status)
                 setLoading(false)
-            }).catch((error) => {
-                setServerError(false);
-                setNoInput(false);
-                console.log(error.response.status)
-                if (error.response.status === 500) {
-                    setServerError(true);
-                }
-                else if (error.response.status === 404) {
-                    setNoInput(true);
-                }
             })
     }, [])
 
     const handleSave = () => {
-        axiosInstance
-            .put(`/employees/${id}`, newEmployee)
-            .then(() => {
+        axios
+            .put(`http://localhost:3500/employees/${id}`, newEmployee)
+            .then(
                 navigate('/employee')
-            }
             )
             .catch((error) => {
-                setServerError(false);
-                setNoInput(false);
-                console.log(error.response.status)
-                if (error.response.status === 500) {
-                    setServerError(true);
-                }
-                else if (error.response.status === 400) {
-                    setNoInput(true);
-                }
+                console.log(error)
             })
     }
     return (
-        <Box ml={'20px'}>
+        <Box>
             <Header title="EMPLOYEE" subtitle="EDIT EMPLOYEE" />
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
 
                     <Typography
                         //display="flex"
-                        variant="h4"
+                        variant="h3"
                         //justifyContent="space-between"
                         sx={{
                             m: "30px auto 5px auto",
@@ -175,8 +151,8 @@ export const EditEmployee = () => {
 
                     <Box
                         display="grid"
-                        gap="30px"
-                        gridTemplateColumns={minwidth1 ? "repeat(4, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                        gap="20px"
+                        gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                         sx={{
                             gridColumn: "span 4",
                             margin: "auto",
@@ -208,19 +184,6 @@ export const EditEmployee = () => {
                             onChange={(e) => setLastName(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
-
-                        <TextField
-                            fullWidth
-                            required
-                            type="text"
-                            variant='filled'
-                            label="Email"
-                            name="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                            sx={{ gridColumn: "span 1" }}
-                        />
                         <TextField
                             fullWidth
                             required
@@ -233,6 +196,19 @@ export const EditEmployee = () => {
                             onChange={(e) => setPhone(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="Email"
+                            name="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            sx={{ gridColumn: "span 1" }}
+                        />
+
                         <TextField
                             fullWidth
                             required
@@ -296,7 +272,7 @@ export const EditEmployee = () => {
 
                     <Typography
                         //display="flex"
-                        variant="h4"
+                        variant="h3"
                         //justifyContent="space-between"
                         sx={{
                             m: "30px auto 5px auto",
@@ -345,9 +321,7 @@ export const EditEmployee = () => {
                     </Box>
 
                     <Typography
-                        //display="flex"
-                        variant="h4"
-                        //justifyContent="space-between"
+                        variant="h3"
                         sx={{
                             m: "30px auto 5px auto",
                             width: '75%',
@@ -404,33 +378,20 @@ export const EditEmployee = () => {
                             ))}
                         </TextField>
                     </Box>
-                    <Box sx={{width: "30%", margin: "10px auto"}}>
-                    {serverError &&
-                    <Alert severity="error" >
-                        <AlertTitle>Server Error</AlertTitle>
-                            Internal Server Error. Please Try Again Later.
-                    </Alert>}
-
-                    {noInput &&
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                            Please Fill Out All Fields
-                    </Alert>}
-                </Box>
-                    <Box
-                        backgroundColor={colors.buttonBase}
-                        display="grid"
-                        sx={{
-                            margin: "10px auto",
-                            width: '150px',
-                            borderRadius: "5px"
-                        }}
-                    >
-                        <Button variant="Text" onClick={handleSave} backgroundcolor={colors.buttonBase}>
+                    <div className="flex justify-end mr-36 pt-4">
+                        <Button
+                            onClick={handleSave}
+                            sx={{
+                                backgroundColor: colors.redAccent[500],
+                                fontWeight: 'bold',
+                                fontSize: '13px',
+                                width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
+                                borderRadius: '3px'
+                            }}
+                        >
                             Save and Add
                         </Button>
-                    </Box>
-
+                    </div>
                 </Box>
             )}
         </Box>

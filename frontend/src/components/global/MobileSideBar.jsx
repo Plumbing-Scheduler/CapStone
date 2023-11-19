@@ -38,7 +38,7 @@ const Sidebar = () => {
   useEffect(() => {
     // Add a listener for window resize event
     const handleResize = () => {
-      if (window.innerWidth < 400) {
+      if (window.innerWidth < 768) {
         setIsCollapsed(true); // Collapse sidebar for mobile and tablet (adjust the width as needed)
       } else {
         setIsCollapsed(false);
@@ -78,7 +78,7 @@ const Sidebar = () => {
         }}
       >
         <ProSidebar collapsed={isCollapsed} style={{ position: 'fixed', top: 0 }}>
-          <Menu iconShape="square"  >
+          <Menu iconShape="square" >
             <MenuItem
               onClick={() => setIsCollapsed(!isCollapsed)}
               icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
