@@ -120,14 +120,14 @@ export const CreateEmployee = () => {
             })
     }
     return (
-        <Box ml={'20px'}>
+        <Box>
             <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
             <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
                 <Typography
                     variant="h3"
                     sx={{
                         m: "30px auto 5px auto",
-                        width: '75%',
+                        width: '80%',
                     }}>
                     Employee Information
                 </Typography>
@@ -138,7 +138,7 @@ export const CreateEmployee = () => {
                     sx={{
                         gridColumn: "span 4",
                         margin: "auto",
-                        width: '75%',
+                        width: '80%',
                     }}
                 >
                     <TextField
@@ -252,12 +252,10 @@ export const CreateEmployee = () => {
                 </Box>
 
                 <Typography
-                    //display="flex"
                     variant="h3"
-                    //justifyContent="space-between"
                     sx={{
                         m: "30px auto 5px auto",
-                        width: '75%',
+                        width: '80%',
                     }}>
                     Education
                 </Typography>
@@ -269,7 +267,7 @@ export const CreateEmployee = () => {
                     sx={{
                         gridColumn: "span 4",
                         margin: "auto",
-                        width: '75%'
+                        width: '80%'
                     }}
                 >
                     <TextField
@@ -302,12 +300,10 @@ export const CreateEmployee = () => {
                 </Box>
 
                 <Typography
-                    //display="flex"
                     variant="h3"
-                    //justifyContent="space-between"
                     sx={{
                         m: "30px auto 5px auto",
-                        width: '75%',
+                        width: '80%',
                     }}>
                     Hours
                 </Typography>
@@ -318,7 +314,7 @@ export const CreateEmployee = () => {
                     sx={{
                         gridColumn: "span 4",
                         margin: "auto",
-                        width: '75%',
+                        width: '80%',
 
                     }}
                 >

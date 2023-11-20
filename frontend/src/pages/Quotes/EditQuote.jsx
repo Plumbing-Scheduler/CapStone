@@ -74,7 +74,7 @@ const EditQuote = () => {
     const handleSave = () => {
         axiosInstance
             .put(`/quote/${id}`, data)
-            .then(() =>{
+            .then(() => {
                 navigate('/quotes')
             }
             )
@@ -104,8 +104,7 @@ const EditQuote = () => {
                         variant="h4"
                         sx={{
                             m: "10px auto",
-                            width: '80%',
-                            textAlign: 'center'
+                            width: '75%',
                         }}>
                         Update Quote Request
                     </Typography>
@@ -174,7 +173,7 @@ const EditQuote = () => {
                             onChange={(e) => setBusName(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
-                       <TextField
+                        <TextField
                             fullWidth
                             required
                             type="text"
@@ -184,7 +183,7 @@ const EditQuote = () => {
                             id="address"
                             value={street}
                             onChange={(e) => setStreet(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
                             fullWidth
@@ -196,7 +195,7 @@ const EditQuote = () => {
                             id="postalCode"
                             value={postalCode}
                             onChange={(e) => setPostalCode(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
                             fullWidth
@@ -208,7 +207,7 @@ const EditQuote = () => {
                             id="city"
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
+                            sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
                             fullWidth
@@ -220,8 +219,29 @@ const EditQuote = () => {
                             id="province"
                             value={province}
                             onChange={(e) => setProvince(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
+                            sx={{ gridColumn: "2/3" }}
                         />
+                    </Box>
+
+                    <Typography
+                        variant="h4"
+                        sx={{
+                            m: "10px auto",
+                            width: '75%',
+                        }}>
+                        Service Information
+                    </Typography>
+
+                    <Box
+                        display="grid"
+                        gap="20px"
+                        gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                        sx={{
+                            gridColumn: "span 2",
+                            margin: "auto",
+                            width: '75%',
+                            pt: "5px"
+                        }}>
                         <TextField
                             fullWidth
                             multiline

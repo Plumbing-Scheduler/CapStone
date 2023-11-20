@@ -26,8 +26,6 @@ export const CreateCustomer = () => {
 
     const navigate = useNavigate();
 
-
-
     const newCustomer = {
         firstName,
         lastName,

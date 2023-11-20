@@ -71,9 +71,9 @@ const Quotes = () => {
                     variant="h4"
                     sx={{
                         m: "10px auto",
-                        width: '80%',
-                        textAlign: 'center'
+                        width: '75%',
                     }}>
+                    Customer Information
                 </Typography>
                 <Box
                     display="grid"
@@ -186,8 +186,26 @@ const Quotes = () => {
                         id="province"
                         value={province}
                         onChange={(e) => setProvince(e.target.value)}
-                        sx={{ gridColumn: "span 1" }}
+                        sx={{ gridColumn: "2/3" }}
                     />
+                </Box >
+                <Typography
+                       variant="h4"
+                       sx={{
+                           m: "30px auto 5px auto",
+                           width: '75%',
+                        }}>
+                        Service Information
+                    </Typography>
+                <Box
+                    display="grid"
+                    gap="20px"
+                    gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                    sx={{
+                        gridColumn: "span 2",
+                        margin: "auto",
+                        width: '75%'
+                    }} >
                     <TextField
                         fullWidth
                         multiline
@@ -215,18 +233,18 @@ const Quotes = () => {
                     />
                 </Box >
                 <Box sx={{ width: "30%", margin: "10px auto" }}>
-                {serverError &&
-                    <Alert severity="error" >
-                        <AlertTitle>Server Error</AlertTitle>
-                        Internal Server Error. Please Try Again Later.
-                    </Alert>}
+                    {serverError &&
+                        <Alert severity="error" >
+                            <AlertTitle>Server Error</AlertTitle>
+                            Internal Server Error. Please Try Again Later.
+                        </Alert>}
 
-                {noInput &&
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                        Please Fill Out All Fields
-                    </Alert>}
-            </Box>
+                    {noInput &&
+                        <Alert severity="warning">
+                            <AlertTitle>Warning</AlertTitle>
+                            Please Fill Out All Fields
+                        </Alert>}
+                </Box>
                 <div className="flex justify-end mr-40 pt-4">
                     <Button
                         onClick={handleSave}
@@ -242,7 +260,7 @@ const Quotes = () => {
                     </Button>
                 </div>
             </Box>
-        </Box>
+        </Box >
     )
 }
 
