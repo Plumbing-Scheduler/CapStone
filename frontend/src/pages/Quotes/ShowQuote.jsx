@@ -57,7 +57,7 @@ const ShowQuote = () => {
       ) : (
         <Box m={4}>
           <Paper elevation={3} sx={{ p: 3, mt: 3, maxWidth: '100%', backgroundColor: colors.primary[400]}}>
-          <Typography variant="h3" sx={{ paddingBottom: '10px' }}>
+          <Typography variant="h4" sx={{ paddingBottom: '10px' }}>
               Customer Information
             </Typography>
             <Divider />
@@ -68,31 +68,31 @@ const ShowQuote = () => {
                                     Internal Server Error. Please Try Again Later.
                             </Alert>}
               {quote.firstName && (
-                <Typography variant="h5">
+                <Typography variant="h6">
                   <strong>Name:</strong> {quote.firstName} {quote.lastName}
                 </Typography>
               )}
               {quote.phone && (
-                <Typography variant="h5">
+                <Typography variant="h6">
                   <strong>Phone:</strong> {quote.phone}
                 </Typography>
               )}
               {quote.email && (
-                <Typography variant="h5">
+                <Typography variant="h6">
                   <strong>Email:</strong> {quote.email}
                 </Typography>
               )}
               {quote.address && (
                 <>
                   {quote.address.street && (
-                    <Typography variant="h5">
+                    <Typography variant="h6">
                       <strong>Address:</strong> {`${quote.address.street}, ${quote.address.postalCode} ${quote.address.city}, ${quote.address.province}`}
                     </Typography>
                   )}
                 </>
               )}
               {quote.busName && (
-                <Typography variant="h5">
+                <Typography variant="h6">
                   <strong>Business Name:</strong> {quote.busName}
                 </Typography>
               )}
@@ -100,18 +100,18 @@ const ShowQuote = () => {
           </Paper>
 
           <Paper elevation={3} sx={{ p: 3, mt: 3, maxWidth: '100%', backgroundColor: colors.primary[400]}}>
-          <Typography variant="h3" sx={{ paddingBottom: '10px' }}>
+          <Typography variant="h4" sx={{ paddingBottom: '10px' }}>
               Quote Information
             </Typography>
             <Divider />
             <Box mt={2}>
               {quote.description && (
-                <Typography variant="h5">
+                <Typography variant="h6">
                   <strong>Quote Description:</strong> {quote.description}
                 </Typography>
               )}
               {quote.cost && (
-                <Typography variant="h5">
+                <Typography variant="h6">
                   <strong>Estimate Cost:</strong> ${quote.cost}
                 </Typography>
               )}
