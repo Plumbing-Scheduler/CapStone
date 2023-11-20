@@ -39,7 +39,7 @@ export const WorkOrders = () => {
     const columns = [
         { field: "no", headerName: "No.", width: 70, },
         { field: "title", headerName: "Title", width: 150, flex: 1 },
-        { field: "cost", headerName: "Cost", width: 70, },
+        { field: "cost", headerName: "Cost", width: 100, flex: 1 },
         { field: "startDate", headerName: "Date", width: 200, flex: 1 },
         { field: "customer", headerName: "Customer", width: 10, flex: 1 },
         { field: "employee", headerName: "Employee", width: 200, flex: 1 },
@@ -67,7 +67,7 @@ export const WorkOrders = () => {
         no: index + 1,
         title: wo.title,
         cost: "$" + wo.cost,
-        startDate: dayjs(wo.startDate).format('LLL'),
+        startDate: dayjs(wo.startDate).format('l'),
         customer: getCustomer(wo.customerID),
         employee: getEmployee(wo.assignedEmp),
         address: wo.address.street

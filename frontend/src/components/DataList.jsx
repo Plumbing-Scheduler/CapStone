@@ -69,7 +69,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                 <DataGrid
                     columns={columnData}
                     rows={rowData}
-                    rowHeight={60}
+                    rowHeight={50}
                     initialState={{
                         pagination: { paginationModel: { pageSize: 10 } }
                     }}

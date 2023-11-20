@@ -18,38 +18,38 @@ const ServiceReports = () => {
     const colors = tokens(theme.palette.mode);
     const { filter } = useParams();
     const filterObj = JSON.parse(filter);
-    
+    let filterWO;
 
     const [employees, setEmployees] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [workOrders, setWorkOrders] = useState([]);
 
     useEffect(() => {
-        axiosInstance.get('/employees')
-            .then((responce) => {
-                setEmployees(responce.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
+        axiosInstance.get('/workorders')
+        .then((responce) => {
+            setWorkOrders(responce.data.data);
+            axiosInstance.get('/employees')
+                .then((responce) => {
+                    setEmployees(responce.data.data);
+                })
             axiosInstance.get('/customer')
-            .then((responce) => {
-                setCustomers(responce.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+                .then((responce) => {
+                    setCustomers(responce.data.data);
+                })
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 
-            axiosInstance.get('/workorders')
-            .then((responce) => {
-                setWorkOrders(responce.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-            console.log(filterObj);
     }, []);
+
+    useEffect(() => {
+        filterWO = workOrders.filter((wo) => (
+            wo.paymentType == filterObj.paymentType
+        ))
+        console.log(filterWO);
+    },[workOrders])
+
     return (
         <Box>
             <Box display="flex" justifyContent="space-between" alignItems="center">

@@ -20,7 +20,7 @@ export const CreateWorkOrder = () => {
     const colors = tokens(theme.palette.mode);
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
-    const serviceStatus = "In Progress" //Newly created work orders will always be set to "1" for in progress. 
+    const serviceStatus = 'New';
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('')
     const [startDate, setStartDate] = useState(Date.now());

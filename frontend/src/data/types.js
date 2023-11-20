@@ -35,8 +35,12 @@ export const titles = [
 
 export const paymentTypes = [
     {
-        value: 'Credit',
-        label: 'Credit'
+        value: 'Credit-MasterCard',
+        label: 'Credit-MasterCard'
+    },
+    {
+        value: 'Credit-Visa',
+        label: 'Credit-Visa'
     },
     {
         value: 'Debit',
@@ -92,11 +96,15 @@ export const empStatusOptions = [
 
 export const woStatusOptions = [
     {
+        value: 'New',
+        label: 'New'
+    },
+    {
         value: 'Active',
         label: 'Active'
     },
     {
-        value: 'Inactive',
-        label: 'Inactive'
+        value: 'Completed',
+        label: 'Completed'
     }
 ];

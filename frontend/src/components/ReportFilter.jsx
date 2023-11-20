@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from "../axiosInstance";
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, TextField, Typography, Button, useTheme, useMediaQuery } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -9,21 +9,20 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import MenuItem from '@mui/material/MenuItem';
 import { tokens } from "../theme";
+import { titles, paymentTypes } from '../data/types';
 // import { Link } from 'react-router-dom';
 
 export const ReportFilter = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const isNonMobile = useMediaQuery("(min-diwth:600px)");
-    const [serviceStatus, setServiceStatus] = useState('');
-    const [description, setDescription] = useState('');
-    const [title, setTitle] = useState('')
+    const [paymentType, setPaymentType] = useState('');
+    const [serviceType, setServiceType] = useState('')
     const [startDate, setStartDate] = useState(Date.now() - (30 * 24 * 60 * 60 * 1000));
     const [assignedEmp, setAssignedEmp] = useState('');
     const [endDate, setEndDate] = useState(Date.now());
     const [customer, setCustomer] = useState('');
     const [busName, setBusName] = useState('');
-    const [address, setAddress] = useState('');
 
     const [employees, setEmployees] = useState([]);
     const [customers, setCustomers] = useState([]);
@@ -32,19 +31,18 @@ export const ReportFilter = () => {
     dayjs.extend(localizedFormat);
 
     const generateReport = {
-        serviceStatus,
-        description,
-        title,
+        serviceType,
+        paymentType,
         startDate,
         assignedEmp,
         endDate,
         customer,
         busName,
-        address,
     };
 
     useEffect(() => {
-        axios.get('http://localhost:3500/employees')
+        axiosInstance
+        .get('/employees')
             .then((responce) => {
                 setEmployees(responce.data.data);
             })
@@ -52,7 +50,8 @@ export const ReportFilter = () => {
                 console.log(error);
             });
 
-            axios.get('http://localhost:3500/customer')
+            axiosInstance
+            .get('/customer')
             .then((responce) => {
                 setCustomers(responce.data.data);
             })
@@ -121,50 +120,51 @@ export const ReportFilter = () => {
                             select
                             variant='filled'
                             label="Customer"
-                            value={assignedEmp}
-                            onChange={(e) => setAssignedEmp(e.target.value)}
+                            value={customer}
+                            onChange={(e) => setCustomer(e.target.value)}
                             name="assignemployee"
                             id=""
                             sx={{ gridColumn: "span 4" }}
                         >
                             {customers.map((cus) => (
                                 <MenuItem key={cus._id} value={cus._id}>
-                                    {cus.firstName + ' ' + cus.lastName}
+                                    {cus.firstName + ' ' + cus.lastName + " (" + cus.phone + ")"}
                                 </MenuItem>
                             ))}</TextField>
-                        <TextField
+
+                         <TextField
                             fullWidth
-                            variant='filled'
-                            type="text"
-                            label="Address"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                            name="address"
-                            id=""
-                            sx={{ gridColumn: "span 4" }}
-                        />
-                        <TextField
-                            fullWidth
-                            variant='filled'
-                            type="text"
-                            label="Phone Number"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                            name="phonenumber"
-                            id=""
-                            sx={{ gridColumn: "span 4" }}
-                        />
-                        <TextField
-                            fullWidth
+                            select
                             type="text"
                             variant="filled"
-                            label="Service"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            label="Payment Type"
+                            value={paymentType}
+                            onChange={(e) => setPaymentType(e.target.value)}
                             name="startdate"
                             id=""
                             sx={{ gridColumn: "span 4" }}
-                        />
+                        >{paymentTypes.map((ttl) => (
+                            <MenuItem key={ttl.value} value={ttl.value}>
+                                {ttl.label}
+                            </MenuItem>
+                        ))}</TextField>
+
+                        <TextField
+                            fullWidth
+                            select
+                            type="text"
+                            variant="filled"
+                            label="Service"
+                            value={serviceType}
+                            onChange={(e) => setServiceType(e.target.value)}
+                            name="startdate"
+                            id=""
+                            sx={{ gridColumn: "span 4" }}
+                        >{titles.map((ttl) => (
+                            <MenuItem key={ttl.value} value={ttl.value}>
+                                {ttl.label}
+                            </MenuItem>
+                        ))}</TextField>
 
                         <TextField
                             select

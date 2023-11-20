@@ -11,7 +11,7 @@ import Header from '../../components/Header';
 import MenuItem from '@mui/material/MenuItem';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { tokens } from '../../theme';
-import { titles, paymentTypes } from '../../data/types'
+import { titles, paymentTypes, woStatusOptions } from '../../data/types'
 
 export const CreateWorkOrder = () => {
     const theme = useTheme();
@@ -331,6 +331,25 @@ export const CreateWorkOrder = () => {
                              {paymentTypes.map((pmtType) => (
                                 <MenuItem key={pmtType.value} value={pmtType.value}>
                                     {pmtType.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            select
+                            fullWidth
+                            type="text"
+                            variant="filled"
+                            label="Status"
+                            value={serviceStatus}
+                            required
+                            onChange={(e) => setServiceStatus(e.target.value)}
+                            name="Status"
+                            id=""
+                            sx={{ gridColumn: "span 1" }}
+                        >
+                            {woStatusOptions.map((sts) => (
+                                <MenuItem key={sts.value} value={sts.value}>
+                                    {sts.label}
                                 </MenuItem>
                             ))}
                         </TextField>
