@@ -238,7 +238,23 @@ export const CreateWorkOrder = () => {
                             </MenuItem>
                         ))}
                     </TextField>
-
+                    <TextField
+                        select
+                        required
+                        variant='filled'
+                        label="Assign Employee"
+                        value={assignedEmp}
+                        onChange={(e) => setAssignedEmp(e.target.value)}
+                        name="assignemployee"
+                        id=""
+                        sx={{ gridColumn: "span 1" }}
+                    >
+                        {employees.map((emp) => (
+                            <MenuItem key={emp._id} value={emp._id}>
+                                {emp.firstName + ' ' + emp.lastName}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                     <TextField
                         fullWidth
                         required
@@ -288,23 +304,6 @@ export const CreateWorkOrder = () => {
                         onChange={(e) => setProvince(e.target.value)}
                         sx={{ gridColumn: "span 1" }}
                     />
-                    <TextField
-                        select
-                        required
-                        variant='filled'
-                        label="Assign Employee"
-                        value={assignedEmp}
-                        onChange={(e) => setAssignedEmp(e.target.value)}
-                        name="assignemployee"
-                        id=""
-                        sx={{ gridColumn: "span 1" }}
-                    >
-                        {employees.map((emp) => (
-                            <MenuItem key={emp._id} value={emp._id}>
-                                {emp.firstName + ' ' + emp.lastName}
-                            </MenuItem>
-                        ))}
-                    </TextField>
                     <TextField
                         fullWidth
                         type="number"

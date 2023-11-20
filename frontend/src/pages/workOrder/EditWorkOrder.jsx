@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../axiosInstance';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from '@mui/material';
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, Divider } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -126,25 +126,20 @@ export const CreateWorkOrder = () => {
                 }
             })
     };
-
-
     return (
-
-
-        <Box>
+        <Box >
             <Header title="WORK ORDER" subtitle="Update" />
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                <div>
+                <div className={`shadow-lg ml-5 mr-2    `}>
+                    <Divider variant="middle" sx={{pt: '10px',}} />
                     <Typography
-                        //display="flex"
-                        variant="h4"
-                        //justifyContent="space-between"
+                        variant="h3"
                         sx={{
                             m: "10px auto",
-                            width: '100%',
-                            textAlign: 'center'
+                            width: '80%',
+                            pt: '10px'
                         }}>
-                        Update Work Order Details
+                        <b>Service Information</b>
                     </Typography>
                     <Box
                         display="grid"
@@ -153,9 +148,8 @@ export const CreateWorkOrder = () => {
                         sx={{
                             gridColumn: "span 2",
                             margin: "auto",
-                            width: '75%'
+                            width: '80%'
                         }} >
-
                         <TextField
                             select
                             fullWidth
@@ -176,24 +170,30 @@ export const CreateWorkOrder = () => {
                             ))}
                         </TextField>
                         <TextField
-                            select
-                            required
                             fullWidth
-                            type="number"
+                            type="text"
                             variant='filled'
-                            label="Cutomer ID"
-                            value={customerID}
-                            onChange={(e) => setCustomerID(e.target.value)}
-                            name="cost"
+                            label="Business Name"
+                            value={busName}
+                            onChange={e => setBusName(e.target.value)}
+                            name="businessname"
                             id=""
                             sx={{ gridColumn: "span 1" }}
-                        >
-                            {customers.map((cstmr) => (
-                                <MenuItem key={cstmr._id} value={cstmr._id}>
-                                    {cstmr.firstName + ' ' + cstmr.lastName}
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                        />
+                        <TextField
+                            fullWidth
+                            multiline
+                            variant="filled"
+                            label="Description"
+                            value={description}
+                            required
+                            cols="30"
+                            rows="4"
+                            onChange={description => setDescription(description.target.value)}
+                            name="description"
+                            id="description"
+                            sx={{ gridColumn: "span 2" }}
+                        />
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
                                 label='Start Date'
@@ -213,79 +213,45 @@ export const CreateWorkOrder = () => {
                                 minutesStep={5}
                             />
                         </LocalizationProvider>
+                    </Box>
+
+                        <Typography
+                            variant="h3"
+                            sx={{
+                                m: "10px auto",
+                                width: '80%',
+                                pt: "40px",
+                            }}>
+                            <b>Customer Information</b>
+                        </Typography>
+                    <Box
+                        display="grid"
+                        gap="20px"
+                        gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                        sx={{
+                            gridColumn: "span 2",
+                            margin: "auto",
+                            width: '80%',
+                        }} >
                         <TextField
+                            select
+                            required
                             fullWidth
-                            type="text"
+                            type="number"
                             variant='filled'
-                            label="Business Name"
-                            value={busName}
-                            onChange={e => setBusName(e.target.value)}
-                            name="businessname"
+                            label="Cutomer ID"
+                            value={customerID}
+                            onChange={(e) => setCustomerID(e.target.value)}
+                            name="cost"
                             id=""
                             sx={{ gridColumn: "span 1" }}
-                        />
-                        <TextField
-                            fullWidth
-                            required
-                            type="text"
-                            variant='filled'
-                            label="Address"
-                            name="address"
-                            id="address"
-                            value={street}
-                            onChange={(e) => setStreet(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
-                        />
-                        <TextField
-                            fullWidth
-                            required
-                            type="text"
-                            variant='filled'
-                            label="Postal Code"
-                            name="postalCode"
-                            id="postalCode"
-                            value={postalCode}
-                            onChange={(e) => setPostalCode(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
-                        />
-                        <TextField
-                            fullWidth
-                            required
-                            type="text"
-                            variant='filled'
-                            label="City"
-                            name="city"
-                            id="city"
-                            value={city}
-                            onChange={(e) => setCity(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
-                        />
-                        <TextField
-                            fullWidth
-                            required
-                            type="text"
-                            variant='filled'
-                            label="Province"
-                            name="province"
-                            id="province"
-                            value={province}
-                            onChange={(e) => setProvince(e.target.value)}
-                            sx={{ gridColumn: "span 2" }}
-                        />
-                        <TextField
-                            fullWidth
-                            multiline
-                            variant="filled"
-                            label="Description"
-                            value={description}
-                            required
-                            cols="30"
-                            rows="4"
-                            onChange={description => setDescription(description.target.value)}
-                            name="description"
-                            id="description"
-                            sx={{ gridColumn: "span 2" }}
-                        />
+                        >
+                            {customers.map((cstmr) => (
+                                <MenuItem key={cstmr._id} value={cstmr._id}>
+                                    {cstmr.firstName + ' ' + cstmr.lastName}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                         <TextField
                             select
                             required
@@ -305,14 +271,50 @@ export const CreateWorkOrder = () => {
                         </TextField>
                         <TextField
                             fullWidth
-                            type="number"
+                            required
+                            type="text"
                             variant='filled'
-                            label="Cost"
-                            value={cost}
-                            onChange={e => setCost(e.target.value)}
-                            name="cost"
-                            id=""
-                            inputProps={{ min: 0 }}
+                            label="Address"
+                            name="address"
+                            id="address"
+                            value={street}
+                            onChange={(e) => setStreet(e.target.value)}
+                            sx={{ gridColumn: "span 1" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="Postal Code"
+                            name="postalCode"
+                            id="postalCode"
+                            value={postalCode}
+                            onChange={(e) => setPostalCode(e.target.value)}
+                            sx={{ gridColumn: "span 1" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="City"
+                            name="city"
+                            id="city"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            sx={{ gridColumn: "span 1" }}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            type="text"
+                            variant='filled'
+                            label="Province"
+                            name="province"
+                            id="province"
+                            value={province}
+                            onChange={(e) => setProvince(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
@@ -328,7 +330,7 @@ export const CreateWorkOrder = () => {
                             inputProps={{ min: 0 }}
                             sx={{ gridColumn: "span 1" }}
                         >
-                             {paymentTypes.map((pmtType) => (
+                            {paymentTypes.map((pmtType) => (
                                 <MenuItem key={pmtType.value} value={pmtType.value}>
                                     {pmtType.label}
                                 </MenuItem>
@@ -353,6 +355,18 @@ export const CreateWorkOrder = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
+                        <TextField
+                            fullWidth
+                            type="number"
+                            variant='filled'
+                            label="Cost"
+                            value={cost}
+                            onChange={e => setCost(e.target.value)}
+                            name="cost"
+                            id=""
+                            inputProps={{ min: 0 }}
+                            sx={{ gridColumn: "2/3" }}
+                        />
                     </Box>
                     <Box sx={{ width: "30%", margin: "10px auto" }}>
                         {serverError &&
@@ -367,7 +381,8 @@ export const CreateWorkOrder = () => {
                                 Please Fill Out All Fields
                             </Alert>}
                     </Box>
-                    <div className="flex justify-end mr-40 pt-4">
+                    <Divider variant="middle" sx={{pt: '10px', boxShadow: '5px'}} />
+                    <div className="flex justify-end mr-32 pt-3 pb-5">
                         <Button
                             onClick={handleSave}
                             sx={{
