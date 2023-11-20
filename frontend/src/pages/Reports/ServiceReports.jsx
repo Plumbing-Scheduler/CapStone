@@ -66,14 +66,17 @@ const ServiceReports = () => {
         axiosInstance.get('/workorders')
             .then((responce) => {
                 setWorkOrders(responce.data.data);
+            }).then(() => {
                 axiosInstance.get('/employees')
                     .then((responce) => {
                         setEmployees(responce.data.data);
                     })
+            }).then(() => {
                 axiosInstance.get('/customer')
                     .then((responce) => {
                         setCustomers(responce.data.data);
                     })
+                setLoading(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -84,7 +87,7 @@ const ServiceReports = () => {
     useEffect(() => {
         setFilterWO(workOrders.filter(filtering));
         console.log(filterWO[0]);
-        
+
     }, [workOrders])
 
     const getEmployeeName = (empId) => {
@@ -110,41 +113,48 @@ const ServiceReports = () => {
             </Box>
             {filterWO.map((wo) => (
                 <Box m={3}>
-                    <Box mb={2}>
-                        <Paper elevation={3} sx={{ backgroundColor: colors.primary[400], p: 2 }}>
-                            {/**Bug here, when page is rendered exception is thrown because technically "filterWO" is undefined*/}
-                             <Typography variant="h6" ><b>Customer ID: </b>{wo.customerID}</Typography>
-                            <Typography variant="h6" ><b>CustomerName: </b>{getCustomer(wo.customerID).firstName + ' ' + getCustomer(wo.customerID).lastName}</Typography>
-                            <Typography variant="h6" ><b>Phone Number: </b>{getCustomer(wo.customerID).phone}</Typography>
-                            <Typography variant="h6" ><b>Address: </b>{getCustomer(wo.customerID).address.street}</Typography>
-                            <Typography variant="h6" ><b>Email: </b>{getCustomer(wo.customerID).email}</Typography>
-                        </Paper>
-                    </Box>
-                    <TableContainer component={Paper} sx={{ background: colors.primary[400] }} >
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell><b>Service Type</b></TableCell>
-                                    <TableCell><b>Employee</b></TableCell>
-                                    <TableCell><b>Completion Date</b></TableCell>
-                                    <TableCell><b>Payment Type</b></TableCell>
-                                    <TableCell><b>Cost</b></TableCell>
-                                    <TableCell><b>Status</b></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell align="left">{wo.title}</TableCell>
-                                    <TableCell align="left">{getEmployeeName(wo.assignedEmp)}</TableCell>
-                                    <TableCell align="left">{dayjs(wo.endDate).format("ll")}</TableCell>
-                                    <TableCell align="left">{wo.paymentType}</TableCell>
-                                    <TableCell align="left">${wo.cost}</TableCell>
-                                    <TableCell align="left">{wo.serviceStatus}</TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Box>
+
+                    {!getCustomer(wo.customerID) ? (
+                        <div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>
+                    ) : (
+                        <div>
+                            <Box mb={2}>
+                                <Paper elevation={3} sx={{ backgroundColor: colors.primary[400], p: 2 }}>
+                                    {/**Bug here, when page is rendered exception is thrown because technically "filterWO" is undefined*/}
+                                    <Typography variant="h6" ><b>Customer ID: </b>{wo.customerID}</Typography>
+                                    <Typography variant="h6" ><b>CustomerName: </b>{getCustomer(wo.customerID).firstName + ' ' + getCustomer(wo.customerID).lastName}</Typography>
+                                    <Typography variant="h6" ><b>Phone Number: </b>{getCustomer(wo.customerID).phone}</Typography>
+                                    <Typography variant="h6" ><b>Address: </b>{getCustomer(wo.customerID).address.street}</Typography>
+                                    <Typography variant="h6" ><b>Email: </b>{getCustomer(wo.customerID).email}</Typography>
+                                </Paper>
+                            </Box>
+
+                            <TableContainer component={Paper} sx={{ background: colors.primary[400] }} >
+                                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell><b>Service Type</b></TableCell>
+                                            <TableCell><b>Employee</b></TableCell>
+                                            <TableCell><b>Completion Date</b></TableCell>
+                                            <TableCell><b>Payment Type</b></TableCell>
+                                            <TableCell><b>Cost</b></TableCell>
+                                            <TableCell><b>Status</b></TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell align="left">{wo.title}</TableCell>
+                                            <TableCell align="left">{getEmployeeName(wo.assignedEmp)}</TableCell>
+                                            <TableCell align="left">{dayjs(wo.endDate).format("ll")}</TableCell>
+                                            <TableCell align="left">{wo.paymentType}</TableCell>
+                                            <TableCell align="left">${wo.cost}</TableCell>
+                                            <TableCell align="left">{wo.serviceStatus}</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                </div>)}
+             </Box>
             ))}
         </Box>
     )
