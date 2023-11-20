@@ -43,37 +43,37 @@ const CustomerDetails = () => {
             <DeleteButton />
           </div>
           <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400] }} >
-            <Typography variant="h3" sx={{ paddingBottom: '1rem' }}>
+            <Typography variant="h4" sx={{ paddingBottom: '1rem' }}>
               Customer Information
             </Typography>
             <Divider />
             <Box mt={2}>
               {customer.firstName && (
-                <Typography variant="h5" >
+                <Typography variant="h6" >
                   <strong>Name:</strong> {customer.firstName} {customer.lastName}
                 </Typography>
               )}
               {customer.phone && (
-                <Typography variant="h5" >
+                <Typography variant="h6" >
                   <strong>Phone:</strong> {customer.phone}
                 </Typography>
               )}
               {customer.email && (
-                <Typography variant="h5" >
+                <Typography variant="h6" >
                   <strong>Email:</strong> {customer.email}
                 </Typography>
               )}
               {customer.address && (
                 <>
                   {customer.address.street && (
-                    <Typography variant="h5" >
+                    <Typography variant="h6" >
                       <strong>Address:</strong> {`${customer.address.street}, ${customer.address.postalCode} ${customer.address.city}, ${customer.address.province}`}
                     </Typography>
                   )}
                 </>
               )}
               {customer.busName && (
-                <Typography variant="h5" >
+                <Typography variant="h6" >
                   <strong>Business Name:</strong> {customer.busName}
                 </Typography>
               )}

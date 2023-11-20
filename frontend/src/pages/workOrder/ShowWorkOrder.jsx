@@ -51,26 +51,26 @@ const ShowWorkOrder = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12}>
               <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400]}}>
-                <Typography variant="h3" sx={{ paddingBottom: '10px' }}>
+                <Typography variant="h4" sx={{ paddingBottom: '10px' }}>
                   Work Order Information
                 </Typography>
                 <Divider sx={{ marginBottom: '10px' }} />
-                <Typography variant="h5">
+                <Typography variant="h6">
                   {workOrder.title}
                 </Typography>
-                <Typography variant="h5" >
+                <Typography variant="h6" >
                   <b>Description:</b> {workOrder.description}
                 </Typography>
-                <Typography variant="h5" >
+                <Typography variant="h6" >
                   <b>Location:</b> {workOrder.address.street}
                 </Typography>
-                <Typography variant="h5" >
+                <Typography variant="h6" >
                   <b>Cost:</b> ${workOrder.cost}
                 </Typography>
-                <Typography variant="h5" >
+                <Typography variant="h6" >
                   <b>Start Date/Time:</b> {dayjs(workOrder.startDate).format('LLL')}
                 </Typography>
-                <Typography variant="h5" >
+                <Typography variant="h6" >
                   <b>End Date/Time:</b> {dayjs(workOrder.endDate).format('LLL')}
                 </Typography>
               </Paper>
@@ -78,11 +78,11 @@ const ShowWorkOrder = () => {
 
             <Grid item xs={12} sm={12}>
               <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400] }}>
-                <Typography variant="h3" sx={{ paddingBottom: '10px' }}>
+                <Typography variant="h4" sx={{ paddingBottom: '10px' }}>
                   Assigned Employee Information
                 </Typography>
                 <Divider sx={{ marginBottom: '10px' }} />
-                <Typography variant="h5">
+                <Typography variant="h6">
                   {workOrder.assignedEmp}
                 </Typography>
               </Paper>
@@ -90,11 +90,11 @@ const ShowWorkOrder = () => {
 
             <Grid item xs={12} sm={12}>
               <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400] }}>
-                <Typography variant="h3" sx={{ paddingBottom: '10px' }}>
+                <Typography variant="h4" sx={{ paddingBottom: '10px' }}>
                   Customer Information
                 </Typography>
                 <Divider sx={{ marginBottom: '10px' }} />
-                <Typography variant="h5">
+                <Typography variant="h6">
                   {workOrder.customerID}
                 </Typography>
               </Paper>
