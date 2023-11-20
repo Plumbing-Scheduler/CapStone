@@ -37,10 +37,7 @@ const ShowWorkOrder = () => {
     <Box>
       <Header title={"WORK ORDER"} subtitle={"DETAILS"} />
 
-      <Box display="flex" justifyContent="flex-end" mt={3} spaceX={3}>
-        <EditButton />
-        <DeleteButton />
-      </Box>
+     
 
       {loading ? (
         <div className="w-5 m-auto h-5 pt-11 text-center">
@@ -48,6 +45,10 @@ const ShowWorkOrder = () => {
         </div>
       ) : (
         <Box m={4}>
+          <div className="flex justify-end space-x-3">
+            <EditButton />
+            <DeleteButton />
+          </div>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12}>
               <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400]}}>

@@ -36,17 +36,16 @@ const EmployeeDetails = () => {
     <Box>
       <Header title={'EMPLOYEE'} subtitle={'DETAILS'} />
 
-      <Box display="flex" justifyContent="flex-end" mt={3}>
-        <EditButton />
-        <DeleteButton />
-      </Box>
-
       {loading ? (
         <div className="w-5 m-auto h-5 pt-11 text-center">
           <Spinner />
         </div>
       ) : (
         <Box m={4}>
+          <div className="flex justify-end space-x-3">
+            <EditButton />
+            <DeleteButton />
+          </div>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={12}>
               <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400]}}>

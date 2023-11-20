@@ -6,8 +6,8 @@ import { Alert, AlertTitle, Box, Typography, Paper, Divider, IconButton, useThem
 import { tokens } from "../../theme";
 import Header from '../../components/Header';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { DeleteButton } from '../../components/global/DeleteButton';
+import { EditButton } from '../../components/global/EditButton';
 
 const ShowQuote = () => {
   const theme = useTheme();
@@ -42,12 +42,10 @@ const ShowQuote = () => {
       <Header title="QUOTE REQUEST" subtitle="DETAILS" />
 
       <Box display="flex" justifyContent="flex-end" m={4} spaceX={3}>
-        <IconButton aria-label="edit" color="primary">
-          <EditIcon />
-        </IconButton>
-        <IconButton aria-label="delete" color="error">
-          <DeleteIcon />
-        </IconButton>
+      <div className="flex justify-end space-x-3">
+            <EditButton />
+            <DeleteButton />
+          </div>
       </Box>
 
       {loading ? (
