@@ -25,7 +25,7 @@ const Login = () => {
             .then((response) => {
                 axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
                 console.log(response.data);
-                localStorage.setItem("user", JSON.stringify(response.data.user));
+                localStorage.setItem("ref-loguser", JSON.stringify(response.data.user));
             }).then(() => {
                 window.location.reload()
             })

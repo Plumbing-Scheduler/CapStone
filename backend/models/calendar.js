@@ -22,6 +22,24 @@ const calendarSchema = mongoose.Schema(
         },
         empId: String,
         notes: String,
+        address: {
+            street:{
+                type: String,
+                required: true
+            },
+            postalCode:{
+                type: String,
+                required: true
+            },
+            city:{
+                type: String,
+                required: true
+            },
+            province:{
+                type: String,
+                required: true
+            }
+        }
     }
 );
 

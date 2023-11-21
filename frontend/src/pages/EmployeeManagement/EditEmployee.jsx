@@ -14,18 +14,6 @@ import { tokens } from "../../theme.js";
 import Spinner from 'react-bootstrap/esm/Spinner';
 import { Roles, employmentOptions, empStatusOptions } from '../../data/types.js'
 
-//dropdown constants for status
-const statusOptions = [
-    {
-        value: 'Active',
-        label: 'Active'
-    },
-    {
-        value: 'Inactive',
-        label: 'Inactive'
-    }
-]
-
 export const EditEmployee = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);

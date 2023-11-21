@@ -29,7 +29,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ role = '' }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -129,13 +129,15 @@ const Sidebar = () => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  <Item
-                    title="Quote Requests"
-                    to="/quotes"
-                    icon={<ContactsOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
+                  {(role == "Management") &&
+                    <Item
+                      title="Quote Requests"
+                      to="/quotes"
+                      icon={<ContactsOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
                   <Item
                     title="Work Orders"
                     to="/workorder"
@@ -150,27 +152,33 @@ const Sidebar = () => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  <Item
-                    title="Employee"
-                    to="/employee"
-                    icon={<PeopleOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                  <Item
-                    title="Customers"
-                    to="/customers"
-                    icon={<PersonIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                  <Item
-                    title="Reports"
-                    to="/reports"
-                    icon={<BarChartOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
+                  {(role == "Management") &&
+                    <Item
+                      title="Employee"
+                      to="/employee"
+                      icon={<PeopleOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
+                  {(role == "Management") &&
+                    <Item
+                      title="Customers"
+                      to="/customers"
+                      icon={<PersonIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
+                  {(role == "Management") &&
+                    <Item
+                      title="Reports"
+                      to="/reports"
+                      icon={<BarChartOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
                 </Box>
               </Box>
             )}

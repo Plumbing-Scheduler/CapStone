@@ -33,9 +33,9 @@ export const CreateEmployee = () => {
     const [experience, setExperience] = useState('');
     const [employmentType, setEmploymentType] = useState('');
     const [status, setStatus] = useState('');
-    const [password, setPassword] = useState(phone);
+    //const [password, setPassword] = useState(phone);
     const [startDate, setStartDate] = useState(Date.now());
-
+    
     dayjs.extend(localizedFormat);
     const navigate = useNavigate();
 

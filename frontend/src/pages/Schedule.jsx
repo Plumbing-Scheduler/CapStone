@@ -24,7 +24,7 @@ import Header from "../components/Header";
 import { tokens } from "../theme";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-const Schedule = () => {
+const Schedule = ({ role = '' }) => {
     const theme = useTheme();
     const currDate = Date.now();
     const [data, setData] = useState([{}]);
@@ -43,7 +43,13 @@ const Schedule = () => {
                     serviceId: app.serviceId,
                     empId: app.empId,
                     id: app._id,
-                    notes: app.notes
+                    notes: app.notes,
+                    address: {
+                        street: app.address.street,
+                        postalCode: app.address.postalCode,
+                        city: app.address.city,
+                        province: app.address.province
+                    }
                 })));
                 setLoading(false);
             })
@@ -131,6 +137,41 @@ const Schedule = () => {
     const MonthTimeTableCell = (props) => {
         return <MonthView.TimeTableCell {...props} onDoubleClick={undefined} />;
     };
+    const AppFormLayout = (props) => {
+        return <AppointmentForm.Layout {...props} isRecurrence={false} />;
+    };
+    const TooltipContent = (props) => {
+        return <AppointmentTooltip.Content
+            {...props}
+            children={<div className="pl-4">
+                <div>
+                    <div>Address</div>
+                    <div className="ml-2">
+                        {props.appointmentData.address.street+", "}
+                        {props.appointmentData.address.postalCode}
+                        </div>
+                    <div className="ml-2">
+                        {props.appointmentData.address.city+", "}
+                        {props.appointmentData.address.province}
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <div>Description</div>
+                    <div className="ml-2">{props.appointmentData.notes}</div>
+                </div>
+            </div>} />;
+    };
+    const AppFormBooleanLayout = (props) => {
+        return null;
+    };
+
+    const readOnly = (role) => {
+        if (role == "Management") {
+            return false;
+        }
+        return true;
+    };
 
 
     return (
@@ -164,15 +205,21 @@ const Schedule = () => {
                                     null}
                                 <DayView startDayHour={6} endDayHour={18} cellDuration={60} timeTableCellComponent={DayTimeTableCell} />
                                 <WeekView startDayHour={6} endDayHour={18} cellDuration={60} timeTableCellComponent={WeekTimeTableCell} />
-                                <MonthView timeTableCellComponent={MonthTimeTableCell}/>
+                                <MonthView timeTableCellComponent={MonthTimeTableCell} />
                                 <Appointments />
                                 <AppointmentTooltip
                                     showOpenButton
-                                    showDeleteButton
+                                    showDeleteButton={role == "Management"}
                                     showCloseButton
+                                    contentComponent={TooltipContent}
                                 />
                                 <ConfirmationDialog />
-                                <AppointmentForm />
+                                <AppointmentForm
+                                    readOnly={readOnly(role)}
+                                    //layoutComponent={AppFormLayout}
+                                    //recurrenceLayoutComponent={AppFormRecurrLayout}
+                                    booleanEditorComponent={AppFormBooleanLayout}
+                                />
                                 <Toolbar />
                                 <DateNavigator />
                                 <ViewSwitcher />

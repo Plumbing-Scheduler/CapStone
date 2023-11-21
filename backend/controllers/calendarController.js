@@ -12,7 +12,13 @@ const createCalendar = async (request, response) => {
             endDate: request.body.endDate,
             serviceId: request.body.serviceId,
             empId: request.body.empId,
-            notes: request.body.notes
+            notes: request.body.notes,
+            address: {
+                street: request.body.address.street,
+                postalCode: request.body.address.postalCode,
+                city: request.body.address.city,
+                province: request.body.address.province,
+            }
         }
         const result = await Calendar.create(newCalendar);
         return response.status(201).send(result)

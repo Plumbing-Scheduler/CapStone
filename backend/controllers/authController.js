@@ -31,7 +31,8 @@ const handleLogin = async (req, res) => {
         const user = {
             firstName: found.firstName,
             email: found.email,
-            id: found._id
+            id: found._id,
+            role: found.role
         };
         res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'strict', maxAge: 24 * 60 * 60 * 1000})
         res.json({

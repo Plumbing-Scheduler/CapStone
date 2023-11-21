@@ -36,63 +36,66 @@ const Topbar = () => {
             });
     };
 
-    return (<div className="flex justify-between p-3" >
-        <Link to='..' relative="path" className="link">
-            <div className="hidden md:max-2xl:flex rounded-sm bg-gray-600">
-                <Button variant="Text"> Back</Button>
-            </div>
-        </Link>
-        {/* Icons */}
-        <div className="flex">
-            <IconButton onClick={colorMode.toggleColorMode}>
-                {theme.palette.mode === 'dark' ? (
-                    < DarkModeOutlinedIcon />
-                ) : (
-                    < LightModeOutlinedIcon />
-                )}
-            </IconButton>
-            {/* <IconButton>
+    return (
+        <div className="flex justify-between p-3 sticky top-0 z-50" >
+            <Link to='..' relative="path" className="link">
+                <div className="hidden md:max-2xl:flex rounded-sm">
+                    <Button variant="Text" sx={{backgroundColor: colors.buttonBase}}> Back</Button>
+                </div>
+            </Link>
+            {/* Icons */}
+            <div className="flex">
+                <IconButton onClick={colorMode.toggleColorMode}>
+                    {theme.palette.mode === 'dark' ? (
+                        < DarkModeOutlinedIcon />
+                    ) : (
+                        < LightModeOutlinedIcon />
+                    )}
+                </IconButton>
+                {/* <IconButton>
                 < NotificationsOutlinedIcon />
             </IconButton> */}
-            <IconButton>
-                < SettingsOutlinedIcon />
-            </IconButton>
+                <IconButton>
+                    < SettingsOutlinedIcon />
+                </IconButton>
 
 
-            <IconButton
-                onClick={handleClick}>
-                < PersonOutlinedIcon />
-            </IconButton>
-            <Menu
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                color={colors.primary[100]}
-                
-                MenuListProps={{
-                    'aria-labelledby': 'fade-button',
-                }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                sx={{".MuiMenu-paper":{
-                    backgroundColor: colors.buttonBase
-                }, color: 'white'}}
+                <IconButton
+                    onClick={handleClick}>
+                    < PersonOutlinedIcon />
+                </IconButton>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    color={colors.primary[100]}
 
-            >
-                <MenuItem onClick={handleLogout} sx={{color: 'white'}}>
-                    Log Out
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                    <Link className="link" to={'/profile'}>
-                        Profile
-                    </Link>
-                </MenuItem>
-            </Menu>
-            <IconButton>
+                    MenuListProps={{
+                        'aria-labelledby': 'fade-button',
+                    }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                    sx={{
+                        ".MuiMenu-paper": {
+                            backgroundColor: colors.buttonBase
+                        }, color: 'white'
+                    }}
 
-            </IconButton>
+                >
+                    <MenuItem onClick={handleLogout} sx={{ color: 'white' }}>
+                        Log Out
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                        <Link className="link" to={'/profile'}>
+                            Profile
+                        </Link>
+                    </MenuItem>
+                </Menu>
+                <IconButton>
+
+                </IconButton>
+            </div>
         </div>
-    </div>
     );
 };
 

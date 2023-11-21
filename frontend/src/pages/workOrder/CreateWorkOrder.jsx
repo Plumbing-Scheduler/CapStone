@@ -89,7 +89,13 @@ export const CreateWorkOrder = () => {
                     endDate: response.data.endDate,
                     serviceId: response.data._id,
                     empId: response.data.assignedEmp,
-                    notes: response.data.description
+                    notes: response.data.description,
+                    address: {
+                        street: response.data.address.street,
+                        postalCode: response.data.address.postalCode,
+                        city: response.data.address.city,
+                        province: response.data.address.province,
+                    }
                 }
                 axiosInstance
                     .post('/schedule', newCal)
