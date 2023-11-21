@@ -312,7 +312,7 @@ export const CreateWorkOrder = () => {
                         value={cost}
                         onChange={(e) => setCost(e.target.value)}
                         name="cost"
-                        id=""
+                        id="cost"
                         inputProps={{ min: 0 }}
                         sx={{ gridColumn: "2/3" }}
                     />

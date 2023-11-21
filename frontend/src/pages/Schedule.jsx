@@ -122,6 +122,17 @@ const Schedule = () => {
         setData(updatedData);
     };
 
+    const WeekTimeTableCell = (props) => {
+        return <WeekView.TimeTableCell {...props} onDoubleClick={undefined} />;
+    };
+    const DayTimeTableCell = (props) => {
+        return <DayView.TimeTableCell {...props} onDoubleClick={undefined} />;
+    };
+    const MonthTimeTableCell = (props) => {
+        return <MonthView.TimeTableCell {...props} onDoubleClick={undefined} />;
+    };
+
+
     return (
         <div>
             <Header title="SCHEDULE" subtitle="Calendar" />
@@ -137,11 +148,23 @@ const Schedule = () => {
                                     onCommitChanges={onCommitChanges}
                                 />
                                 <IntegratedEditing />
-                                {minwidth2 ? <WeekView startDayHour={6} endDayHour={18} cellDuration={60} /> : null}
-                                {minwidth1 ? <DayView startDayHour={6} endDayHour={18} cellDuration={60} /> : null}
-                                <DayView startDayHour={6} endDayHour={18} cellDuration={60} />
-                                <WeekView startDayHour={6} endDayHour={18} cellDuration={60} />
-                                <MonthView />
+                                {minwidth2 ?
+                                    <WeekView
+                                        startDayHour={6}
+                                        endDayHour={18}
+                                        cellDuration={60}
+                                        timeTableCellComponent={WeekTimeTableCell} /> :
+                                    null}
+                                {minwidth1 ?
+                                    <DayView
+                                        startDayHour={6}
+                                        endDayHour={18}
+                                        cellDuration={60}
+                                        timeTableCellComponent={DayTimeTableCell} /> :
+                                    null}
+                                <DayView startDayHour={6} endDayHour={18} cellDuration={60} timeTableCellComponent={DayTimeTableCell} />
+                                <WeekView startDayHour={6} endDayHour={18} cellDuration={60} timeTableCellComponent={WeekTimeTableCell} />
+                                <MonthView timeTableCellComponent={MonthTimeTableCell}/>
                                 <Appointments />
                                 <AppointmentTooltip
                                     showOpenButton

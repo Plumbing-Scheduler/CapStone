@@ -11,7 +11,8 @@ const createCalendar = async (request, response) => {
             startDate: request.body.startDate,
             endDate: request.body.endDate,
             serviceId: request.body.serviceId,
-            empId: request.body.empId
+            empId: request.body.empId,
+            notes: request.body.notes
         }
         const result = await Calendar.create(newCalendar);
         return response.status(201).send(result)
@@ -57,9 +58,10 @@ const updateCalendar = async (request, response) => {
     };
     const { id } = request.params;
     try {
-        const result = await Calendar.findByIdAndUpdate(id, request.body);
+        const result_calID = await Calendar.findByIdAndUpdate(id, request.body);
+        const result_ServID = await Calendar.findOneAndUpdate({serviceId: id}, request.body);
 
-        if(!result){
+        if(!result_calID && !result_ServID){
             return response.status(204).send({message: "No Content Found"});
         }
 
@@ -73,9 +75,9 @@ const updateCalendar = async (request, response) => {
 const deleteCalendar = async (request, response) => {
     const { id } = request.params;
     try {
-        const result = await Calendar.findByIdAndDelete(id);
-
-        if(!result){
+        const result_calID = await Calendar.findByIdAndDelete(id);
+        const result_ServID = await Calendar.findOneAndDelete({serviceId: id});
+        if(!result_calID && !result_ServID){
             return response.status(204).send({message: "No Content Found"});
         }
 

@@ -126,6 +126,9 @@ export const CreateWorkOrder = () => {
                 }
             })
     };
+
+    const handleChange = event => setCustomerID(event.target.value);
+
     return (
         <Box >
             <Header title="WORK ORDER" subtitle="Update" />
@@ -159,8 +162,8 @@ export const CreateWorkOrder = () => {
                             value={title}
                             required
                             onChange={(e) => setTitle(e.target.value)}
-                            name="startdate"
-                            id=""
+                            name="Title"
+                            id="Title"
                             sx={{ gridColumn: "span 1" }}
                         >
                             {titles.map((ttl) => (
@@ -237,17 +240,18 @@ export const CreateWorkOrder = () => {
                             select
                             required
                             fullWidth
-                            type="number"
+                            // type="text"
                             variant='filled'
                             label="Cutomer ID"
+                            defaultValue=""
                             value={customerID}
-                            onChange={(e) => setCustomerID(e.target.value)}
-                            name="cost"
+                            onChange={handleChange}
+                            name="customerID"
                             id=""
                             sx={{ gridColumn: "span 1" }}
                         >
                             {customers.map((cstmr) => (
-                                <MenuItem key={cstmr._id} value={cstmr._id}>
+                                <MenuItem key={cstmr._id} value={cstmr._id} >
                                     {cstmr.firstName + ' ' + cstmr.lastName}
                                 </MenuItem>
                             ))}
