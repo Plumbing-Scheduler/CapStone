@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import DataList from '../../components/DataList';
 
-export const WorkOrders = () => {
+export const WorkOrders = ({ role = '', logId = '' }) => {
     const [workOrders, setWorkOrders] = useState([]);
     const [employees, setEmployees] = useState([]);
     const [customers, setCustomers] = useState([]);
@@ -16,24 +16,42 @@ export const WorkOrders = () => {
 
     useEffect(() => {
         setLoading(true);
+        if (role != "Management") {
+            axiosInstance
+                .get(`/workorders/employee/${logId}`)
+                .then((response) => {
+                    setWorkOrders(response.data.data);
+                    setLoading(false);
+                }).catch((error) => {
+                    setLoading(false);
+                    console.log(error);
+                })
+        } else {
+            axiosInstance
+                .get('/workorders')
+                .then((response) => {
+                    setWorkOrders(response.data.data);
+                    setLoading(false);
+                }).catch((error) => {
+                    setLoading(false);
+                    console.log(error);
+                })
+        }
         axiosInstance
-            .get('/workorders')
+            .get('/employees')
             .then((response) => {
-                setWorkOrders(response.data.data);
-                axiosInstance.get('/employees')
-                    .then((response) => {
-                        setEmployees(response.data.data);
-                    })
+                setEmployees(response.data.data);
                 axiosInstance
-                .get('/customer')
+                    .get('/customer')
                     .then((response) => {
                         setCustomers(response.data.data);
                     })
-                setLoading(false);
             }).catch((error) => {
                 setLoading(false);
                 console.log(error);
             })
+
+
     }, []);
 
     const columns = [
@@ -75,7 +93,6 @@ export const WorkOrders = () => {
 
     return (
         <div>
-
             <Header title="WORK ORDER" subtitle="Show Work Orders" />
             <div className='flex justify-end' >
                 <AddNewButton destination="form" item="Work Order" className='bg-sky-900' />

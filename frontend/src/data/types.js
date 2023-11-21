@@ -100,3 +100,58 @@ export const woStatusOptions = [
         label: 'Completed'
     }
 ];
+
+export const provinces = [
+    {
+        value: 'AB',
+        label: 'Alberta'
+    },
+    {
+        value: 'BC',
+        label: 'British Columbia'
+    },
+    {
+        value: 'SK',
+        label: 'Saskatchewan'
+    },
+    {
+        value: 'ON',
+        label: 'Ontario'
+    },
+    {
+        value: 'MB',
+        label: 'Manitoba'
+    },
+    {
+        value: 'QC',
+        label: 'Quebec'
+    },
+    {
+        value: 'NL',
+        label: 'Newfoundland and Labrador'
+    },
+    {
+        value: 'NS',
+        label: 'Nova Scotia'
+    },
+    {
+        value: 'NB',
+        label: 'New Brunswick'
+    },
+    {
+        value: 'PE',
+        label: 'Prince Edward Island'
+    },
+    {
+        value: 'NU',
+        label: 'Nunavut'
+    },
+    {
+        value: 'NT',
+        label: 'Northwest Territories'
+    },
+    {
+        value: 'YT',
+        label: 'Yukon'
+    },
+];

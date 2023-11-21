@@ -11,4 +11,7 @@ router.route('/:id')
     .put(workOrderController.updateWorkOrder)
     .delete(workOrderController.deleteWorkOrder);
 
+router.route('/employee/:empid')
+    .get(workOrderController.getAllEmployeeWorkOrders);
+    
 export default router;

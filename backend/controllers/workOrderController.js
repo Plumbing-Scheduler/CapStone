@@ -96,4 +96,18 @@ const deleteWorkOrder = async (request, response) => {
     };
 };
 
-export default {createWorkOrder, getAllWorkOrders, getWorkOrder, updateWorkOrder, deleteWorkOrder};
+const getAllEmployeeWorkOrders = async (request, response) => { 
+    try {
+        const { empid } = request.params;
+        const result = await WorkOrder.find({assignedEmp: empid});
+        return response.status(200).send({
+            count: result.length,
+            data: result
+        });
+    } catch (error) {
+        console.log(error);
+        response.status(500).send({message: error.message});
+    };
+};
+
+export default {createWorkOrder, getAllWorkOrders, getWorkOrder, updateWorkOrder, deleteWorkOrder, getAllEmployeeWorkOrders};

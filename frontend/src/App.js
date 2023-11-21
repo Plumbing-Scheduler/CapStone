@@ -75,7 +75,7 @@ function App() {
 
 
               <Route path='workorder'>
-                <Route index element={<WorkOrderList />} />
+                <Route index element={<WorkOrderList role={userData.role} logId={userData.id}/>} />
                 <Route path="form" element={<CreateWorkOrder />} />
                 <Route path="edit/:id" element={<EditWorkOrder />} />
                 <Route path="details/:id" element={<ShowWorkOrder />} />

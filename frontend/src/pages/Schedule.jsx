@@ -145,7 +145,7 @@ const Schedule = ({ role = '' }) => {
             {...props}
             children={<div className="pl-4">
                 <div>
-                    <div>Address</div>
+                    <div>Location</div>
                     <div className="ml-2">
                         {props.appointmentData.address.street+", "}
                         {props.appointmentData.address.postalCode}
