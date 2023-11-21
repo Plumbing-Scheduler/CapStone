@@ -12,38 +12,8 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { tokens } from "../../theme.js";
 import Spinner from 'react-bootstrap/esm/Spinner';
+import { Roles, employmentOptions, empStatusOptions } from '../../data/types.js'
 
-
-//Dropdown constants for education
-const educationOptions = [
-    {
-        value: 'Journeyman',
-        label: 'Journeyman'
-    },
-    {
-        value: 'Apprentice First Year',
-        label: 'Apprentice First Year'
-    },
-    {
-        value: 'Apprentice Second Year',
-        label: 'Apprentice Second Year'
-    },
-    {
-        value: 'Apprentice Third Year',
-        label: 'Apprentice Third Year'
-    }
-]
-//Dropdown constants for employment
-const employmentOptions = [
-    {
-        value: 'Full Time',
-        label: 'Full Time'
-    },
-    {
-        value: 'Part Time',
-        label: 'Part Time'
-    }
-]
 //dropdown constants for status
 const statusOptions = [
     {
@@ -63,8 +33,8 @@ export const EditEmployee = () => {
     const { id } = useParams({});
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
+    const [serverError, setServerError] = useState(false);
+    const [noInput, setNoInput] = useState(false);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -293,7 +263,7 @@ export const EditEmployee = () => {
                             />
                         </LocalizationProvider>
                     </Box>
-
+                    {/**EMPLOYMENT INFO HERE BELOW--------------------------------------------------------------- */}
                     <Typography
                         //display="flex"
                         variant="h3"
@@ -302,12 +272,12 @@ export const EditEmployee = () => {
                             m: "30px auto 5px auto",
                             width: '75%',
                         }}>
-                        Education
+                        Employement type
                     </Typography>
 
                     <Box
                         display="grid"
-                        gap="30px"
+                        gap="20px"
                         gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                         sx={{
                             gridColumn: "span 4",
@@ -318,15 +288,15 @@ export const EditEmployee = () => {
                         <TextField
                             select
                             required
-                            label="Education Level"
+                            label="Role"
                             variant='filled'
-                            name="educationLevel"
-                            id="education"
+                            name="role"
+                            id="role"
                             value={role}
                             onChange={(e) => setRole(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         >
-                            {educationOptions.map((option) => (
+                            {Roles.map((option) => (
                                 <MenuItem key={option.value} value={option.value}>
                                     {option.label}
                                 </MenuItem>
@@ -342,31 +312,10 @@ export const EditEmployee = () => {
                             onChange={(e) => setExperience(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
-                    </Box>
-
-                    <Typography
-                        variant="h3"
-                        sx={{
-                            m: "30px auto 5px auto",
-                            width: '75%',
-                        }}>
-                        Hours
-                    </Typography>
-                    <Box
-                        display="grid"
-                        gap="30px"
-                        gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
-                        sx={{
-                            gridColumn: "span 4",
-                            margin: "auto",
-                            width: '75%',
-
-                        }}
-                    >
                         <TextField
                             select
                             required
-                            label="Employment Type"
+                            label="Full-Time/Part-Time"
                             variant='filled'
                             name="employmentType"
                             id="employmentType"
@@ -392,7 +341,7 @@ export const EditEmployee = () => {
                             onChange={(e) => setStatus(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         >
-                            {statusOptions.map((option) => (
+                            {empStatusOptions.map((option) => (
                                 <MenuItem
                                     key={option.value}
                                     value={option.value}

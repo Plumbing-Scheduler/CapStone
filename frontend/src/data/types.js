@@ -53,23 +53,15 @@ export const paymentTypes = [
 ];
 
 //Dropdown constants for education
-export const educationOptions = [
+export const Roles = [
     {
-        value: 'Journeyman',
-        label: 'Journeyman'
+        value: 'Employee',
+        label: 'Employee'
     },
     {
-        value: 'Apprentice First Year',
-        label: 'Apprentice First Year'
+        value: 'Management',
+        label: 'Management'
     },
-    {
-        value: 'Apprentice Second Year',
-        label: 'Apprentice Second Year'
-    },
-    {
-        value: 'Apprentice Third Year',
-        label: 'Apprentice Third Year'
-    }
 ];
 //Dropdown constants for employment
 export const employmentOptions = [
