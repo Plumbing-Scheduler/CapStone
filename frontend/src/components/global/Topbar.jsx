@@ -1,6 +1,6 @@
 import { Menu, MenuItem, IconButton, useTheme, Button } from "@mui/material";
 import { useContext, useState } from "react";
-import { ColorModeContext, tokens, themeSettings } from "../../theme";
+import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
@@ -11,7 +11,6 @@ import axiosInstance from "../../axiosInstance";
 const Topbar = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const settings = themeSettings(theme.palette.mode)
     const colorMode = useContext(ColorModeContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl)
@@ -23,7 +22,6 @@ const Topbar = () => {
     };
 
     const handleLogout = () => {
-        //alert(99);
         axiosInstance
             .get('/logout')
             .then(() => {
@@ -40,9 +38,9 @@ const Topbar = () => {
     return (
         <div className="flex justify-between p-3 sticky top-0 z-50" >
             <Link to='..' relative="path" className="link">
-                <div className="hidden md:max-2xl:flex rounded-sm">
-                    <Button variant="Text" sx={{backgroundColor: colors.buttonBase}}> Back</Button>
-                </div>
+                    <div className="hidden md:max-2xl:flex rounded-sm" style={{backgroundColor: colors.buttonBase}}>
+                        <Button variant="Text" > Back</Button>
+                    </div>
             </Link>
             {/* Icons */}
             <div className="flex">
@@ -53,14 +51,9 @@ const Topbar = () => {
                         < LightModeOutlinedIcon />
                     )}
                 </IconButton>
-                {/* <IconButton>
-                < NotificationsOutlinedIcon />
-            </IconButton> */}
                 <IconButton>
                     < SettingsOutlinedIcon />
                 </IconButton>
-
-
                 <IconButton
                     onClick={handleClick}>
                     < PersonOutlinedIcon />
