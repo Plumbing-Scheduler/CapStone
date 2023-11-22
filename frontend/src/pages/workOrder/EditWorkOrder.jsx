@@ -139,14 +139,14 @@ export const CreateWorkOrder = () => {
         <Box >
             <Header title="WORK ORDER" subtitle="Update" />
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                <div className={`shadow-lg ml-5 mr-2    `}>
-                    <Divider variant="middle" sx={{pt: '10px',}} />
+                <div className={`shadow-lg mt-3 `}>
+                    <Divider variant="middle" sx={{pt: '20px'}} />
                     <Typography
                         variant="h3"
                         sx={{
                             m: "10px auto",
-                            width: '80%',
-                            pt: '10px'
+                            width: '83%',
+                            pb: '10px'
                         }}>
                         <b>Service Information</b>
                     </Typography>
@@ -228,8 +228,9 @@ export const CreateWorkOrder = () => {
                             variant="h3"
                             sx={{
                                 m: "10px auto",
-                                width: '80%',
-                                pt: "40px",
+                                width: '83%',
+                                pt: "20px",
+                                pb: '10px',
                             }}>
                             <b>Customer Information</b>
                         </Typography>

@@ -99,18 +99,17 @@ const Sidebar = ({ role = '' }) => {
             </MenuItem>
 
             {isCollapsed ? null : (
-              <Box mb="25px">
-                {/* <Box display="flex" justifyContent="center" alignItems="center">
+              <Box mb="20x">
+                <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="company-logo"
-                    width="100px"
-                    height="100px"
-                    src={`../../assets/companylogo.png`}
+                    width="270px"
+                    src={`../../assets/logo.png`}
                     style={{ cursor: 'pointer', borderRadius: '50%' }}
                   />
-                </Box> */}
+                </Box>
 
-                <Box textAlign="center">
+                {/* <Box textAlign="center">
                   <Typography
                     variant="h1"
                     color={colors.grey[100]}
@@ -119,7 +118,7 @@ const Sidebar = ({ role = '' }) => {
                   >
                     SEWER & DRAIN PLUMBING
                   </Typography>
-                </Box>
+                </Box> */}
 
                 <Box paddingLeft={isCollapsed ? undefined : '10%'}>
                   <Item

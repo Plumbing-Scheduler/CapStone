@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from '@mui/material';
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, Divider } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -39,8 +39,6 @@ export const CreateWorkOrder = () => {
     const navigate = useNavigate();
 
     dayjs.extend(localizedFormat);
-
-
 
     const newWorkOrder = {
         serviceStatus,
@@ -125,12 +123,14 @@ export const CreateWorkOrder = () => {
         <Box >
             <Header title="WORK ORDER" subtitle="Create Invoice" />
             <Box >
-                <div className={`shadow-lg ml-5 mr-2 pt-3`}>
+                <div className={`shadow-lg mt-3`}>
+                <Divider variant="middle" sx={{pt: '20px'}} />
                     <Typography
                         variant="h3"
                         sx={{
-                            m: "10px auto",
-                            width: '75%',
+                            m: "30px auto 5px auto",
+                            width: '83%',
+                            pb: '10px', 
                         }}>
                         <b>Service Information</b>
                     </Typography>
@@ -141,7 +141,7 @@ export const CreateWorkOrder = () => {
                         sx={{
                             gridColumn: "span 2",
                             margin: "auto",
-                            width: '75%',
+                            width: '80%',
                         }} >
                         <TextField
                             select
@@ -211,9 +211,9 @@ export const CreateWorkOrder = () => {
                     <Typography
                         variant="h3"
                         sx={{
-                            m: "10px auto",
-                            width: '75%',
-                            pt: "20px"
+                            m: "30px auto 5px auto",
+                            width: '83%',
+                            pb: '10px', 
                         }}>
                         <b>Customer Information</b>
                     </Typography>
@@ -224,7 +224,7 @@ export const CreateWorkOrder = () => {
                         sx={{
                             gridColumn: "span 2",
                             margin: "auto",
-                            width: '75%'
+                            width: '80%'
                         }}>
                         <TextField
                             select
@@ -337,7 +337,8 @@ export const CreateWorkOrder = () => {
                                 Please Fill Out All Fields
                             </Alert>}
                     </Box>
-                    <div className="flex justify-end mr-40 pt-4 pb-5">
+                    <Divider variant="middle" sx={{pt: '10px', boxShadow: '5px'}} />
+                    <div className="flex justify-end mr-32 pt-3 pb-5">
                         <Button
                             onClick={handleSave}
                             sx={{

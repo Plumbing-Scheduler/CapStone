@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, Divider } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
@@ -35,7 +35,7 @@ export const CreateEmployee = () => {
     const [status, setStatus] = useState('');
     //const [password, setPassword] = useState(phone);
     const [startDate, setStartDate] = useState(Date.now());
-    
+
     dayjs.extend(localizedFormat);
     const navigate = useNavigate();
 
@@ -80,14 +80,16 @@ export const CreateEmployee = () => {
     return (
         <Box>
             <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
-            <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
+            <div className={`shadow-lg mt-3 `}>
+                <Divider variant="middle" sx={{ pt: '20px' }} />
                 <Typography
                     variant="h3"
                     sx={{
                         m: "30px auto 5px auto",
-                        width: '80%',
+                        width: '83%',
+                        pb: '10px',
                     }}>
-                    Employee Information
+                    <b>Employee Information</b>
                 </Typography>
                 <Box
                     display="grid"
@@ -197,25 +199,16 @@ export const CreateEmployee = () => {
                         onChange={(e) => setProvince(e.target.value)}
                         sx={{ gridColumn: "span 1" }}
                     />
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            required
-                            label='Start Date'
-                            renderInput={(params) => <TextField variant="filled" required {...params} />}
-                            value={startDate}
-                            onChange={(e) => { setStartDate(dayjs(e).toISOString()) }}
-                            orientation="landscape"
-                        />
-                    </LocalizationProvider>
                 </Box>
                 {/**EMPLOYMENT INFO HERE BELOW--------------------------------------------------------------- */}
                 <Typography
                     variant="h3"
                     sx={{
                         m: "30px auto 5px auto",
-                        width: '80%',
+                        width: '83%',
+                        pb: '10px',
                     }}>
-                    Employement type
+                    <b>Employement type</b>
                 </Typography>
 
                 <Box
@@ -293,6 +286,16 @@ export const CreateEmployee = () => {
                             </MenuItem>
                         ))}
                     </TextField>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            required
+                            label='Start Date'
+                            renderInput={(params) => <TextField variant="filled" required {...params} sx={{ gridColumn: "2/3" }} />}
+                            value={startDate}
+                            onChange={(e) => { setStartDate(dayjs(e).toISOString()) }}
+                            orientation="landscape"
+                        />
+                    </LocalizationProvider>
                 </Box>
                 <Box sx={{ width: "30%", margin: "10px auto" }}>
                     {serverError &&
@@ -307,7 +310,8 @@ export const CreateEmployee = () => {
                             Please Fill Out All Fields
                         </Alert>}
                 </Box>
-                <div className="flex justify-end mr-36 pt-4">
+                <Divider variant="middle" sx={{ pt: '10px', boxShadow: '5px' }} />
+                <div className="flex justify-end mr-32 pt-3 pb-5">
                     <Button
                         onClick={handleSave}
                         sx={{
@@ -321,7 +325,7 @@ export const CreateEmployee = () => {
                         Save and Add
                     </Button>
                 </div>
-            </Box>
+            </div>
         </Box>
     )
 }
