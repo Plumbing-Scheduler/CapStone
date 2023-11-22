@@ -39,8 +39,8 @@ const CustomerDetails = () => {
       ) : (
         <Box m={4}>
           <div className="flex justify-end space-x-3">
-            <EditButton />
-            <DeleteButton />
+            <EditButton path={`../../customers/edit/${id}`}/>
+            <DeleteButton path={`../../customers/delete/${id}`}/>
           </div>
           <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400] }} >
             <Typography variant="h4" sx={{ paddingBottom: '1rem' }}>
@@ -77,7 +77,6 @@ const CustomerDetails = () => {
                   <strong>Business Name:</strong> {customer.busName}
                 </Typography>
               )}
-
             </Box>
           </Paper>
         </Box>

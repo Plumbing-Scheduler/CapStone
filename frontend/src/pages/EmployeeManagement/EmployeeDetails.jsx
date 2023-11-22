@@ -43,8 +43,8 @@ const EmployeeDetails = () => {
       ) : (
         <Box m={4}>
           <div className="flex justify-end space-x-3">
-            <EditButton />
-            <DeleteButton />
+            <EditButton path={`../../employee/edit/${id}`}/>
+            <DeleteButton path={`../../employee/delete/${id}`}/>
           </div>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={12}>

@@ -56,7 +56,7 @@ const ServiceReports = () => {
                 return false
             }
         }
-        if (!dayjs(wo.startDate).isBetween(filterObj.startDate, filterObj.endDate)) {
+        if (!dayjs(wo.startDate).isBetween(dayjs(filterObj.startDate), dayjs(filterObj.endDate))) {
             return false
         }
         return true

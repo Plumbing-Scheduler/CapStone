@@ -43,8 +43,8 @@ const ShowQuote = () => {
 
       <Box display="flex" justifyContent="flex-end" m={4} spaceX={3}>
       <div className="flex justify-end space-x-3">
-            <EditButton />
-            <DeleteButton />
+            <EditButton path={`../../quotes/edit/${id}`}/>
+            <DeleteButton path={`../../quotes/delete/${id}`}/>
           </div>
       </Box>
 
