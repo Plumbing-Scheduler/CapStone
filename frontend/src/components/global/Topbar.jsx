@@ -1,6 +1,6 @@
 import { Menu, MenuItem, IconButton, useTheme, Button } from "@mui/material";
 import { useContext, useState } from "react";
-import { ColorModeContext, tokens } from "../../theme";
+import { ColorModeContext, tokens, themeSettings } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
@@ -11,6 +11,7 @@ import axiosInstance from "../../axiosInstance";
 const Topbar = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const settings = themeSettings(theme.palette.mode)
     const colorMode = useContext(ColorModeContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl)
@@ -91,9 +92,6 @@ const Topbar = () => {
                         </Link>
                     </MenuItem>
                 </Menu>
-                <IconButton>
-
-                </IconButton>
             </div>
         </div>
     );

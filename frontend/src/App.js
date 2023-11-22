@@ -72,8 +72,6 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
 
-
-
               <Route path='workorder'>
                 <Route index element={<WorkOrderList role={userData.role} logId={userData.id}/>} />
                 <Route path="form" element={<CreateWorkOrder />} />
@@ -82,7 +80,7 @@ function App() {
                 <Route path="delete/:id" element={<DeleteWorkOrder />} />
               </Route>
 
-              <Route path="/schedule" element={<Schedule role={userData.role}/>} >
+              <Route path="/schedule" element={<Schedule role={userData.role} logId={userData.id}/>} >
               </Route>
               {(userData.role == "Management") && 
               <Route path="/quotes" >

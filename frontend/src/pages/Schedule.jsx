@@ -24,8 +24,9 @@ import Header from "../components/Header";
 import { tokens } from "../theme";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-const Schedule = ({ role = '' }) => {
+const Schedule = ({ role = '', logId = '' }) => {
     const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
     const currDate = Date.now();
     const [data, setData] = useState([{}]);
     const [loading, setLoading] = useState(true);
@@ -137,8 +138,27 @@ const Schedule = ({ role = '' }) => {
     const MonthTimeTableCell = (props) => {
         return <MonthView.TimeTableCell {...props} onDoubleClick={undefined} />;
     };
-    const AppFormLayout = (props) => {
-        return <AppointmentForm.Layout {...props} isRecurrence={false} />;
+
+    const appointment = (props) => {
+        return <Appointments.Appointment
+            {...props}
+            style={(props.data.empId == logId) ? { backgroundColor: colors.redAccent[400] } : {}}
+            children={
+                <div className="text-white">
+                    {props.children}
+                    {(props.data.empId == logId)?("You"):("")}
+                    </div>
+            } />;
+    };
+    const weekCell = (props) => {
+        return <DayView.Layout {...props} style={{ color: colors.redAccent[400] }} />;
+    };
+
+    const AppContent = (props) => {
+        return <Appointments.AppointmentContent {...props} />;
+        // children={<Box >
+        //         {props.data.startDate}
+        //     </Box>} 
     };
     const TooltipContent = (props) => {
         return <AppointmentTooltip.Content
@@ -147,11 +167,11 @@ const Schedule = ({ role = '' }) => {
                 <div>
                     <div>Location</div>
                     <div className="ml-2">
-                        {props.appointmentData.address.street+", "}
+                        {props.appointmentData.address.street + ", "}
                         {props.appointmentData.address.postalCode}
-                        </div>
+                    </div>
                     <div className="ml-2">
-                        {props.appointmentData.address.city+", "}
+                        {props.appointmentData.address.city + ", "}
                         {props.appointmentData.address.province}
                     </div>
                 </div>
@@ -177,13 +197,15 @@ const Schedule = ({ role = '' }) => {
     return (
         <div>
             <Header title="SCHEDULE" subtitle="Calendar" />
-            <div className={`text-center sm:max-2xl:flex justify-between p-2 m-3 shadow-lg `}>
+            <div className={`text-center sm:max-2xl:flex justify-between p-2 m-3 shadow-xl`}>
                 {loading ? (
                     <div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>
                 ) : (
                     <Paper variant="h4">
                         <Box flex="1 1 20%">
-                            <Scheduler data={data} >
+                            <Scheduler
+                                data={data}
+                            >
                                 <ViewState defaultCurrentDate={currDate} />
                                 <EditingState
                                     onCommitChanges={onCommitChanges}
@@ -203,10 +225,13 @@ const Schedule = ({ role = '' }) => {
                                         cellDuration={60}
                                         timeTableCellComponent={DayTimeTableCell} /> :
                                     null}
-                                <DayView startDayHour={6} endDayHour={18} cellDuration={60} timeTableCellComponent={DayTimeTableCell} />
+                                <DayView startDayHour={6} endDayHour={18} cellDuration={60} timeTableCellComponent={DayTimeTableCell} layoutComponent={weekCell} />
                                 <WeekView startDayHour={6} endDayHour={18} cellDuration={60} timeTableCellComponent={WeekTimeTableCell} />
                                 <MonthView timeTableCellComponent={MonthTimeTableCell} />
-                                <Appointments />
+                                <Appointments
+                                    appointmentContentComponent={AppContent}
+                                    appointmentComponent={appointment}
+                                />
                                 <AppointmentTooltip
                                     showOpenButton
                                     showDeleteButton={role == "Management"}
