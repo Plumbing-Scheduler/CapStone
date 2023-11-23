@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosInstance';
-import { useNavigate } from 'react-router-dom';
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, Divider } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, Divider,Radio, RadioGroup, FormControl, FormControlLabel, FormLabel } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -34,6 +34,7 @@ export const CreateWorkOrder = () => {
     const [city, setCity] = useState('');
     const [province, setProvince] = useState('');
 
+    const { state } = useLocation();
     const [employees, setEmployees] = useState([]);
     const [customers, setCustomers] = useState([]);
     const navigate = useNavigate();
@@ -59,6 +60,18 @@ export const CreateWorkOrder = () => {
     };
 
     useEffect(() => {
+        console.log(state);
+        if(state){
+            setTitle(state.quote.type);
+            setDescription(state.quote.description);
+            setCost(state.quote.cost);
+            setBusName(state.quote.busName);
+            setCustomerID(state.customer._id);
+            setStreet(state.quote.address.street);
+            setPostalCode(state.quote.address.postalCode);
+            setCity(state.quote.address.city);
+            setProvince(state.quote.address.province);
+        }
         axiosInstance
             .get('/employees')
             .then((response) => {
@@ -152,8 +165,8 @@ export const CreateWorkOrder = () => {
                             value={title}
                             required
                             onChange={(e) => setTitle(e.target.value)}
-                            name="startdate"
-                            id=""
+                            name="title"
+                            id="title"
                             sx={{ gridColumn: "span 1" }}
                         >
                             {titles.map((ttl) => (
@@ -206,6 +219,35 @@ export const CreateWorkOrder = () => {
                                 minutesStep={5}
                             />
                         </LocalizationProvider>
+                        <TextField
+                            select
+                            required
+                            variant='filled'
+                            label="Assign Employee"
+                            value={assignedEmp}
+                            onChange={(e) => setAssignedEmp(e.target.value)}
+                            name="assignemployee"
+                            id="assignemployee"
+                            sx={{ gridColumn: "span 1" }}
+                        >
+                            {employees.map((emp) => (
+                                <MenuItem key={emp._id} value={emp._id}>
+                                    {emp.firstName + ' ' + emp.lastName}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            fullWidth
+                            type="number"
+                            variant='filled'
+                            label="Cost"
+                            value={cost}
+                            onChange={(e) => setCost(e.target.value)}
+                            name="Cost"
+                            id="Cost"
+                            inputProps={{ min: 0 }}
+                            sx={{ gridColumn: "2/3" }}
+                        />
                     </Box>
 
                     <Typography
@@ -234,9 +276,10 @@ export const CreateWorkOrder = () => {
                             variant='filled'
                             label="Cutomer ID"
                             value={customerID}
+                            defaultValue={''}
                             onChange={(e) => setCustomerID(e.target.value)}
-                            name="cost"
-                            id=""
+                            name="customerID"
+                            id="customerID"
                             sx={{ gridColumn: "span 1" }}
                         >
                             {customers.map((cstmr) => (
@@ -245,23 +288,7 @@ export const CreateWorkOrder = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
-                        <TextField
-                            select
-                            required
-                            variant='filled'
-                            label="Assign Employee"
-                            value={assignedEmp}
-                            onChange={(e) => setAssignedEmp(e.target.value)}
-                            name="assignemployee"
-                            id=""
-                            sx={{ gridColumn: "span 1" }}
-                        >
-                            {employees.map((emp) => (
-                                <MenuItem key={emp._id} value={emp._id}>
-                                    {emp.firstName + ' ' + emp.lastName}
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                        
                         <TextField
                             fullWidth
                             required
@@ -296,6 +323,7 @@ export const CreateWorkOrder = () => {
                             name="city"
                             id="city"
                             value={city}
+                            defaultValue={"Calgary"}
                             onChange={(e) => setCity(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
@@ -308,21 +336,11 @@ export const CreateWorkOrder = () => {
                             name="province"
                             id="province"
                             value={province}
+                            defaultValue={"Alberta"}
                             onChange={(e) => setProvince(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
-                        <TextField
-                            fullWidth
-                            type="number"
-                            variant='filled'
-                            label="Cost"
-                            value={cost}
-                            onChange={(e) => setCost(e.target.value)}
-                            name="cost"
-                            id="cost"
-                            inputProps={{ min: 0 }}
-                            sx={{ gridColumn: "2/3" }}
-                        />
+                        
                     </Box>
                     <Box sx={{ width: "13%", margin: "10px auto" }}>
                         {serverError &&

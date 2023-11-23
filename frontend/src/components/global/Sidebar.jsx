@@ -83,7 +83,7 @@ const Sidebar = ({ role = '' }) => {
               onClick={() => setIsCollapsed(!isCollapsed)}
               icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
               style={{
-                margin: '4px 0 20px 0',
+                margin: '4px 0 0 0',
                 color: colors.grey[100],
               }}
             >

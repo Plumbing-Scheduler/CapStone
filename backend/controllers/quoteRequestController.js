@@ -18,7 +18,8 @@ const createQuoteRequest = async (request, response) => {
                 province: request.body.address.province,
             }, 
             busName: request.body.busName,
-            email: request.body.email
+            email: request.body.email,
+            type: request.body.type
         };
         const result = await QuoteRequest.create(newQuoteRequest);
     

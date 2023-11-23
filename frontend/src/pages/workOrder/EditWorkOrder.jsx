@@ -313,6 +313,7 @@ export const CreateWorkOrder = () => {
                             name="city"
                             id="city"
                             value={city}
+                            defaultValue={"Calgary"}
                             onChange={(e) => setCity(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
@@ -325,6 +326,7 @@ export const CreateWorkOrder = () => {
                             name="province"
                             id="province"
                             value={province}
+                            defaultValue={"Alberta"}
                             onChange={(e) => setProvince(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />

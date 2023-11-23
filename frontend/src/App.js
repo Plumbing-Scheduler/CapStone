@@ -44,8 +44,8 @@ function App() {
       .get('/refresh')
       .then((response) => {
         axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
-        console.log(response.data.accessToken);
-        console.log(JSON.parse(loggedInUser));
+        // console.log(response.data.accessToken);
+        // console.log(JSON.parse(loggedInUser));
       })
       .catch((error) => {
         console.log(error);

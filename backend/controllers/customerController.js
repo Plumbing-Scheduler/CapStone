@@ -58,6 +58,21 @@ const getCustomer = async (request, response) => {
     };
 };
 
+const getCustomerByNamePhoneEmail = async (request, response) => {
+    const { email, phone } = request.params
+    try {
+        const result = await Customer.findOne({ phone: phone, email: email});
+        if(!result){
+            return response.status(204).send({message: "No Content Found"});
+        }
+
+        return response.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+        return response.status(500).send({message: error.message});
+    };
+};
+
 const updateCustomer = async (request, response) => {
     if (!request.body.firstName || !request.body.lastName || !request.body.address.street || !request.body.address.postalCode 
         || !request.body.address.city || !request.body.address.province) {
@@ -94,4 +109,4 @@ const deleteCustomer = async (request, response) => {
     };
 };
 
-export default {createCustomer, getAllCustomer, getCustomer, updateCustomer, deleteCustomer};
+export default {createCustomer, getAllCustomer, getCustomer, updateCustomer, deleteCustomer, getCustomerByNamePhoneEmail};

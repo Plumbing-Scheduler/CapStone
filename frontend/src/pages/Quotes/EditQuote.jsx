@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, AlertTitle, Box, Typography, TextField, useTheme, Button, Divider } from "@mui/material";
+import { Alert, AlertTitle, Box, Typography, TextField, useTheme, Button, Divider, MenuItem } from "@mui/material";
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import Header from '../../components/Header';
 import { tokens } from "../../theme.js";
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { titles } from '../../data/types'
 
 const EditQuote = () => {
     const theme = useTheme();
@@ -14,7 +15,7 @@ const EditQuote = () => {
     const [loading, setLoading] = useState(true);
     const [serverError, setServerError] = useState(false);
     const [noInput, setNoInput] = useState(false);
-
+    const [type, setType] = useState('')
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
@@ -44,6 +45,7 @@ const EditQuote = () => {
         cost,
         busName,
         email,
+        type
     }
 
     useEffect(() => {
@@ -62,6 +64,7 @@ const EditQuote = () => {
                 setCost(response.data.cost);
                 setBusName(response.data.busName);
                 setEmail(response.data.email);
+                setType(response.data.type)
                 setLoading(false);
             })
             .catch((error) => {
@@ -263,13 +266,31 @@ const EditQuote = () => {
                                 fullWidth
                                 type="number"
                                 variant='filled'
-                                label="Cost"
-                                name="cost"
-                                id="cost"
+                                label="Cost $"
+                                name="Cost"
+                                id="Cost"
                                 value={cost}
                                 onChange={(e) => setCost(e.target.value)}
-                                sx={{ gridColumn: "2/3" }}
+                                sx={{ gridColumn: "span 1" }}
                             />
+                            <TextField
+                                select
+                                fullWidth
+                                type="text"
+                                variant="filled"
+                                label="Service Type (optional)"
+                                value={type}
+                                onChange={(e) => setType(e.target.value)}
+                                name="serviceType"
+                                id="serviceType"
+                                sx={{ gridColumn: "span 1" }}
+                            >
+                                {titles.map((ttl) => (
+                                    <MenuItem key={ttl.value} value={ttl.value}>
+                                        {ttl.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
                         </Box>
                         <Box sx={{ width: "30%", margin: "10px auto" }}>
                             {serverError &&
