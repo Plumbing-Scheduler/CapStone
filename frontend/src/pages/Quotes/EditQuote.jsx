@@ -93,7 +93,7 @@ const EditQuote = () => {
 
     return (
         <Box>
-            <Header title={"QUOTE REQUEST"} subtitle={"EDIT QUOTE DETAILS"} />
+            <Header title={"QUOTE REQUESTS"} subtitle={"Edit Quote Details"} />
             {loading ? (
                 <div className='w-5 m-auto h-5 pt-11 text-center'>
                     <Spinner />

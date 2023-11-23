@@ -93,7 +93,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
 
     return (
         <div>
-            <Header title="WORK ORDER" subtitle="Show Work Orders" />
+            <Header title="WORK ORDERS" subtitle="View Workorders" />
             <div className='flex justify-end' >
                 <AddNewButton destination="form" item="Work Order" className='bg-sky-900' />
             </div>

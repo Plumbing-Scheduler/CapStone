@@ -44,7 +44,7 @@ const Customer = () => {
   return (
 
     <Box>
-      <Header title={"CUSTOMERS"} />
+      <Header title={"CUSTOMERS"} subtitle={"View Customers"}/>
       <div className='flex justify-end' >
         <AddNewButton destination="create" item="Customer" />
       </div>

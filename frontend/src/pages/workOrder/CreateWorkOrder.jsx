@@ -121,7 +121,7 @@ export const CreateWorkOrder = () => {
 
     return (
         <Box >
-            <Header title="WORK ORDER" subtitle="Create Invoice" />
+            <Header title="WORK ORDERS" subtitle="Add New Workorder" />
             <Box >
                 <div className={`shadow-lg mt-3`}>
                 <Divider variant="middle" sx={{pt: '20px'}} />

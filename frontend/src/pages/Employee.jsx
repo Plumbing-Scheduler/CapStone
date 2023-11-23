@@ -50,7 +50,7 @@ export const Employee = () => {
 
     return (
         <Box>
-            <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
+            <Header title="EMPLOYEE" subtitle="View Employees" />
             <div className='flex justify-end' >
                 <AddNewButton destination="create" item="Employee" />
             </div>

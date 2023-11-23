@@ -137,7 +137,7 @@ export const CreateWorkOrder = () => {
 
     return (
         <Box >
-            <Header title="WORK ORDER" subtitle="Update" />
+            <Header title="WORK ORDERS" subtitle="Edit Workorder" />
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <div className={`shadow-lg mt-3 `}>
                     <Divider variant="middle" sx={{pt: '20px'}} />

@@ -39,7 +39,7 @@ const ShowQuote = () => {
 
   return (
     <Box>
-      <Header title="QUOTE REQUEST" subtitle="DETAILS" />
+      <Header title="QUOTE REQUESTS" subtitle="Details" />
 
       <Box display="flex" justifyContent="flex-end" m={4} spaceX={3}>
       <div className="flex justify-end space-x-3">

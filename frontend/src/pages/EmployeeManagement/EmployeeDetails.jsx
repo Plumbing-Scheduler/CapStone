@@ -34,7 +34,7 @@ const EmployeeDetails = () => {
 
   return (
     <Box>
-      <Header title={'EMPLOYEE'} subtitle={'DETAILS'} />
+      <Header title={'EMPLOYEE'} subtitle={'Details'} />
 
       {loading ? (
         <div className="w-5 m-auto h-5 pt-11 text-center">

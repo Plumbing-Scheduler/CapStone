@@ -116,7 +116,7 @@ export const EditEmployee = () => {
     }
     return (
         <Box>
-            <Header title="EMPLOYEE" subtitle="EDIT EMPLOYEE" />
+            <Header title="EMPLOYEE" subtitle="Edit Employee" />
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <div className={`shadow-lg mt-3 `}>
                     <Divider variant="middle" sx={{ pt: '20px' }} />

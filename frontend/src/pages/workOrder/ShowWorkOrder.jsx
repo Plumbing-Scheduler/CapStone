@@ -58,7 +58,7 @@ const ShowWorkOrder = () => {
 
   return (
     <Box>
-      <Header title={"WORK ORDER"} subtitle={"DETAILS"} />
+      <Header title={"WORK ORDERS"} subtitle={"Details"} />
 
       {loading ? (
         <div className="w-5 m-auto h-5 pt-11 text-center">

@@ -93,7 +93,7 @@ export const EditCustomer = () => {
 
     return (
         <Box>
-            <Header title="CUSTOMER" subtitle="NEW CUSTOMER" />
+            <Header title="CUSTOMER" subtitle="Edit Customer" />
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <div className={`shadow-lg mt-3 `}>
                     <Divider variant="middle" sx={{ pt: '20px' }} />

@@ -63,7 +63,7 @@ export const CreateCustomer = () => {
 
     return (
         <Box>
-            <Header title="CUSTOMER" subtitle="NEW CUSTOMER" />
+            <Header title="CUSTOMER" subtitle="Add New Customer" />
             <div className={`shadow-lg mt-3 `}>
                 <Divider variant="middle" sx={{ pt: '20px' }} />
                 <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >

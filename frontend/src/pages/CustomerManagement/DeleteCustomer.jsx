@@ -55,7 +55,7 @@ const DeleteCustomer = () => {
 
     return (
         <Box >
-            <Header title={"CUSTOMERS"} subtitle={"DELETE CUSTOMER"} />
+            <Header title={"CUSTOMERS"} subtitle={"Delete Customer"} />
             {loading ? (
                 <div className='w-5 m-auto h-5 pt-11 text-center'>
                     <Spinner />

@@ -31,7 +31,7 @@ const CustomerDetails = () => {
 
   return (
     <Box>
-      <Header title={'CUSTOMER'} subtitle={'DETAILS'} />
+      <Header title={'CUSTOMER'} subtitle={'Details'} />
       {loading ? (
         <div className="w-5 m-auto h-5 pt-11 text-center">
           <Spinner />

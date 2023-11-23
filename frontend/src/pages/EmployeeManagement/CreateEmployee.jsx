@@ -79,7 +79,7 @@ export const CreateEmployee = () => {
     }
     return (
         <Box>
-            <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
+            <Header title="EMPLOYEE" subtitle="Add New Employee" />
             <div className={`shadow-lg mt-3 `}>
                 <Divider variant="middle" sx={{ pt: '20px' }} />
                 <Typography
