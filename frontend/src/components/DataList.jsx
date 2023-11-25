@@ -35,6 +35,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "ActiveBorder",
+                        zIndex: -1
                     },
                     "& .MuiDataGrid-cell:focus": {
                         outline: "none !important",
@@ -50,7 +51,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                         backgroundColor: colors.redAccent[400],
                         borderBottom: "none",
                         fontSize: minwidth1 ? '20px' : minwidth2 ? '15px' : '10 px',
-                        color: "black"
+                        color: "black",
                     },
                     "& .MuiDataGrid-VirtualScroller": {
                         backgroundColor: colors.primary[400]
@@ -60,7 +61,8 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                         backgroundColor: colors.redAccent[400]
                     },
                     width: 'auto',
-                    margin: "0 5%"
+                    margin: "0 5%",
+                    zIndex: -1
                 }}
             >
                 <DataGrid

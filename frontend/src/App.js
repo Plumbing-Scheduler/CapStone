@@ -31,7 +31,7 @@ import Login from "./pages/Login";
 import Profile from './pages/Profile';
 import axiosInstance from './axiosInstance';
 import { useEffect } from 'react';
-
+import MobileSidebar from './components/global/MobileSideBar';
 // import WorkOrderform from "./scenes/form";
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
   const navigate = useNavigate();
   const loggedInUser = localStorage.getItem("ref-loguser");
   const userData = JSON.parse(loggedInUser);
-  const mobileSideBar = useMediaQuery("(max-width:600px)");
+  const mobileSideBar = useMediaQuery("(max-width:800px)");
   const getRefresh = () => {
     axiosInstance
       .get('/refresh')
@@ -59,72 +59,80 @@ function App() {
     getRefresh();
     navigate('/');
   }, [])
-  return (<ColorModeContext.Provider value={colorMode}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {!loggedInUser ? (
-        <Login />
-      ) : (
-        <div className="app">
-          {!mobileSideBar && 
-            <Sidebar role={userData.role} />
-            }
-          <main className="content">
-            
-            <div className=''>
-            <Topbar mobile={mobileSideBar}/>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/profile" element={<Profile />} />
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {!loggedInUser ? (
+          <Login />
+        ) : (
+          <div className="app">
+            {!mobileSideBar && (
+              <Sidebar role={userData.role} />
+            )}
 
-              <Route path='workorder'>
-                <Route index element={<WorkOrderList role={userData.role} logId={userData.id}/>} />
-                <Route path="form" element={<CreateWorkOrder />} />
-                <Route path="edit/:id" element={<EditWorkOrder />} />
-                <Route path="details/:id" element={<ShowWorkOrder />} />
-                <Route path="delete/:id" element={<DeleteWorkOrder />} />
-              </Route>
-
-              <Route path="/schedule" element={<Schedule role={userData.role} logId={userData.id}/>} >
-              </Route>
-              {(userData.role == "Management") && 
-              <Route path="/quotes" >
-                <Route index element={<Quotes />} />
-                <Route path='create' element={<CreateQuote />} />
-                <Route path='edit/:id' element={<EditQuote />} />
-                <Route path="delete/:id" element={<DeleteQuote />} />
-                <Route path="details/:id" element={<ShowQuote />} />
-              </Route>
-              }
-
-              <Route path="employee">
-                <Route index element={<Employee />} />
-                <Route path='details/:id' element={<EmployeeDetails />} />
-                <Route path="create" element={<CreateEmployee />} />
-                <Route path="edit/:id" element={<EditEmployee />} />
-                <Route path="delete/:id" element={<DeleteEmployee />} />
-              </Route>
-
-              <Route path="/customers">
-                <Route index element={<Customer />} />
-                <Route path="create" element={<CreateCustomer />} />
-                <Route path="edit/:id" element={<EditCustomer />} />
-                <Route path="delete/:id" element={<DeleteCustomer />} />
-                <Route path="details/:id" element={<CustomerDetails />} />
-              </Route>
-
-              <Route path="/reports">
-                <Route index element={<Reports />} />
-                <Route path="history/:filter" element={<ServiceReports />} />
-              </Route>
-            
-            </Routes>
+            <div className='topBar'>
+              <div>
+                {mobileSideBar && (
+                  <MobileSidebar />
+                )}
+              </div>
+              <Topbar mobile={mobileSideBar} role={userData.role} />
             </div>
-          </main>
-        </div>
-      )}
-    </ThemeProvider>
-  </ColorModeContext.Provider>
+            <main className="content">
+              <div className='pages'>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/profile" element={<Profile />} />
+
+                  <Route path='workorder'>
+                    <Route index element={<WorkOrderList role={userData.role} logId={userData.id} />} />
+                    <Route path="form" element={<CreateWorkOrder />} />
+                    <Route path="edit/:id" element={<EditWorkOrder />} />
+                    <Route path="details/:id" element={<ShowWorkOrder />} />
+                    <Route path="delete/:id" element={<DeleteWorkOrder />} />
+                  </Route>
+
+                  <Route path="/schedule" element={<Schedule role={userData.role} logId={userData.id} />} >
+                  </Route>
+                  {(userData.role == "Management") &&
+                    <Route path="/quotes" >
+                      <Route index element={<Quotes />} />
+                      <Route path='create' element={<CreateQuote />} />
+                      <Route path='edit/:id' element={<EditQuote />} />
+                      <Route path="delete/:id" element={<DeleteQuote />} />
+                      <Route path="details/:id" element={<ShowQuote />} />
+                    </Route>
+                  }
+
+                  <Route path="employee">
+                    <Route index element={<Employee />} />
+                    <Route path='details/:id' element={<EmployeeDetails />} />
+                    <Route path="create" element={<CreateEmployee />} />
+                    <Route path="edit/:id" element={<EditEmployee />} />
+                    <Route path="delete/:id" element={<DeleteEmployee />} />
+                  </Route>
+
+                  <Route path="/customers">
+                    <Route index element={<Customer />} />
+                    <Route path="create" element={<CreateCustomer />} />
+                    <Route path="edit/:id" element={<EditCustomer />} />
+                    <Route path="delete/:id" element={<DeleteCustomer />} />
+                    <Route path="details/:id" element={<CustomerDetails />} />
+                  </Route>
+
+                  <Route path="/reports">
+                    <Route index element={<Reports />} />
+                    <Route path="history/:filter" element={<ServiceReports />} />
+                  </Route>
+
+                </Routes>
+              </div>
+            </main>
+          </div>
+        )}
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 

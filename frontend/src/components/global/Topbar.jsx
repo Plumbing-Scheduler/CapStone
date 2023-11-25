@@ -1,4 +1,4 @@
-import { Menu, MenuItem, IconButton, useTheme, Button } from "@mui/material";
+import { Menu, MenuItem, IconButton, useTheme, Button, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -8,14 +8,20 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axiosInstance";
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import Sidebar from "./Sidebar";
-const Topbar = ({mobile = ''}) => {
+import SideBarSmall from "./SideBarSmall";
+import MobileSidebar from './MobileSideBar';
+
+const Topbar = ({ mobile = '', role = '' }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const colorMode = useContext(ColorModeContext);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [MenuanchorEl, setMenuAnchorEl] = useState(null);
     const open = Boolean(anchorEl)
-    const handleClick = (event) => {
+    const openMenu = Boolean(MenuanchorEl)
+    const [selected, setSelected] = useState('Home');
+
+    const handleClickUser = (event) => {
         setAnchorEl(event.currentTarget);
     }
     const handleClose = () => {
@@ -37,12 +43,13 @@ const Topbar = ({mobile = ''}) => {
     };
 
     return (
-        <div className="flex justify-between p-3 sticky top-0 z-50" >
-            {mobile ? ( 
-            <IconButton>
-                <MenuOutlinedIcon />
-            </IconButton>
-            ): (<div></div>)}
+        <div className="flex justify-end mr-3 mt-3 mb-3 w-1/4 relative" >
+
+            {/* {mobile ? (
+                <div >
+                    <MobileSidebar />
+                </div>
+            ) : (<div></div>)} */}
             {/* Icons */}
             <div className="flex">
                 <IconButton onClick={colorMode.toggleColorMode}>
@@ -56,7 +63,7 @@ const Topbar = ({mobile = ''}) => {
                     < SettingsOutlinedIcon />
                 </IconButton>
                 <IconButton
-                    onClick={handleClick}>
+                    onClick={handleClickUser}>
                     < PersonOutlinedIcon />
                 </IconButton>
                 <Menu
@@ -88,6 +95,7 @@ const Topbar = ({mobile = ''}) => {
                 </Menu>
             </div>
         </div>
+        
     );
 };
 

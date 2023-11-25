@@ -15,10 +15,11 @@ body,
 
 .app {
   display: flex; 
-  position: relative; 
+  position: absolute;
 }
 .content {
   min-width: 500px;
+  margin-top: 80px;
 }
 
 ::-webkitscrollbar {
@@ -43,6 +44,15 @@ body,
 .link{
   color: #fff;
   text-decoration: none;
+}
+
+
+.topBar{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 99;
 }
 
 

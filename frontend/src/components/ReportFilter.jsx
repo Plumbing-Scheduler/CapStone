@@ -65,7 +65,7 @@ export const ReportFilter = () => {
     };
 
     return (
-        <Box>
+        <Box >
             <Box m="30px">
                 <Box sx={{ width: "70%", m: "auto", boxShadow: '4', borderRadius: '5px', backgroundColor: colors.primary[400] }}>
                     <Typography
@@ -114,7 +114,7 @@ export const ReportFilter = () => {
                             onChange={(e) => setBusName(e.target.value)}
                             name="businessname"
                             id=""
-                            sx={{ gridColumn: "span 4" }}
+                            sx={{ gridColumn: "span 4", zIndex: 0 }}
                         />
                          <TextField
                             select

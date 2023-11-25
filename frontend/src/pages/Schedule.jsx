@@ -154,6 +154,14 @@ const Schedule = ({ role = '', logId = '' }) => {
         return <DayView.Layout {...props} style={{ color: colors.redAccent[400] }} />;
     };
 
+    const SchedulerRoot = (props) => {
+        return <Scheduler.Root >
+                
+                    {props.children}
+
+                </Scheduler.Root>
+    }
+
     const AppContent = (props) => {
         return <Appointments.AppointmentContent {...props} />;
         // children={<Box >
@@ -201,10 +209,11 @@ const Schedule = ({ role = '', logId = '' }) => {
                 {loading ? (
                     <div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>
                 ) : (
-                    <Paper variant="h4">
-                        <Box flex="1 1 20%">
+                    <Paper variant="h4" >
+                        <Box flex="1 1 20%" >
                             <Scheduler
                                 data={data}
+                                rootComponent={SchedulerRoot}
                             >
                                 <ViewState defaultCurrentDate={currDate} />
                                 <EditingState
