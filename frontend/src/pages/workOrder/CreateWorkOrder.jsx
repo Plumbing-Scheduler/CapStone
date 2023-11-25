@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosInstance';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, Divider,Radio, RadioGroup, FormControl, FormControlLabel, FormLabel } from '@mui/material';
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, Divider, Radio, RadioGroup, FormControl, FormControlLabel, FormLabel } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -60,8 +60,8 @@ export const CreateWorkOrder = () => {
     };
 
     useEffect(() => {
-        console.log(state);
-        if(state){
+        //console.log(state.quote._id);
+        if (state) {
             setTitle(state.quote.type);
             setDescription(state.quote.description);
             setCost(state.quote.cost);
@@ -114,9 +114,18 @@ export const CreateWorkOrder = () => {
                         console.log(response.data)
                         navigate('/workorder')
                     })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+
+                if (state.quote._id) {
+                    axiosInstance
+                        .delete(`/quote/${state.quote._id}`)
+                        .then((response) => {
+                            console.log(response.data)
+                            navigate('/workorder')
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                }
             })
             .catch((error) => {
                 setServerError(false);
@@ -129,6 +138,7 @@ export const CreateWorkOrder = () => {
                     setNoInput(true);
                 }
             });
+
     };
 
 
@@ -137,13 +147,13 @@ export const CreateWorkOrder = () => {
             <Header title="WORK ORDERS" subtitle="Add New Workorder" />
             <Box >
                 <div className={`shadow-lg mt-3`}>
-                <Divider variant="middle" sx={{pt: '20px'}} />
+                    <Divider variant="middle" sx={{ pt: '20px' }} />
                     <Typography
                         variant="h3"
                         sx={{
                             m: "30px auto 5px auto",
                             width: '83%',
-                            pb: '10px', 
+                            pb: '10px',
                         }}>
                         <b>Service Information</b>
                     </Typography>
@@ -255,7 +265,7 @@ export const CreateWorkOrder = () => {
                         sx={{
                             m: "30px auto 5px auto",
                             width: '83%',
-                            pb: '10px', 
+                            pb: '10px',
                         }}>
                         <b>Customer Information</b>
                     </Typography>
@@ -288,7 +298,7 @@ export const CreateWorkOrder = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
-                        
+
                         <TextField
                             fullWidth
                             required
@@ -340,7 +350,7 @@ export const CreateWorkOrder = () => {
                             onChange={(e) => setProvince(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
-                        
+
                     </Box>
                     <Box sx={{ width: "13%", margin: "10px auto" }}>
                         {serverError &&
@@ -355,7 +365,7 @@ export const CreateWorkOrder = () => {
                                 Please Fill Out All Fields
                             </Alert>}
                     </Box>
-                    <Divider variant="middle" sx={{pt: '10px', boxShadow: '5px'}} />
+                    <Divider variant="middle" sx={{ pt: '10px', boxShadow: '5px' }} />
                     <div className="flex justify-end mr-32 pt-3 pb-5">
                         <Button
                             onClick={handleSave}

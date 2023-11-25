@@ -1,5 +1,5 @@
 import { ColorModeContext, useMode } from './theme';
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Topbar from "./components/global/Topbar";
 import Home from "./pages/Home";
@@ -39,6 +39,7 @@ function App() {
   const navigate = useNavigate();
   const loggedInUser = localStorage.getItem("ref-loguser");
   const userData = JSON.parse(loggedInUser);
+  const mobileSideBar = useMediaQuery("(max-width:600px)");
   const getRefresh = () => {
     axiosInstance
       .get('/refresh')
@@ -65,9 +66,13 @@ function App() {
         <Login />
       ) : (
         <div className="app">
-          <Sidebar role={userData.role} />
+          {!mobileSideBar && 
+            <Sidebar role={userData.role} />
+            }
           <main className="content">
-            <Topbar />
+            
+            <div className=''>
+            <Topbar mobile={mobileSideBar}/>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
@@ -114,6 +119,7 @@ function App() {
               </Route>
             
             </Routes>
+            </div>
           </main>
         </div>
       )}

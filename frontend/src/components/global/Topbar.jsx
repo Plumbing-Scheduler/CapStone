@@ -7,8 +7,9 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axiosInstance";
-
-const Topbar = () => {
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import Sidebar from "./Sidebar";
+const Topbar = ({mobile = ''}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const colorMode = useContext(ColorModeContext);
@@ -37,11 +38,11 @@ const Topbar = () => {
 
     return (
         <div className="flex justify-between p-3 sticky top-0 z-50" >
-            <Link to='..' relative="path" className="link">
-                    <div className="hidden md:max-2xl:flex rounded-sm" style={{backgroundColor: colors.buttonBase}}>
-                        <Button variant="Text" > Back</Button>
-                    </div>
-            </Link>
+            {mobile ? ( 
+            <IconButton>
+                <MenuOutlinedIcon />
+            </IconButton>
+            ): (<div></div>)}
             {/* Icons */}
             <div className="flex">
                 <IconButton onClick={colorMode.toggleColorMode}>

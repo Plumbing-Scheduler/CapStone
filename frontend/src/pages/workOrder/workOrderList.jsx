@@ -55,13 +55,12 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
     }, []);
 
     const columns = [
-        { field: "no", headerName: "No.", width: 70, },
-        { field: "title", headerName: "Title", width: 150, flex: 1 },
-        { field: "cost", headerName: "Cost", width: 100, flex: 1 },
-        { field: "startDate", headerName: "Date", width: 200, flex: 1 },
-        { field: "customer", headerName: "Customer", width: 10, flex: 1 },
-        { field: "employee", headerName: "Employee", width: 200, flex: 1 },
-        { field: "address", headerName: "Address", width: 200, flex: 1 },
+        { field: "title", headerName: "Title", width: 150, flex: 1},
+        { field: "cost", headerName: "Cost", width: 110, type: Number},
+        { field: "startDate", headerName: "Date", width: 200, flex: 1, type: Date},
+        { field: "customer", headerName: "Customer", width: 200, flex: 1},
+        { field: "employee", headerName: "Employee", width: 200, flex: 1},
+        // { field: "address", headerName: "Address", width: 200},
     ]
 
     const getEmployee = (empId) => {
@@ -82,13 +81,12 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
 
     const rows = workOrders.map((wo, index) => ({
         id: wo._id,
-        no: index + 1,
         title: wo.title,
-        cost: "$" + wo.cost,
+        cost: wo.cost,
         startDate: dayjs(wo.startDate).format('l'),
         customer: getCustomer(wo.customerID),
         employee: getEmployee(wo.assignedEmp),
-        address: wo.address.street
+        // address: wo.address.street
     }))
 
     return (

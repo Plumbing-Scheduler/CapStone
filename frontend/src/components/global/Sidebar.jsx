@@ -38,7 +38,7 @@ const Sidebar = ({ role = '' }) => {
   useEffect(() => {
     // Add a listener for window resize event
     const handleResize = () => {
-      if (window.innerWidth < 400) {
+      if (window.innerWidth < 1) {
         setIsCollapsed(true); // Collapse sidebar for mobile and tablet (adjust the width as needed)
       } else {
         setIsCollapsed(false);
@@ -56,7 +56,7 @@ const Sidebar = ({ role = '' }) => {
   }, []);
 
   return (
-    <Box sx={!isCollapsed ? { width: '320px', transition: '.3s' } : { width: '80px', transition: '.3s' }} >
+    <Box sx={!isCollapsed ? { width: '270px', transition: '.3s'} : { width: '80px', transition: '.3s' }} >
       <Box
         sx={{
           '& .pro-sidebar-inner': {
@@ -74,10 +74,11 @@ const Sidebar = ({ role = '' }) => {
           '& .pro-menu-item.active': {
             color: '#6870fa !important',
           },
-          height: '200%',
+          height: '100%',
+          minWidth: '270px'
         }}
       >
-        <ProSidebar collapsed={isCollapsed} style={{ position: 'fixed', top: 0 }}>
+        <ProSidebar collapsed={isCollapsed} style={{ position: 'fixed', top: 0}}>
           <Menu iconShape="square"  >
             <MenuItem
               onClick={() => setIsCollapsed(!isCollapsed)}
@@ -88,7 +89,7 @@ const Sidebar = ({ role = '' }) => {
               }}
             >
               {!isCollapsed && (
-                <div className="sm:max-2xl:flex justify-between box-border ml-15">
+                <div className="flex justify-between box-border ml-15">
                   <Typography variant="h6" color={colors.grey[100]}>
                     Welcome
                   </Typography>
@@ -103,7 +104,7 @@ const Sidebar = ({ role = '' }) => {
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="company-logo"
-                    width="270px"
+                    width="100%"
                     src={`../../assets/logo.png`}
                     style={{ cursor: 'pointer', borderRadius: '50%' }}
                   />

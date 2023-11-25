@@ -14,8 +14,11 @@ body,
 }
 
 .app {
-  display: flex;
-  position: relative;
+  display: flex; 
+  position: relative; 
+}
+.content {
+  min-width: 500px;
 }
 
 ::-webkitscrollbar {

@@ -73,7 +73,7 @@ const EditQuote = () => {
             })
 
     }, [])
-
+    
     const handleSave = () => {
         axiosInstance
             .put(`/quote/${id}`, data)
@@ -112,7 +112,7 @@ const EditQuote = () => {
                                 width: '83%',
                                 pb: '10px',
                             }}>
-                            <b>Update Quote Request</b>
+                            <b>Customer Information</b>
                         </Typography>
                         <Box
                             display="grid"
@@ -166,55 +166,6 @@ const EditQuote = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 sx={{ gridColumn: "span 1" }}
-                            />
-
-                            <TextField
-                                fullWidth
-                                required
-                                type="text"
-                                variant='filled'
-                                label="Address"
-                                name="address"
-                                id="address"
-                                value={street}
-                                onChange={(e) => setStreet(e.target.value)}
-                                sx={{ gridColumn: "span 1" }}
-                            />
-                            <TextField
-                                fullWidth
-                                required
-                                type="text"
-                                variant='filled'
-                                label="Postal Code"
-                                name="postalCode"
-                                id="postalCode"
-                                value={postalCode}
-                                onChange={(e) => setPostalCode(e.target.value)}
-                                sx={{ gridColumn: "span 1" }}
-                            />
-                            <TextField
-                                fullWidth
-                                required
-                                type="text"
-                                variant='filled'
-                                label="City"
-                                name="city"
-                                id="city"
-                                value={city}
-                                onChange={(e) => setCity(e.target.value)}
-                                sx={{ gridColumn: "span 1" }}
-                            />
-                            <TextField
-                                fullWidth
-                                required
-                                type="text"
-                                variant='filled'
-                                label="Province"
-                                name="province"
-                                id="province"
-                                value={province}
-                                onChange={(e) => setProvince(e.target.value)}
-                                sx={{ gridColumn: "2/3" }}
                             />
                             <TextField
                                 fullWidth
@@ -291,6 +242,54 @@ const EditQuote = () => {
                                     </MenuItem>
                                 ))}
                             </TextField>
+                            <TextField
+                                fullWidth
+                                required
+                                type="text"
+                                variant='filled'
+                                label="Address"
+                                name="address"
+                                id="address"
+                                value={street}
+                                onChange={(e) => setStreet(e.target.value)}
+                                sx={{ gridColumn: "span 1" }}
+                            />
+                            <TextField
+                                fullWidth
+                                required
+                                type="text"
+                                variant='filled'
+                                label="Postal Code"
+                                name="postalCode"
+                                id="postalCode"
+                                value={postalCode}
+                                onChange={(e) => setPostalCode(e.target.value)}
+                                sx={{ gridColumn: "span 1" }}
+                            />
+                            <TextField
+                                fullWidth
+                                required
+                                type="text"
+                                variant='filled'
+                                label="City"
+                                name="city"
+                                id="city"
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
+                                sx={{ gridColumn: "span 1" }}
+                            />
+                            <TextField
+                                fullWidth
+                                required
+                                type="text"
+                                variant='filled'
+                                label="Province"
+                                name="province"
+                                id="province"
+                                value={province}
+                                onChange={(e) => setProvince(e.target.value)}
+                                sx={{ gridColumn: "2/3" }}
+                            />
                         </Box>
                         <Box sx={{ width: "30%", margin: "10px auto" }}>
                             {serverError &&

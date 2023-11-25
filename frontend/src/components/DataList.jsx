@@ -14,17 +14,14 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
     columnData = [...columnData, {
-        field: "Operations", headerName: "Operations", width: 200,  renderCell: ({ row: id }) => {
+        field: "Operations", headerName: "Ops", width: 120,  renderCell: ({ row: id }) => {
             return (
-                <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                    <Link to={`edit/${id.id}`} className='link mr-auto'>
+                <Box sx={{ width: "100%", display: "flex", justifyContent: "space-evenly", gap: "20px" }}>
+                    <Link to={`edit/${id.id}`} className='link '>
                         <EditIcon style={{color: colors.primary[100]}}/>
                     </Link>
-                    <Link to={`details/${id.id}`} className='link m-auto'>
+                    <Link to={`details/${id.id}`} className='link '>
                         <InfoOutlinedIcon style={{color: colors.primary[100]}} />
-                    </Link>
-                    <Link to={`delete/${id.id}`} className='link m-auto'>
-                        <DeleteOutlineIcon style={{color: colors.primary[100]}}/>
                     </Link>
                 </Box>
             )
@@ -34,7 +31,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
     return (
         <div>
             <Box m="40px"
-                height="55vh"
+                height="auto"
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "ActiveBorder",
@@ -62,8 +59,8 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                         borderTop: "none",
                         backgroundColor: colors.redAccent[400]
                     },
-                    width: '95%',
-                    margin: "0 auto"
+                    width: 'auto',
+                    margin: "0 5%"
                 }}
             >
                 <DataGrid

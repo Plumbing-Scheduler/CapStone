@@ -225,8 +225,8 @@ const Schedule = ({ role = '', logId = '' }) => {
                                         cellDuration={60}
                                         timeTableCellComponent={DayTimeTableCell} /> :
                                     null}
-                                <DayView startDayHour={6} endDayHour={18} cellDuration={60} timeTableCellComponent={DayTimeTableCell} layoutComponent={weekCell} />
-                                <WeekView startDayHour={6} endDayHour={18} cellDuration={60} timeTableCellComponent={WeekTimeTableCell} />
+                                <DayView startDayHour={6} endDayHour={20} cellDuration={60} timeTableCellComponent={DayTimeTableCell} layoutComponent={weekCell} />
+                                <WeekView startDayHour={6} endDayHour={20} cellDuration={60} timeTableCellComponent={WeekTimeTableCell} />
                                 <MonthView timeTableCellComponent={MonthTimeTableCell} />
                                 <Appointments
                                     appointmentContentComponent={AppContent}

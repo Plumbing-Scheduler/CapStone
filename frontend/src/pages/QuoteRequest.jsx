@@ -26,7 +26,6 @@ const Quotes = () => {
     }, []);
 
     const columns = [ 
-        {field: 'no', headerName: "No.", width: 70},
         {field: 'name', headerName: "Name", flex: 1},
         {field: 'phone', headerName: "Phone", flex: 1},
         {field: 'email', headerName: "Email", flex: 1},
@@ -35,7 +34,6 @@ const Quotes = () => {
 
     const rows = quotes.map((qu, index) => ({
         id: qu._id,
-        no: index + 1,
         name: qu.firstName + ' ' + qu.lastName,
         phone: qu.phone,
         email: qu.email,

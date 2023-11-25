@@ -24,7 +24,7 @@ export const CreateEmployee = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
+    const [phone, setPhone] = useState("");
     const [street, setStreet] = useState('');
     const [postalCode, setPostalCode] = useState('');
     const [city, setCity] = useState('');
@@ -77,6 +77,14 @@ export const CreateEmployee = () => {
                 }
             })
     }
+
+    const formatPhone = (event) => {
+        let num = event.target.value;
+        num = num.replace(/\D/, '');
+        console.log(num)
+        setPhone(num)
+    }
+
     return (
         <Box>
             <Header title="EMPLOYEE" subtitle="Add New Employee" />
@@ -129,13 +137,13 @@ export const CreateEmployee = () => {
                     <TextField
                         fullWidth
                         required
-                        type="number"
+                        type="text"
                         variant='filled'
                         label="Phone"
                         name="phone #"
                         id="phone"
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={formatPhone}
                         sx={{ gridColumn: "span 1" }}
                     />
                     <TextField

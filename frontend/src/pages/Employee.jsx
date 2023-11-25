@@ -26,7 +26,6 @@ export const Employee = () => {
     }, [])
 
     const columns = [
-        {field: 'no', headerName: "No.", width: 70},
         {field: 'name', headerName: "Name", flex: 1},
         { field: 'phone', headerName: "Phone", flex: 1, 
         renderCell: (params) => {
@@ -39,7 +38,6 @@ export const Employee = () => {
 
     const rows = employees.map((emp, index) => ({
         id: emp._id,
-        no: index + 1,
         name: emp.firstName + " " + emp.lastName,
         phone: emp.phone,
         email: emp.email,

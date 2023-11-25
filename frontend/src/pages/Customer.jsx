@@ -25,7 +25,6 @@ const Customer = () => {
   }, []);
 
   const columns = [
-    { field: 'no', headerName: "No.", width: 70 },
     { field: 'name', headerName: "Name", flex: 1 },
     { field: 'phone', headerName: "Phone", flex: 1 },
     { field: 'email', headerName: "Email", flex: 1 },
@@ -34,7 +33,6 @@ const Customer = () => {
 
   const rows = customers.map((cust, index) => ({
     id: cust._id,
-    no: index + 1,
     name: cust.firstName + ' ' + cust.lastName,
     phone: cust.phone,
     email: cust.email,
