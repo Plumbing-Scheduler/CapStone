@@ -112,7 +112,8 @@ export const CreateWorkOrder = () => {
                         postalCode: data.postalCode,
                         city: data.city,
                         province: data.province,
-                    }
+                    },
+                    serviceStatus: data.serviceStatus
                 }
                 axiosInstance
                     .put(`/schedule/${id}`, editedCalendar)

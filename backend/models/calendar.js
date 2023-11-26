@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-//This may change
-//Im not sure how well this will work with our system
 const calendarSchema = mongoose.Schema(
     {
         title:{
@@ -39,7 +37,8 @@ const calendarSchema = mongoose.Schema(
                 type: String,
                 required: true
             }
-        }
+        },
+        serviceStatus: String,
     }
 );
 

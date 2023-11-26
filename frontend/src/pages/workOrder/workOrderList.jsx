@@ -94,14 +94,15 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
         }
     }
 
-    const rows = workOrders.map((wo, index) => ({
+    const rows = workOrders.map((wo) => ({
         id: wo._id,
         title: wo.title,
         cost: wo.cost,
         startDate: dayjs(wo.startDate).format('l'),
         customer: getCustomer(wo.customerID),
         employee: getEmployee(wo.assignedEmp),
-         address: wo.address.street
+        address: wo.address.street,
+        serviceStatus: wo.serviceStatus
     }))
 
     return (

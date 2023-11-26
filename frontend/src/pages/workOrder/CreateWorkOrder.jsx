@@ -60,6 +60,7 @@ export const CreateWorkOrder = () => {
     };
 
     useEffect(() => {
+        console.log(state)
         if (state) {
             setTitle(state.quote.type);
             setDescription(state.quote.description);
@@ -90,6 +91,8 @@ export const CreateWorkOrder = () => {
     }, []);
 
     const handleSave = () => {
+        setServerError(false);
+        setNoInput(false);
         axiosInstance
             .post('/workorders', newWorkOrder)
             .then((response) => {
@@ -105,7 +108,8 @@ export const CreateWorkOrder = () => {
                         postalCode: response.data.address.postalCode,
                         city: response.data.address.city,
                         province: response.data.address.province,
-                    }
+                    },
+                    serviceStatus: serviceStatus
                 }
                 axiosInstance
                     .post('/schedule', newCal)
@@ -114,21 +118,16 @@ export const CreateWorkOrder = () => {
                         navigate('/workorder')
                     })
 
-                if (state.quote._id) {
+                if (state !== null) {
                     axiosInstance
                         .delete(`/quote/${state.quote._id}`)
                         .then((response) => {
                             console.log(response.data)
                             navigate('/workorder')
-                        })
-                        .catch((error) => {
-                            console.log(error);
                         });
                 }
             })
             .catch((error) => {
-                setServerError(false);
-                setNoInput(false);
                 console.log(error.response.status)
                 if (error.response.status === 500) {
                     setServerError(true);
@@ -372,7 +371,7 @@ export const CreateWorkOrder = () => {
                                 backgroundColor: colors.redAccent[500],
                                 fontWeight: 'bold',
                                 fontSize: '13px',
-                                width: minwidth1 ? 'auto' : '80%' ,
+                                width: minwidth1 ? 'auto' : '80%',
                                 borderRadius: '3px',
                                 color: 'white',
                                 margin: 'auto'

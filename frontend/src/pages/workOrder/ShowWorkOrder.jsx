@@ -95,6 +95,9 @@ const ShowWorkOrder = () => {
                 <Typography variant="h6" >
                   <b>End Date/Time:</b> {dayjs(workOrder.endDate).format('LLL')}
                 </Typography>
+                <Typography variant="h6" >
+                  <b>Status:</b> {workOrder.serviceStatus}
+                </Typography>
               </Paper>
             </Grid>
 

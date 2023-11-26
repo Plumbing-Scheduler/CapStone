@@ -18,7 +18,8 @@ const createCalendar = async (request, response) => {
                 postalCode: request.body.address.postalCode,
                 city: request.body.address.city,
                 province: request.body.address.province,
-            }
+            },
+            serviceStatus: request.body.serviceStatus,
         }
         const result = await Calendar.create(newCalendar);
         return response.status(201).send(result)

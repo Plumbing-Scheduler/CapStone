@@ -62,8 +62,7 @@ export const CreateEmployee = () => {
             .post('/employees', newEmployee)
             .then(() => {
                 navigate('/employee')
-            }
-            )
+            })
             .catch((error) => {
                 setServerError(false);
                 setNoInput(false);

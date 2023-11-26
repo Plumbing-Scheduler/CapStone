@@ -50,8 +50,11 @@ const Schedule = ({ role = '', logId = '' }) => {
                         postalCode: app.address.postalCode,
                         city: app.address.city,
                         province: app.address.province
-                    }
-                })));
+                    },
+                    serviceStatus: app.serviceStatus
+                })).filter((elem) => {
+                    return elem.serviceStatus != "Completed";
+                }));
                 setLoading(false);
             })
             .catch((error) => {
@@ -59,6 +62,7 @@ const Schedule = ({ role = '', logId = '' }) => {
                 console.log(error);
             });
     }, []);
+
 
     const onCommitChanges = ({ changed, deleted }) => {
         let updatedData = data;
@@ -155,10 +159,8 @@ const Schedule = ({ role = '', logId = '' }) => {
     };
 
     const SchedulerRoot = (props) => {
-        return <Scheduler.Root style={{color: 'red'}}>
-
+        return <Scheduler.Root>
             {props.children}
-
         </Scheduler.Root>
     }
 
@@ -250,8 +252,6 @@ const Schedule = ({ role = '', logId = '' }) => {
                                 <ConfirmationDialog />
                                 <AppointmentForm
                                     readOnly={readOnly(role)}
-                                    //layoutComponent={AppFormLayout}
-                                    //recurrenceLayoutComponent={AppFormRecurrLayout}
                                     booleanEditorComponent={AppFormBooleanLayout}
                                 />
                                 <Toolbar />
