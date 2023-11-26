@@ -60,7 +60,6 @@ export const CreateWorkOrder = () => {
     };
 
     useEffect(() => {
-        //console.log(state.quote._id);
         if (state) {
             setTitle(state.quote.type);
             setDescription(state.quote.description);
@@ -366,16 +365,17 @@ export const CreateWorkOrder = () => {
                             </Alert>}
                     </Box>
                     <Divider variant="middle" sx={{ pt: '10px', boxShadow: '5px' }} />
-                    <div className="flex justify-end mr-32 pt-3 pb-5">
+                    <div className="flex justify-end pt-3 pb-5">
                         <Button
                             onClick={handleSave}
                             sx={{
                                 backgroundColor: colors.redAccent[500],
                                 fontWeight: 'bold',
                                 fontSize: '13px',
-                                width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
+                                width: minwidth1 ? 'auto' : '80%' ,
                                 borderRadius: '3px',
-                                color: "white"
+                                color: 'white',
+                                margin: 'auto'
                             }}
                         >
                             Save and Add

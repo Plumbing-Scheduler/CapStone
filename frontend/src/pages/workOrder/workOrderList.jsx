@@ -65,26 +65,11 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
         { field: "employee", headerName: "Employee", width: 200, flex: 1},
         { field: "address", headerName: "Address", width: 200, flex: 1},
     ]
-
-    const largeColumns = [
-        { field: "title", headerName: "Title", width: 150, },
-        { field: "cost", headerName: "Cost", width: 110, type: Number},
-        { field: "startDate", headerName: "Date", width: 150, type: Date},
-        { field: "employee", headerName: "Employee", width: 200, flex: 1},
-        { field: "address", headerName: "Address", width: 200, flex: 1},
-    ]
-
     const medColumns = [
         { field: "title", headerName: "Title", width: 150,},
         { field: "cost", headerName: "Cost", width: 110, type: Number, flex: 1},
         { field: "startDate", headerName: "Date", width: 150, type: Date, flex: 1},
         { field: "address", headerName: "Address", width: 200, flex: 1},
-    ]
-
-    const smallColumns = [
-        { field: "title", headerName: "Title", width: 150, flex: 1},
-        { field: "cost", headerName: "Cost", width: 110, type: Number, flex: 1},
-        { field: "startDate", headerName: "Date", width: 150, type: Date, flex: 1},
     ]
 
     const getEmployee = (empId) => {
