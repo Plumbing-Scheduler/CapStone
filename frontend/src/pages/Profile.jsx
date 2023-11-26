@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 const Profile = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const LoggedInUser = JSON.parse(localStorage.getItem("user"));
+    const LoggedInUser = JSON.parse(localStorage.getItem("ref-loguser"));
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');

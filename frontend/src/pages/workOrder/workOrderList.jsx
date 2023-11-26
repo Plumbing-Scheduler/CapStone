@@ -6,12 +6,15 @@ import Spinner from 'react-bootstrap/Spinner';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import DataList from '../../components/DataList';
+import { useMediaQuery } from '@mui/material';
 
 export const WorkOrders = ({ role = '', logId = '' }) => {
     const [workOrders, setWorkOrders] = useState([]);
     const [employees, setEmployees] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const lg = useMediaQuery("(min-width:1400px)")
+    const med = useMediaQuery("(min-width:1200px)")
     dayjs(localizedFormat);
 
     useEffect(() => {
@@ -55,12 +58,33 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
     }, []);
 
     const columns = [
-        { field: "title", headerName: "Title", width: 150, flex: 1},
+        { field: "title", headerName: "Title", width: 200, },
         { field: "cost", headerName: "Cost", width: 110, type: Number},
-        { field: "startDate", headerName: "Date", width: 200, flex: 1, type: Date},
+        { field: "startDate", headerName: "Date", width: 150, type: Date},
         { field: "customer", headerName: "Customer", width: 200, flex: 1},
         { field: "employee", headerName: "Employee", width: 200, flex: 1},
-        // { field: "address", headerName: "Address", width: 200},
+        { field: "address", headerName: "Address", width: 200, flex: 1},
+    ]
+
+    const largeColumns = [
+        { field: "title", headerName: "Title", width: 150, },
+        { field: "cost", headerName: "Cost", width: 110, type: Number},
+        { field: "startDate", headerName: "Date", width: 150, type: Date},
+        { field: "employee", headerName: "Employee", width: 200, flex: 1},
+        { field: "address", headerName: "Address", width: 200, flex: 1},
+    ]
+
+    const medColumns = [
+        { field: "title", headerName: "Title", width: 150,},
+        { field: "cost", headerName: "Cost", width: 110, type: Number, flex: 1},
+        { field: "startDate", headerName: "Date", width: 150, type: Date, flex: 1},
+        { field: "address", headerName: "Address", width: 200, flex: 1},
+    ]
+
+    const smallColumns = [
+        { field: "title", headerName: "Title", width: 150, flex: 1},
+        { field: "cost", headerName: "Cost", width: 110, type: Number, flex: 1},
+        { field: "startDate", headerName: "Date", width: 150, type: Date, flex: 1},
     ]
 
     const getEmployee = (empId) => {
@@ -86,7 +110,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
         startDate: dayjs(wo.startDate).format('l'),
         customer: getCustomer(wo.customerID),
         employee: getEmployee(wo.assignedEmp),
-        // address: wo.address.street
+         address: wo.address.street
     }))
 
     return (
@@ -97,7 +121,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
             </div>
 
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                <DataList columnData={columns} rowData={rows} />
+                <DataList columnData={lg?columns:medColumns} rowData={rows} />
             )}
         </div>
     )

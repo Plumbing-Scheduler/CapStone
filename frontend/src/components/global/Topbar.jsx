@@ -1,4 +1,4 @@
-import { Menu, MenuItem, IconButton, useTheme, Button, Typography } from "@mui/material";
+import { Menu, MenuItem, IconButton, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -7,9 +7,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axiosInstance";
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import SideBarSmall from "./SideBarSmall";
-import MobileSidebar from './MobileSideBar';
+
 
 const Topbar = ({ mobile = '', role = '' }) => {
     const theme = useTheme();

@@ -14,7 +14,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
     columnData = [...columnData, {
-        field: "Operations", headerName: "Ops", width: 120,  renderCell: ({ row: id }) => {
+        field: "Operations", headerName: "Ops", width: 100,  renderCell: ({ row: id }) => {
             return (
                 <Box sx={{ width: "100%", display: "flex", justifyContent: "space-evenly", gap: "20px" }}>
                     <Link to={`edit/${id.id}`} className='link '>
@@ -26,7 +26,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                 </Box>
             )
         }
-    },]
+    }]
     
     return (
         <div>
@@ -35,7 +35,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "ActiveBorder",
-                        zIndex: -1
+                        
                     },
                     "& .MuiDataGrid-cell:focus": {
                         outline: "none !important",
@@ -62,13 +62,13 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                     },
                     width: 'auto',
                     margin: "0 5%",
-                    zIndex: -1
                 }}
             >
                 <DataGrid
                     columns={columnData}
                     rows={rowData}
                     rowHeight={50}
+                    
                     initialState={{
                         pagination: { paginationModel: { pageSize: 10 } }
                     }}
