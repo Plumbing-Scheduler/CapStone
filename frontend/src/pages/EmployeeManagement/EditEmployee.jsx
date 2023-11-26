@@ -355,7 +355,7 @@ export const EditEmployee = () => {
                         {noInput &&
                             <Alert severity="warning">
                                 <AlertTitle>Warning</AlertTitle>
-                                Please Fill Out All Fields
+                                Please Fill All Required Fields
                             </Alert>}
                     </Box>
                     <Divider variant="middle" sx={{ pt: '10px', boxShadow: '5px' }} />
