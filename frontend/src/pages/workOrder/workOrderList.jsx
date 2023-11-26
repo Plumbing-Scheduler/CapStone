@@ -14,7 +14,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
     const lg = useMediaQuery("(min-width:1400px)")
-    const med = useMediaQuery("(min-width:1200px)")
+    const med = useMediaQuery("(min-width:680px)")
     dayjs(localizedFormat);
 
     useEffect(() => {
@@ -72,6 +72,12 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
         { field: "address", headerName: "Address", width: 200, flex: 1},
     ]
 
+    const smallColumns = [
+        { field: "title", headerName: "Title", width: 150,},
+        { field: "cost", headerName: "Cost", width: 110, type: Number, flex: 1},
+        { field: "startDate", headerName: "Date", width: 150, type: Date, flex: 1},
+    ]
+
     const getEmployee = (empId) => {
         for (let i = 0; employees.length > i; i++) {
             if (employees[i]._id === empId) {
@@ -106,7 +112,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
             </div>
 
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                <DataList columnData={lg?columns:medColumns} rowData={rows} />
+                <DataList columnData={!med?smallColumns:!lg?medColumns:columns} rowData={rows} />
             )}
         </div>
     )

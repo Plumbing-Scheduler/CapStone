@@ -146,8 +146,8 @@ const Schedule = ({ role = '', logId = '' }) => {
             children={
                 <div className="text-white">
                     {props.children}
-                    {(props.data.empId == logId)?("You"):("")}
-                    </div>
+                    {(props.data.empId == logId) ? ("You") : ("")}
+                </div>
             } />;
     };
     const weekCell = (props) => {
@@ -155,11 +155,11 @@ const Schedule = ({ role = '', logId = '' }) => {
     };
 
     const SchedulerRoot = (props) => {
-        return <Scheduler.Root >
-                
-                    {props.children}
+        return <Scheduler.Root style={{color: 'red'}}>
 
-                </Scheduler.Root>
+            {props.children}
+
+        </Scheduler.Root>
     }
 
     const AppContent = (props) => {
@@ -205,7 +205,7 @@ const Schedule = ({ role = '', logId = '' }) => {
     return (
         <div>
             <Header title="SCHEDULE" subtitle="Calendar" />
-            <div className={`text-center sm:max-2xl:flex justify-between p-2 m-3 shadow-xl`}>
+            <div className={`text-center flex justify-between p-2 m-3 shadow-xl`}>
                 {loading ? (
                     <div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>
                 ) : (
