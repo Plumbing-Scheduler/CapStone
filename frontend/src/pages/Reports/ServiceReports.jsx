@@ -14,6 +14,8 @@ import axiosInstance from '../../axiosInstance';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import Spinner from 'react-bootstrap/esm/Spinner';
+import isBetween from 'dayjs/plugin/isBetween';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 
 const ServiceReports = () => {
     const theme = useTheme();
@@ -26,11 +28,13 @@ const ServiceReports = () => {
     const [customers, setCustomers] = useState([]);
     const [workOrders, setWorkOrders] = useState([]);
     dayjs.extend(localizedFormat);
+    dayjs.extend(isBetween)
+    dayjs.extend(isSameOrAfter)
 
     const filtering = (wo) => {
-        if (wo.serviceStatus != "Completed") {
-            return false
-        }
+        // if (wo.serviceStatus != "Completed") {
+        //     return false
+        // }
         if (filterObj.assignedEmp != "") {
             if (wo.assignedEmp != filterObj.assignedEmp) {
                 return false
@@ -46,6 +50,11 @@ const ServiceReports = () => {
                 return false
             }
         }
+        if (filterObj.serviceStatus != "") {
+            if (wo.serviceStatus != filterObj.serviceStatus) {
+                return false
+            }
+        }
         if (filterObj.customer != "") {
             if (wo.customerID != filterObj.customer) {
                 return false
@@ -56,7 +65,10 @@ const ServiceReports = () => {
                 return false
             }
         }
-        if (!dayjs(wo.startDate).isBetween(dayjs(filterObj.startDate), dayjs(filterObj.endDate))) {
+        if (!dayjs(wo.startDate).isBetween(dayjs(filterObj.startDate), dayjs(filterObj.endDate), 'day', '[]')) {
+            return false
+        }
+        if (!dayjs(wo.startDate).isSameOrAfter(dayjs(filterObj.startDate), 'day')) {
             return false
         }
         return true
@@ -96,6 +108,7 @@ const ServiceReports = () => {
                 return employees[i].firstName + ' ' + employees[i].lastName
             }
         }
+        return "N/A"
     }
 
     const getCustomer = (custId) => {
@@ -106,11 +119,60 @@ const ServiceReports = () => {
         }
     }
 
+    const getCustomerFullName = (custId) => {
+        for (let i = 0; customers.length > i; i++) {
+            if (customers[i]._id === custId) {
+                return customers[i].firstName + ' ' + customers[i].lastName
+            }
+        }
+        return "N/A"
+    }
+
+    // const getEmployeeName = (empId) => {
+    //     for (let i = 0; employees.length > i; i++) {
+    //         if (employees[i]._id === empId) {
+    //             return employees[i].firstName + ' ' + employees[i].lastName
+    //         }
+    //     }
+    //     return "N/A"
+    // }
+
     return (
-        <Box>
+        <Box pb={"50px"}>
             <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Header title="Reports" subtitle="" />
+
             </Box>
+            <Box m="20px">
+                <Typography variant="h4" ><b>Search Parameters</b></Typography>
+
+                <Typography variant="h6" ><b>Between: </b>{dayjs(filterObj.startDate).format('LL')} - {dayjs(filterObj.endDate).format('LL')} </Typography>
+                {filterObj.busName != "" &&
+                    <Typography variant="h6" ><b>Business Name: </b>{filterObj.busName}</Typography>
+                }
+                {filterObj.customer != "" &&
+                    <Typography variant="h6" ><b>Customer: </b>{getCustomerFullName(filterObj.customer)}</Typography>
+                }
+                {filterObj.paymentType != "" &&
+                    <Typography variant="h6" ><b>Payment Type: </b>{filterObj.paymentType}</Typography>
+                }
+                {filterObj.serviceStatus != "" &&
+                    <Typography variant="h6" ><b>Work Order Status: </b>{filterObj.serviceStatus}</Typography>
+                }
+                {filterObj.serviceType != "" &&
+                    <Typography variant="h6" ><b>Service Type: </b>{filterObj.serviceType}</Typography>
+                }
+                {filterObj.assignedEmp != "" &&
+                    <Typography variant="h6" ><b>Employee: </b>{getEmployeeName(filterObj.assignedEmp)}</Typography>
+                }
+            </Box>
+
+            {filterWO.length === 0 &&
+                <Box ml="20px" sx={{width: "206px", margin: "40px auto"}}>
+                    <Typography variant="h3" ><b>No Results Found </b></Typography>
+                </Box>
+            }
+
             {filterWO.map((wo) => (
                 <Box m={3}>
 
@@ -153,8 +215,8 @@ const ServiceReports = () => {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
-                </div>)}
-             </Box>
+                        </div>)}
+                </Box>
             ))}
         </Box>
     )

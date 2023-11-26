@@ -1,11 +1,11 @@
-import { AlertTitle, Box, Button, TextField, Typography, useTheme } from "@mui/material";
+import { AlertTitle, Box, Button, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import { tokens } from "../theme.js";
 import axiosInstance from "../axiosInstance.js";
 import Alert from '@mui/material/Alert';
 
 const Login = () => {
-
+    const mobile = useMediaQuery("(min-width: 620px)")
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [email, setEmail] = useState('');
@@ -42,22 +42,25 @@ const Login = () => {
             })  
     }
 
-    return (<Box>
-        <Box display="flex" justifyContent="center" alignItems="center">
+    return (<Box minWidth={"500px"}>
+        <Box height={"150px"} display="flex" justifyContent="center" alignItems="center">
             <img
                 alt="company-logo"
-                width="100px"
-                height="100px"
-                src={`../../assets/companylogo.png`}
+                width="200px"
+                
+                src={`../../assets/logo.png`}
                 style={{ cursor: 'pointer', borderRadius: '50%' }}
             />
         </Box>
-        <Box sx={{ m: 'auto', width: '50%', p: '50px', boxShadow: '4', border: 'solid', borderWidth: "1px", borderRadius: '5px' }}>
+        <Box sx={{ m: 'auto', p: '50px', boxShadow: '4', border: 'solid', borderWidth: "1px", borderRadius: '5px' }}
+            width={!mobile? "70%" : '50%'}
+        >
             <Typography
                 variant="h2"
                 height="10vh"
                 textAlign="center"
-                sx={{ p: '10px', margin: '20px' }}>
+                width={"100%"}
+                sx={{ p: '10px', margin: 'auto' }}>
                 LOGIN
             </Typography>
             <Box
@@ -101,12 +104,12 @@ const Login = () => {
                 />
 
             </Box>
-            <Box m="30px" p="60px">
+            <Box width="100%"  p="60px 0">
                 <Box
                     backgroundColor={colors.redAccent[500]}
                     display="grid"
                     gap="30px"
-                    sx={{ p: '4px', m: 'auto', width: '90%', borderRadius: '4px' }}
+                    sx={{ p: '4px', m: 'auto', width: '100px', borderRadius: '4px' }}
                 >
                     <Button onClick={handleLogin}>Login</Button>
                 </Box>

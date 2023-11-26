@@ -10,7 +10,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 import MenuItem from '@mui/material/MenuItem';
 import { tokens } from "../theme";
 import { titles, paymentTypes } from '../data/types';
-// import { Link } from 'react-router-dom';
+import {woStatusOptions } from '../data/types'
 
 export const ReportFilter = () => {
     const theme = useTheme();
@@ -23,7 +23,7 @@ export const ReportFilter = () => {
     const [endDate, setEndDate] = useState(Date.now());
     const [customer, setCustomer] = useState('');
     const [busName, setBusName] = useState('');
-
+    const [serviceStatus, setServiceStatus] = useState('');
     const [employees, setEmployees] = useState([]);
     const [customers, setCustomers] = useState([]);
     const navigate = useNavigate();
@@ -38,6 +38,7 @@ export const ReportFilter = () => {
         endDate,
         customer,
         busName,
+        serviceStatus
     };
 
     useEffect(() => {
@@ -148,6 +149,25 @@ export const ReportFilter = () => {
                                 {ttl.label}
                             </MenuItem>
                         ))}</TextField>
+                        <TextField
+                            select
+                            fullWidth
+                            type="text"
+                            variant="filled"
+                            label="Status"
+                            value={serviceStatus}
+                            required
+                            onChange={(e) => setServiceStatus(e.target.value)}
+                            name="Status"
+                            id="Status"
+                            sx={{ gridColumn: "span 4" }}
+                        >
+                            {woStatusOptions.map((sts) => (
+                                <MenuItem key={sts.value} value={sts.value}>
+                                    {sts.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
 
                         <TextField
                             fullWidth
@@ -190,6 +210,8 @@ export const ReportFilter = () => {
                                         fontWeight: 'bold',
                                         fontSize: '13px',
                                         borderRadius: '3px',
+                                        color: 'white',
+                                        margin: 'auto'
                                     }}
                                 >
                                     Run Report
