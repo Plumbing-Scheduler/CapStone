@@ -189,6 +189,13 @@ const Quotes = () => {
 
     }
 
+    const formatPhone = (event) => {
+        let num = event.target.value;
+        num = num.replace(/\D/, '');
+        console.log(num)
+        setPhone(num)
+    }
+
     return (
         <Box >
             <Header title="QUOTE REQUESTS" subtitle="Add New Quote" />
@@ -262,7 +269,7 @@ const Quotes = () => {
                                 name="phone"
                                 id="phone"
                                 value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
+                                onChange={formatPhone}
                                 sx={{ gridColumn: "span 1" }}
                             />
                             <TextField

@@ -11,7 +11,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { tokens } from "../../theme.js";
-import { Roles, employmentOptions, empStatusOptions } from '../../data/types.js'
+import { Roles, employmentOptions, empStatusOptions, provinces } from '../../data/types.js'
 
 export const CreateEmployee = () => {
     const theme = useTheme();
@@ -27,8 +27,8 @@ export const CreateEmployee = () => {
     const [phone, setPhone] = useState("");
     const [street, setStreet] = useState('');
     const [postalCode, setPostalCode] = useState('');
-    const [city, setCity] = useState('');
-    const [province, setProvince] = useState('');
+    const [city, setCity] = useState('Calgary');
+    const [province, setProvince] = useState('AB');
     const [role, setRole] = useState('');
     const [experience, setExperience] = useState('');
     const [employmentType, setEmploymentType] = useState('');
@@ -197,6 +197,7 @@ export const CreateEmployee = () => {
                     <TextField
                         fullWidth
                         required
+                        select
                         type="text"
                         variant='filled'
                         label="Province"
@@ -205,7 +206,16 @@ export const CreateEmployee = () => {
                         value={province}
                         onChange={(e) => setProvince(e.target.value)}
                         sx={{ gridColumn: "span 1" }}
-                    />
+                    >
+                        {provinces.map((option) => (
+                            <MenuItem
+                                key={option.value}
+                                value={option.value}
+                            >
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                 </Box>
                 {/**EMPLOYMENT INFO HERE BELOW--------------------------------------------------------------- */}
                 <Typography

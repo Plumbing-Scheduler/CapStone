@@ -318,7 +318,7 @@ const EditQuote = () => {
                                     margin: 'auto'
                                 }}
                             >
-                                Save and Add
+                                Save
                             </Button>
                         </div>
                     </Box>

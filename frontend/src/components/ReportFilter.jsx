@@ -18,7 +18,7 @@ export const ReportFilter = () => {
     const isNonMobile = useMediaQuery("(min-diwth:600px)");
     const [paymentType, setPaymentType] = useState('');
     const [serviceType, setServiceType] = useState('')
-    const [startDate, setStartDate] = useState(Date.now() - (30 * 24 * 60 * 60 * 1000));
+    const [startDate, setStartDate] = useState(dayjs(Date.now()).startOf('month'));
     const [assignedEmp, setAssignedEmp] = useState('');
     const [endDate, setEndDate] = useState(Date.now());
     const [customer, setCustomer] = useState('');

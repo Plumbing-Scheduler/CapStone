@@ -45,21 +45,27 @@ export const CreateCustomer = () => {
         axiosInstance
             .post('/customer', newCustomer)
             .then(() => {
-                navigate('/customers')
+                navigate('/customers');
             }
             )
             .catch((error) => {
                 setServerError(false);
                 setNoInput(false);
-                console.log(error.response.status)
                 if (error.response.status === 500) {
                     setServerError(true);
                 }
                 else if (error.response.status === 400) {
                     setNoInput(true);
                 }
-            })
-    }
+            });
+    };
+
+    const formatPhone = (event) => {
+        let num = event.target.value;
+        num = num.replace(/\D/, '');
+        console.log(num)
+        setPhone(num)
+    };
 
     return (
         <Box>
@@ -113,13 +119,13 @@ export const CreateCustomer = () => {
                         <TextField
                             fullWidth
                             required
-                            type="number"
+                            type="text"
                             variant='filled'
                             label="Phone"
                             name="phone #"
                             id="phone"
                             value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            onChange={formatPhone}
                             sx={{ gridColumn: "span 1" }}
                         />
                         <TextField

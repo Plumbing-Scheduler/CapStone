@@ -408,7 +408,7 @@ export const CreateWorkOrder = () => {
                                 margin: 'auto'
                             }}
                         >
-                            Save and Add
+                            Save
                         </Button>
                     </div>
                 </div>)}
