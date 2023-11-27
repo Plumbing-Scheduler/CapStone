@@ -95,7 +95,7 @@ function App() {
 
                   <Route path="/schedule" element={<Schedule role={userData.role} logId={userData.id} />} >
                   </Route>
-                  {(userData.role == "Management") &&
+                  {(userData.role === "Management") &&
                     <Route path="/quotes" >
                       <Route index element={<Quotes />} />
                       <Route path='create' element={<CreateQuote />} />

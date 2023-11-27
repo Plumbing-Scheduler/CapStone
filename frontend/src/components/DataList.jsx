@@ -2,7 +2,6 @@ import React from 'react'
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import { Box, useTheme } from '@mui/material';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Link } from 'react-router-dom';

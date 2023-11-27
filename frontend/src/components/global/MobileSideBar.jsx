@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
-import { Box, Hidden, IconButton, Typography, useTheme } from '@mui/material';
+import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { tokens } from '../../theme';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
@@ -127,7 +127,7 @@ const MobileSidebar = ({ role = '' }) => {
                       selected={selected}
                       setSelected={setSelected}
                     />
-                    {(role == "Management") &&
+                    {(role === "Management") &&
                     <Item
                       title="Quote Requests"
                       to="/quotes"
@@ -150,7 +150,7 @@ const MobileSidebar = ({ role = '' }) => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  {(role == "Management") &&
+                  {(role === "Management") &&
                     <Item
                       title="Employee"
                       to="/employee"
@@ -159,7 +159,7 @@ const MobileSidebar = ({ role = '' }) => {
                       setSelected={setSelected}
                     />
                   }
-                  {(role == "Management") &&
+                  {(role === "Management") &&
                     <Item
                       title="Customers"
                       to="/customers"
@@ -168,7 +168,7 @@ const MobileSidebar = ({ role = '' }) => {
                       setSelected={setSelected}
                     />
                   }
-                  {(role == "Management") &&
+                  {(role === "Management") &&
                     <Item
                       title="Reports"
                       to="/reports"

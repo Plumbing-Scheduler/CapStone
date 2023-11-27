@@ -364,12 +364,12 @@ const Profile = () => {
                     onChange={(e) => setConPassword(e.target.value)}
                     sx={{ margin: "10px auto", width: "100%" }} />
 
-                {(newPassword != conPassword) &&
+                {(newPassword !== conPassword) &&
                     <Alert severity="error" variant="filled">
                         <AlertTitle>Passwords Do Not Match</AlertTitle>
                     </Alert>}
 
-                {(newPassword.length < 8 && newPassword.length != 0) &&
+                {(newPassword.length < 8 && newPassword.length !== 0) &&
                     <Alert severity="warning" variant="filled">
                         <AlertTitle>Password should be more than 8 Characters</AlertTitle>
                     </Alert>}
@@ -402,7 +402,7 @@ const Profile = () => {
                         onClick={changePassword}
                         variant="contained"
                         color="error"
-                        disabled={(newPassword != conPassword || newPassword.length < 8 && conPassword.length < 8) ? (true) : (false)}
+                        disabled={((newPassword !== conPassword) || (newPassword.length < 8 && conPassword.length < 8)) ? (true) : (false)}
                         sx={{ fontWeight: "bold", color: "white" }}>
                         Change pasword
                     </Button>
