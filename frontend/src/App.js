@@ -74,7 +74,7 @@ function App() {
             <div className='topBar'>
               <div>
                 {mobileSideBar && (
-                  <MobileSidebar />
+                  <MobileSidebar role={userData.role}/>
                 )}
               </div>
               <Topbar mobile={mobileSideBar} role={userData.role} />

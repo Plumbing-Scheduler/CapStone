@@ -29,7 +29,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const MobileSidebar = () => {
+const MobileSidebar = ({ role = '' }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -127,6 +127,7 @@ const MobileSidebar = () => {
                       selected={selected}
                       setSelected={setSelected}
                     />
+                    {(role == "Management") &&
                     <Item
                       title="Quote Requests"
                       to="/quotes"
@@ -134,20 +135,22 @@ const MobileSidebar = () => {
                       selected={selected}
                       setSelected={setSelected}
                     />
-                    <Item
-                      title="Work Orders"
-                      to="/workorder"
-                      icon={<ReceiptOutlinedIcon />}
-                      selected={selected}
-                      setSelected={setSelected}
-                    />
-                    <Item
-                      title="Schedule"
-                      to="/schedule"
-                      icon={<CalendarTodayOutlinedIcon />}
-                      selected={selected}
-                      setSelected={setSelected}
-                    />
+                  }
+                  <Item
+                    title="Work Orders"
+                    to="/workorder"
+                    icon={<ReceiptOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                  <Item
+                    title="Schedule"
+                    to="/schedule"
+                    icon={<CalendarTodayOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                  {(role == "Management") &&
                     <Item
                       title="Employee"
                       to="/employee"
@@ -155,6 +158,8 @@ const MobileSidebar = () => {
                       selected={selected}
                       setSelected={setSelected}
                     />
+                  }
+                  {(role == "Management") &&
                     <Item
                       title="Customers"
                       to="/customers"
@@ -162,6 +167,8 @@ const MobileSidebar = () => {
                       selected={selected}
                       setSelected={setSelected}
                     />
+                  }
+                  {(role == "Management") &&
                     <Item
                       title="Reports"
                       to="/reports"
@@ -169,6 +176,7 @@ const MobileSidebar = () => {
                       selected={selected}
                       setSelected={setSelected}
                     />
+                  }
                   </Box>
                 </Box>
               )}
