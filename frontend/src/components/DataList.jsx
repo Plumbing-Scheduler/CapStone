@@ -31,7 +31,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
     return (
         <div>
             <Box m="40px"
-                height="auto"
+                height="608px"
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "ActiveBorder",

@@ -63,7 +63,7 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {!loggedInUser ? (
+        {!loggedInUser? (
           <Login />
         ) : (
           <div className="app">
