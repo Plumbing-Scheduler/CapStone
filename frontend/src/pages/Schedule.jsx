@@ -207,7 +207,7 @@ const Schedule = ({ role = '', logId = '' }) => {
     return (
         <div>
             <Header title="SCHEDULE" subtitle="Calendar" />
-            <div className={`text-center flex justify-between p-2 m-3 shadow-xl`}>
+            <div className={`text-center flex justify-between pb-5 m-3 shadow-xl`}>
                 {loading ? (
                     <div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>
                 ) : (

@@ -34,7 +34,7 @@ export const CreateEmployee = () => {
     const [employmentType, setEmploymentType] = useState('');
     const [status, setStatus] = useState('');
     const [startDate, setStartDate] = useState(Date.now());
-
+    const [alertMessage, setAlertMessage ] = useState('');
     dayjs.extend(localizedFormat);
     const navigate = useNavigate();
 
@@ -66,12 +66,15 @@ export const CreateEmployee = () => {
             .catch((error) => {
                 setServerError(false);
                 setNoInput(false);
-                console.log(error.response.status)
+                console.log(error)
                 if (error.response.status === 500) {
                     setServerError(true);
                 }
                 else if (error.response.status === 400) {
+                    
+                    setAlertMessage(error.response.data.message);
                     setNoInput(true);
+                    
                 }
             })
     }
@@ -323,7 +326,7 @@ export const CreateEmployee = () => {
                     {noInput &&
                         <Alert severity="warning">
                             <AlertTitle>Warning</AlertTitle>
-                            Please Fill All Required Fields
+                            {alertMessage}
                         </Alert>}
                 </Box>
                 <Divider variant="middle" sx={{ pt: '10px', boxShadow: '5px' }} />

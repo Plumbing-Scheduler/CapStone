@@ -57,13 +57,11 @@ const Topbar = ({ mobile = '', role = '' }) => {
                         < LightModeOutlinedIcon />
                     )}
                 </IconButton>
-                <IconButton>
-                    < SettingsOutlinedIcon />
-                </IconButton>
                 <IconButton
                     onClick={handleClickUser}>
                     < PersonOutlinedIcon />
                 </IconButton>
+                </div>
                 <Menu
                     anchorEl={anchorEl}
                     open={open}
@@ -91,7 +89,7 @@ const Topbar = ({ mobile = '', role = '' }) => {
                         </Link>
                     </MenuItem>
                 </Menu>
-            </div>
+            
         </div>
         
     );

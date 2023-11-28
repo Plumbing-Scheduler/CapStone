@@ -58,7 +58,7 @@ function App() {
   useEffect(() => {
     getRefresh();
     navigate('/');
-  }, [])
+  }, [] )
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
