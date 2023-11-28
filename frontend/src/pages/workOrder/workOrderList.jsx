@@ -6,15 +6,21 @@ import Spinner from 'react-bootstrap/Spinner';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import DataList from '../../components/DataList';
-import { useMediaQuery } from '@mui/material';
+import { Button, useMediaQuery, Box, useTheme } from '@mui/material';
+import { tokens } from "../../theme";
 
 export const WorkOrders = ({ role = '', logId = '' }) => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const [workOrders, setWorkOrders] = useState([]);
+    const [workOrdersCompleted, setWorkOrdersCompleted] = useState([]);
     const [employees, setEmployees] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
     const lg = useMediaQuery("(min-width:1400px)")
     const med = useMediaQuery("(min-width:680px)")
+    const [showCompleted, setShowCompleted] = useState(false);
     dayjs(localizedFormat);
 
     useEffect(() => {
@@ -24,8 +30,11 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
                 .get(`/workorders/employee/${logId}`)
                 .then((response) => {
                     setWorkOrders(response.data.data);
+
                     setLoading(false);
-                }).catch((error) => {
+                }).then(() => {
+                })
+                .catch((error) => {
                     setLoading(false);
                     console.log(error);
                 })
@@ -48,34 +57,42 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
                     .get('/customer')
                     .then((response) => {
                         setCustomers(response.data.data);
+                        console.log(workOrders);
+
                     })
             }).catch((error) => {
                 setLoading(false);
                 console.log(error);
             })
 
-
+        console.log(workOrdersCompleted);
     }, []);
+
+    useEffect(() => {
+        setWorkOrdersCompleted(workOrders.filter((elem) => {
+            return elem.serviceStatus == "Completed";
+        }));
+    }, [workOrders])
 
     const columns = [
         { field: "title", headerName: "Title", width: 200, },
-        { field: "cost", headerName: "Cost", width: 110, type: Number},
-        { field: "startDate", headerName: "Date", width: 150, type: Date},
-        { field: "customer", headerName: "Customer", width: 200, flex: 1},
-        { field: "employee", headerName: "Employee", width: 200, flex: 1},
-        { field: "address", headerName: "Address", width: 200, flex: 1},
+        { field: "cost", headerName: "Cost", width: 110, type: Number },
+        { field: "startDate", headerName: "Date", width: 150, type: Date },
+        { field: "customer", headerName: "Customer", width: 200, flex: 1 },
+        { field: "employee", headerName: "Employee", width: 200, flex: 1 },
+        { field: "address", headerName: "Address", width: 200, flex: 1 },
     ]
     const medColumns = [
-        { field: "title", headerName: "Title", width: 150,},
-        { field: "cost", headerName: "Cost", width: 110, type: Number, flex: 1},
-        { field: "startDate", headerName: "Date", width: 150, type: Date, flex: 1},
-        { field: "address", headerName: "Address", width: 200, flex: 1},
+        { field: "title", headerName: "Title", width: 150, },
+        { field: "cost", headerName: "Cost", width: 110, type: Number, flex: 1 },
+        { field: "startDate", headerName: "Date", width: 150, type: Date, flex: 1 },
+        { field: "address", headerName: "Address", width: 200, flex: 1 },
     ]
 
     const smallColumns = [
-        { field: "title", headerName: "Title", width: 150,},
-        { field: "cost", headerName: "Cost", width: 110, type: Number, flex: 1},
-        { field: "startDate", headerName: "Date", width: 150, type: Date, flex: 1},
+        { field: "title", headerName: "Title", width: 150, },
+        { field: "cost", headerName: "Cost", width: 110, type: Number, flex: 1 },
+        { field: "startDate", headerName: "Date", width: 150, type: Date, flex: 1 },
     ]
 
     const getEmployee = (empId) => {
@@ -94,7 +111,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
         }
     }
 
-    const rows = workOrders.map((wo) => ({
+    const rows = workOrdersCompleted.map((wo) => ({
         id: wo._id,
         title: wo.title,
         cost: wo.cost,
@@ -105,15 +122,39 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
         serviceStatus: wo.serviceStatus
     }))
 
+    const rowsCompleted = workOrders.map((wo) => ({
+        id: wo._id,
+        title: wo.title,
+        cost: wo.cost,
+        startDate: dayjs(wo.startDate).format('l'),
+        customer: getCustomer(wo.customerID),
+        employee: getEmployee(wo.assignedEmp),
+        address: wo.address.street,
+        serviceStatus: wo.serviceStatus
+    }))
+
+    const handleRows = () => {
+        setShowCompleted(!showCompleted);
+    }
+
     return (
         <div>
             <Header title="WORK ORDERS" subtitle="View Workorders" />
             <div className='flex justify-end' >
-                <AddNewButton destination="form" item="Work Order" className='bg-sky-900' />
+                <AddNewButton destination="form" item="Work Order"/>
             </div>
 
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                <DataList columnData={!med?smallColumns:!lg?medColumns:columns} rowData={rows} />
+                <div>
+                    <DataList columnData={!med ? smallColumns : !lg ? medColumns : columns} rowData={!showCompleted ? rows : rowsCompleted} />
+                    <div className='flex justify-end'>
+                        <Box display="flex" justifyContent="space-between" p={3} sx={{ margin: 'auto', pt: '2%', width: '50%' }}>
+                            <Box display="flex" justifyContent="space-between" backgroundColor={colors.buttonBase} borderRadius="3px" color={"white"} width={'20%'} margin={'auto'}>
+                                <Button variant="Text" onClick={handleRows}>Show All</Button>
+                            </Box>
+                        </Box>
+                    </div>
+                </div>
             )}
         </div>
     )

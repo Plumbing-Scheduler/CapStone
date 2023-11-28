@@ -41,7 +41,8 @@ const quoteRequestSchema = mongoose.Schema(
         cost: Number,
         busName: String,
         email: String,
-        type: String
+        type: String,
+        customerId: String
     }
 );
 

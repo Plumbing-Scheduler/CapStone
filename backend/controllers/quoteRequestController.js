@@ -19,7 +19,8 @@ const createQuoteRequest = async (request, response) => {
             }, 
             busName: request.body.busName,
             email: request.body.email,
-            type: request.body.type
+            type: request.body.type,
+            customerId: request.body.customerId
         };
         const result = await QuoteRequest.create(newQuoteRequest);
     

@@ -27,11 +27,8 @@ const ShowQuote = () => {
       .get(`/quote/${id}`)
       .then((response) => {
         setQuote(response.data);
-
-          const email = response.data.email;
-          const phone =  response.data.phone;
         axiosInstance
-          .get(`/customer/quote/${email}&${phone}`)
+          .get(`/customer/${response.data.customerId}`)
           .then((response) => {
             setCustomer(response.data); 
             console.log(response.data)

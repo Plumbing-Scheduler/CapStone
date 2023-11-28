@@ -103,7 +103,8 @@ const Quotes = () => {
                         cost,
                         busName: response.data.busName,
                         email: response.data.email,
-                        type
+                        type,
+                        customerId: response.data._id
                     }
                 }).then(() => {
                     axiosInstance

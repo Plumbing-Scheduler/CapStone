@@ -24,9 +24,14 @@ const EditQuote = () => {
     const [postalCode, setPostalCode] = useState('');
     const [city, setCity] = useState('');
     const [province, setProvince] = useState('');
+    const [CuStreet, setCuStreet] = useState('');
+    const [CuPostalCode, setCuPostalCode] = useState('');
+    const [CuCity, setCuCity] = useState('');
+    const [CuProvince, setCuProvince] = useState('');
     const [cost, setCost] = useState('');
     const [busName, setBusName] = useState('');
     const [email, setEmail] = useState('');
+    const [customerId, setCustomerId] = useState('');
     const navigate = useNavigate();
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
@@ -45,7 +50,8 @@ const EditQuote = () => {
         cost,
         busName,
         email,
-        type
+        type,
+        customerId
     }
 
     useEffect(() => {
@@ -53,19 +59,14 @@ const EditQuote = () => {
         axiosInstance
             .get(`/quote/${id}`)
             .then((response) => {
-                setFirstName(response.data.firstName);
-                setLastName(response.data.lastName);
-                setPhone(response.data.phone);
                 setDescription(response.data.description);
                 setPostalCode(response.data.address.postalCode)
                 setStreet(response.data.address.street)
                 setCity(response.data.address.city)
                 setProvince(response.data.address.province)
                 setCost(response.data.cost);
-                setBusName(response.data.busName);
-                setEmail(response.data.email);
                 setType(response.data.type)
-                setLoading(false);
+                setCustomerId(response.data.customerId)
             })
             .catch((error) => {
                 setLoading(false);
@@ -73,14 +74,49 @@ const EditQuote = () => {
             })
 
     }, [])
-    
+
+    useEffect(() => {
+        axiosInstance
+            .get(`/customer/${customerId}`)
+            .then((response) => {
+                setFirstName(response.data.firstName);
+                setLastName(response.data.lastName);
+                setPhone(response.data.phone);
+                setBusName(response.data.busName);
+                setEmail(response.data.email);
+                setCuCity(response.data.address.city)
+                setCuPostalCode(response.data.address.postalCode)
+                setCuProvince(response.data.address.province)
+                setCuStreet(response.data.address.street)
+            }).catch((error) => {
+                console.log(error);
+            })
+        setLoading(false);
+    }, [customerId])
+
     const handleSave = () => {
         axiosInstance
             .put(`/quote/${id}`, data)
             .then(() => {
-                navigate('/quotes')
-            }
-            )
+                const cust = {
+                    firstName,
+                    lastName,
+                    phone,
+                    busName,
+                    email,
+                    address: {
+                        street: CuStreet,
+                        postalCode: CuPostalCode,
+                        city: CuCity,
+                        province: CuProvince
+                    },
+                }
+                axiosInstance
+                    .put(`/customer/${customerId}`, cust)
+                    .then(() => {
+                        navigate('/quotes')
+                    })
+            })
             .catch((error) => {
                 setServerError(false);
                 setNoInput(false);
@@ -105,82 +141,7 @@ const EditQuote = () => {
                 <div className={`shadow-lg mt-3 `}>
                     <Divider variant="middle" sx={{ pt: '20px' }} />
                     <Box>
-                        <Typography
-                            variant="h3"
-                            sx={{
-                                m: "30px auto 5px auto",
-                                width: '83%',
-                                pb: '10px',
-                            }}>
-                            <b>Customer Information</b>
-                        </Typography>
-                        <Box
-                            display="grid"
-                            gap="20px"
-                            gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
-                            sx={{
-                                gridColumn: "span 4",
-                                margin: "auto",
-                                width: '80%'
-                            }} >
-                            <TextField
-                                fullWidth
-                                type="text"
-                                variant='filled'
-                                label="First Name"
-                                name="firstName"
-                                id="firstName"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                                sx={{ gridColumn: "span 1" }}
-                            />
-                            <TextField
-                                fullWidth
-                                type="text"
-                                variant='filled'
-                                label="Last Name"
-                                name="lastName"
-                                id="lastName"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                                sx={{ gridColumn: "span 1" }}
-                            />
-                            <TextField
-                                fullWidth
-                                type="number"
-                                variant='filled'
-                                label="Phone #"
-                                name="phone"
-                                id="phone"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                sx={{ gridColumn: "span 1" }}
-                            />
-                            <TextField
-                                fullWidth
-                                type="text"
-                                variant='filled'
-                                label="Email"
-                                name="email"
-                                id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                sx={{ gridColumn: "span 1" }}
-                            />
-                            <TextField
-                                fullWidth
-                                type="text"
-                                variant="filled"
-                                label="Buisness Name"
-                                name="businessname"
-                                id="businessname"
-                                value={busName}
-                                onChange={(e) => setBusName(e.target.value)}
-                                sx={{ gridColumn: "span 1" }}
-                            />
-                        </Box>
-
-                        <Typography
+                    <Typography
                             variant="h3"
                             sx={{
                                 m: "30px auto 5px auto",
@@ -291,6 +252,129 @@ const EditQuote = () => {
                                 sx={{ gridColumn: "2/3" }}
                             />
                         </Box>
+                        <Typography
+                            variant="h3"
+                            sx={{
+                                m: "30px auto 5px auto",
+                                width: '83%',
+                                pb: '10px',
+                            }}>
+                            <b>Customer Information </b>
+                        </Typography>
+                        <Box
+                            display="grid"
+                            gap="20px"
+                            gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                            sx={{
+                                gridColumn: "span 4",
+                                margin: "auto",
+                                width: '80%'
+                            }} >
+                            <TextField
+                                fullWidth
+                                type="text"
+                                variant='filled'
+                                label="First Name"
+                                name="firstName"
+                                id="firstName"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                                sx={{ gridColumn: "span 1" }}
+                            />
+                            <TextField
+                                fullWidth
+                                type="text"
+                                variant='filled'
+                                label="Last Name"
+                                name="lastName"
+                                id="lastName"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                                sx={{ gridColumn: "span 1" }}
+                            />
+                            <TextField
+                                fullWidth
+                                type="number"
+                                variant='filled'
+                                label="Phone #"
+                                name="phone"
+                                id="phone"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                sx={{ gridColumn: "span 1" }}
+                            />
+                            <TextField
+                                fullWidth
+                                type="text"
+                                variant='filled'
+                                label="Email"
+                                name="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                sx={{ gridColumn: "span 1" }}
+                            /><TextField
+                                fullWidth
+                                required
+                                type="text"
+                                variant='filled'
+                                label="Address"
+                                name="address"
+                                id="address"
+                                value={CuStreet}
+                                onChange={(e) => setCuStreet(e.target.value)}
+                                sx={{ gridColumn: "span 1" }}
+                            />
+                            <TextField
+                                fullWidth
+                                required
+                                type="text"
+                                variant='filled'
+                                label="Postal Code"
+                                name="postalCode"
+                                id="postalCode"
+                                value={CuPostalCode}
+                                onChange={(e) => setCuPostalCode(e.target.value)}
+                                sx={{ gridColumn: "span 1" }}
+                            />
+                            <TextField
+                                fullWidth
+                                required
+                                type="text"
+                                variant='filled'
+                                label="City"
+                                name="city"
+                                id="city"
+                                value={CuCity}
+                                onChange={(e) => setCuCity(e.target.value)}
+                                sx={{ gridColumn: "span 1" }}
+                            />
+                            <TextField
+                                fullWidth
+                                required
+                                type="text"
+                                variant='filled'
+                                label="Province"
+                                name="province"
+                                id="province"
+                                value={CuProvince}
+                                onChange={(e) => setCuProvince(e.target.value)}
+                                sx={{ gridColumn: "2/3" }}
+                            />
+                            <TextField
+                                fullWidth
+                                type="text"
+                                variant="filled"
+                                label="Buisness Name"
+                                name="businessname"
+                                id="businessname"
+                                value={busName}
+                                onChange={(e) => setBusName(e.target.value)}
+                                sx={{ gridColumn: "span 1" }}
+                            />
+                        </Box>
+
+                        
                         <Box sx={{ width: "30%", margin: "10px auto" }}>
                             {serverError &&
                                 <Alert severity="error" >
@@ -312,7 +396,7 @@ const EditQuote = () => {
                                     backgroundColor: colors.redAccent[500],
                                     fontWeight: 'bold',
                                     fontSize: '13px',
-                                    width: minwidth1 ? 'auto': '80%',
+                                    width: minwidth1 ? 'auto' : '80%',
                                     borderRadius: '3px',
                                     color: 'white',
                                     margin: 'auto'

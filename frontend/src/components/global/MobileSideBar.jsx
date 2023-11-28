@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { tokens } from '../../theme';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
@@ -16,6 +16,7 @@ import PersonIcon from '@mui/icons-material/Person';
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  
   return (
     <MenuItem
       active={selected === title}
@@ -34,7 +35,7 @@ const MobileSidebar = ({ role = '' }) => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState('Home');
-
+  const navigate = useNavigate();
   useEffect(() => {
     // Add a listener for window resize event
     const handleResize = () => {
@@ -54,6 +55,10 @@ const MobileSidebar = ({ role = '' }) => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const goHome = () => {
+    navigate('/');
+  }
 
   return (
     <Box sx={{ width: 'auto', position: 'relative' }}>
@@ -113,13 +118,14 @@ const MobileSidebar = ({ role = '' }) => {
                     <img
                       alt="company-logo"
                       width="100%"
-                      height={"50%"}
+                      // height={"50%"}
                       src={`../../assets/logo.png`}
-                      style={{ cursor: 'pointer', borderRadius: '50%' }}
+                      style={{ cursor: 'pointer', borderRadius: '10%', margin: "100px 0 0 0" }}
+                      onClick={goHome}
                     />
                   </Box>
 
-                  <Box paddingLeft={isCollapsed ? 0 : '10%'}>
+                  <Box paddingLeft={isCollapsed ? 0 : '10%'} marginTop={"100px"}>
                     <Item
                       title="Home"
                       to="/"

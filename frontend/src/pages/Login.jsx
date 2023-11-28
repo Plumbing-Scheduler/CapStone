@@ -43,11 +43,10 @@ const Login = () => {
     }
 
     return (<Box minWidth={"500px"}>
-        <Box height={"150px"} display="flex" justifyContent="center" alignItems="center">
+        <Box height={"150px"} display="flex" justifyContent="center" alignItems="center" paddingTop={"30px"}>
             <img
                 alt="company-logo"
                 width="200px"
-                
                 src={`../../assets/logo.png`}
                 style={{ cursor: 'pointer', borderRadius: '50%' }}
             />
