@@ -48,7 +48,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                     },
                     "& .MuiDataGrid-columnHeaders": {
                         backgroundColor: colors.redAccent[400],
-                        borderBottom: "none",
+                        // borderBottom: "none",
                         fontSize: minwidth1 ? '20px' : minwidth2 ? '15px' : '10 px',
                         color: "black",
                     },
@@ -58,6 +58,18 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                     "& .MuiDataGrid-footerContainer": {
                         borderTop: "none",
                         backgroundColor: colors.redAccent[400]
+                    },
+                    "& .MuiTablePagination-root": {
+                        display: "flex",
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        color: 'black'
+                    },
+                    "& .MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows" :{
+                        margin: "auto 0",
+                    },
+                    "& .MuiButtonBase-root": {
+                        color: 'black'
                     },
                     width: 'auto',
                     margin: "0 5%",
@@ -69,6 +81,7 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
                     rowHeight={50}
                     
                     initialState={{
+                        ...rowData.initialState,
                         pagination: { paginationModel: { pageSize: 10 } }
                     }}
                     pageSizeOptions={[10, 25, 50, 100]}
