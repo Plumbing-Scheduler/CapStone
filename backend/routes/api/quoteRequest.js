@@ -11,4 +11,7 @@ router.route('/:id')
     .put(quoteRequestController.updateQuoteRequest)
     .delete(quoteRequestController.deleteQuoteRequest);
 
+router.route('/custDelete/:id')
+    .delete(quoteRequestController.deleteCustomerQuoteRequest);
+
 export default router;

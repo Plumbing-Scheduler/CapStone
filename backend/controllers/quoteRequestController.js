@@ -94,4 +94,19 @@ const deleteQuoteRequest = async (request, response) => {
     };
 };
 
-export default {createQuoteRequest, getAllQuoteRequest, getQuoteRequest, updateQuoteRequest, deleteQuoteRequest};
+const deleteCustomerQuoteRequest = async (request, response) => { 
+    try {
+        const { id } = request.params;
+        const result = await QuoteRequest.deleteMany({customerId: id});
+
+        if (!result) {
+            return response.status(204).send({message: 'No Content Found'});
+        };
+        return response.status(200).send({message: "Delete Successful!"});
+    } catch (error) {
+        console.log(error);
+        response.status(500).send({message: error.message});
+    };
+};
+
+export default {createQuoteRequest, getAllQuoteRequest, getQuoteRequest, updateQuoteRequest, deleteQuoteRequest, deleteCustomerQuoteRequest};

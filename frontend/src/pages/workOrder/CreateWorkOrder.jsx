@@ -114,21 +114,18 @@ export const CreateWorkOrder = () => {
                 axiosInstance
                     .post('/schedule', newCal)
                     .then((response) => {
-                        console.log(response.data)
                         navigate('/workorder')
                     })
 
                 if (state !== null) {
                     axiosInstance
                         .delete(`/quote/${state.quote._id}`)
-                        .then((response) => {
-                            console.log(response.data)
+                        .then(() => {
                             navigate('/workorder')
                         });
                 }
             })
             .catch((error) => {
-                console.log(error.response.status)
                 if (error.response.status === 500) {
                     setServerError(true);
                 }

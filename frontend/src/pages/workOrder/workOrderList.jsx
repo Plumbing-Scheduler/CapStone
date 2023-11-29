@@ -70,7 +70,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
 
     useEffect(() => {
         setWorkOrdersCompleted(workOrders.filter((elem) => {
-            return elem.serviceStatus == "Completed";
+            return elem.serviceStatus != "Completed";
         }));
     }, [workOrders])
 
@@ -81,12 +81,14 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
         { field: "customer", headerName: "Customer", width: 200, flex: 1 },
         { field: "employee", headerName: "Employee", width: 200, flex: 1 },
         { field: "address", headerName: "Address", width: 200, flex: 1 },
+        { field: "status", headerName: "Status", width: 200, flex: 1 },
     ]
     const medColumns = [
         { field: "title", headerName: "Title", width: 150, },
         { field: "cost", headerName: "Cost", width: 110, type: Number, flex: 1 },
         { field: "startDate", headerName: "Date", width: 150, type: Date, flex: 1 },
         { field: "address", headerName: "Address", width: 200, flex: 1 },
+        { field: "status", headerName: "Status", width: 200, flex: 1 },
     ]
 
     const smallColumns = [
@@ -119,7 +121,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
         customer: getCustomer(wo.customerID),
         employee: getEmployee(wo.assignedEmp),
         address: wo.address.street,
-        serviceStatus: wo.serviceStatus
+        status: wo.serviceStatus
     }))
 
     const rowsCompleted = workOrders.map((wo) => ({
@@ -130,7 +132,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
         customer: getCustomer(wo.customerID),
         employee: getEmployee(wo.assignedEmp),
         address: wo.address.street,
-        serviceStatus: wo.serviceStatus
+        status: wo.serviceStatus
     }))
 
     const handleRows = () => {
@@ -150,7 +152,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
                     <div className='flex justify-end'>
                         <Box display="flex" justifyContent="space-between" p={3} sx={{ margin: 'auto', pt: '2%', width: '50%' }}>
                             <Box display="flex" justifyContent="space-between" backgroundColor={colors.buttonBase} borderRadius="3px" color={"white"} width={'auto'} margin={'auto'}>
-                                <Button variant="Text" onClick={handleRows}>Show All</Button>
+                                <Button variant="Text" onClick={handleRows}>Click to Show All</Button>
                             </Box>
                         </Box>
                     </div>
