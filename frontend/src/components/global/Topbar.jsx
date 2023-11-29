@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axiosInstance";
@@ -14,10 +13,8 @@ const Topbar = ({ mobile = '', role = '' }) => {
     const colors = tokens(theme.palette.mode);
     const colorMode = useContext(ColorModeContext);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [MenuanchorEl, setMenuAnchorEl] = useState(null);
     const open = Boolean(anchorEl)
-    const openMenu = Boolean(MenuanchorEl)
-    const [selected, setSelected] = useState('Home');
+  
 
     const handleClickUser = (event) => {
         setAnchorEl(event.currentTarget);
@@ -42,13 +39,6 @@ const Topbar = ({ mobile = '', role = '' }) => {
 
     return (
         <div className="flex justify-end mr-3 mt-3 mb-3 w-1/4 relative" >
-
-            {/* {mobile ? (
-                <div >
-                    <MobileSidebar />
-                </div>
-            ) : (<div></div>)} */}
-            {/* Icons */}
             <div className="flex">
                 <IconButton onClick={colorMode.toggleColorMode}>
                     {theme.palette.mode === 'dark' ? (

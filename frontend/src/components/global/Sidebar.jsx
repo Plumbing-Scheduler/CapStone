@@ -129,7 +129,7 @@ const Sidebar = ({ role = '' }) => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  {(role == "Management") &&
+                  {(role === "Management") &&
                     <Item
                       title="Quote Requests"
                       to="/quotes"
@@ -152,7 +152,7 @@ const Sidebar = ({ role = '' }) => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  {(role == "Management") &&
+                  {(role === "Management") &&
                     <Item
                       title="Employee"
                       to="/employee"
@@ -161,7 +161,7 @@ const Sidebar = ({ role = '' }) => {
                       setSelected={setSelected}
                     />
                   }
-                  {(role == "Management") &&
+                  {(role === "Management") &&
                     <Item
                       title="Customers"
                       to="/customers"
@@ -170,7 +170,7 @@ const Sidebar = ({ role = '' }) => {
                       setSelected={setSelected}
                     />
                   }
-                  {(role == "Management") &&
+                  {(role === "Management") &&
                     <Item
                       title="Reports"
                       to="/reports"

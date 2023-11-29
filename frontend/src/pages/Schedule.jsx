@@ -53,7 +53,7 @@ const Schedule = ({ role = '', logId = '' }) => {
                     },
                     serviceStatus: app.serviceStatus
                 })).filter((elem) => {
-                    return elem.serviceStatus != "Completed";
+                    return elem.serviceStatus !== "Completed";
                 }));
                 setLoading(false);
             })
@@ -116,7 +116,7 @@ const Schedule = ({ role = '', logId = '' }) => {
                 app.id === deleted
             ))
             updatedData = updatedData.filter((app) => (
-                app.id != deleted
+                app.id !== deleted
             ));
 
             axiosInstance
@@ -146,11 +146,11 @@ const Schedule = ({ role = '', logId = '' }) => {
     const appointment = (props) => {
         return <Appointments.Appointment
             {...props}
-            style={(props.data.empId == logId) ? { backgroundColor: colors.redAccent[400] } : {}}
+            style={(props.data.empId === logId) ? { backgroundColor: colors.redAccent[400] } : {}}
             children={
                 <div className="text-white">
                     {props.children}
-                    {(props.data.empId == logId) ? ("You") : ("")}
+                    {(props.data.empId === logId) ? ("You") : ("")}
                 </div>
             } />;
     };
@@ -197,7 +197,7 @@ const Schedule = ({ role = '', logId = '' }) => {
     };
 
     const readOnly = (role) => {
-        if (role == "Management") {
+        if (role === "Management") {
             return false;
         }
         return true;
@@ -245,7 +245,7 @@ const Schedule = ({ role = '', logId = '' }) => {
                                 />
                                 <AppointmentTooltip
                                     showOpenButton
-                                    showDeleteButton={role == "Management"}
+                                    showDeleteButton={role === "Management"}
                                     showCloseButton
                                     contentComponent={TooltipContent}
                                 />

@@ -25,7 +25,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
 
     useEffect(() => {
         setLoading(true);
-        if (role != "Management") {
+        if (role !== "Management") {
             axiosInstance
                 .get(`/workorders/employee/${logId}`)
                 .then((response) => {
@@ -70,7 +70,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
 
     useEffect(() => {
         setWorkOrdersCompleted(workOrders.filter((elem) => {
-            return elem.serviceStatus != "Completed";
+            return elem.serviceStatus !== "Completed";
         }));
     }, [workOrders])
 

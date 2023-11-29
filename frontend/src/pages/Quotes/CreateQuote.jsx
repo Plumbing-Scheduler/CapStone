@@ -174,7 +174,7 @@ const Quotes = () => {
     const handleCustomerChange = (event) => {
         setCustomerId(event.target.value);
 
-        const found = customers.find((elem) => elem._id == event.target.value);
+        const found = customers.find((elem) => elem._id === event.target.value);
  
         setCity(found.address.city)
         setPostalCode(found.address.postalCode)
@@ -184,7 +184,7 @@ const Quotes = () => {
 
     const handleCutomerType = (event) => {
         setCustType(event.target.value);
-        if (event.target.value == "new") {
+        if (event.target.value === "new") {
             setCity('')
             setPostalCode('')
             setProvince('')
@@ -195,7 +195,7 @@ const Quotes = () => {
     }
 
     const handleCheckbox = () => {
-        if (checked == false) {
+        if (checked === false) {
             setChecked(true);
             setQuCity(city)
             setQuPostalCode(postalCode)

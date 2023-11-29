@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosInstance';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
-import { Alert, AlertTitle, Box, Typography, Paper, Divider, IconButton, useTheme } from '@mui/material';
+import { Alert, AlertTitle, Box, Typography, Paper, Divider, useTheme } from '@mui/material';
 import { tokens } from "../../theme";
 import Header from '../../components/Header';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { DeleteButton } from '../../components/global/DeleteButton';
 import { EditButton } from '../../components/global/EditButton';
 import { ScheduleQuote } from '../../components/global/Process';
@@ -17,8 +16,6 @@ const ShowQuote = () => {
   const [quote, setQuote] = useState({});
   const [loading, setLoading] = useState(true);
   const [serverError, setServerError] = useState(false);
-  const [noInput, setNoInput] = useState(false);
-  const minwidth2 = useMediaQuery('(min-width:500px)');
   const [customer, setCustomer] = useState({});
 
   useEffect(() => {

@@ -12,7 +12,6 @@ const DeleteQuote = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
     const { id } = useParams();
     const [quote, setQuote] = useState({});
     const [loading, setLoading] = useState(true);

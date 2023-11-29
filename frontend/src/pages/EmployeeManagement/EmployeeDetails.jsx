@@ -3,7 +3,7 @@ import axiosInstance from '../../axiosInstance';
 import { useParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 import dayjs from 'dayjs';
-import { Box, Typography, Paper, Divider, Grid, IconButton, useTheme } from '@mui/material';
+import { Box, Typography, Paper, Divider, Grid, useTheme } from '@mui/material';
 import Header from '../../components/Header';
 import { tokens } from "../../theme";
 import { DeleteButton } from '../../components/global/DeleteButton';

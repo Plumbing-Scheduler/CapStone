@@ -32,36 +32,33 @@ const ServiceReports = () => {
     dayjs.extend(isSameOrAfter)
 
     const filtering = (wo) => {
-        // if (wo.serviceStatus != "Completed") {
-        //     return false
-        // }
-        if (filterObj.assignedEmp != "") {
-            if (wo.assignedEmp != filterObj.assignedEmp) {
+        if (filterObj.assignedEmp !== "") {
+            if (wo.assignedEmp !== filterObj.assignedEmp) {
                 return false
             }
         }
-        if (filterObj.serviceType != "") {
-            if (wo.title != filterObj.serviceType) {
+        if (filterObj.serviceType !== "") {
+            if (wo.title !== filterObj.serviceType) {
                 return false
             }
         }
-        if (filterObj.paymentType != "") {
-            if (wo.paymentType != filterObj.paymentType) {
+        if (filterObj.paymentType !== "") {
+            if (wo.paymentType !== filterObj.paymentType) {
                 return false
             }
         }
-        if (filterObj.serviceStatus != "") {
-            if (wo.serviceStatus != filterObj.serviceStatus) {
+        if (filterObj.serviceStatus !== "") {
+            if (wo.serviceStatus !== filterObj.serviceStatus) {
                 return false
             }
         }
-        if (filterObj.customer != "") {
-            if (wo.customerID != filterObj.customer) {
+        if (filterObj.customer !== "") {
+            if (wo.customerID !== filterObj.customer) {
                 return false
             }
         }
-        if (filterObj.busName != "") {
-            if (wo.busName != filterObj.busName) {
+        if (filterObj.busName !== "") {
+            if (wo.busName !== filterObj.busName) {
                 return false
             }
         }
@@ -98,7 +95,6 @@ const ServiceReports = () => {
 
     useEffect(() => {
         setFilterWO(workOrders.filter(filtering));
-        console.log(filterWO[0]);
 
     }, [workOrders])
 
@@ -147,22 +143,22 @@ const ServiceReports = () => {
                 <Typography variant="h4" ><b>Search Parameters</b></Typography>
 
                 <Typography variant="h6" ><b>Between: </b>{dayjs(filterObj.startDate).format('LL')} - {dayjs(filterObj.endDate).format('LL')} </Typography>
-                {filterObj.busName != "" &&
+                {filterObj.busName !== "" &&
                     <Typography variant="h6" ><b>Business Name: </b>{filterObj.busName}</Typography>
                 }
-                {filterObj.customer != "" &&
+                {filterObj.customer !== "" &&
                     <Typography variant="h6" ><b>Customer: </b>{getCustomerFullName(filterObj.customer)}</Typography>
                 }
-                {filterObj.paymentType != "" &&
+                {filterObj.paymentType !== "" &&
                     <Typography variant="h6" ><b>Payment Type: </b>{filterObj.paymentType}</Typography>
                 }
-                {filterObj.serviceStatus != "" &&
+                {filterObj.serviceStatus !== "" &&
                     <Typography variant="h6" ><b>Work Order Status: </b>{filterObj.serviceStatus}</Typography>
                 }
-                {filterObj.serviceType != "" &&
+                {filterObj.serviceType !== "" &&
                     <Typography variant="h6" ><b>Service Type: </b>{filterObj.serviceType}</Typography>
                 }
-                {filterObj.assignedEmp != "" &&
+                {filterObj.assignedEmp !== "" &&
                     <Typography variant="h6" ><b>Employee: </b>{getEmployeeName(filterObj.assignedEmp)}</Typography>
                 }
             </Box>
