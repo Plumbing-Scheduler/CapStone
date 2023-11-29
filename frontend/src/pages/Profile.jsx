@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 const Profile = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const LoggedInUser = JSON.parse(localStorage.getItem("user"));
+    const LoggedInUser = JSON.parse(localStorage.getItem("ref-loguser"));
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -29,6 +29,50 @@ const Profile = () => {
     const [pcSuccess, setPcSuccess] = useState(false);
     const [pcFail, setPcFail] = useState(false);
     const [serverError, setServerError] = useState(false);
+    const [serverErrorInfo, setServerErrorInfo] = useState(false);
+    const [noInput, setNoInput] = useState(false);
+    const [infoSuccess, setInfoSuccess] = useState(false);
+
+    const saveEmployee = {
+        firstName,
+        lastName,
+        email,
+        phone,
+        address: {
+            street,
+            postalCode,
+            city,
+            province
+        },
+        role,
+        experience,
+        startDate,
+        employmentType,
+        status,
+        password
+    }
+
+    const handleSave = () => {
+                setServerError(false);
+                setNoInput(false);
+                setInfoSuccess(false);
+        axiosInstance
+            .put(`/employees/${LoggedInUser.id}`, saveEmployee)
+            .then(() => {
+                setInfoSuccess(true);
+            }
+            )
+            .catch((error) => {
+                
+                console.log(error.response.status)
+                if (error.response.status === 500) {
+                    setServerErrorInfo(true);
+                }
+                else if (error.response.status === 400) {
+                    setNoInput(true);
+                }
+            })
+    }
 
     const changePassword = () => {
         const passChange = {
@@ -42,7 +86,7 @@ const Profile = () => {
             .put(`/employees/password/${LoggedInUser.id}`, passChange)
             .then((response) => {
                 if (response.status === 200) {
-                setPcSuccess(true);
+                    setPcSuccess(true);
                 }
             })
             .catch((err) => {
@@ -73,11 +117,19 @@ const Profile = () => {
                 setExperience(response.data.experience)
                 setEmploymentType(response.data.employmentType)
                 setStatus(response.data.status)
+                setPassword(response.data.password)
             })
             .catch((error) => {
                 console.log(error)
             });
     }, []);
+
+    const formatPhone = (event) => {
+        let num = event.target.value;
+        num = num.replace(/\D/, '');
+        console.log(num)
+        setPhone(num)
+    };
 
     return (
         <Box sx={{ width: "400px", margin: "0 auto" }}>
@@ -143,11 +195,11 @@ const Profile = () => {
                         </Typography>
                         <TextField
                             size="small"
-                            type="number"
+                            type="text"
                             name="phone"
                             id="phone"
                             value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            onChange={formatPhone}
                             sx={{ width: '100%' }} />
                     </Box>
                     <Box sx={{ gridColumn: "span 1" }}>
@@ -203,6 +255,22 @@ const Profile = () => {
                             sx={{ width: '100%' }} />
                     </Box>
                 </Box>
+                {infoSuccess &&
+                    <Alert severity="success" variant='filled'>
+                        <AlertTitle>Success</AlertTitle>
+                        Changes Will Be Visable on Next Login
+                    </Alert>}
+                {serverErrorInfo &&
+                    <Alert severity="error" variant='filled'>
+                        <AlertTitle>Server Error</AlertTitle>
+                        Internal Server Error. Please Try Again Later.
+                    </Alert>}
+
+                {noInput &&
+                    <Alert severity="warning" variant='filled'>
+                        <AlertTitle>Warning</AlertTitle>
+                        Please Fill All Required Fields
+                    </Alert>}
                 <Box
                     backgroundColor={colors.greenButton}
                     display="grid"
@@ -213,6 +281,7 @@ const Profile = () => {
                     }}
                 >
                     <Button
+                        onClick={handleSave}
                         variant="Text"
                         sx={{ fontWeight: "bold", color: "white" }}>
                         Save Changes
@@ -295,12 +364,12 @@ const Profile = () => {
                     onChange={(e) => setConPassword(e.target.value)}
                     sx={{ margin: "10px auto", width: "100%" }} />
 
-                {(newPassword != conPassword) &&
+                {(newPassword !== conPassword) &&
                     <Alert severity="error" variant="filled">
                         <AlertTitle>Passwords Do Not Match</AlertTitle>
                     </Alert>}
 
-                {(newPassword.length < 8 && newPassword.length != 0) &&
+                {(newPassword.length < 8 && newPassword.length !== 0) &&
                     <Alert severity="warning" variant="filled">
                         <AlertTitle>Password should be more than 8 Characters</AlertTitle>
                     </Alert>}
@@ -310,7 +379,7 @@ const Profile = () => {
                         <AlertTitle>Password Has Been Changed</AlertTitle>
                     </Alert>}
 
-                {pcFail && 
+                {pcFail &&
                     <Alert severity="error" variant="filled">
                         <AlertTitle>Incorrect Old Password</AlertTitle>
                     </Alert>}
@@ -333,7 +402,7 @@ const Profile = () => {
                         onClick={changePassword}
                         variant="contained"
                         color="error"
-                        disabled={(newPassword != conPassword || newPassword.length < 8 && conPassword.length < 8) ? (true) : (false)}
+                        disabled={((newPassword !== conPassword) || (newPassword.length < 8 && conPassword.length < 8)) ? (true) : (false)}
                         sx={{ fontWeight: "bold", color: "white" }}>
                         Change pasword
                     </Button>

@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme } from "@mui/material";
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, Divider } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
@@ -11,73 +11,30 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { tokens } from "../../theme.js";
-//start of Marcus' Code
-
-//Dropdown constants for education
-const educationOptions = [
-    {
-        value: 'Journeyman',
-        label: 'Journeyman'
-    },
-    {
-        value: 'Apprentice First Year',
-        label: 'Apprentice First Year'
-    },
-    {
-        value: 'Apprentice Second Year',
-        label: 'Apprentice Second Year'
-    },
-    {
-        value: 'Apprentice Third Year',
-        label: 'Apprentice Third Year'
-    }
-]
-//Dropdown constants for employment
-const employmentOptions = [
-    {
-        value: 'Full Time',
-        label: 'Full Time'
-    },
-    {
-        value: 'Part Time',
-        label: 'Part Time'
-    }
-]
-//dropdown constants for status
-const statusOptions = [
-    {
-        value: 'Active',
-        label: 'Active'
-    },
-    {
-        value: 'Inactive',
-        label: 'Inactive'
-    }
-]
+import { Roles, employmentOptions, empStatusOptions, provinces } from '../../data/types.js'
 
 export const CreateEmployee = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
+    const [serverError, setServerError] = useState(false);
+    const [noInput, setNoInput] = useState(false);
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
+    const [phone, setPhone] = useState("");
     const [street, setStreet] = useState('');
     const [postalCode, setPostalCode] = useState('');
-    const [city, setCity] = useState('');
-    const [province, setProvince] = useState('');
+    const [city, setCity] = useState('Calgary');
+    const [province, setProvince] = useState('AB');
     const [role, setRole] = useState('');
     const [experience, setExperience] = useState('');
     const [employmentType, setEmploymentType] = useState('');
     const [status, setStatus] = useState('');
-    const [password, setPassword] = useState(phone);
     const [startDate, setStartDate] = useState(Date.now());
-
+    const [alertMessage, setAlertMessage ] = useState('');
     dayjs.extend(localizedFormat);
     const navigate = useNavigate();
 
@@ -105,31 +62,43 @@ export const CreateEmployee = () => {
             .post('/employees', newEmployee)
             .then(() => {
                 navigate('/employee')
-            }
-            )
+            })
             .catch((error) => {
                 setServerError(false);
                 setNoInput(false);
-                console.log(error.response.status)
+                console.log(error)
                 if (error.response.status === 500) {
                     setServerError(true);
                 }
                 else if (error.response.status === 400) {
+                    
+                    setAlertMessage(error.response.data.message);
                     setNoInput(true);
+                    
                 }
             })
     }
+
+    const formatPhone = (event) => {
+        let num = event.target.value;
+        num = num.replace(/\D/, '');
+        console.log(num)
+        setPhone(num)
+    }
+
     return (
-        <Box ml={'20px'}>
-            <Header title="EMPLOYEE" subtitle="NEW EMPLOYEE" />
-            <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
+        <Box>
+            <Header title="EMPLOYEE" subtitle="Add New Employee" />
+            <div className={`shadow-lg mt-3 `}>
+                <Divider variant="middle" sx={{ pt: '20px' }} />
                 <Typography
                     variant="h3"
                     sx={{
                         m: "30px auto 5px auto",
-                        width: '75%',
+                        width: '83%',
+                        pb: '10px',
                     }}>
-                    Employee Information
+                    <b>Employee Information</b>
                 </Typography>
                 <Box
                     display="grid"
@@ -138,7 +107,7 @@ export const CreateEmployee = () => {
                     sx={{
                         gridColumn: "span 4",
                         margin: "auto",
-                        width: '75%',
+                        width: '80%',
                     }}
                 >
                     <TextField
@@ -169,13 +138,13 @@ export const CreateEmployee = () => {
                     <TextField
                         fullWidth
                         required
-                        type="number"
+                        type="text"
                         variant='filled'
                         label="Phone"
                         name="phone #"
                         id="phone"
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={formatPhone}
                         sx={{ gridColumn: "span 1" }}
                     />
                     <TextField
@@ -230,6 +199,7 @@ export const CreateEmployee = () => {
                     <TextField
                         fullWidth
                         required
+                        select
                         type="text"
                         variant='filled'
                         label="Province"
@@ -238,52 +208,50 @@ export const CreateEmployee = () => {
                         value={province}
                         onChange={(e) => setProvince(e.target.value)}
                         sx={{ gridColumn: "span 1" }}
-                    />
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            required
-                            label='Start Date'
-                            renderInput={(params) => <TextField variant="filled" required {...params} />}
-                            value={startDate}
-                            onChange={(e) => { setStartDate(dayjs(e).toISOString()) }}
-                            orientation="landscape"
-                        />
-                    </LocalizationProvider>
+                    >
+                        {provinces.map((option) => (
+                            <MenuItem
+                                key={option.value}
+                                value={option.value}
+                            >
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                 </Box>
-
+                {/**EMPLOYMENT INFO HERE BELOW--------------------------------------------------------------- */}
                 <Typography
-                    //display="flex"
                     variant="h3"
-                    //justifyContent="space-between"
                     sx={{
                         m: "30px auto 5px auto",
-                        width: '75%',
+                        width: '83%',
+                        pb: '10px',
                     }}>
-                    Education
+                    <b>Employement type</b>
                 </Typography>
 
                 <Box
                     display="grid"
-                    gap="30px"
+                    gap="20px"
                     gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                     sx={{
                         gridColumn: "span 4",
                         margin: "auto",
-                        width: '75%'
+                        width: '80%'
                     }}
                 >
                     <TextField
                         select
                         required
-                        label="Education Level"
+                        label="Role"
                         variant='filled'
-                        name="educationLevel"
-                        id="education"
+                        name="role"
+                        id="role"
                         value={role}
                         onChange={(e) => setRole(e.target.value)}
                         sx={{ gridColumn: "span 1" }}
                     >
-                        {educationOptions.map((option) => (
+                        {Roles.map((option) => (
                             <MenuItem key={option.value} value={option.value}>
                                 {option.label}
                             </MenuItem>
@@ -299,33 +267,10 @@ export const CreateEmployee = () => {
                         onChange={(e) => setExperience(e.target.value)}
                         sx={{ gridColumn: "span 1" }}
                     />
-                </Box>
-
-                <Typography
-                    //display="flex"
-                    variant="h3"
-                    //justifyContent="space-between"
-                    sx={{
-                        m: "30px auto 5px auto",
-                        width: '75%',
-                    }}>
-                    Hours
-                </Typography>
-                <Box
-                    display="grid"
-                    gap="30px"
-                    gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
-                    sx={{
-                        gridColumn: "span 4",
-                        margin: "auto",
-                        width: '75%',
-
-                    }}
-                >
                     <TextField
                         select
                         required
-                        label="Employment Type"
+                        label="Full-Time/Part-Time"
                         variant='filled'
                         name="employmentType"
                         id="employmentType"
@@ -351,7 +296,7 @@ export const CreateEmployee = () => {
                         onChange={(e) => setStatus(e.target.value)}
                         sx={{ gridColumn: "span 1" }}
                     >
-                        {statusOptions.map((option) => (
+                        {empStatusOptions.map((option) => (
                             <MenuItem
                                 key={option.value}
                                 value={option.value}
@@ -360,37 +305,49 @@ export const CreateEmployee = () => {
                             </MenuItem>
                         ))}
                     </TextField>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            required
+                            label='Start Date'
+                            renderInput={(params) => <TextField variant="filled" required {...params} sx={{ gridColumn: "2/3" }} />}
+                            value={startDate}
+                            onChange={(e) => { setStartDate(dayjs(e).toISOString()) }}
+                            orientation="landscape"
+                        />
+                    </LocalizationProvider>
                 </Box>
-                <Box sx={{width: "30%", margin: "10px auto"}}>
+                <Box sx={{ width: "30%", margin: "10px auto" }}>
                     {serverError &&
-                    <Alert severity="error" >
-                        <AlertTitle>Server Error</AlertTitle>
+                        <Alert severity="error" >
+                            <AlertTitle>Server Error</AlertTitle>
                             Internal Server Error. Please Try Again Later.
-                    </Alert>}
+                        </Alert>}
 
                     {noInput &&
-                    <Alert severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                            Please Fill Out All Fields
-                    </Alert>}
+                        <Alert severity="warning">
+                            <AlertTitle>Warning</AlertTitle>
+                            {alertMessage}
+                        </Alert>}
                 </Box>
-                <div className="flex justify-end mr-36 pt-4">
+                <Divider variant="middle" sx={{ pt: '10px', boxShadow: '5px' }} />
+                <div className="flex justify-end pt-3 pb-5">
                     <Button
                         onClick={handleSave}
                         sx={{
                             backgroundColor: colors.redAccent[500],
                             fontWeight: 'bold',
                             fontSize: '13px',
-                            width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
-                            borderRadius: '3px'
+                            width: minwidth1 ? 'auto' : '80%',
+                            borderRadius: '3px',
+                            color: 'white',
+                            margin: 'auto'
                         }}
                     >
                         Save and Add
                     </Button>
                 </div>
-            </Box>
+            </div>
         </Box>
     )
 }
 export default CreateEmployee
-//End of Marcus' code

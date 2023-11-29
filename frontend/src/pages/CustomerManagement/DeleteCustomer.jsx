@@ -11,8 +11,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 const DeleteCustomer = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
+    const [serverError, setServerError] = useState(false);
+    const [noInput, setNoInput] = useState(false);
     const { id } = useParams();
     const [customer, setCustomer] = useState({});
     const [loading, setLoading] = useState(true);
@@ -37,8 +37,15 @@ const DeleteCustomer = () => {
     const handleDelete = () => {
         axiosInstance
             .delete(`/customer/${id}`)
-            .then(
+            .then(() => {
+
+                axiosInstance
+                    .delete(`/quote/custDelete/${id}`)
+                axiosInstance
+                    .delete(`/workorders/custDelete/${id}`)
                 navigate('/customers')
+            }
+
             )
             .catch((error) => {
                 setServerError(false);
@@ -55,7 +62,7 @@ const DeleteCustomer = () => {
 
     return (
         <Box >
-            <Header title={"CUSTOMERS"} subtitle={"DELETE CUSTOMER"} />
+            <Header title={"CUSTOMERS"} subtitle={"Delete Customer"} />
             {loading ? (
                 <div className='w-5 m-auto h-5 pt-11 text-center'>
                     <Spinner />
@@ -79,13 +86,13 @@ const DeleteCustomer = () => {
                             p={'40px'}
                         >
                             <div>
-                                This will Delete Customer <b>{customer.firstName + " " + customer.lastName}</b> Forever!
+                                This will Delete ALL WorkOrders and/or Quotes For Customer <b>{customer.firstName + " " + customer.lastName}</b> and  Forever!
                             </div>
                             <br />
                             Are You sure you want to Delete?
                         </Typography>
                     </Box>
-                    <Box display="flex" justifyContent="space-between" sx={{ margin: 'auto', pt: '2%', width: minwidth1 ? '15%' : minwidth2 ? '40%' : '40%',}}>
+                    <Box display="flex" justifyContent="space-between" sx={{ margin: 'auto', pt: '2%', width: minwidth1 ? '15%' : minwidth2 ? '40%' : '40%', }}>
                         <Link to={'/customers'}>
                             <Button sx={{
                                 backgroundColor: colors.grey[500],

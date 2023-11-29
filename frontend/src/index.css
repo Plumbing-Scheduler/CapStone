@@ -14,8 +14,12 @@ body,
 }
 
 .app {
-  display: flex;
-  position: relative;
+  display: flex; 
+  position: absolute;
+}
+.content {
+  min-width: 500px;
+  
 }
 
 ::-webkitscrollbar {
@@ -40,6 +44,19 @@ body,
 .link{
   color: #fff;
   text-decoration: none;
+}
+
+.pages{
+  position: relative;
+  margin-top: 68.5px;
+}
+
+.topBar{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 99;
 }
 
 

@@ -11,4 +11,7 @@ router.route('/:id')
     .put(customerController.updateCustomer)
     .delete(customerController.deleteCustomer);
 
+router.route('/quote/:email&:phone')
+    .get(customerController.getCustomerByNamePhoneEmail);
+
 export default router;

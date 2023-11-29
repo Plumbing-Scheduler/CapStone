@@ -24,8 +24,9 @@ import Header from "../components/Header";
 import { tokens } from "../theme";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-const Schedule = () => {
+const Schedule = ({ role = '', logId = '' }) => {
     const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
     const currDate = Date.now();
     const [data, setData] = useState([{}]);
     const [loading, setLoading] = useState(true);
@@ -43,8 +44,17 @@ const Schedule = () => {
                     serviceId: app.serviceId,
                     empId: app.empId,
                     id: app._id,
-                    notes: app.notes
-                })));
+                    notes: app.notes,
+                    address: {
+                        street: app.address.street,
+                        postalCode: app.address.postalCode,
+                        city: app.address.city,
+                        province: app.address.province
+                    },
+                    serviceStatus: app.serviceStatus
+                })).filter((elem) => {
+                    return elem.serviceStatus != "Completed";
+                }));
                 setLoading(false);
             })
             .catch((error) => {
@@ -52,6 +62,7 @@ const Schedule = () => {
                 console.log(error);
             });
     }, []);
+
 
     const onCommitChanges = ({ changed, deleted }) => {
         let updatedData = data;
@@ -122,34 +133,127 @@ const Schedule = () => {
         setData(updatedData);
     };
 
+    const WeekTimeTableCell = (props) => {
+        return <WeekView.TimeTableCell {...props} onDoubleClick={undefined} />;
+    };
+    const DayTimeTableCell = (props) => {
+        return <DayView.TimeTableCell {...props} onDoubleClick={undefined} />;
+    };
+    const MonthTimeTableCell = (props) => {
+        return <MonthView.TimeTableCell {...props} onDoubleClick={undefined} />;
+    };
+
+    const appointment = (props) => {
+        return <Appointments.Appointment
+            {...props}
+            style={(props.data.empId == logId) ? { backgroundColor: colors.redAccent[400] } : {}}
+            children={
+                <div className="text-white">
+                    {props.children}
+                    {(props.data.empId == logId) ? ("You") : ("")}
+                </div>
+            } />;
+    };
+    const weekCell = (props) => {
+        return <DayView.Layout {...props} style={{ color: colors.redAccent[400] }} />;
+    };
+
+    const SchedulerRoot = (props) => {
+        return <Scheduler.Root>
+            {props.children}
+        </Scheduler.Root>
+    }
+
+    const AppContent = (props) => {
+        return <Appointments.AppointmentContent {...props} />;
+        // children={<Box >
+        //         {props.data.startDate}
+        //     </Box>} 
+    };
+    const TooltipContent = (props) => {
+        return <AppointmentTooltip.Content
+            {...props}
+            children={<div className="pl-4">
+                <div>
+                    <div>Location</div>
+                    <div className="ml-2">
+                        {props.appointmentData.address.street + ", "}
+                        {props.appointmentData.address.postalCode}
+                    </div>
+                    <div className="ml-2">
+                        {props.appointmentData.address.city + ", "}
+                        {props.appointmentData.address.province}
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <div>Description</div>
+                    <div className="ml-2">{props.appointmentData.notes}</div>
+                </div>
+            </div>} />;
+    };
+    const AppFormBooleanLayout = (props) => {
+        return null;
+    };
+
+    const readOnly = (role) => {
+        if (role == "Management") {
+            return false;
+        }
+        return true;
+    };
+
+
     return (
         <div>
             <Header title="SCHEDULE" subtitle="Calendar" />
-            <div className={`text-center sm:max-2xl:flex justify-between p-2 m-3 shadow-lg `}>
+            <div className={`text-center flex justify-between pb-5 m-3 shadow-xl`}>
                 {loading ? (
                     <div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>
                 ) : (
-                    <Paper variant="h4">
-                        <Box flex="1 1 20%">
-                            <Scheduler data={data} >
+                    <Paper variant="h4" >
+                        <Box flex="1 1 20%" >
+                            <Scheduler
+                                data={data}
+                                rootComponent={SchedulerRoot}
+                            >
                                 <ViewState defaultCurrentDate={currDate} />
                                 <EditingState
                                     onCommitChanges={onCommitChanges}
                                 />
                                 <IntegratedEditing />
-                                {minwidth2 ? <WeekView startDayHour={6} endDayHour={18} cellDuration={60} /> : null}
-                                {minwidth1 ? <DayView startDayHour={6} endDayHour={18} cellDuration={60} /> : null}
-                                <DayView startDayHour={6} endDayHour={18} cellDuration={60} />
-                                <WeekView startDayHour={6} endDayHour={18} cellDuration={60} />
-                                <MonthView />
-                                <Appointments />
+                                {minwidth2 ?
+                                    <WeekView
+                                        startDayHour={6}
+                                        endDayHour={18}
+                                        cellDuration={60}
+                                        timeTableCellComponent={WeekTimeTableCell} /> :
+                                    null}
+                                {minwidth1 ?
+                                    <DayView
+                                        startDayHour={6}
+                                        endDayHour={18}
+                                        cellDuration={60}
+                                        timeTableCellComponent={DayTimeTableCell} /> :
+                                    null}
+                                <DayView startDayHour={6} endDayHour={20} cellDuration={60} timeTableCellComponent={DayTimeTableCell} layoutComponent={weekCell} />
+                                <WeekView startDayHour={6} endDayHour={20} cellDuration={60} timeTableCellComponent={WeekTimeTableCell} />
+                                <MonthView timeTableCellComponent={MonthTimeTableCell} />
+                                <Appointments
+                                    appointmentContentComponent={AppContent}
+                                    appointmentComponent={appointment}
+                                />
                                 <AppointmentTooltip
                                     showOpenButton
-                                    showDeleteButton
+                                    showDeleteButton={role == "Management"}
                                     showCloseButton
+                                    contentComponent={TooltipContent}
                                 />
                                 <ConfirmationDialog />
-                                <AppointmentForm />
+                                <AppointmentForm
+                                    readOnly={readOnly(role)}
+                                    booleanEditorComponent={AppFormBooleanLayout}
+                                />
                                 <Toolbar />
                                 <DateNavigator />
                                 <ViewSwitcher />

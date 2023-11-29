@@ -29,7 +29,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ role = '' }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -38,7 +38,7 @@ const Sidebar = () => {
   useEffect(() => {
     // Add a listener for window resize event
     const handleResize = () => {
-      if (window.innerWidth < 400) {
+      if (window.innerWidth < 1) {
         setIsCollapsed(true); // Collapse sidebar for mobile and tablet (adjust the width as needed)
       } else {
         setIsCollapsed(false);
@@ -56,7 +56,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <Box sx={!isCollapsed ? { width: '320px', transition: '.3s' } : { width: '80px', transition: '.3s' }} >
+    <Box sx={!isCollapsed ? { width: '270px', transition: '.3s'} : { width: '80px', transition: '.3s' }} >
       <Box
         sx={{
           '& .pro-sidebar-inner': {
@@ -74,21 +74,22 @@ const Sidebar = () => {
           '& .pro-menu-item.active': {
             color: '#6870fa !important',
           },
-          height: '200%',
+          height: '100%',
+          minWidth: '270px'
         }}
       >
-        <ProSidebar collapsed={isCollapsed} style={{ position: 'fixed', top: 0 }}>
+        <ProSidebar collapsed={isCollapsed} style={{ position: 'fixed', top: 0}}>
           <Menu iconShape="square"  >
             <MenuItem
               onClick={() => setIsCollapsed(!isCollapsed)}
               icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
               style={{
-                margin: '4px 0 20px 0',
+                margin: '4px 0 0 0',
                 color: colors.grey[100],
               }}
             >
               {!isCollapsed && (
-                <div className="sm:max-2xl:flex justify-between box-border ml-15">
+                <div className="flex justify-between box-border ml-15">
                   <Typography variant="h6" color={colors.grey[100]}>
                     Welcome
                   </Typography>
@@ -99,18 +100,17 @@ const Sidebar = () => {
             </MenuItem>
 
             {isCollapsed ? null : (
-              <Box mb="25px">
-                {/* <Box display="flex" justifyContent="center" alignItems="center">
+              <Box mb="20x">
+                <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="company-logo"
-                    width="100px"
-                    height="100px"
-                    src={`../../assets/companylogo.png`}
+                    width="100%"
+                    src={`../../assets/logo.png`}
                     style={{ cursor: 'pointer', borderRadius: '50%' }}
                   />
-                </Box> */}
+                </Box>
 
-                <Box textAlign="center">
+                {/* <Box textAlign="center">
                   <Typography
                     variant="h1"
                     color={colors.grey[100]}
@@ -119,7 +119,7 @@ const Sidebar = () => {
                   >
                     SEWER & DRAIN PLUMBING
                   </Typography>
-                </Box>
+                </Box> */}
 
                 <Box paddingLeft={isCollapsed ? undefined : '10%'}>
                   <Item
@@ -129,13 +129,15 @@ const Sidebar = () => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  <Item
-                    title="Quote Requests"
-                    to="/quotes"
-                    icon={<ContactsOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
+                  {(role == "Management") &&
+                    <Item
+                      title="Quote Requests"
+                      to="/quotes"
+                      icon={<ContactsOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
                   <Item
                     title="Work Orders"
                     to="/workorder"
@@ -150,27 +152,33 @@ const Sidebar = () => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  <Item
-                    title="Employee"
-                    to="/employee"
-                    icon={<PeopleOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                  <Item
-                    title="Customers"
-                    to="/customers"
-                    icon={<PersonIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                  <Item
-                    title="Reports"
-                    to="/reports"
-                    icon={<BarChartOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
+                  {(role == "Management") &&
+                    <Item
+                      title="Employee"
+                      to="/employee"
+                      icon={<PeopleOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
+                  {(role == "Management") &&
+                    <Item
+                      title="Customers"
+                      to="/customers"
+                      icon={<PersonIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
+                  {(role == "Management") &&
+                    <Item
+                      title="Reports"
+                      to="/reports"
+                      icon={<BarChartOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
                 </Box>
               </Box>
             )}

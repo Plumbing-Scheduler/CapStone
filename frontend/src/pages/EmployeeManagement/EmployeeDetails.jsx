@@ -34,12 +34,7 @@ const EmployeeDetails = () => {
 
   return (
     <Box>
-      <Header title={'EMPLOYEE'} subtitle={'DETAILS'} />
-
-      <Box display="flex" justifyContent="flex-end" mt={3}>
-        <EditButton />
-        <DeleteButton />
-      </Box>
+      <Header title={'EMPLOYEE'} subtitle={'Details'} />
 
       {loading ? (
         <div className="w-5 m-auto h-5 pt-11 text-center">
@@ -47,43 +42,47 @@ const EmployeeDetails = () => {
         </div>
       ) : (
         <Box m={4}>
-          <Grid container spacing={3}>
+          <div className="flex justify-end space-x-3">
+            <EditButton path={`../../employee/edit/${id}`}/>
+            <DeleteButton path={`../../employee/delete/${id}`}/>
+          </div>
+          <Grid container spacing={1}>
             <Grid item xs={12} sm={12}>
               <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400]}}>
-                <Typography variant="h3" sx={{ paddingBottom: '1rem' }}>
+                <Typography variant="h4" sx={{ paddingBottom: '1rem' }}>
                   Employee Information
                 </Typography>
                 <Divider />
                 <Box mt={2}>
                   {employee.firstName && (
-                    <Typography variant="h5">
+                    <Typography variant="h6">
                       <strong>Name:</strong> {employee.firstName} {employee.lastName}
                     </Typography>
                   )}
                   {employee.phone && (
-                    <Typography variant="h5">
+                    <Typography variant="h6">
                       <strong>Phone:</strong> {employee.phone}
                     </Typography>
                   )}
                   {employee.email && (
-                    <Typography variant="h5">
+                    <Typography variant="h6">
                       <strong>Email:</strong> {employee.email}
                     </Typography>
                   )}
                   {employee.address && (
                     <>
                       {employee.address.street && (
-                        <Typography variant="h5">
+                        <Typography variant="h6">
                           <strong>Address:</strong> {`${employee.address.street}, ${employee.address.city}, ${employee.address.province}`}
                         </Typography>
                       )}
                       {employee.address.postalCode && (
-                        <Typography variant="h5">
+                        <Typography variant="h6">
                           <strong>Postal Code:</strong> {employee.address.postalCode}
                         </Typography>
                       )}
                       {employee.startDate && (
-                        <Typography variant="h5">
+                        <Typography variant="h6">
                           <strong>Start Date:</strong> {dayjs(employee.startDate).toISOString().substring(0, 10)}
                         </Typography>
                       )}
@@ -95,18 +94,18 @@ const EmployeeDetails = () => {
 
             <Grid item xs={12} sm={12}>
               <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400] }}>
-                <Typography variant="h3" sx={{ paddingBottom: '1rem' }}>
+                <Typography variant="h4" sx={{ paddingBottom: '1rem' }}>
                   Availability/Hours
                 </Typography>
                 <Divider />
                 <Box mt={2}>
                   {employee.employmentType && (
-                    <Typography variant="h5">
+                    <Typography variant="h6">
                       <strong>Employment Type:</strong> {employee.employmentType}
                     </Typography>
                   )}
                   {employee.status && (
-                    <Typography variant="h5">
+                    <Typography variant="h6">
                       <strong>Status:</strong> {employee.status}
                     </Typography>
                   )}
@@ -116,18 +115,18 @@ const EmployeeDetails = () => {
 
             <Grid item xs={12} sm={12}>
               <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400] }}>
-                <Typography variant="h3" sx={{ paddingBottom: '1rem' }}>
+                <Typography variant="h4" sx={{ paddingBottom: '1rem' }}>
                   Education/Experience
                 </Typography>
                 <Divider />
                 <Box mt={2}>
                   {employee.role && (
-                    <Typography variant="h5">
+                    <Typography variant="h6">
                       <strong>Role:</strong> {employee.role}
                     </Typography>
                   )}
                   {employee.experience && (
-                    <Typography variant="h5">
+                    <Typography variant="h6">
                       <strong>Years of Experience:</strong> {employee.experience}
                     </Typography>
                   )}

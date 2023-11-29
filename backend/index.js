@@ -14,7 +14,7 @@ import logout from './routes/logout.js'
 import cookieParser from 'cookie-parser';
 import 'dotenv/config'
 
-const PORT = process.env.port || 3500;
+const PORT = process.env.PORT || 3500;
 const corsOptions ={
     origin: ['http://localhost:3000', 'http://localhost:3500'],
     credentials: true

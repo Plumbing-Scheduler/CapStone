@@ -51,7 +51,7 @@ const DeleteQuote = () => {
 
     return (
         <Box >
-            <Header title={"QUOTE REQUEST"} subtitle={"DELETE QUOTE REQUEST"} />
+            <Header title={"QUOTE REQUESTS"} subtitle={"Delete Quote Request"} />
             {loading ? (
                 <div className='w-5 m-auto h-5 pt-11 text-center'>
                     <Spinner />

@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, NativeSelect } from "@mui/material";
+import { Alert, AlertTitle, Box, TextField, Typography, Button, useTheme, Divider } from "@mui/material";
 import Header from "../../components/Header";
 import MenuItem from '@mui/material/MenuItem';
 import { useEffect, useState } from "react";
@@ -12,49 +12,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { tokens } from "../../theme.js";
 import Spinner from 'react-bootstrap/esm/Spinner';
-
-
-//Dropdown constants for education
-const educationOptions = [
-    {
-        value: 'Journeyman',
-        label: 'Journeyman'
-    },
-    {
-        value: 'Apprentice First Year',
-        label: 'Apprentice First Year'
-    },
-    {
-        value: 'Apprentice Second Year',
-        label: 'Apprentice Second Year'
-    },
-    {
-        value: 'Apprentice Third Year',
-        label: 'Apprentice Third Year'
-    }
-]
-//Dropdown constants for employment
-const employmentOptions = [
-    {
-        value: 'Full Time',
-        label: 'Full Time'
-    },
-    {
-        value: 'Part Time',
-        label: 'Part Time'
-    }
-]
-//dropdown constants for status
-const statusOptions = [
-    {
-        value: 'Active',
-        label: 'Active'
-    },
-    {
-        value: 'Inactive',
-        label: 'Inactive'
-    }
-]
+import { Roles, employmentOptions, empStatusOptions, provinces } from '../../data/types.js'
 
 export const EditEmployee = () => {
     const theme = useTheme();
@@ -63,8 +21,8 @@ export const EditEmployee = () => {
     const { id } = useParams({});
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
-    const [ serverError, setServerError ] = useState(false);
-    const [ noInput, setNoInput ] = useState(false);
+    const [serverError, setServerError] = useState(false);
+    const [noInput, setNoInput] = useState(false);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -72,8 +30,8 @@ export const EditEmployee = () => {
     const [phone, setPhone] = useState('');
     const [street, setStreet] = useState('');
     const [postalCode, setPostalCode] = useState('');
-    const [city, setCity] = useState('');
-    const [province, setProvince] = useState('');
+    const [city, setCity] = useState('Calgary');
+    const [province, setProvince] = useState('AB');
     const [role, setRole] = useState('');
     const [experience, setExperience] = useState('');
     const [employmentType, setEmploymentType] = useState('');
@@ -156,21 +114,28 @@ export const EditEmployee = () => {
                 }
             })
     }
+
+    const formatPhone = (event) => {
+        let num = event.target.value;
+        num = num.replace(/\D/, '');
+        console.log(num)
+        setPhone(num)
+    }
+
     return (
         <Box>
-            <Header title="EMPLOYEE" subtitle="EDIT EMPLOYEE" />
+            <Header title="EMPLOYEE" subtitle="Edit Employee" />
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                <Box m="10px auto" p={"0 0 30px 0"} width={"90%"} >
-
+                <div className={`shadow-lg mt-3 `}>
+                    <Divider variant="middle" sx={{ pt: '20px' }} />
                     <Typography
-                        //display="flex"
                         variant="h3"
-                        //justifyContent="space-between"
                         sx={{
                             m: "30px auto 5px auto",
-                            width: '75%',
+                            width: '83%',
+                            pb: '10px',
                         }}>
-                        Employee Information
+                        <b>Employee Information</b>
                     </Typography>
 
                     <Box
@@ -180,7 +145,7 @@ export const EditEmployee = () => {
                         sx={{
                             gridColumn: "span 4",
                             margin: "auto",
-                            width: '75%',
+                            width: '80%',
                         }}
                     >
                         <TextField
@@ -211,13 +176,13 @@ export const EditEmployee = () => {
                         <TextField
                             fullWidth
                             required
-                            type="number"
+                            type="text"
                             variant='filled'
                             label="Phone"
                             name="phone #"
                             id="phone"
                             value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            onChange={formatPhone}
                             sx={{ gridColumn: "span 1" }}
                         />
                         <TextField
@@ -273,6 +238,7 @@ export const EditEmployee = () => {
                         <TextField
                             fullWidth
                             required
+                            select
                             type="text"
                             variant='filled'
                             label="Province"
@@ -281,52 +247,50 @@ export const EditEmployee = () => {
                             value={province}
                             onChange={(e) => setProvince(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
-                        />
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker
-                                required
-                                label='Start Date'
-                                renderInput={(params) => <TextField variant="filled" required {...params} />}
-                                value={startDate}
-                                onChange={(e) => { setStartDate(dayjs(e).toISOString()) }}
-                                orientation="landscape"
-                            />
-                        </LocalizationProvider>
+                            >
+                            {provinces.map((option) => (
+                                <MenuItem
+                                    key={option.value}
+                                    value={option.value}
+                                >
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                     </Box>
-
+                    {/**EMPLOYMENT INFO HERE BELOW--------------------------------------------------------------- */}
                     <Typography
-                        //display="flex"
                         variant="h3"
-                        //justifyContent="space-between"
                         sx={{
                             m: "30px auto 5px auto",
-                            width: '75%',
+                            width: '83%',
+                            pb: '10px',
                         }}>
-                        Education
+                        <b>Employement type</b>
                     </Typography>
 
                     <Box
                         display="grid"
-                        gap="30px"
+                        gap="20px"
                         gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
                         sx={{
                             gridColumn: "span 4",
                             margin: "auto",
-                            width: '75%'
+                            width: '80%'
                         }}
                     >
                         <TextField
                             select
                             required
-                            label="Education Level"
+                            label="Role"
                             variant='filled'
-                            name="educationLevel"
-                            id="education"
+                            name="role"
+                            id="role"
                             value={role}
                             onChange={(e) => setRole(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         >
-                            {educationOptions.map((option) => (
+                            {Roles.map((option) => (
                                 <MenuItem key={option.value} value={option.value}>
                                     {option.label}
                                 </MenuItem>
@@ -342,31 +306,10 @@ export const EditEmployee = () => {
                             onChange={(e) => setExperience(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         />
-                    </Box>
-
-                    <Typography
-                        variant="h3"
-                        sx={{
-                            m: "30px auto 5px auto",
-                            width: '75%',
-                        }}>
-                        Hours
-                    </Typography>
-                    <Box
-                        display="grid"
-                        gap="30px"
-                        gridTemplateColumns={minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
-                        sx={{
-                            gridColumn: "span 4",
-                            margin: "auto",
-                            width: '75%',
-
-                        }}
-                    >
                         <TextField
                             select
                             required
-                            label="Employment Type"
+                            label="Full-Time/Part-Time"
                             variant='filled'
                             name="employmentType"
                             id="employmentType"
@@ -392,7 +335,7 @@ export const EditEmployee = () => {
                             onChange={(e) => setStatus(e.target.value)}
                             sx={{ gridColumn: "span 1" }}
                         >
-                            {statusOptions.map((option) => (
+                            {empStatusOptions.map((option) => (
                                 <MenuItem
                                     key={option.value}
                                     value={option.value}
@@ -401,6 +344,16 @@ export const EditEmployee = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                required
+                                label='Start Date'
+                                renderInput={(params) => <TextField variant="filled" required {...params} sx={{ gridColumn: "2/3" }}  />}
+                                value={startDate}
+                                onChange={(e) => { setStartDate(dayjs(e).toISOString()) }}
+                                orientation="landscape"
+                            />
+                        </LocalizationProvider>
                     </Box>
                     <Box sx={{ width: "30%", margin: "10px auto" }}>
                         {serverError &&
@@ -412,27 +365,29 @@ export const EditEmployee = () => {
                         {noInput &&
                             <Alert severity="warning">
                                 <AlertTitle>Warning</AlertTitle>
-                                Please Fill Out All Fields
+                                Please Fill All Required Fields
                             </Alert>}
                     </Box>
-                    <div className="flex justify-end mr-36 pt-4">
+                    <Divider variant="middle" sx={{ pt: '10px', boxShadow: '5px' }} />
+                    <div className="flex justify-end pt-3 pb-5">
                         <Button
                             onClick={handleSave}
                             sx={{
                                 backgroundColor: colors.redAccent[500],
                                 fontWeight: 'bold',
                                 fontSize: '13px',
-                                width: minwidth1 ? 'auto' : minwidth2 ? '80%' : '100%',
-                                borderRadius: '3px'
+                                width: minwidth1 ? 'auto' : '80%',
+                                borderRadius: '3px',
+                                color: 'white',
+                                margin: 'auto'
                             }}
                         >
-                            Save and Add
+                            Save
                         </Button>
                     </div>
-                </Box>
+                </div>
             )}
         </Box>
     )
 }
 export default EditEmployee
-//End of Marcus' code

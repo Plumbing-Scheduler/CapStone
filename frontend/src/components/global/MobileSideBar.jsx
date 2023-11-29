@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { tokens } from '../../theme';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
@@ -16,6 +16,7 @@ import PersonIcon from '@mui/icons-material/Person';
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  
   return (
     <MenuItem
       active={selected === title}
@@ -29,16 +30,16 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
+const MobileSidebar = ({ role = '' }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState('Home');
-
+  const navigate = useNavigate();
   useEffect(() => {
     // Add a listener for window resize event
     const handleResize = () => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 800) {
         setIsCollapsed(true); // Collapse sidebar for mobile and tablet (adjust the width as needed)
       } else {
         setIsCollapsed(false);
@@ -55,87 +56,92 @@ const Sidebar = () => {
     };
   }, []);
 
+  const goHome = () => {
+    navigate('/');
+  }
+
   return (
-    <Box sx={!isCollapsed ? { width: '320px', transition: '.3s' } : { width: '80px', transition: '.3s' }} >
-      <Box
-        sx={{
-          '& .pro-sidebar-inner': {
-            background: `${colors.primary[400]} !important`,
-          },
-          '& .pro-icon-wrapper': {
-            backgroundColor: 'transparent !important',
-          },
-          '& .pro-inner-item': {
-            padding: '5px 35px 5px 20px !important',
-          },
-          '& .pro-menu-item:hover': {
-            color: '#868dfb !important',
-          },
-          '& .pro-menu-item.active': {
-            color: '#6870fa !important',
-          },
-          height: '200%',
-        }}
-      >
-        <ProSidebar collapsed={isCollapsed} style={{ position: 'fixed', top: 0 }}>
-          <Menu iconShape="square" >
-            <MenuItem
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-              style={{
-                margin: '4px 0 20px 0',
-                color: colors.grey[100],
-              }}
+    <Box sx={{ width: 'auto', position: 'relative' }}>
+        <Box sx={{ position: 'fixed', zIndex: 1, margin: '.75rem', }}>
+          <IconButton onClick={() => setIsCollapsed(!isCollapsed)} >
+            <MenuOutlinedIcon />
+          </IconButton>
+        </Box>
+      <Box sx={!isCollapsed ? { width: '100%', transition: 'width .3s'} : { width: '0%', transition: 'width .3s',}} >
+        <Box
+          sx={{
+            '& .pro-sidebar-inner': !isCollapsed ? {
+              background: `${colors.primary[400]} !important`,
+            } : {transition: '0.3s', visibility: 'hidden', background: `${colors.primary[400]} !important`},
+            '& .pro-icon-wrapper': {
+              backgroundColor: 'transparent !important',
+            },
+            '& .pro-inner-item': {
+              padding: '5px 35px 5px 20px !important',
+            },
+            '& .pro-menu-item:hover': {
+              color: '#868dfb !important',
+            },
+            '& .pro-menu-item.active': {
+              color: '#6870fa !important',
+            },
+          }}
+        >
+          <ProSidebar 
+            collapsed={isCollapsed} 
+            style={isCollapsed ? { position: 'fixed', top: 0, zIndex: 0}: { position: 'fixed', top: 0, zIndex: 3}} 
+            collapsedWidth={"0px"}
             >
-              {!isCollapsed && (
-                <div className="sm:max-2xl:flex justify-between box-border ml-15">
-                  <Typography variant="h6" color={colors.grey[100]}>
-                    Welcome
-                  </Typography>
-                  <IconButton onClick={() => setIsCollapsed(!isCollapsed)}></IconButton>
-                  <MenuOutlinedIcon />
-                </div>
-              )}
-            </MenuItem>
+            <Menu iconShape="square" >
+              <MenuItem
+                onClick={() => setIsCollapsed(!isCollapsed)}
+                // icon={<MenuOutlinedIcon />}
+                style={{
+                  margin: '4px 0 20px 0',
+                  color: colors.grey[100],
+                }}
+              >
+                {!isCollapsed && (
+                  <div className="flex justify-between box-border ml-15">
+                    <Typography variant="h6" color={colors.grey[100]}>
+                      Welcome
+                    </Typography>
+                    <IconButton onClick={() => setIsCollapsed(!isCollapsed)}></IconButton>
+                    <MenuOutlinedIcon />
+                  </div>
+                )}
+              </MenuItem>
 
-            {isCollapsed ? null : (
-              <Box mb="25px">
-                {/* <Box display="flex" justifyContent="center" alignItems="center">
-                  <img
-                    alt="company-logo"
-                    width="100px"
-                    height="100px"
-                    src={`../../assets/companylogo.png`}
-                    style={{ cursor: 'pointer', borderRadius: '50%' }}
-                  />
-                </Box> */}
+              {isCollapsed ? <div></div> : (
+                <Box mb="25px">
+                  <Box display="flex" justifyContent="center" alignItems="center" height={"120px"} marginBottom={'40px'}>
+                    <img
+                      alt="company-logo"
+                      width="100%"
+                      // height={"50%"}
+                      src={`../../assets/logo.png`}
+                      style={{ cursor: 'pointer', borderRadius: '10%', margin: "100px 0 0 0" }}
+                      onClick={goHome}
+                    />
+                  </Box>
 
-                <Box textAlign="center">
-                  <Typography
-                    variant="h1"
-                    color={colors.grey[100]}
-                    fontWeight="bold"
-                    sx={{ m: '10px 0 50px 0' }}
-                  >
-                    SEWER & DRAIN PLUMBING
-                  </Typography>
-                </Box>
-
-                <Box paddingLeft={isCollapsed ? undefined : '10%'}>
-                  <Item
-                    title="Home"
-                    to="/"
-                    icon={<HomeOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                  <Item
-                    title="Quote Requests"
-                    to="/quotes"
-                    icon={<ContactsOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
+                  <Box paddingLeft={isCollapsed ? 0 : '10%'} marginTop={"100px"}>
+                    <Item
+                      title="Home"
+                      to="/"
+                      icon={<HomeOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                    {(role === "Management") &&
+                    <Item
+                      title="Quote Requests"
+                      to="/quotes"
+                      icon={<ContactsOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
                   <Item
                     title="Work Orders"
                     to="/workorder"
@@ -150,36 +156,43 @@ const Sidebar = () => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  <Item
-                    title="Employee"
-                    to="/employee"
-                    icon={<PeopleOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                  <Item
-                    title="Customers"
-                    to="/customers"
-                    icon={<PersonIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                  <Item
-                    title="Reports"
-                    to="/reports"
-                    icon={<BarChartOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
+                  {(role === "Management") &&
+                    <Item
+                      title="Employee"
+                      to="/employee"
+                      icon={<PeopleOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
+                  {(role === "Management") &&
+                    <Item
+                      title="Customers"
+                      to="/customers"
+                      icon={<PersonIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
+                  {(role === "Management") &&
+                    <Item
+                      title="Reports"
+                      to="/reports"
+                      icon={<BarChartOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
+                  </Box>
                 </Box>
-              </Box>
-            )}
-          </Menu>
-        </ProSidebar>
+              )}
+            </Menu>
+          </ProSidebar>
+        </Box>
       </Box>
     </Box>
   );
 };
 
-export default Sidebar;
+export default MobileSidebar;
 

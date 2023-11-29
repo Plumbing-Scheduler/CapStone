@@ -7,6 +7,19 @@ const createEmployee = async (request, response) => {
             || !request.body.address.city || !request.body.address.province) {
             return response.status(400).send({ message: 'All required fields must be filled' });
         };
+
+        const empPhone = await Employee.find({phone: request.body.phone});
+        console.log("empPhone" + empPhone)
+        if (empPhone != '' || !empPhone) {
+            return response.status(400).send({ message: `Employee with phone # "${request.body.phone}" already exists` });
+        }
+
+        const empEmail = await Employee.find({email: request.body.email});
+        console.log("empEmail" + empEmail)
+        if (empEmail != '' || !empEmail) {
+            return response.status(400).send({ message: `Employee with emial "${request.body.email}" already exists` });
+        }
+
         const newEmployee = {
             firstName: request.body.firstName,
             lastName: request.body.lastName,
@@ -23,7 +36,8 @@ const createEmployee = async (request, response) => {
             startDate: request.body.startDate,
             employmentType: request.body.employmentType,
             status: request.body.status,
-            serviceList: request.body.serviceList
+            serviceList: request.body.serviceList,
+            password: request.body.password
         };
         const result = await Employee.create(newEmployee);
 

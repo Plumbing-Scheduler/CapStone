@@ -36,12 +36,17 @@ export const DeleteWorkOrder = () => {
   const handleDeleteWorkOrder = () => {
     axiosInstance
       .delete(`/workorders/${id}`)
-      .then(() => {
-        axiosInstance
-          .delete(`/schedule/${id}`)
-          .then(() => {
-            navigate('/workorder')
-          })
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) =>
+        console.log(error)
+      );
+    axiosInstance
+      .delete(`/schedule/${id}`)
+      .then((response) => {
+        console.log(response)
+        navigate('/workorder')
       })
       .catch((error) =>
         console.log(error)
@@ -50,7 +55,7 @@ export const DeleteWorkOrder = () => {
 
 
   return (<div>
-    <Header title={"WORK ORDER"} subtitle={"DELETE WORK ORDER"} />
+    <Header title={"WORK ORDERS"} subtitle={"Delete Work Order"} />
     {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
       <Box m="30px" >
         <Box sx={{ width: "90%", margin: "auto", boxShadow: '4', border: 'solid', borderWidth: "2px", borderRadius: '5px' }}>
@@ -86,7 +91,7 @@ export const DeleteWorkOrder = () => {
             </div>
           </div>
         </Box>
-        <Box display="flex" justifyContent="space-between" sx={{ margin: 'auto', pt:'2%', width: minwidth1 ? '15%' : minwidth2 ? '40%' : '40%', }}>
+        <Box display="flex" justifyContent="space-between" sx={{ margin: 'auto', pt: '2%', width: minwidth1 ? '15%' : minwidth2 ? '40%' : '40%', }}>
           <Link to={'/workorder'}>
             <Button sx={{
               backgroundColor: colors.grey[500],
@@ -101,9 +106,9 @@ export const DeleteWorkOrder = () => {
             fontSize: '13px',
           }} onClick={handleDeleteWorkOrder} >DELETE</Button>
         </Box>
-        </Box>
-      )}
-    </div>
+      </Box>
+    )}
+  </div>
   );
 };
 
