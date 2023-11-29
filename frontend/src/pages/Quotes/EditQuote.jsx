@@ -56,6 +56,7 @@ const EditQuote = () => {
 
     useEffect(() => {
         setLoading(true);
+
         axiosInstance
             .get(`/quote/${id}`)
             .then((response) => {
@@ -67,6 +68,7 @@ const EditQuote = () => {
                 setCost(response.data.cost);
                 setType(response.data.type)
                 setCustomerId(response.data.customerId)
+                console.log(response.data.customerId);
             })
             .catch((error) => {
                 setLoading(false);

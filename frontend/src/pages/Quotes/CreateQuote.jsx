@@ -33,12 +33,13 @@ const Quotes = () => {
     const [qucity, setQuCity] = useState('');
     const [quprovince, setQuProvince] = useState('');
 
+
     const navigate = useNavigate();
     const minwidth1 = useMediaQuery('(min-width:800px)');
     const minwidth2 = useMediaQuery('(min-width:500px)');
     const [custType, setCustType] = useState("new");
     const [customers, setCustomers] = useState([{}]);
-    const [customer, setCustomer] = useState('');
+    const [customerId, setCustomerId] = useState('');
     const [checked, setChecked] = useState(false);
     let selectedCustomer = {}
 
@@ -56,7 +57,8 @@ const Quotes = () => {
         cost,
         busName,
         email,
-        type
+        type,
+        customerId
     }
 
     const newCustomer = {
@@ -87,9 +89,9 @@ const Quotes = () => {
         if (custType === "returning") {
             console.log(selectedCustomer);
             axiosInstance
-                .get(`/customer/${customer}`)
+                .get(`/customer/${customerId}`)
                 .then((response) => {
-                    newQuote = {
+                     newQuote = {
                         firstName: response.data.firstName,
                         lastName: response.data.lastName,
                         phone: response.data.phone,
@@ -104,7 +106,7 @@ const Quotes = () => {
                         busName: response.data.busName,
                         email: response.data.email,
                         type,
-                        customerId: response.data._id
+                        customerId
                     }
                 }).then(() => {
                     axiosInstance
@@ -129,8 +131,27 @@ const Quotes = () => {
         else {
             axiosInstance
                 .post('/customer', newCustomer)
-                .then(() => {
-                    axiosInstance
+                .then((response) => {
+                    newQuote = {
+                        firstName: response.data.firstName,
+                        lastName: response.data.lastName,
+                        phone: response.data.phone,
+                        description,
+                        address: {
+                            street: qustreet,
+                            postalCode: qupostalCode,
+                            city: qucity,
+                            province: quprovince
+                        },
+                        cost,
+                        busName: response.data.busName,
+                        email: response.data.email,
+                        type,
+                        customerId: response.data._id
+                    }
+                }).then(() => {
+                    console.log(newQuote)
+                     axiosInstance
                         .post('/quote', newQuote)
                         .then(() => {
                             navigate('/quotes')
@@ -151,7 +172,7 @@ const Quotes = () => {
     }
 
     const handleCustomerChange = (event) => {
-        setCustomer(event.target.value);
+        setCustomerId(event.target.value);
 
         const found = customers.find((elem) => elem._id == event.target.value);
  
@@ -169,7 +190,7 @@ const Quotes = () => {
             setProvince('')
             setStreet('')
         } else {
-            setCustomer('');
+            setCustomerId('');
         }
     }
 
@@ -362,7 +383,7 @@ const Quotes = () => {
                                 fullWidth
                                 variant='filled'
                                 label="Cutomer"
-                                value={customer}
+                                value={customerId}
                                 onChange={handleCustomerChange}
                                 name="customerID"
                                 id="customerID"

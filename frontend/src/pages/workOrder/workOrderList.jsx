@@ -149,7 +149,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
                     <DataList columnData={!med ? smallColumns : !lg ? medColumns : columns} rowData={!showCompleted ? rows : rowsCompleted} />
                     <div className='flex justify-end'>
                         <Box display="flex" justifyContent="space-between" p={3} sx={{ margin: 'auto', pt: '2%', width: '50%' }}>
-                            <Box display="flex" justifyContent="space-between" backgroundColor={colors.buttonBase} borderRadius="3px" color={"white"} width={'20%'} margin={'auto'}>
+                            <Box display="flex" justifyContent="space-between" backgroundColor={colors.buttonBase} borderRadius="3px" color={"white"} width={'auto'} margin={'auto'}>
                                 <Button variant="Text" onClick={handleRows}>Show All</Button>
                             </Box>
                         </Box>

@@ -26,13 +26,14 @@ const ShowWorkOrder = () => {
       .get(`/workorders/${id}`)
       .then((response) => {
         setWorkOrder(response.data);
-
-        axiosInstance
-          .get(`/employees/${response.data.assignedEmp}`)
-          .then((response) => {
-            setEmployee(response.data);
-          })
-
+        console.log(response.data.assignedEmp);
+        if (response.data.assignedEmp) {
+          axiosInstance
+            .get(`/employees/${response.data.assignedEmp}`)
+            .then((response) => {
+              setEmployee(response.data);
+            })
+        }
         axiosInstance
           .get(`/customer/${response.data.customerID}`)
           .then((response) => {
@@ -46,16 +47,6 @@ const ShowWorkOrder = () => {
       })
   }, [])
 
-  //   useEffect(() => {
-
-
-  //   })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       setLoading(false);
-  //     })
-  // }, [workOrder])
-
   return (
     <Box>
       <Header title={"WORK ORDERS"} subtitle={"Details"} />
@@ -67,8 +58,8 @@ const ShowWorkOrder = () => {
       ) : (
         <Box m={4}>
           <div className="flex justify-end space-x-3">
-            <EditButton path={`../../workorder/edit/${id}`}/>
-            <DeleteButton path={`../../workorder/delete/${id}`}/>
+            <EditButton path={`../../workorder/edit/${id}`} />
+            <DeleteButton path={`../../workorder/delete/${id}`} />
           </div>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12}>
@@ -100,25 +91,25 @@ const ShowWorkOrder = () => {
                 </Typography>
               </Paper>
             </Grid>
-
-            <Grid item xs={12} sm={12}>
-              <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400] }}>
-                <Typography variant="h4" sx={{ paddingBottom: '10px' }}>
-                  Assigned Employee Information
-                </Typography>
-                <Divider sx={{ marginBottom: '10px' }} />
-                <Typography variant="h6">
-                  {employee.firstName + " " + employee.lastName}
-                </Typography>
-                <Typography variant="h6" >
-                  <b>Phone:</b> {employee.phone}
-                </Typography>
-                <Typography variant="h6" >
-                  <b>Email:</b> {employee.email}
-                </Typography>
-              </Paper>
-            </Grid>
-
+            {employee.firstName !== undefined &&
+              <Grid item xs={12} sm={12}>
+                <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400] }}>
+                  <Typography variant="h4" sx={{ paddingBottom: '10px' }}>
+                    Assigned Employee Information
+                  </Typography>
+                  <Divider sx={{ marginBottom: '10px' }} />
+                  <Typography variant="h6">
+                    {employee.firstName + " " + employee.lastName}
+                  </Typography>
+                  <Typography variant="h6" >
+                    <b>Phone:</b> {employee.phone}
+                  </Typography>
+                  <Typography variant="h6" >
+                    <b>Email:</b> {employee.email}
+                  </Typography>
+                </Paper>
+              </Grid>
+            }
             <Grid item xs={12} sm={12}>
               <Paper elevation={3} sx={{ p: 3, mt: 3, backgroundColor: colors.primary[400] }}>
                 <Typography variant="h4" sx={{ paddingBottom: '10px' }}>
