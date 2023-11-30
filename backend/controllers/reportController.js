@@ -29,11 +29,12 @@ const createReport = async (request, response) => {
                     endDate: elem.workOrder.endDate,
                     description: elem.workOrder.description,
                     cost: elem.workOrder.cost,
-                    busName: elem.workOrder.busName
+                    busName: elem.workOrder.busName,
+                    address: elem.workOrder.address,
+                    paymentType: elem.workOrder.paymentType
                 },
                 employee: {
                     name: elem.employee.name,
-
                 },
                 customer: {
                     name: elem.customer.name,

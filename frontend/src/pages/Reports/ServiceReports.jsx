@@ -165,7 +165,8 @@ const ServiceReports = () => {
                     description: elem.description,
                     cost: elem.cost,
                     busName: elem.busName,
-                    address: elem.address.street + ", " + elem.address.postalCode
+                    address: elem.address.street + ", " + elem.address.postalCode,
+                    paymentType: elem.paymentType
                 },
                 employee: {
                     name: getEmployeeName(elem.assignedEmp)

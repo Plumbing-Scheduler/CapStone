@@ -31,7 +31,8 @@ const reportsSchema = mongoose.Schema(
                         description: String,
                         cost: String,
                         busName: String,
-                        paymentType: String
+                        paymentType: String,
+                        address: String
                     },
                     employee: {
                         name: String,

@@ -25,10 +25,11 @@ const SavedReports = () => {
             });
     }, [])
 
-    const rows = reports.map((elem, index) => ({
+    const rows = reports.map((elem) => ({
         id: elem._id,
         name: elem.name,
         date: dayjs(elem.date).format('l'),
+        description: elem.description
     }))
 
     const columns = [

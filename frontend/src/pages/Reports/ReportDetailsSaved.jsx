@@ -79,7 +79,7 @@ const ReportDetailsSaved = () => {
                             </Box>
                         </div>
                         {report.info.map((elem) => (
-                            <Box m={3} mb={6}>
+                            <Box m={3} mb={6} key={elem._id}>
                                 <Box mb={1}>
                                     <Paper elevation={3} sx={{ backgroundColor: colors.primary[400], p: 2 }}>
                                         {/**Bug here, when page is rendered exception is thrown because technically "filterWO" is undefined*/}
@@ -106,7 +106,7 @@ const ReportDetailsSaved = () => {
                                             <TableRow key={elem._id}>
                                                 <TableCell align="left">{elem.workOrder.title}</TableCell>
                                                 <TableCell align="left">{elem.employee.name}</TableCell>
-                                                <TableCell align="left">{elem.workOrder.endDate}</TableCell>
+                                                <TableCell align="left">{dayjs(elem.workOrder.endDate).format("LL")}</TableCell>
                                                 <TableCell align="left">{elem.workOrder.paymentType}</TableCell>
                                                 <TableCell align="left">${elem.workOrder.cost}</TableCell>
                                                 <TableCell align="left">{elem.workOrder.status}</TableCell>
