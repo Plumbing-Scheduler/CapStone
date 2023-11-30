@@ -27,6 +27,8 @@ import DeleteCustomer from './pages/CustomerManagement/DeleteCustomer';
 import CustomerDetails from './pages/CustomerManagement/CustomerDetails';
 import Reports from "./pages/Reports";
 import ServiceReports from './pages/Reports/ServiceReports';
+import SavedReports from './pages/Reports/SavedReports';
+import ReportDetailsSaved from './pages/Reports/ReportDetailsSaved';
 import Login from "./pages/Login";
 import Profile from './pages/Profile';
 import axiosInstance from './axiosInstance';
@@ -40,6 +42,7 @@ function App() {
   const loggedInUser = localStorage.getItem("ref-loguser");
   const userData = JSON.parse(loggedInUser);
   const mobileSideBar = useMediaQuery("(max-width:800px)");
+
   const getRefresh = () => {
     axiosInstance
       .get('/refresh')
@@ -124,6 +127,8 @@ function App() {
                   <Route path="/reports">
                     <Route index element={<Reports />} />
                     <Route path="history/:filter" element={<ServiceReports />} />
+                    <Route path="saved" element={<SavedReports />} />
+                    <Route path="saved/details/:id" element={<ReportDetailsSaved />} />
                   </Route>
 
                 </Routes>

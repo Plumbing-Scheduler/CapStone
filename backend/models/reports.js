@@ -1,71 +1,49 @@
 import mongoose from "mongoose";
-
-//reprots database
-
+//reports database
 const reportsSchema = mongoose.Schema(
     {
-        firstName: {
-            type: String,
-            required: true
-        },
-        lastName: {
-            type: String,
-            required: true
-        },
-        address: {
-            street:{
-                type: String,
-                required: true
-            },
-            postalCode:{
-                type: String,
-                required: true
-            },
-            city:{
-                type: String,
-                required: true
-            },
-            province:{
-                type: String,
-                required: true
-            },
-
-        busName: String,
-        phone: {
-            type: Number,
-            required: true
-        },
-        email: String,
-
-        },
-        serviceStatus: {
+        name: {
             type: String,
             required: true
         },
         description: {
-            type: String,
-            required: true
+            type: String
         },
-        title: {
-            type: String,
+        date: {
+            type: Date
         },
-        startDate: {
-            type: Date,
-            required: true
+        params: {
+            startDate: Date,
+            endDate: Date,
+            busName: String,
+            customer: String,
+            paymentType: String,
+            status: String,
+            service: String,
+            employee: String
         },
-        cost:{
-            type: Number,
-            required: true
-        },
-        assignedEmp:String,
-        endDate: Date,
-        customerID: String,
-        busName: String,
-        address: {
-            type: String,
-            required: true
+        info:  [
+                {
+                    workOrder: {
+                        title: String,
+                        startDate: String,
+                        endDate: String,
+                        description: String,
+                        cost: String,
+                        busName: String,
+                        paymentType: String
+                    },
+                    employee: {
+                        name: String,
+                    },
+                    customer: {
+                        name: String,
+                        phone: Number,
+                        email: String
+                    }
+                }
+            ]
         }
-    }
 );
 
-export const reports = mongoose.model('Reports', reportsSchema);
+export const Reports = mongoose.model('Reports', reportsSchema);

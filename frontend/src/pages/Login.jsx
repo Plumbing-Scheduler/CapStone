@@ -18,14 +18,14 @@ const Login = () => {
         password
     }
 
-    const handleLogin = async () => {
+    const handleLogin = () => {
 
-        await axiosInstance
+         axiosInstance
             .post('/login', login)
             .then((response) => {
-                axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
-                console.log(response.data);
-                localStorage.setItem("ref-loguser", JSON.stringify(response.data.user));
+                    axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
+                    console.log(response.data);
+                    localStorage.setItem("ref-loguser", JSON.stringify(response.data.user));
             }).then(() => {
                 window.location.reload()
             })

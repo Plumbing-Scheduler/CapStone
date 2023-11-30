@@ -13,8 +13,9 @@ import verifyJWT from './middleware/verifyJWT.js';
 import logout from './routes/logout.js'
 import cookieParser from 'cookie-parser';
 import 'dotenv/config'
-
-const PORT = process.env.PORT || 3500;
+import report from './routes/api/report.js';
+// const PORT = process.env.PORT || 5000;
+const PORT = 3500;
 const corsOptions ={
     origin: ['http://localhost:3000','http://localhost:3500', 'http://localhost:5000', "http://52.14.18.78/"],
     credentials: true
@@ -43,6 +44,7 @@ app.use('/schedule', calendar);
 app.use('/customer', Customer);
 app.use('/quote', Quote)
 app.use('/employees', Employee)
+app.use('/report', report)
 //Connection to MongoDB
 //Connection Process will need to be changed so than Mongo URL isnt in plain text!!!!!!
 //for Development Process mongodb+srv://Admin:hvHVFgTb1Ljxf4oC@plumbing-scheduler.rqelmif.mongodb.net/?retryWrites=true&w=majority

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, useTheme, Typography } from "@mui/material";
+import { Box, useTheme, Typography, Button, Backdrop, TextField } from "@mui/material";
 import { tokens } from "../../theme.js";
 import Header from '../../components/Header';
 import Table from '@mui/material/Table';
@@ -23,13 +23,16 @@ const ServiceReports = () => {
     const { filter } = useParams();
     const filterObj = JSON.parse(filter);
     const [filterWO, setFilterWO] = useState([{}]);
-    const [loading, setLoading] = useState(true);
     const [employees, setEmployees] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [workOrders, setWorkOrders] = useState([]);
+    const [open, setOpen] = useState(false);
     dayjs.extend(localizedFormat);
     dayjs.extend(isBetween)
     dayjs.extend(isSameOrAfter)
+    const [repname, setRepName] = useState("");
+    const [description, setDescription] = useState("");
+    const date = Date.now();
 
     const filtering = (wo) => {
         if (filterObj.assignedEmp !== "") {
@@ -85,7 +88,6 @@ const ServiceReports = () => {
                     .then((responce) => {
                         setCustomers(responce.data.data);
                     })
-                setLoading(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -95,7 +97,7 @@ const ServiceReports = () => {
 
     useEffect(() => {
         setFilterWO(workOrders.filter(filtering));
-
+        console.log(filterWO);
     }, [workOrders])
 
     const getEmployeeName = (empId) => {
@@ -105,6 +107,14 @@ const ServiceReports = () => {
             }
         }
         return "N/A"
+    }
+
+    const getEmployee = (custId) => {
+        for (let i = 0; employees.length > i; i++) {
+            if (employees[i]._id === custId) {
+                return employees[i]
+            }
+        }
     }
 
     const getCustomer = (custId) => {
@@ -124,59 +134,191 @@ const ServiceReports = () => {
         return "N/A"
     }
 
-    // const getEmployeeName = (empId) => {
-    //     for (let i = 0; employees.length > i; i++) {
-    //         if (employees[i]._id === empId) {
-    //             return employees[i].firstName + ' ' + employees[i].lastName
-    //         }
-    //     }
-    //     return "N/A"
-    // }
+    const handleOpen = () => {
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const saveReport = () => {
+        const report = {
+            name: repname,
+            description,
+            date,
+            params: {
+                startDate: filterObj.startDate,
+                endDate: filterObj.endDate,
+                busName: filterObj.busName,
+                customer: filterObj.customerID,
+                paymentType: filterObj.paymentType,
+                status: filterObj.serviceStatus,
+                service: filterObj.serviceType,
+                employee: filterObj.assignedEmp
+            },
+            info: filterWO.map((elem) => ({
+                workOrder: {
+                    title: elem.title,
+                    startDate: elem.startDate,
+                    endDate: elem.endDate,
+                    description: elem.description,
+                    cost: elem.cost,
+                    busName: elem.busName,
+                    address: elem.address.street + ", " + elem.address.postalCode
+                },
+                employee: {
+                    name: getEmployeeName(elem.assignedEmp)
+                },
+                customer: {
+                    name: getCustomerFullName(elem.customerID),
+                    phone: getCustomer(elem.customerID).phone,
+                    email: getCustomer(elem.customerID).email,
+                }
+            }))
+        }
+
+        console.log(report);
+        saveto(report)
+        setOpen(false);
+    }
+
+    const saveto = (report) => {
+        axiosInstance
+            .post('/report', report)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+    }
 
     return (
         <Box pb={"50px"}>
             <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Header title="Reports" subtitle="" />
-
-            </Box>
-            <Box m="20px">
-                <Typography variant="h4" ><b>Search Parameters</b></Typography>
-
-                <Typography variant="h6" ><b>Between: </b>{dayjs(filterObj.startDate).format('LL')} - {dayjs(filterObj.endDate).format('LL')} </Typography>
-                {filterObj.busName !== "" &&
-                    <Typography variant="h6" ><b>Business Name: </b>{filterObj.busName}</Typography>
-                }
-                {filterObj.customer !== "" &&
-                    <Typography variant="h6" ><b>Customer: </b>{getCustomerFullName(filterObj.customer)}</Typography>
-                }
-                {filterObj.paymentType !== "" &&
-                    <Typography variant="h6" ><b>Payment Type: </b>{filterObj.paymentType}</Typography>
-                }
-                {filterObj.serviceStatus !== "" &&
-                    <Typography variant="h6" ><b>Work Order Status: </b>{filterObj.serviceStatus}</Typography>
-                }
-                {filterObj.serviceType !== "" &&
-                    <Typography variant="h6" ><b>Service Type: </b>{filterObj.serviceType}</Typography>
-                }
-                {filterObj.assignedEmp !== "" &&
-                    <Typography variant="h6" ><b>Employee: </b>{getEmployeeName(filterObj.assignedEmp)}</Typography>
-                }
             </Box>
 
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Box m="20px">
+                    <Typography variant="h4" ><b>Search Parameters</b></Typography>
+
+                    <Typography variant="h6" ><b>Between: </b>{dayjs(filterObj.startDate).format('LL')} - {dayjs(filterObj.endDate).format('LL')} </Typography>
+                    {filterObj.busName !== "" &&
+                        <Typography variant="h6" ><b>Business Name: </b>{filterObj.busName}</Typography>
+                    }
+                    {filterObj.customer !== "" &&
+                        <Typography variant="h6" ><b>Customer: </b>{getCustomerFullName(filterObj.customer)}</Typography>
+                    }
+                    {filterObj.paymentType !== "" &&
+                        <Typography variant="h6" ><b>Payment Type: </b>{filterObj.paymentType}</Typography>
+                    }
+                    {filterObj.serviceStatus !== "" &&
+                        <Typography variant="h6" ><b>Work Order Status: </b>{filterObj.serviceStatus}</Typography>
+                    }
+                    {filterObj.serviceType !== "" &&
+                        <Typography variant="h6" ><b>Service Type: </b>{filterObj.serviceType}</Typography>
+                    }
+                    {filterObj.assignedEmp !== "" &&
+                        <Typography variant="h6" ><b>Employee: </b>{getEmployeeName(filterObj.assignedEmp)}</Typography>
+                    }
+                </Box>
+                <Box sx={{ width: "auto", margin: "20px", backgroundColor: colors.buttonBase, color: 'white', borderRadius: '3px', }}>
+                    <Button
+                        sx={{ margin: "auto", backgroundColor: colors.buttonBase, color: 'white', borderRadius: '3px', }}
+                        onClick={handleOpen}
+                    >
+                        Save Report
+                    </Button>
+                </Box>
+            </Box>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+            >
+                <Paper sx={{ height: "auto", width: 'auto' }}>
+                    <Box sx={{ width: 'auto', margin: 'auto' }}>
+                        <Box m={"20px"}>
+                            <Typography>Enter a Report Name</Typography>
+                            <TextField
+                                variant='filled'
+                                size='small'
+                                sx={{ width: '100%' }}
+                                value={repname}
+                                onChange={(e) => setRepName(e.target.value)}
+                            />
+                        </Box>
+                        <Box m={"20px"}>
+                            <Typography>Enter a Description of The Report (Optional)</Typography>
+                            <TextField
+                                variant='filled'
+                                size='small'
+                                sx={{ width: '100%' }}
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                            />
+                        </Box>
+                        <Box m="20px">
+                            <Typography variant="h5" ><b>Search Parameters</b></Typography>
+
+                            <Typography variant="h6" ><b>Between: </b>{dayjs(filterObj.startDate).format('L')} - {dayjs(filterObj.endDate).format('L')} </Typography>
+                            {filterObj.busName !== "" &&
+                                <Typography variant="h6" ><b>Business Name: </b>{filterObj.busName}</Typography>
+                            }
+                            {filterObj.customer !== "" &&
+                                <Typography variant="h6" ><b>Customer: </b>{getCustomerFullName(filterObj.customer)}</Typography>
+                            }
+                            {filterObj.paymentType !== "" &&
+                                <Typography variant="h6" ><b>Payment Type: </b>{filterObj.paymentType}</Typography>
+                            }
+                            {filterObj.serviceStatus !== "" &&
+                                <Typography variant="h6" ><b>Work Order Status: </b>{filterObj.serviceStatus}</Typography>
+                            }
+                            {filterObj.serviceType !== "" &&
+                                <Typography variant="h6" ><b>Service Type: </b>{filterObj.serviceType}</Typography>
+                            }
+                            {filterObj.assignedEmp !== "" &&
+                                <Typography variant="h6" ><b>Employee: </b>{getEmployeeName(filterObj.assignedEmp)}</Typography>
+                            }
+                        </Box>
+
+                        <Box display="flex" justifyContent="space-evenly" alignItems="center" margin={'auto 0 30px 0'}>
+                            <Box sx={{ width: "auto", margin: "20px", backgroundColor: colors.buttonBase, color: 'white', borderRadius: '3px', textAlign: 'center' }}>
+                                <Button
+                                    sx={{ margin: "auto", backgroundColor: colors.buttonBase, color: 'white', borderRadius: '3px', }}
+                                    onClick={saveReport}
+                                >
+                                    Submit
+                                </Button>
+                            </Box>
+                            <Box sx={{ width: "auto", margin: "20px", backgroundColor: colors.buttonBase, color: 'white', borderRadius: '3px', textAlign: 'center' }}>
+                                <Button
+                                    sx={{ margin: "auto", backgroundColor: colors.buttonBase, color: 'white', borderRadius: '3px', }}
+                                    onClick={handleClose}
+                                >
+                                    Cancel
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Box>
+                </Paper>
+
+            </Backdrop>
             {filterWO.length === 0 &&
-                <Box ml="20px" sx={{width: "206px", margin: "40px auto"}}>
+                <Box ml="20px" sx={{ width: "206px", margin: "40px auto" }}>
                     <Typography variant="h3" ><b>No Results Found </b></Typography>
                 </Box>
             }
 
             {filterWO.map((wo) => (
-                <Box m={3}>
+                <Box m={3} mb={6}>
 
                     {!getCustomer(wo.customerID) ? (
                         <div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>
                     ) : (
                         <div>
-                            <Box mb={2}>
+                            <Box mb={1}>
                                 <Paper elevation={3} sx={{ backgroundColor: colors.primary[400], p: 2 }}>
                                     {/**Bug here, when page is rendered exception is thrown because technically "filterWO" is undefined*/}
                                     <Typography variant="h6" ><b>Customer ID: </b>{wo.customerID}</Typography>
@@ -211,7 +353,8 @@ const ServiceReports = () => {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
-                        </div>)}
+                        </div>
+                    )}
                 </Box>
             ))}
         </Box>

@@ -1,39 +1,34 @@
-import { Box } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import Header from "../components/Header";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import Spinner from 'react-bootstrap/Spinner';
-// import { Outlet } from "react-router-dom";
 import ReportFilter from "../components/ReportFilter";
-
+import { tokens } from "../theme";
+import { useNavigate } from "react-router-dom";
 
 export const Reports = () => {
-    const [loading, setLoading] = useState(false);
-    const [reports, setReports] = useState([]);
-
-    // useEffect(() => {
-    //     setLoading(true);
-    //     axios
-    //         .get('http://localhost:3500/reports')
-    //         .then((responce) => {
-    //             setReports(responce.data.data)
-    //             setLoading(false)
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //             setLoading(false)
-    //         })
-    // }, [])
-
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const navigate = useNavigate();
+    const toSaved = () => {
+        navigate('saved');
+    }
     return (
         <Box>
             <Box>
-                <Header title="REPORTS" subtitle="Filter Reports" />
+                <div className="flex justify-between">
+                    <Header title="REPORTS" subtitle="Filter Reports" />
+                    <Box sx={{ width: "auto", margin: "auto 50px", backgroundColor: colors.buttonBase, color: 'white', borderRadius: '3px', }}>
+                        <Button
+                            sx={{ margin: "auto", backgroundColor: colors.buttonBase, color: 'white', borderRadius: '3px', }}
+                            onClick={toSaved}
+                        >
+                            Show Saved Reports
+                        </Button>
+                    </Box>
+                </div>
             </Box >
             <Box display="full">
-                {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
-                    <ReportFilter />
-                )}
+            
+                <ReportFilter />
             </Box>
         </Box>
     )

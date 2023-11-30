@@ -4,7 +4,7 @@ import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../axiosInstance";
 
 
@@ -14,6 +14,7 @@ const Topbar = ({ mobile = '', role = '' }) => {
     const colorMode = useContext(ColorModeContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl)
+    const navigate = useNavigate();
   
 
     const handleClickUser = (event) => {
@@ -30,7 +31,9 @@ const Topbar = ({ mobile = '', role = '' }) => {
                 //delete AccessToken in browser
                 axiosInstance.defaults.headers.common['Authorization'] = null;
                 localStorage.clear();
+                navigate("/");
                 window.location.reload()
+                
             })
             .catch((err) => {
                 console.log(err)

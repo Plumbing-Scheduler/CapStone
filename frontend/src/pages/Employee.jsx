@@ -15,7 +15,7 @@ export const Employee = () => {
     useEffect(() => {
         setLoading(true);
         axiosInstance
-            .get('http://localhost:3500/employees')
+            .get('/employees')
             .then((responce) => {
                 setEmployees(responce.data.data)
                 setLoading(false)

@@ -7,7 +7,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Link } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-const DataList = ({ columnData = [{}], rowData = [{}] }) => {
+const DataList = ({ columnData = [{}], rowData = [{}], hideEdit = Boolean }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const minwidth1 = useMediaQuery('(min-width:800px)');
@@ -16,9 +16,11 @@ const DataList = ({ columnData = [{}], rowData = [{}] }) => {
         field: "Operations", headerName: "Ops", width: 100,  renderCell: ({ row: id }) => {
             return (
                 <Box sx={{ width: "100%", display: "flex", justifyContent: "space-evenly", gap: "20px" }}>
+                    {hideEdit !== true && 
                     <Link to={`edit/${id.id}`} className='link '>
                         <EditIcon style={{color: colors.primary[100]}}/>
                     </Link>
+                    }
                     <Link to={`details/${id.id}`} className='link '>
                         <InfoOutlinedIcon style={{color: colors.primary[100]}} />
                     </Link>
