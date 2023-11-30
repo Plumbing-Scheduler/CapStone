@@ -107,11 +107,11 @@ export const CreateWorkOrder = () => {
                     serviceId: id,
                     empId: data.assignedEmp,
                     notes: data.description,
-                    ddress: {
-                        street: data.street,
-                        postalCode: data.postalCode,
-                        city: data.city,
-                        province: data.province,
+                    address: {
+                        street: data.address.street,
+                        postalCode: data.address.postalCode,
+                        city: data.address.city,
+                        province: data.address.province,
                     },
                     serviceStatus: data.serviceStatus
                 }

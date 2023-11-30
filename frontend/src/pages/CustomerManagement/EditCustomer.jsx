@@ -172,6 +172,45 @@ export const EditCustomer = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 sx={{ gridColumn: "span 1" }}
                             />
+
+                            <TextField
+                                fullWidth
+                                type="text"
+                                variant='filled'
+                                label="Buisness Name"
+                                name="busName"
+                                id="busName"
+                                value={busName}
+                                onChange={(e) => setBusName(e.target.value)}
+                                sx={{ gridColumn: "span 2" }}
+                            />
+                        </Box>
+                        <Typography
+                            variant="h3"
+                            sx={{
+                                m: "30px auto 5px auto",
+                                width: '83%',
+                                pb: '10px',
+                            }}>
+                            <b>Address</b>
+                        </Typography>
+                        <Typography variant="h6"
+                            sx={{
+                                m: "0 auto 5px auto",
+                                width: '83%',
+                                pb: '10px',
+                            }}>
+                            Changing this address will not be shown on any PREVIOUSLY created Quotes or Work Orders</Typography>
+                        <Box
+                            display="grid"
+                            gap="20px"
+                            gridTemplateColumns={minwidth1 ? "repeat(2, minmax(0, 1fr))" : minwidth2 ? "repeat(2, minmax(0, 1fr))" : "repeat(1, minmax(0, 1fr))"}
+                            sx={{
+                                gridColumn: "span 4",
+                                margin: "auto",
+                                width: '80%',
+                            }}
+                        >
                             <TextField
                                 fullWidth
                                 required
@@ -220,17 +259,6 @@ export const EditCustomer = () => {
                                 value={province}
                                 onChange={(e) => setProvince(e.target.value)}
                                 sx={minwidth2 ? { gridColumn: "span 1" } : { gridColumn: "span 2" }}
-                            />
-                            <TextField
-                                fullWidth
-                                type="text"
-                                variant='filled'
-                                label="Buisness Name"
-                                name="busName"
-                                id="busName"
-                                value={busName}
-                                onChange={(e) => setBusName(e.target.value)}
-                                sx={{ gridColumn: "span 2" }}
                             />
                         </Box>
                         <Box sx={{ width: "30%", margin: "10px auto" }}>

@@ -40,6 +40,7 @@ const ShowWorkOrder = () => {
             setCustomer(response.data);
             setLoading(false);
           })
+          console.log(employee)
 
       })
       .catch((error) => {

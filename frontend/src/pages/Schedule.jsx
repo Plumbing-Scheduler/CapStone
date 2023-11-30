@@ -37,6 +37,7 @@ const Schedule = ({ role = '', logId = '' }) => {
     useEffect(() => {
         axiosInstance.get('/schedule')
             .then((response) => {
+                console.log(response.data.data)
                 setData(response.data.data.map((app) => ({
                     title: app.title,
                     startDate: app.startDate,
@@ -174,17 +175,20 @@ const Schedule = ({ role = '', logId = '' }) => {
         return <AppointmentTooltip.Content
             {...props}
             children={<div className="pl-4">
-                <div>
-                    <div>Location</div>
-                    <div className="ml-2">
-                        {props.appointmentData.address.street + ", "}
-                        {props.appointmentData.address.postalCode}
+
+                {props.appointmentData.address.street &&
+                    <div>
+                        <div>Location</div>
+                        <div className="ml-2">
+                            {props.appointmentData.address.street + ", "}
+                            {props.appointmentData.address.postalCode}
+                        </div>
+                        <div className="ml-2">
+                            {props.appointmentData.address.city + ", "}
+                            {props.appointmentData.address.province}
+                        </div>
                     </div>
-                    <div className="ml-2">
-                        {props.appointmentData.address.city + ", "}
-                        {props.appointmentData.address.province}
-                    </div>
-                </div>
+                }
                 <br />
                 <div>
                     <div>Description</div>
