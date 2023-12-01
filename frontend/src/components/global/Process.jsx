@@ -10,8 +10,8 @@ export const ScheduleQuote = ({ state=''}) => {
   return (
     <Box>
       <Link to={"/workorder/form"} className='link' state={state}>
-        <Box display="flex" justifyContent="space-between" backgroundColor={colors.redAccent[400]} borderRadius="3px" >
-          <Button variant="text">
+        <Box display="flex" justifyContent="space-between" backgroundColor={colors.grey[400]} borderRadius="3px" >
+          <Button variant="text" sx={{color: 'white'}}>
             Schedule as Work Order
           </Button>
         </Box>

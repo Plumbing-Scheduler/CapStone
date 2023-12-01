@@ -71,13 +71,13 @@ function App() {
         ) : (
           <div className="app">
             {!mobileSideBar && (
-              <Sidebar role={userData.role} />
+              <Sidebar role={userData.role} userName={userData.firstName}/>
             )}
 
             <div className='topBar'>
               <div>
                 {mobileSideBar && (
-                  <MobileSidebar role={userData.role}/>
+                  <MobileSidebar role={userData.role} userName={userData.firstName}/>
                 )}
               </div>
               <Topbar mobile={mobileSideBar} role={userData.role} />
@@ -85,7 +85,8 @@ function App() {
             <main className="content">
               <div className='pages'>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<Schedule role={userData.role} logId={userData.id} />} />
+                  
                   <Route path="/profile" element={<Profile />} />
 
                   <Route path='workorder'>
@@ -96,8 +97,7 @@ function App() {
                     <Route path="delete/:id" element={<DeleteWorkOrder />} />
                   </Route>
 
-                  <Route path="/schedule" element={<Schedule role={userData.role} logId={userData.id} />} >
-                  </Route>
+                  
                   {(userData.role === "Management") &&
                     <Route path="/quotes" >
                       <Route index element={<Quotes />} />

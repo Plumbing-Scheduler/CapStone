@@ -40,10 +40,10 @@ const SavedReports = () => {
 
     return (
         <Box>
-            <Header title="EMPLOYEE" subtitle="View Employees" />
-            <div className='flex justify-end' >
-                
-            </div>
+           
+            <Box mb={3} >
+                 <Header title="EMPLOYEE" subtitle="View Employees" />
+            </Box>
             {loading ? (<div className='w-5 m-auto h-5 pt-11 text-center'><Spinner /></div>) : (
                 <DataList columnData={columns} rowData={rows} hideEdit={true}/>
             )}

@@ -16,9 +16,9 @@ export const Reports = () => {
             <Box>
                 <div className="flex justify-between">
                     <Header title="REPORTS" subtitle="Filter Reports" />
-                    <Box sx={{ width: "auto", margin: "auto 50px", backgroundColor: colors.buttonBase, color: 'white', borderRadius: '3px', }}>
+                    <Box sx={{ width: "auto", margin: "auto 50px", backgroundColor: colors.grey[400], color: 'white', borderRadius: '3px', }}>
                         <Button
-                            sx={{ margin: "auto", backgroundColor: colors.buttonBase, color: 'white', borderRadius: '3px', }}
+                            sx={{ margin: "auto", backgroundColor: colors.grey[400], color: 'white', borderRadius: '3px', }}
                             onClick={toSaved}
                         >
                             Show Saved Reports

@@ -15,7 +15,7 @@ const Topbar = ({ mobile = '', role = '' }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl)
     const navigate = useNavigate();
-  
+
 
     const handleClickUser = (event) => {
         setAnchorEl(event.currentTarget);
@@ -33,7 +33,7 @@ const Topbar = ({ mobile = '', role = '' }) => {
                 localStorage.clear();
                 navigate("/");
                 window.location.reload()
-                
+
             })
             .catch((err) => {
                 console.log(err)
@@ -54,37 +54,38 @@ const Topbar = ({ mobile = '', role = '' }) => {
                     onClick={handleClickUser}>
                     < PersonOutlinedIcon />
                 </IconButton>
-                </div>
-                <Menu
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    color={colors.primary[100]}
+            </div>
+            <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                color={colors.primary[100]}
 
-                    MenuListProps={{
-                        'aria-labelledby': 'fade-button',
-                    }}
-                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                    sx={{
-                        ".MuiMenu-paper": {
-                            backgroundColor: colors.buttonBase
-                        }, color: 'white'
-                    }}
+                MenuListProps={{
+                    'aria-labelledby': 'fade-button',
+                }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                sx={{
+                    ".MuiMenu-paper": {
+                        backgroundColor: colors.buttonBase
+                    }, color: 'white'
+                }}
 
-                >
-                    <MenuItem onClick={handleLogout} sx={{ color: 'white' }}>
-                        Log Out
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                        <Link className="link" to={'/profile'}>
-                            Profile
-                        </Link>
-                    </MenuItem>
-                </Menu>
-            
+            >
+                <MenuItem onClick={handleClose}>
+                    <Link className="link" to={'/profile'}>
+                        Profile
+                    </Link>
+                </MenuItem>
+                <MenuItem onClick={handleLogout} sx={{ color: 'white' }}>
+                    Log Out
+                </MenuItem>
+
+            </Menu>
+
         </div>
-        
+
     );
 };
 

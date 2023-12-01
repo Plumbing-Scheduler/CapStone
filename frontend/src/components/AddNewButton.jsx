@@ -14,7 +14,7 @@ const AddNewButton = ({destination = '/', item = ''}) => { /*sets "destination" 
         <div>
             <Box display="flex" justifyContent="space-between" p={3} sx={{ margin: 'auto', pt: '2%', width: minwidth1 ? 'auto' : minwidth2 ? '100%' : '100%',}}>
                 <Link to={destination} relative='path' className='link'> {/* Routes button to value of "destination" */}
-                    <Box display="flex" justifyContent="space-between" backgroundColor={colors.buttonBase} borderRadius="3px" >
+                    <Box display="flex" justifyContent="space-between" backgroundColor={colors.grey[400]} borderRadius="3px" >
                         <Button variant="Text">Add New {item}</Button> {/** Displays "Add New" and value of "item" as button text*/}
                     </Box>
                 </Link>

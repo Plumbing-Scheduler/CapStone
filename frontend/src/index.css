@@ -13,14 +13,19 @@ body,
   font-family: "Gabarito", cursive;
 }
 
+body{
+  min-width: 500px;
+}
+.content {
+  min-width: 500px;
+}
 .app {
   display: flex; 
   position: absolute;
 }
-.content {
+/* .content {
   min-width: 500px;
-  
-}
+} */
 
 ::-webkitscrollbar {
   width: 10px;
@@ -47,6 +52,7 @@ body,
 }
 
 .pages{
+  width: 100%;
   position: relative;
   margin-top: 68.5px;
 }

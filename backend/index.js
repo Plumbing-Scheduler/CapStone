@@ -1,4 +1,4 @@
-import express, { request } from 'express';
+import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import workOrder from './routes/api/workOrders.js';
@@ -14,13 +14,26 @@ import logout from './routes/logout.js'
 import cookieParser from 'cookie-parser';
 import 'dotenv/config'
 import report from './routes/api/report.js';
-// const PORT = process.env.PORT || 5000;
-const PORT = 3500;
-const corsOptions ={
-    origin: ['http://localhost:3000','http://localhost:3500', 'http://localhost:5000', "http://52.14.18.78/"],
-    credentials: true
-}
+
 const app = express();
+const PORT = process.env.PORT || 5000;
+const allowedOrigins = ["http://52.14.18.78", "http://52.14.18.78:5000"]
+
+const corsOptions =  {
+    origin: function (origin, callback){
+        console.log(origin);
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            console.log('true');
+            callback(null, true); // reflect (enable) the requested origin in the CORS response
+        } else {
+            console.log('false');
+            callback(null, false); // disable CORS for this request
+        }
+    },
+    credentials: true
+  }
+
+app.use(cors(corsOptions)); 
 app.use(cookieParser())
 
 app.use(cors(corsOptions)); 

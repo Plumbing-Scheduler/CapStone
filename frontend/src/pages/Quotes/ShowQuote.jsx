@@ -45,12 +45,16 @@ const ShowQuote = () => {
     <Box>
       <Header title="QUOTE REQUESTS" subtitle="Details" />
 
-      <Box display="flex" justifyContent="flex-end" m={4} space={3}>
-        <div className="flex justify-end space-x-3">
-          <EditButton path={`../../quotes/edit/${id}`} />
-          <DeleteButton path={`../../quotes/delete/${id}`} />
-          <ScheduleQuote state={{quote, customer}}/>
-        </div>
+      <Box display="flex" justifyContent="space-between" m={4} space={3}>
+        
+          <div>
+            <ScheduleQuote state={{quote, customer}}/>
+          </div>
+          <div className='flex justify-end space-x-3'>
+            <EditButton path={`../../quotes/edit/${id}`} />
+            <DeleteButton path={`../../quotes/delete/${id}`} />
+          </div>
+       
       </Box>
 
       {loading ? (

@@ -29,11 +29,11 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = ({ role = '' }) => {
+const Sidebar = ({ role = '', userName = ''}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState('Home');
+  const [selected, setSelected] = useState('Schedule');
 
   useEffect(() => {
     // Add a listener for window resize event
@@ -91,7 +91,7 @@ const Sidebar = ({ role = '' }) => {
               {!isCollapsed && (
                 <div className="flex justify-between box-border ml-15">
                   <Typography variant="h6" color={colors.grey[100]}>
-                    Welcome
+                    Welcome {userName}!
                   </Typography>
                   <IconButton onClick={() => setIsCollapsed(!isCollapsed)}></IconButton>
                   <MenuOutlinedIcon />
@@ -104,28 +104,16 @@ const Sidebar = ({ role = '' }) => {
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <img
                     alt="company-logo"
-                    width="100%"
+                    width="85%"
                     src={`../../assets/logo.png`}
-                    style={{ cursor: 'pointer', borderRadius: '50%' }}
+                    style={{ cursor: 'pointer' }}
                   />
                 </Box>
-
-                {/* <Box textAlign="center">
-                  <Typography
-                    variant="h1"
-                    color={colors.grey[100]}
-                    fontWeight="bold"
-                    sx={{ m: '10px 0 50px 0' }}
-                  >
-                    SEWER & DRAIN PLUMBING
-                  </Typography>
-                </Box> */}
-
                 <Box paddingLeft={isCollapsed ? undefined : '10%'}>
                   <Item
-                    title="Home"
+                    title="Schedule"
                     to="/"
-                    icon={<HomeOutlinedIcon />}
+                    icon={<CalendarTodayOutlinedIcon />}
                     selected={selected}
                     setSelected={setSelected}
                   />
@@ -142,13 +130,6 @@ const Sidebar = ({ role = '' }) => {
                     title="Work Orders"
                     to="/workorder"
                     icon={<ReceiptOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                  <Item
-                    title="Schedule"
-                    to="/schedule"
-                    icon={<CalendarTodayOutlinedIcon />}
                     selected={selected}
                     setSelected={setSelected}
                   />

@@ -132,7 +132,7 @@ const Profile = () => {
     };
 
     return (
-        <Box sx={{ width: "400px", margin: "0 auto" }}>
+        <Box sx={{ width: "400px", margin: "0 auto 40px auto" }}>
             <div className='shadow-lg m-4 p-3'>
                 <Typography variant='h3'>
                     Profile

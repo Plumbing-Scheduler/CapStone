@@ -30,11 +30,11 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const MobileSidebar = ({ role = '' }) => {
+const MobileSidebar = ({ role = '', userName = '' }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState('Home');
+  const [selected, setSelected] = useState('Schedule');
   const navigate = useNavigate();
   useEffect(() => {
     // Add a listener for window resize event
@@ -104,7 +104,7 @@ const MobileSidebar = ({ role = '' }) => {
                 {!isCollapsed && (
                   <div className="flex justify-between box-border ml-15">
                     <Typography variant="h6" color={colors.grey[100]}>
-                      Welcome
+                      Welcome {userName}!
                     </Typography>
                     <IconButton onClick={() => setIsCollapsed(!isCollapsed)}></IconButton>
                     <MenuOutlinedIcon />
@@ -117,8 +117,7 @@ const MobileSidebar = ({ role = '' }) => {
                   <Box display="flex" justifyContent="center" alignItems="center" height={"120px"} marginBottom={'40px'}>
                     <img
                       alt="company-logo"
-                      width="100%"
-                      // height={"50%"}
+                      width="85%"
                       src={`../../assets/logo.png`}
                       style={{ cursor: 'pointer', borderRadius: '10%', margin: "100px 0 0 0" }}
                       onClick={goHome}
@@ -127,9 +126,9 @@ const MobileSidebar = ({ role = '' }) => {
 
                   <Box paddingLeft={isCollapsed ? 0 : '10%'} marginTop={"100px"}>
                     <Item
-                      title="Home"
+                      title="Schedule"
                       to="/"
-                      icon={<HomeOutlinedIcon />}
+                      icon={<CalendarTodayOutlinedIcon />}
                       selected={selected}
                       setSelected={setSelected}
                     />
@@ -146,13 +145,6 @@ const MobileSidebar = ({ role = '' }) => {
                     title="Work Orders"
                     to="/workorder"
                     icon={<ReceiptOutlinedIcon />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                  <Item
-                    title="Schedule"
-                    to="/schedule"
-                    icon={<CalendarTodayOutlinedIcon />}
                     selected={selected}
                     setSelected={setSelected}
                   />
