@@ -24,7 +24,7 @@ const EmployeeDetails = () => {
         .then((response) => {
             setEmployee(response.data);
             setLoading(false);
-            console.log(employee.startDate);
+            
         })
         .catch((error) => {
             console.log(error);

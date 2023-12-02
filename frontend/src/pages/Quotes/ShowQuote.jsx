@@ -28,7 +28,6 @@ const ShowQuote = () => {
           .get(`/customer/${response.data.customerId}`)
           .then((response) => {
             setCustomer(response.data); 
-            console.log(response.data)
             setLoading(false);
           })
       })

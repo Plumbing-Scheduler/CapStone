@@ -124,7 +124,7 @@ export const CreateWorkOrder = () => {
             .catch((error) => {
                 setServerError(false);
                 setNoInput(false);
-                console.log(error.response.status)
+                console.log(error)
                 if (error.response.status === 500) {
                     setServerError(true);
                 }

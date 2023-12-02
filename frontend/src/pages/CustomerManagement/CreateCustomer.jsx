@@ -63,7 +63,6 @@ export const CreateCustomer = () => {
     const formatPhone = (event) => {
         let num = event.target.value;
         num = num.replace(/\D/, '');
-        console.log(num)
         setPhone(num)
     };
 

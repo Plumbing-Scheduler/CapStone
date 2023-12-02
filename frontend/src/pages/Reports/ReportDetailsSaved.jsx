@@ -30,7 +30,7 @@ const ReportDetailsSaved = () => {
             .then((response) => {
                 setReport(response.data);
                 setLoading(false);
-                console.log(response.data)
+                
             })
             .catch((error) => {
                 console.log(error);

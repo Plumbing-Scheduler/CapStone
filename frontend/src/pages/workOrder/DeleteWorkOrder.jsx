@@ -24,7 +24,6 @@ export const DeleteWorkOrder = () => {
       .then((response) => {
         setWorkOrder(response.data)
         setLoading(false);
-        console.log(workOrder);
       }
       )
       .catch((error) => {
@@ -37,7 +36,7 @@ export const DeleteWorkOrder = () => {
     axiosInstance
       .delete(`/workorders/${id}`)
       .then((response) => {
-        console.log(response)
+        
       })
       .catch((error) =>
         console.log(error)
@@ -45,7 +44,7 @@ export const DeleteWorkOrder = () => {
     axiosInstance
       .delete(`/schedule/${id}`)
       .then((response) => {
-        console.log(response)
+        
         navigate('/workorder')
       })
       .catch((error) =>

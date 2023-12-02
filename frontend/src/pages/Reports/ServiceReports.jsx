@@ -97,7 +97,6 @@ const ServiceReports = () => {
 
     useEffect(() => {
         setFilterWO(workOrders.filter(filtering));
-        console.log(filterWO);
     }, [workOrders])
 
     const getEmployeeName = (empId) => {
@@ -179,7 +178,6 @@ const ServiceReports = () => {
             }))
         }
 
-        console.log(report);
         saveto(report)
         setOpen(false);
     }
@@ -188,7 +186,6 @@ const ServiceReports = () => {
         axiosInstance
             .post('/report', report)
             .then((response) => {
-                console.log(response);
             })
             .catch((error) => {
                 console.log(error)

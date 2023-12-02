@@ -35,9 +35,9 @@ const Schedule = ({ role = '', logId = '' }) => {
 
 
     useEffect(() => {
+        setLoading(true);
         axiosInstance.get('/schedule')
             .then((response) => {
-                console.log(response.data.data)
                 setData(response.data.data.map((app) => ({
                     title: app.title,
                     startDate: app.startDate,

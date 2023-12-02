@@ -60,7 +60,6 @@ export const CreateWorkOrder = () => {
     };
 
     useEffect(() => {
-        console.log(state)
         if (state) {
             setTitle(state.quote.type);
             setDescription(state.quote.description);

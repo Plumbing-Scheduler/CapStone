@@ -26,7 +26,6 @@ const ShowWorkOrder = () => {
       .get(`/workorders/${id}`)
       .then((response) => {
         setWorkOrder(response.data);
-        console.log(response.data.assignedEmp);
         if (response.data.assignedEmp) {
           axiosInstance
             .get(`/employees/${response.data.assignedEmp}`)
@@ -40,7 +39,7 @@ const ShowWorkOrder = () => {
             setCustomer(response.data);
             setLoading(false);
           })
-          console.log(employee)
+          
 
       })
       .catch((error) => {

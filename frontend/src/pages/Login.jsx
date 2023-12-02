@@ -1,5 +1,6 @@
 import { AlertTitle, Box, Button, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { tokens } from "../theme.js";
 import axiosInstance from "../axiosInstance.js";
 import Alert from '@mui/material/Alert';
@@ -12,6 +13,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [unauth, setUnauth] = useState(false);
     const [noInput, setNoInput] = useState(false);
+    const navigate = useNavigate();
 
     const login = {
         email,
@@ -24,10 +26,9 @@ const Login = () => {
             .post('/login', login)
             .then((response) => {
                     axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.accessToken;
-                    console.log(response.data);
                     localStorage.setItem("ref-loguser", JSON.stringify(response.data.user));
             }).then(() => {
-                window.location.reload()
+                navigate('/')
             })
             .catch((error) => {
                 setUnauth(false);

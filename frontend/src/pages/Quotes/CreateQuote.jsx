@@ -87,7 +87,7 @@ const Quotes = () => {
 
     const handleSave = async () => {
         if (custType === "returning") {
-            console.log(selectedCustomer);
+            
             axiosInstance
                 .get(`/customer/${customerId}`)
                 .then((response) => {
@@ -150,7 +150,7 @@ const Quotes = () => {
                         customerId: response.data._id
                     }
                 }).then(() => {
-                    console.log(newQuote)
+                    
                      axiosInstance
                         .post('/quote', newQuote)
                         .then(() => {
@@ -214,7 +214,6 @@ const Quotes = () => {
     const formatPhone = (event) => {
         let num = event.target.value;
         num = num.replace(/\D/, '');
-        console.log(num)
         setPhone(num)
     }
 

@@ -57,7 +57,6 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
                     .get('/customer')
                     .then((response) => {
                         setCustomers(response.data.data);
-                        console.log(workOrders);
 
                     })
             }).catch((error) => {
@@ -65,7 +64,7 @@ export const WorkOrders = ({ role = '', logId = '' }) => {
                 console.log(error);
             })
 
-        console.log(workOrdersCompleted);
+        
     }, []);
 
     useEffect(() => {

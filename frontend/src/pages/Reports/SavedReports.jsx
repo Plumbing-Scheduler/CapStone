@@ -17,7 +17,6 @@ const SavedReports = () => {
             .get('/report')
             .then((response)=> {
                 setReports(response.data.data);
-                console.log(response.data.data)
                 setLoading(false)
             }).catch((error) => {
                 console.log(error);
